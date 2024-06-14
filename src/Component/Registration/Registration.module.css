@@ -1,0 +1,202 @@
+/* General font settings */
+body {
+    font-family: 'Public Sans', sans-serif;
+}
+
+h2,
+.registrationContainer h2,
+.formGroup label,
+.formGroup input,
+.formGroup textarea,
+button[type="submit"] {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 14px;
+}
+
+/* Container styling */
+.backgroundContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 1rem;
+    background-color: rgb(248, 250, 252);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+    padding: 1rem;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+}
+
+.mainCard {
+    padding: 2rem;
+    border-radius: 0.5rem;
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+}
+
+h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 29px;
+}
+
+.registrationContainer h2 {
+    font-size: 1.5rem;
+    color: #262262;
+}
+
+.registrationContainer {
+    max-width: 500px;
+    width: 100%;
+    height: 80vh;
+    overflow: hidden;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.formContainer {
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-grow: 1;
+    padding-right: 10px;
+}
+
+.logoContainer {
+    max-width: 300px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formGroup {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.formGroup label {
+    display: block;
+    font-weight: normal;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.formGroup input,
+.formGroup textarea {
+    width: calc(100% - 1.6rem);
+    /* To match the padding of the container */
+    padding: 1rem;
+    border: 1px solid rgb(226, 232, 240);
+    background-color: #fff;
+    border-radius: 0.4rem;
+    margin-left: 0.8rem;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+    outline: none;
+    border: 1px solid #2d0c96;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    width: 100%;
+    /* Ensure it spans the full width of the form */
+}
+
+button[type="submit"] {
+    background-color: #262262;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    width: calc(100% - 1.6rem);
+    /* To match the padding of the container */
+    margin-left: 0.8rem;
+    box-sizing: border-box;
+}
+
+button[type="submit"]:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    z-index: -1;
+    transition: all 0.5s ease;
+    transform: translate(-50%, -50%);
+}
+
+button[type="submit"]:hover {
+    background-color: #2d0c96;
+}
+
+button[type="submit"]:hover:before {
+    width: 200%;
+    height: 200%;
+}
+
+button[type="submit"]:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+    .mainCard {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .registrationContainer,
+    .logoContainer {
+        max-width: none;
+        margin-left: 0;
+        margin-bottom: 2rem;
+    }
+}
+
+.logo {
+    max-width: 100%;
+    max-height: 200px;
+}
+
+.logoHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.logo {
+    max-height: 80px;
+    margin-right: 1rem;
+}
+
+.companyName {
+    font-size: 2rem;
+    font-weight: bold;
+}
