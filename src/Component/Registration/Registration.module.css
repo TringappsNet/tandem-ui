@@ -67,7 +67,6 @@ h2 {
 .formContainer {
     overflow-y: auto;
     max-height: calc(80vh - 8rem);
-    /* Adjust the value as needed */
     flex-grow: 1;
     padding-right: 10px;
 }
@@ -91,24 +90,36 @@ h2 {
     margin-bottom: 0.25rem;
     width: 100%;
     box-sizing: border-box;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    font-size: 0.875rem;
+    line-height: 1.2;
+    /* Adjusted line-height for reduced height */
+    padding-top: 0.2rem;
+    /* Reduced padding */
+    padding-bottom: 0.2rem;
+    /* Reduced padding */
 }
 
 .formGroup input,
-.formGroup textarea {
+.formGroup textarea,
+.formGroup input[type="file"] {
     width: calc(100% - 1.2rem);
     padding: 0.8rem;
     border: 1px solid rgb(226, 232, 240);
     background-color: #fff;
-    border-radius: 0.4rem;
+    border-radius: 0.375rem;
     margin-left: 0.6rem;
     font-size: 14px;
     box-sizing: border-box;
+    border-width: 1px;
+    font-size: 0.875rem;
 }
 
 .formGroup input:focus,
 .formGroup textarea:focus {
     outline: none;
-    border: 1px solid rgb(226, 232, 240);
+    border: 1px solid #2d0c96
 }
 
 .buttonContainer {
@@ -123,7 +134,7 @@ button[type="submit"] {
     color: #fff;
     border: none;
     padding: 0.8rem 1.5rem;
-    border-radius: 0.4rem;
+    border-radius: 0.375rem;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -198,6 +209,7 @@ button[type="submit"]:active {
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url("@fontsource/public-sans");
 
 .error {
     color: red;

@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './Registration.module.css';
 import { useSnackbar } from 'notistack';
 import logo from './logo.jpeg';
 
 const Registration: React.FC = () => {
     const { enqueueSnackbar } = useSnackbar();
-    const [name, setName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [age, setAge] = useState<number | ''>('');
     const [photo, setPhoto] = useState<File | null>(null);
     const [address, setAddress] = useState('');
     const [referenceBroker, setReferenceBroker] = useState('');
     const [ssn, setSsn] = useState('');
     const [email, setEmail] = useState('');
-    const [nameError, setNameError] = useState('');
+    const [firstNameError, setFirstNameError] = useState('');
+    const [lastNameError, setLastNameError] = useState('');
     const [emailError, setEmailError] = useState('');
+    const [ssnError, setSsnError] = useState('');
+    const photoInputRef = useRef<HTMLInputElement | null>(null);
 
     const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
@@ -21,16 +25,16 @@ const Registration: React.FC = () => {
         }
     };
 
-    const validateName = (name: string) => {
+    const validateName = (name: string, setError: React.Dispatch<React.SetStateAction<string>>) => {
         const namePattern = /^[a-zA-Z\s]+$/;
         if (name.trim() === '') {
-            setNameError('');
+            setError('');
         } else if (name.length > 30) {
-            setNameError('Name should not exceed 30 characters.');
+            setError('Name should not exceed 30 characters.');
         } else if (!namePattern.test(name)) {
-            setNameError('Name should contain only alphabets and spaces.');
+            setError('Name should contain only alphabets and spaces.');
         } else {
-            setNameError('');
+            setError('');
         }
     };
 
@@ -45,12 +49,26 @@ const Registration: React.FC = () => {
         }
     };
 
+    const validateSsn = (ssn: string) => {
+        if (ssn.trim() === '') {
+            setSsnError('');
+        } else if (!/^\d{9}$/.test(ssn)) {
+            setSsnError('SSN should be exactly 9 digits and contain only numbers.');
+        } else {
+            setSsnError('');
+        }
+    };
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const errors: string[] = [];
 
-        if (name.trim() === '' || name.length > 30 || nameError) {
-            errors.push('Name should not exceed 30 characters and should contain only alphabets.');
+        if (firstName.trim() === '' || firstName.length > 30 || firstNameError) {
+            errors.push('First name should not exceed 30 characters and should contain only alphabets.');
+        }
+
+        if (lastName.trim() === '' || lastName.length > 30 || lastNameError) {
+            errors.push('Last name should not exceed 30 characters and should contain only alphabets.');
         }
 
         if (age === '' || age <= 20 || age > 30) {
@@ -61,8 +79,8 @@ const Registration: React.FC = () => {
             errors.push('You must upload a photo.');
         }
 
-        if (ssn.trim() === '' || ssn.length !== 9 || !/^\d{9}$/.test(ssn)) {
-            errors.push('SSN should be exactly 9 digits.');
+        if (ssn.trim() === '' || ssn.length !== 9 || ssnError) {
+            errors.push('SSN should be exactly 9 digits and contain only numbers.');
         }
 
         if (email.trim() === '' || emailError) {
@@ -74,13 +92,17 @@ const Registration: React.FC = () => {
             return;
         }
 
-        setName('');
+        setFirstName('');
+        setLastName('');
         setAge('');
         setEmail('');
         setPhoto(null);
         setAddress('');
         setReferenceBroker('');
         setSsn('');
+        if (photoInputRef.current) {
+            photoInputRef.current.value = '';
+        }
         enqueueSnackbar('Registration successful!', { variant: 'success' });
     };
 
@@ -90,25 +112,40 @@ const Registration: React.FC = () => {
                 <div className={styles.registrationContainer}>
                     <div className={styles.logoHeader}>
                         <img src={logo} alt="Tandem Infrastructure Logo" className={styles.logo} />
-                        <h1 className={styles.companyName}>Tandem Infrastructure</h1>
+                        <h1 className={styles.companyName}>TANDEM INFRASTRCTURE</h1>
                     </div>
-                    <h2 className={styles.formTitle}>REGISTER HERE!</h2>
+                    <h2 className={styles.formTitle}>REGISTER HERE !</h2>
                     <div className={styles.formContainer}>
                         <form onSubmit={handleSubmit}>
                             <div className={styles.formGroup}>
-                                <label htmlFor="name">Name</label>
+                                <label htmlFor="firstName">First Name</label>
                                 <input
                                     type="text"
-                                    id="name"
-                                    placeholder="Enter your name"
-                                    value={name}
+                                    id="firstName"
+                                    placeholder="Enter your first name"
+                                    value={firstName}
                                     onChange={(e) => {
-                                        setName(e.target.value);
-                                        validateName(e.target.value);
+                                        setFirstName(e.target.value);
+                                        validateName(e.target.value, setFirstNameError);
                                     }}
                                     required
                                 />
-                                {nameError && <div className={styles.error}>{nameError}</div>}
+                                {firstNameError && <div className={styles.error}>{firstNameError}</div>}
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label htmlFor="lastName">Last Name</label>
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    placeholder="Enter your last name"
+                                    value={lastName}
+                                    onChange={(e) => {
+                                        setLastName(e.target.value);
+                                        validateName(e.target.value, setLastNameError);
+                                    }}
+                                    required
+                                />
+                                {lastNameError && <div className={styles.error}>{lastNameError}</div>}
                             </div>
                             <div className={styles.formGroup}>
                                 <label htmlFor="age">Age</label>
@@ -128,6 +165,7 @@ const Registration: React.FC = () => {
                                     id="photo"
                                     accept="image/*"
                                     onChange={handlePhotoUpload}
+                                    ref={photoInputRef}
                                     required
                                 />
                             </div>
@@ -158,9 +196,13 @@ const Registration: React.FC = () => {
                                     id="ssn"
                                     placeholder="Enter your SSN"
                                     value={ssn}
-                                    onChange={(e) => setSsn(e.target.value)}
+                                    onChange={(e) => {
+                                        setSsn(e.target.value);
+                                        validateSsn(e.target.value);
+                                    }}
                                     required
                                 />
+                                {ssnError && <div className={styles.error}>{ssnError}</div>}
                             </div>
                             <div className={styles.formGroup}>
                                 <label htmlFor="email">Email</label>
