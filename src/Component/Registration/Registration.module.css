@@ -1,5 +1,11 @@
 body {
     font-family: 'Public Sans', sans-serif;
+    background-color: rgb(248, 250, 252);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 h2,
@@ -16,7 +22,7 @@ button[type="submit"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
+    width: 700px;
     background-color: rgb(248, 250, 252);
 }
 
@@ -34,7 +40,7 @@ button[type="submit"] {
 .mainCard {
     padding: 2rem;
     border-radius: 0.5rem;
-    max-width: 900px;
+    max-width: 1000px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -47,19 +53,24 @@ button[type="submit"] {
 h2 {
     text-align: center;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: bolder;
     margin-bottom: 29px;
 }
 
 .registrationContainer h2 {
-    font-size: 1.25rem;
+    font-size: 22px;
+    font-weight: bold;
     color: #262262;
+    margin: 0px 0px 4px;
 }
 
 .registrationContainer {
     max-width: 1200px;
     width: 100%;
     padding: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    align-items: center;
     display: flex;
     flex-direction: column;
 }
@@ -69,6 +80,7 @@ h2 {
     max-height: calc(80vh - 8rem);
     flex-grow: 1;
     padding-right: 10px;
+    width: 100%;
 }
 
 .logoContainer {
@@ -81,39 +93,35 @@ h2 {
 
 .formGroup {
     margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
     position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .formGroup label {
     display: block;
     font-weight: normal;
     margin-bottom: 0.25rem;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 0.375rem;
-    border-width: 1px;
     font-size: 0.875rem;
     line-height: 1.2;
-    /* Adjusted line-height for reduced height */
     padding-top: 0.2rem;
-    /* Reduced padding */
     padding-bottom: 0.2rem;
-    /* Reduced padding */
 }
 
 .formGroup input,
 .formGroup textarea,
 .formGroup input[type="file"] {
-    width: calc(100% - 1.2rem);
+    width: 100%;
     padding: 0.8rem;
     border: 1px solid rgb(226, 232, 240);
     background-color: #fff;
     border-radius: 0.375rem;
-    margin-left: 0.6rem;
     font-size: 14px;
     box-sizing: border-box;
-    border-width: 1px;
-    font-size: 0.875rem;
 }
 
 .formGroup input:focus,
@@ -140,8 +148,10 @@ button[type="submit"] {
     position: relative;
     overflow: hidden;
     z-index: 1;
-    width: calc(100% - 1.2rem);
-    margin-left: 0.6rem;
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
     box-sizing: border-box;
 }
 
@@ -175,7 +185,11 @@ button[type="submit"]:active {
 @media (max-width: 768px) {
     .mainCard {
         flex-direction: column;
-        align-items: stretch;
+        align-items: center;
+    }
+
+    .backgroundContainer {
+        width: 100%;
     }
 
     .registrationContainer,
@@ -189,6 +203,7 @@ button[type="submit"]:active {
 .logo {
     max-width: 80%;
     max-height: 200px;
+
 }
 
 .logoHeader {
@@ -198,23 +213,45 @@ button[type="submit"]:active {
 }
 
 .logo {
-    max-height: 80px;
+    max-height: 35px;
     margin-right: 1rem;
+
 }
 
 .companyName {
-    font-size: 20px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
+    font-size: 21px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: bolder;
+
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-@import url("@fontsource/public-sans");
+.formTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
 
 .error {
     color: red;
     font-size: 12px;
     margin-top: 0.25rem;
-    max-width: calc(100% - 1.2rem);
-    margin-left: 0.6rem;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url("@fontsource/public-sans");
+
+.formContainer .formGroup:first-of-type {
+    margin-top: 40px;
+}
+
+.formContainer {
+    overflow-y: auto;
+    max-height: calc(80vh - 8rem);
+    padding-right: 10px;
+}
+
+.formContent {
+    max-width: 500px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }

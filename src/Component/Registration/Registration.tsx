@@ -3,6 +3,7 @@ import styles from './Registration.module.css';
 import { useSnackbar } from 'notistack';
 import logo from './logo.jpeg';
 
+
 const Registration: React.FC = () => {
     const { enqueueSnackbar } = useSnackbar();
     const [firstName, setFirstName] = useState('');
@@ -63,12 +64,12 @@ const Registration: React.FC = () => {
         event.preventDefault();
         const errors: string[] = [];
 
-        if (firstName.trim() === '' || firstName.length > 30 || firstNameError) {
-            errors.push('First name should not exceed 30 characters and should contain only alphabets.');
+        if (firstName.trim() === '' || firstName.length > 20 || firstNameError) {
+            errors.push('First name should not exceed 20 characters and should contain only alphabets.');
         }
 
-        if (lastName.trim() === '' || lastName.length > 30 || lastNameError) {
-            errors.push('Last name should not exceed 30 characters and should contain only alphabets.');
+        if (lastName.trim() === '' || lastName.length > 10 || lastNameError) {
+            errors.push('Last name should not exceed 10 characters and should contain only alphabets.');
         }
 
         if (age === '' || age <= 20 || age > 30) {
@@ -112,7 +113,7 @@ const Registration: React.FC = () => {
                 <div className={styles.registrationContainer}>
                     <div className={styles.logoHeader}>
                         <img src={logo} alt="Tandem Infrastructure Logo" className={styles.logo} />
-                        <h1 className={styles.companyName}>TANDEM INFRASTRCTURE</h1>
+                        <h1 className={styles.companyName}>TANDEM INFRASTRUCTURE</h1>
                     </div>
                     <h2 className={styles.formTitle}>REGISTER HERE !</h2>
                     <div className={styles.formContainer}>
@@ -180,9 +181,9 @@ const Registration: React.FC = () => {
                                 />
                             </div>
                             <div className={styles.formGroup}>
-                                <label htmlFor="referenceBroker">Reference Broker</label>
+                                <label htmlFor="referenceBroker">Reference Broker ID</label>
                                 <input
-                                    type="text"
+                                    type="number"
                                     id="referenceBroker"
                                     placeholder="Enter reference broker"
                                     value={referenceBroker}
