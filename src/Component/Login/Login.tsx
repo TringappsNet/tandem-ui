@@ -115,8 +115,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
               />
               {passwordError && <p className={styles.error}>{passwordError}</p>}
             </div>
-
-            <a href="#" className={styles.forgotPassword}>
+            <a href="/" className={styles.forgotPassword}>
               Forgot password?
             </a>
             <button className={styles.loginbtn} type="submit">
