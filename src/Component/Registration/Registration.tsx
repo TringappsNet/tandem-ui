@@ -8,7 +8,7 @@ const Registration: React.FC = () => {
     const { enqueueSnackbar } = useSnackbar();
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
-    const [age, setAge] = useState<number | ''>('');
+    const [age, setAge] = useState<number | undefined>();
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
@@ -60,8 +60,8 @@ const Registration: React.FC = () => {
         }
     };
 
-    const validateAge = (age: number | '') => {
-        if (age === '') {
+    const validateAge = (age: number | undefined) => {
+        if (age === undefined) {
             setAgeError('Age is required.');
         } else if (age <= 20 || age > 30) {
             setAgeError('Age should be between 20 and 30.');
@@ -92,7 +92,7 @@ const Registration: React.FC = () => {
             errors.push('Last name should not exceed 10 characters and should contain only alphabets.');
         }
 
-        if (age === '' || age <= 20 || age > 30 || ageError) {
+        if (age === undefined || age <= 20 || age > 30 || ageError) {
             errors.push('Age should be between 20 and 30.');
         }
 
@@ -134,7 +134,7 @@ const Registration: React.FC = () => {
 
             setFirstname('');
             setLastname('');
-            setAge('');
+            setAge(undefined);
             setEmail('');
             setAddress('');
             setCity('');
@@ -223,13 +223,16 @@ const Registration: React.FC = () => {
                             </div>
 
                             <div className={styles.formGroup}>
-                                <label htmlFor="age">Age</label>
+                                <label htmlFor='age'>Age</label>
                                 <input
-                                    type="number"
+                                    type='number'
                                     id="age"
-                                    placeholder="Enter your age"
-                                    value={age}
-                                    onChange={(e) => setAge(e.target.value ? parseInt(e.target.value, 10) : '')}
+                                    placeholder="Enter the age"
+                                    value={age || ''}
+                                    onChange={(e) => {
+                                        setAge(parseInt(e.target.value));
+                                        validateAge(parseInt(e.target.value));
+                                    }}
                                     required
                                 />
                                 {ageError && <div className={styles.error}>{ageError}</div>}
@@ -299,6 +302,7 @@ const Registration: React.FC = () => {
                                     onChange={(e) => setReferenceBrokerId(e.target.value)}
                                 />
                             </div>
+
                             <div className={styles.formGroup}>
                                 <label htmlFor="ssn">SSN</label>
                                 <input
