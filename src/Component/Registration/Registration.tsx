@@ -3,7 +3,6 @@ import styles from './Registration.module.css';
 import { useSnackbar } from 'notistack';
 import logo from './logo.jpeg';
 
-
 const Registration: React.FC = () => {
     const { enqueueSnackbar } = useSnackbar();
     const [firstName, setFirstName] = useState('');
@@ -115,7 +114,7 @@ const Registration: React.FC = () => {
                         <img src={logo} alt="Tandem Infrastructure Logo" className={styles.logo} />
                         <h1 className={styles.companyName}>TANDEM INFRASTRUCTURE</h1>
                     </div>
-                    <h2 className={styles.formTitle}>REGISTER HERE !</h2>
+                    <h4 className={styles.formTitle}>REGISTER HERE</h4>
                     <div className={styles.formContainer}>
                         <form onSubmit={handleSubmit}>
                             <div className={styles.formGroup}>
@@ -158,6 +157,21 @@ const Registration: React.FC = () => {
                                     onChange={(e) => setAge(e.target.value ? parseInt(e.target.value, 10) : '')}
                                     required
                                 />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label htmlFor="email">Email</label>
+                                <input
+                                    type="text"
+                                    id="email"
+                                    placeholder="Enter your email"
+                                    value={email}
+                                    onChange={(e) => {
+                                        setEmail(e.target.value);
+                                        validateEmail(e.target.value);
+                                    }}
+                                    required
+                                />
+                                {emailError && <div className={styles.error}>{emailError}</div>}
                             </div>
                             <div className={styles.formGroup}>
                                 <label htmlFor="photo">Photo Upload</label>
@@ -204,21 +218,6 @@ const Registration: React.FC = () => {
                                     required
                                 />
                                 {ssnError && <div className={styles.error}>{ssnError}</div>}
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label htmlFor="email">Email</label>
-                                <input
-                                    type="text"
-                                    id="email"
-                                    placeholder="Enter your email"
-                                    value={email}
-                                    onChange={(e) => {
-                                        setEmail(e.target.value);
-                                        validateEmail(e.target.value);
-                                    }}
-                                    required
-                                />
-                                {emailError && <div className={styles.error}>{emailError}</div>}
                             </div>
                             <div className={styles.buttonContainer}>
                                 <button type="submit">Register</button>
