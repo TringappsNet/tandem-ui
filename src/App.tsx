@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Login from './Component/Login/Login';
+import Dashboard from './Component/Dashboarad/Dashboard';
 import './App.css';
 
-function App() {
+const App: React.FC = () => {
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  const handleLoginSuccess = (token: string) => {
+    setAccessToken(token);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={accessToken ? <Navigate to="/dashboard" /> : <Login onLoginSuccess={handleLoginSuccess} />} />
+          {/* <Route path="/login" element= {<Login onLoginSuccess={handleLoginSuccess} />} /> */}
+          <Route path="/dashboard" element={accessToken ? <Dashboard accessToken={accessToken} /> : <Navigate to="/" />} />
+        </Routes>
+      </Router>
   );
-}
+};
 
 export default App;
