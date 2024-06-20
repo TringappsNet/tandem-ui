@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url("@fontsource/public-sans");
+
 body {
     font-family: 'Public Sans', sans-serif;
     background-color: rgb(248, 250, 252);
@@ -22,7 +25,9 @@ button[type="submit"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 800px;
+    width: 140%;
+    height: 100%;
+    padding-right: 220px;
     background-color: rgb(248, 250, 252);
 }
 
@@ -35,6 +40,10 @@ button[type="submit"] {
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 0.5rem;
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    box-sizing: border-box;
 }
 
 .mainCard {
@@ -238,5 +247,9 @@ button[type="submit"]:active {
     margin-top: 20px;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-@import url("@fontsource/public-sans");
+.invalid{
+    font-family: 'Times New Roman', Times, serif;
+    font-style: normal;
+    color: #2d0c96;
+    font-weight: 100;
+}
