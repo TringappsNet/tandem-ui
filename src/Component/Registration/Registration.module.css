@@ -156,7 +156,7 @@ h4 {
     width: 100%;
 }
 
-button[type="submit"] {
+.buttoncls[type="submit"] {
     background-color: #262262;
     color: #fff;
     border: none;
@@ -174,7 +174,7 @@ button[type="submit"] {
     box-sizing: border-box;
 }
 
-button[type="submit"]:before {
+.buttoncls[type="submit"]:before {
     content: '';
     position: absolute;
     top: 50%;
@@ -188,16 +188,16 @@ button[type="submit"]:before {
     transform: translate(-50%, -50%);
 }
 
-button[type="submit"]:hover {
+.buttoncls[type="submit"]:hover {
     background-color: #2d0c96;
 }
 
-button[type="submit"]:hover:before {
+.buttoncls[type="submit"]:hover:before {
     width: 200%;
     height: 200%;
 }
 
-button[type="submit"]:active {
+.buttoncls[type="submit"]:active {
     transform: scale(0.95);
 }
 

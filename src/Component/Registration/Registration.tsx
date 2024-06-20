@@ -97,7 +97,7 @@ const Registration: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('http://192.168.1.223:3008/register', {
+            const response = await axios.post('http://192.168.1.223:3008/api/register', {
                 firstname,
                 lastname,
                 mobileno,
@@ -207,7 +207,7 @@ const Registration: React.FC = () => {
                                     />
                                 </div>
                                 <div className={styles.buttonContainer}>
-                                    <button type="submit">Register</button>
+                                    <button type="submit" className={styles.buttoncls}>Register</button>
                                 </div>
                             </form>
                         </div>
