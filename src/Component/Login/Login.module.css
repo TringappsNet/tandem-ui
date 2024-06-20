@@ -31,6 +31,10 @@
   gap: .3rem;
 }
 
+.header h2 {
+  font-size: 1.25rem;
+}
+
 .section p {
   margin-top: 2rem;
   text-align: center;
@@ -133,7 +137,19 @@
     width: 100%;
   }
 
-  h2 {
+  .header h2  {
     font-size: medium;
+  }
+}
+
+@media (max-width: 400px) {
+  .header img {
+    width: 2rem;
+  }
+  .header h2  {
+    font-size: .86rem;
+  }
+  .section p {
+    font-size: .9rem;
   }
 }
