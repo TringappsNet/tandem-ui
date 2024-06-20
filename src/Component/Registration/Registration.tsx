@@ -24,7 +24,7 @@ const Registration: React.FC = () => {
     const [ssnError, setSsnError] = useState('');
     const [ageError, setAgeError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const [role] = useState(1);
+    const [role] = useState(2);
 
     const validateName = (name: string, setError: React.Dispatch<React.SetStateAction<string>>) => {
         const namePattern = /^[a-zA-Z\s]+$/;
@@ -71,10 +71,16 @@ const Registration: React.FC = () => {
     };
 
     const validatePassword = (password: string) => {
+        const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
+        const numberPattern = /\d/g;
         if (password.trim() === '') {
             setPasswordError('Password is required.');
         } else if (password.length < 8) {
             setPasswordError('Password should be at least 8 characters long.');
+        } else if (!specialCharPattern.test(password)) {
+            setPasswordError('Password should contain at least one special character.');
+        } else if ((password.match(numberPattern) || []).length < 2) {
+            setPasswordError('Password should contain at least two numerical digits.');
         } else {
             setPasswordError('');
         }
@@ -85,11 +91,11 @@ const Registration: React.FC = () => {
         const errors: string[] = [];
 
         if (firstname.trim() === '' || firstname.length > 20 || firstnameError) {
-            errors.push('First name should not exceed 20 characters and should contain only alphabets.');
+            errors.push('First name should not exceed 20 characters.');
         }
 
         if (lastname.trim() === '' || lastname.length > 10 || lastnameError) {
-            errors.push('Last name should not exceed 10 characters and should contain only alphabets.');
+            errors.push('Last name should not exceed 10 characters.');
         }
 
         if (age === undefined || age <= 20 || age > 30 || ageError) {
@@ -105,7 +111,7 @@ const Registration: React.FC = () => {
         }
 
         if (password.trim() === '' || passwordError) {
-            errors.push('Password should be at least 8 characters long.');
+            errors.push('Password should be at least 8 characters, contain at least one special character, and contain at least two numerical digits.');
         }
 
         if (errors.length > 0) {
@@ -146,7 +152,11 @@ const Registration: React.FC = () => {
             setPassword('');
         } catch (error) {
             console.error('Registration failed:', error);
-            enqueueSnackbar('Registration failed. Please try again.', { variant: 'error' });
+            if (axios.isAxiosError(error) && error.response?.status === 409) {
+                setEmailError('Email already regisetred. Please enter a valid email ID');
+            } else {
+                enqueueSnackbar('Registration failed. Please try again.', { variant: 'error' });
+            }
         }
     };
 
