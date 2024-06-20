@@ -9,9 +9,6 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [disable, setDisable] = useState(true);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showFailureMessage, setShowFailureMessage] = useState(false);
   const [validationErrorMessage, setValidationErrorMessage] = useState(`You have failed signed in.`);
