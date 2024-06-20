@@ -11,24 +11,34 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [disable, setDisable] = useState(true);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showFailureMessage, setShowFailureMessage] = useState(false);
+  const [validationErrorMessage, setValidationErrorMessage] = useState(`You have failed signed in.`);
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setEmailError('Invalid email address');
-    } else {
-      setEmailError('');
+    if(email === ''){
+      setValidationErrorMessage('Email cannot be empty');
+      setShowFailureMessage(true);
+    }
+    else if(!emailRegex.test(email)) { 
+      setValidationErrorMessage('Invalid email address');
+      setShowFailureMessage(true);
+    } 
+    else {
+      setShowFailureMessage(false);
+      setShowSuccessMessage(false);
     }
   };
 
   const validatePassword = (password: string) => {
     if (password === '') {
-      setPasswordError('Password cannot be empty');
+      setValidationErrorMessage('Password cannot be empty');
+      setShowFailureMessage(true);
       return;
     } else {
-      setPasswordError('');
+      setShowFailureMessage(false);
       return;
     }
   }
@@ -47,6 +57,12 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(email === '' || password === ''){
+      setValidationErrorMessage("Please Enter valid Email and Password")
+      setShowFailureMessage(true);
+      return;
+    }
+
     if (emailError || passwordError) {
       return;
     }
@@ -57,17 +73,47 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
         }
       });
       const data = response.data;
-      if (data.status_code === 200 && data.message) {
+      if (data.message && response.status === 200) {
         setShowSuccessMessage(true);
         setShowFailureMessage(false);
         onLoginSuccess(data.access_token);  // Pass the access token to the parent component
-      } else {
+      }
+      else {
         setShowSuccessMessage(false);
         setShowFailureMessage(true);
       }
-    } catch (error) {
-      setShowSuccessMessage(false);
-      setShowFailureMessage(true);
+    } catch (error: any) {
+      try {
+        if(error.message === 'Network Error'){
+          setValidationErrorMessage(error.message)
+          setShowSuccessMessage(false);
+          setShowFailureMessage(true);
+          return
+        }
+        const res = error.response
+        if (res.status === 401 && res.data.message === 'Incorrect Password') {
+          let message = 'Incorrect Password! Please Enter Correct Password.'
+          setValidationErrorMessage(message)
+          setShowSuccessMessage(false);
+          setShowFailureMessage(true);
+        }
+        else if (res.status === 401 && res.data.message === 'You are not a registered user') {
+          const message = 'You are not a registered user. Please Register and sign in again'
+          setValidationErrorMessage(message)
+          setShowSuccessMessage(false);
+          setShowFailureMessage(true);
+        }
+        else {
+          setShowSuccessMessage(false);
+          setShowFailureMessage(true);
+        }
+      }
+      catch (e: any) {
+        setValidationErrorMessage(e.message)
+        setShowSuccessMessage(false);
+        setShowFailureMessage(true);
+      }
+
     }
   };
 
@@ -89,7 +135,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
             )}
             {showFailureMessage && (
               <div className={styles.failure}>
-                You have <b>failed</b> signed in.
+                {validationErrorMessage}
               </div>
             )}
             <div className={styles.inputGroup}>
@@ -101,7 +147,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
                 value={email}
                 onChange={handleEmailChange}
               />
-              {emailError && <p className={styles.error}>{emailError}</p>}
+              {/* {emailError && <p className={styles.error}>{emailError}</p>} */}
             </div>
 
             <div className={styles.inputGroup}>
@@ -113,7 +159,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
                 value={password}
                 onChange={handlePasswordChange}
               />
-              {passwordError && <p className={styles.error}>{passwordError}</p>}
+              {/* {passwordError && <p className={styles.error}>{passwordError}</p>} */}
             </div>
             <a href="/" className={styles.forgotPassword}>
               Forgot password?
