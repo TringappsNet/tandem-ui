@@ -59,10 +59,6 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       setShowFailureMessage(true);
       return;
     }
-
-    if (emailError || passwordError) {
-      return;
-    }
     try {
       const response = await axios.post('http://192.168.1.223:3008/auth/login', { email, password }, {
         headers: {
