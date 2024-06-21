@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor'; 
 import styles from './Login.module.css';
 import { Link } from 'react-router-dom';
 
@@ -59,11 +59,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       return;
     }
     try {
-      const response = await axios.post('http://192.168.1.223:3008/api/auth/login', { email, password }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await axiosInstance.post('/auth/login', { email, password });
       const data = response.data;
       if (data.message && response.status === 200) {
         const { token, expiresAt } = data.session;
