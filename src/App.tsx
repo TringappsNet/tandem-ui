@@ -4,8 +4,6 @@ import { SnackbarProvider } from 'notistack';
 import Login from './Component/Login/Login';
 import Dashboard from './Component/Dashboarad/Dashboard';
 import './App.css';
-import Registration from './Component/Registration/Registration';
-
 const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const handleLoginSuccess = (token: string) => {
@@ -17,8 +15,8 @@ const App: React.FC = () => {
       <Router>
         <Routes>
           <Route path="/" element={accessToken ? <Navigate to="/dashboard" /> : <Login onLoginSuccess={handleLoginSuccess} />} />
-          <Route path="/registerform" element={<Registration />} />
-          <Route path="/dashboard" element={accessToken ? <Dashboard accessToken={accessToken} /> : <Navigate to="/" />} />
+          {/* <Route path="/registerform" element={<Registration />} /> */}
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </Router>
     </SnackbarProvider>
