@@ -4,7 +4,6 @@ import styles from './Dashboard.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-import logo from './logo.jpeg';
 
 interface DashboardProps {
   accessToken: string;
@@ -143,13 +142,13 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken }) => {
             {dropdownOpen && (
               <>
                 <div className={styles.dropdownItem}>
-                  <a href="#">Log out</a>
+                  <a href="/">Log out</a>
                 </div>
                 <div className={styles.dropdownItem}>
-                  <a href="#" onClick={handleResetClick}>Reset</a>
+                  <a href="/" onClick={handleResetClick}>Reset</a>
                 </div>
                 <div className={styles.dropdownItem}>
-                  <a href="#" onClick={handleInviteClick}>Send Invite</a>
+                  <a href="/" onClick={handleInviteClick}>Send Invite</a>
                 </div>
               </>
             )}

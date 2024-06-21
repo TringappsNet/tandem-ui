@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './Registration.module.css';
 import logo from './logo.jpeg';
-import { useSnackbar } from 'notistack';
 
 
 const Registration: React.FC = () => {
