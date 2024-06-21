@@ -6,7 +6,11 @@ import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import logo from './logo.jpeg';
 
-const Dashboard: React.FC = () => {
+interface DashboardProps {
+  accessToken: string;
+}
+
+const Dashboard: React.FC<DashboardProps> = ({ accessToken }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showResetForm, setShowResetForm] = useState(false);
   const [showInviteForm, setShowInviteForm] = useState(false);

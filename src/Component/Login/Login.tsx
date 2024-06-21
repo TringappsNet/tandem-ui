@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor'; 
 import styles from './Login.module.css';
+import { Link } from 'react-router-dom';
 
 interface LoginProps {
   onLoginSuccess: (accessToken: string) => void;
@@ -11,19 +12,17 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const [password, setPassword] = useState('');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showFailureMessage, setShowFailureMessage] = useState(false);
-  const [validationErrorMessage, setValidationErrorMessage] = useState(`You have failed signed in.`);
+  const [validationErrorMessage, setValidationErrorMessage] = useState('You have failed signed in.');
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(email === ''){
+    if (email === '') {
       setValidationErrorMessage('Email cannot be empty');
       setShowFailureMessage(true);
-    }
-    else if(!emailRegex.test(email)) { 
+    } else if (!emailRegex.test(email)) {
       setValidationErrorMessage('Invalid email address');
       setShowFailureMessage(true);
-    } 
-    else {
+    } else {
       setShowFailureMessage(false);
       setShowSuccessMessage(false);
     }
@@ -38,7 +37,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       setShowFailureMessage(false);
       return;
     }
-  }
+  };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -54,59 +53,62 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(email === '' || password === ''){
-      setValidationErrorMessage("Please Enter valid Email and Password")
+    if (email === '' || password === '') {
+      setValidationErrorMessage('Please Enter valid Email and Password');
       setShowFailureMessage(true);
       return;
     }
     try {
-      const response = await axios.post('http://192.168.1.223:3008/auth/login', { email, password }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await axiosInstance.post('/auth/login', { email, password });
       const data = response.data;
       if (data.message && response.status === 200) {
-        setShowSuccessMessage(true);
-        setShowFailureMessage(false);
-        onLoginSuccess(data.access_token);  // Pass the access token to the parent component
-      }
-      else {
+        const { token, expiresAt } = data.session;
+        const expirationDate = new Date(expiresAt);
+        if (expirationDate > new Date()) {
+          localStorage.setItem('userid', JSON.stringify(data.user.id));
+          localStorage.setItem('email', JSON.stringify(data.user.email));
+          localStorage.setItem('sessiontoken', JSON.stringify(data.session.token));
+          localStorage.setItem('expireAt', JSON.stringify(data.session.expiresAt));
+          setShowSuccessMessage(true);
+          setShowFailureMessage(false);
+          onLoginSuccess(token); // Pass the access token to the parent component
+        } else {
+          setValidationErrorMessage('Session expired. Please try again.');
+          setShowFailureMessage(true);
+          setShowSuccessMessage(false);
+        }
+      } else {
         setShowSuccessMessage(false);
         setShowFailureMessage(true);
       }
     } catch (error: any) {
       try {
-        if(error.message === 'Network Error'){
-          setValidationErrorMessage(error.message)
+        if (error.message === 'Network Error') {
+          setValidationErrorMessage(error.message);
           setShowSuccessMessage(false);
           setShowFailureMessage(true);
-          return
+          return;
         }
-        const res = error.response
+        const res = error.response;
         if (res.status === 401 && res.data.message === 'Incorrect Password') {
-          let message = 'Incorrect Password! Please Enter Correct Password.'
-          setValidationErrorMessage(message)
+          let message = 'Incorrect Password! Please Enter Correct Password.';
+          setValidationErrorMessage(message);
+          setShowSuccessMessage(false);
+          setShowFailureMessage(true);
+        } else if (res.status === 401 && res.data.message === 'You are not a registered user') {
+          const message = 'You are not a registered user. Please Register and sign in again';
+          setValidationErrorMessage(message);
+          setShowSuccessMessage(false);
+          setShowFailureMessage(true);
+        } else {
           setShowSuccessMessage(false);
           setShowFailureMessage(true);
         }
-        else if (res.status === 401 && res.data.message === 'You are not a registered user') {
-          const message = 'You are not a registered user. Please Register and sign in again'
-          setValidationErrorMessage(message)
-          setShowSuccessMessage(false);
-          setShowFailureMessage(true);
-        }
-        else {
-          setShowSuccessMessage(false);
-          setShowFailureMessage(true);
-        }
-      }
-      catch (e: any) {
-        setValidationErrorMessage(e.message)
+      } catch (e: any) {
+        setValidationErrorMessage(e.message);
         setShowSuccessMessage(false);
         setShowFailureMessage(true);
       }
-
     }
   };
 
@@ -140,7 +142,6 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
                 value={email}
                 onChange={handleEmailChange}
               />
-              {/* {emailError && <p className={styles.error}>{emailError}</p>} */}
             </div>
 
             <div className={styles.inputGroup}>
@@ -152,11 +153,10 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
                 value={password}
                 onChange={handlePasswordChange}
               />
-              {/* {passwordError && <p className={styles.error}>{passwordError}</p>} */}
             </div>
-            <a href="/" className={styles.forgotPassword}>
+            <Link to="/forgotpassword" className={styles.forgotPassword}>
               Forgot password?
-            </a>
+            </Link>
             <button className={styles.loginbtn} type="submit">
               Sign In
             </button>
