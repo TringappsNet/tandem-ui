@@ -276,13 +276,14 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
             {dropdownOpen && (
               <>
                 <div className={styles.dropdownItem}>
-                  <a href="#" onClick={handleResetClick}>Reset</a>
+                  <button onClick={handleResetClick} className={styles.linkButton}>Reset</button>
+                </div>
+
+                <div className={styles.dropdownItem}>
+                  <button onClick={handleInviteClick} className={styles.linkButton}>Send Invite</button>
                 </div>
                 <div className={styles.dropdownItem}>
-                  <a href="#" onClick={handleInviteClick}>Send Invite</a>
-                </div>
-                <div className={styles.dropdownItem}>
-                  <a href="#" onClick={handleLogout}>Log out</a>
+                  <button onClick={handleLogout} className={styles.linkButton}>Log out</button>
                 </div>
 
               </>

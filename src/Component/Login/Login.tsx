@@ -13,7 +13,6 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showFailureMessage, setShowFailureMessage] = useState(false);
   const [validationErrorMessage, setValidationErrorMessage] = useState('You have failed signed in.');
-  const history = useNavigate();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

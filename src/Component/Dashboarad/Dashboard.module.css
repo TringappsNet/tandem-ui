@@ -360,3 +360,13 @@ button:hover {
 .statusButtonStarted {
     background-color: #98fb98;
 }
+
+.linkButton {
+    background: none;
+    border: none;
+    color: rgb(178, 178, 224);
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font: inherit;
+}
