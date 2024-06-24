@@ -1,7 +1,372 @@
-.main {
-    height: 200px;
-    width: 600px;
-    margin: 40px;
+@import url("@fontsource/montserrat");
+@import url("@fontsource/public-sans");
+
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: white;
+    font-family: 'Public Sans', sans-serif;
+}
+
+.navbar {
+    background-color: #262262;
+    font-family: 'Public Sans', sans-serif;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    height: 80px;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.navbarTitle {
+    margin: 0;
+    font-size: 24px;
+    padding-right: 20px;
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.dropdown span {
+    cursor: pointer;
+    padding: 10px;
+}
+
+.dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    right: 0;
+}
+
+.dropdown.show {
+    display: block;
+}
+
+.dropdownContent.show {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdownContent:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdownItem a {
+    padding: 8px 12px;
+    color: #333;
+    display: block;
+    text-decoration: none;
+}
+
+.dropdownItem a:hover {
+    background-color: #ddd;
+}
+
+.mainContent {
+    margin-top: 80px;
+    margin-left: 230px;
+    padding: 20px;
+    background-color: rgb(248, 250, 252);
+    min-height: calc(100vh - 80px);
+}
+
+.formContainer {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+    z-index: 1000;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    margin-top: 140px;
+}
+
+.formContainer h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: bold;
+}
+
+.formGroup {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 5px;
+    font-family: 'Public Sans', sans-serif;
+}
+
+.formGroup input,
+.formGroup select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #262262;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-family: 'Public Sans', sans-serif;
+    cursor: pointer;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+button:hover {
+    background-color: #1a1a45;
+}
+
+.responseMessage {
+    position: fixed;
+    top: 100px;
+    right: 50px;
+    transform: translateX(-50%);
+    padding: 20px;
+    border-radius: 8px;
+    width: 650px;
+    text-align: center;
+    z-index: 1001;
+    font-size: 16px;
+    animation: fadeInOut 4s ease-in-out forwards;
+}
+
+.successMessage {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #53ba6b;
+}
+
+.errorMessage {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #b14650;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+
+    10% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    90% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+}
+
+.sidePanel {
+    background-color: #bfbfe1;
+    width: 230px;
+    height: 100%;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    padding-top: 34px;
+    padding-left: 30px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    overflow-y: auto;
+}
+
+.sidePanel .sidePanelTitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #262262;
+    padding-right: 30px !important;
+    padding-left: 30px;
+    margin-bottom: 20px;
+}
+
+.sidePanelButtons {
+    display: flex;
+    flex-direction: column;
+    padding-right: 50px;
+    gap: 10px;
+}
+
+.sidePanelButton {
+    width: 100%;
+    background-color: #262262;
+    color: white;
+    border: none;
+    border-radius: 66px !important;
+    font-weight: bold;
+    font-family: 'Public Sans', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+}
+
+.sidePanelButton:hover {
+    background-color: #49006a;
+}
+
+.cardContainer {
     display: flex;
     flex-wrap: wrap;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.cardList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.card {
+    flex: 0 0 calc(33.33% - 20px);
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+
+
+.cardContent {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.brokerName {
+    margin-bottom: 10px;
+}
+
+.statusLine {
+    padding-top: 40px;
+    text-align: center;
+    gap: 5px;
+}
+
+.statusButton {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: rgb(26, 25, 25);
+    background-color: #43d748;
+    text-align: center;
+}
+
+.gridContainer {
+    width: 800px;
+    margin-top: auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-top: 280px;
+}
+
+.grid {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.grid th,
+.grid td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.grid th {
+    background-color: #262262;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.grid tr:nth-child(even) {
+    background-color: #f8f8f8;
+}
+
+.grid tr:hover {
+    background-color: #f1f1f1;
+}
+
+* {
+    margin: 0;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    font-family: "Public Sans";
+}
+
+.statusButtonFinished {
+    background-color: #43d748;
+}
+
+.statusButtonInProgress {
+    background-color: #ffcc00;
+}
+
+.statusButtonStarted {
+    background-color: #98fb98;
+}
+
+.linkButton {
+    background: none;
+    border: none;
+    color: rgb(178, 178, 224);
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font: inherit;
 }

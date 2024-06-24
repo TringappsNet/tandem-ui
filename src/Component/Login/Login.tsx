@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor'; 
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './Login.module.css';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 interface LoginProps {
   onLoginSuccess: (accessToken: string) => void;
@@ -71,7 +71,8 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           localStorage.setItem('expireAt', JSON.stringify(data.session.expiresAt));
           setShowSuccessMessage(true);
           setShowFailureMessage(false);
-          onLoginSuccess(token); // Pass the access token to the parent component
+          onLoginSuccess(token);
+          <Navigate to="/dashboard" replace={true} />
         } else {
           setValidationErrorMessage('Session expired. Please try again.');
           setShowFailureMessage(true);
