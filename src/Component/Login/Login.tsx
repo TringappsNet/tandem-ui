@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './Login.module.css';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 interface LoginProps {
   onLoginSuccess: (accessToken: string) => void;
