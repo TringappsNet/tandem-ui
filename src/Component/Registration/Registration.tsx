@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './Registration.module.css';
 import logo from './logo.jpeg';
+
 
 const Registration: React.FC = () => {
     const [firstname, setFirstname] = useState('');
@@ -13,6 +14,24 @@ const Registration: React.FC = () => {
     const [validationSucessMessage, setValidationSucessMessage] = useState('');
 
     const [role] = useState(2);
+
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const inviteToken = urlParams.get('token');
+        if (inviteToken) {
+            validateInviteToken(inviteToken);
+        }
+    }, []);
+
+    const validateInviteToken = async (token: string) => {
+        try {
+            await axios.post('http://192.168.1.223:3008/api/auth/invite-validate', { token });
+        } catch (error) {
+            console.error('Invite validation failed:', error);
+
+        }
+    };
 
     const validateName = (name: string): string => {
         const namePattern = /^[a-zA-Z\s]+$/;
@@ -87,7 +106,7 @@ const Registration: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if(firstname === '' || lastname === '' || mobileno === '' || password === '' || confirmpassword === '') {
+        if (firstname === '' || lastname === '' || mobileno === '' || password === '' || confirmpassword === '') {
             setValidationErrorMessage("Pleaser Enter the values in the All Field.")
             return
         }

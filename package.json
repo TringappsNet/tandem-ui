@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@fontsource/montserrat": "^5.0.18",
     "@fontsource/public-sans": "^5.0.18",
     "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.20",
@@ -16,6 +17,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "axios": "^1.7.2",
+    "classnames": "^2.5.1",
     "jest": "^27.5.1",
     "node-modules": "^1.0.1",
     "notistack": "^3.0.1",
