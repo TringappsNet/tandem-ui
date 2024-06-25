@@ -5,8 +5,10 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: white;
+    background-color: rgb(248, 250, 252);
     font-family: 'Public Sans', sans-serif;
+    overflow: hidden;
+    
 }
 
 .navbar {
@@ -21,9 +23,30 @@
     left: 0;
     right: 0;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buttonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.createButton {
+    background-color: #262262;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-right: 20px;
+    cursor: pointer;
+    font-weight: bolder;
+    font-family: 'Public Sans', sans-serif;
 }
 
 .navbarTitle {
@@ -61,10 +84,10 @@
 }
 
 .dropdownContent.show {
-    color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    font-family: 'Public Sans', sans-serif;
 }
 
 .dropdownContent:hover {
@@ -87,7 +110,8 @@
     margin-left: 230px;
     padding: 20px;
     background-color: rgb(248, 250, 252);
-    min-height: calc(100vh - 80px);
+    height: calc(100vh - 80px);
+    overflow: hidden;
 }
 
 .formContainer {
@@ -112,7 +136,7 @@
 }
 
 .formGroup {
-    margin-bottom: 15px;
+    margin-bottom: 1px;
     text-align: left;
 }
 
@@ -146,7 +170,7 @@ button {
 }
 
 button:hover {
-    background-color: #1a1a45;
+    cursor: pointer;
 }
 
 .responseMessage {
@@ -200,7 +224,7 @@ button:hover {
 .sidePanel {
     background-color: #bfbfe1;
     width: 230px;
-    height: 100%;
+    height: calc(100vh - 80px);
     position: fixed;
     top: 80px;
     left: 0;
@@ -226,6 +250,7 @@ button:hover {
     flex-direction: column;
     padding-right: 50px;
     gap: 10px;
+    height: 20px;
 }
 
 .sidePanelButton {
@@ -247,58 +272,88 @@ button:hover {
 .cardContainer {
     display: flex;
     flex-wrap: wrap;
-    padding: 20px;
-    justify-content: space-between;
+    padding-top: 10px;
+    padding-left: 20px;
+    justify-content: space-evenly;
 }
 
 .cardList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between;
-    width: 60%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    row-gap: 20px;
+    column-gap: px;
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .cardContainer {
+        flex-direction: column;
+    }
+
+    .cardList {
+        flex-direction: column;
+    }
+}
+
+.cardTitle {
+    font-weight: bold;
 }
 
 .card {
-    flex: 0 0 calc(33.33% - 20px);
-    padding: 20px;
+    padding: 20px 20px 0 20px;
     background-color: #fff;
-    border-radius: 8px;
+    border-radius: 15px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     text-align: left;
-    height: 200px;
-    margin-bottom: 20px;
+    height: 175px;
+    width: 165px;
+    justify-content: space-between;
 }
-
-
 
 .cardContent {
-    text-align: center;
+    text-align: left;
     display: flex;
     flex-direction: column;
-}
-
-.brokerName {
-    margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 .statusLine {
-    padding-top: 40px;
-    text-align: center;
-    gap: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 12px;
+}
+
+.statusLabel {
+    margin-right: 10px;
+    padding-bottom: 0px;
+    padding-left: 2px;
+    margin-bottom: 0px;
+}
+
+.brokerName {
+    justify-content: space-between;
+    padding-bottom: 40px;
+    width: 100%;
+    font-size: 12px;
+    margin-right: 2px;
+}
+
+.brokerName span {
+    margin-right: px;
 }
 
 .statusButton {
     display: inline-block;
-    padding: 3px 8px;
-    border-radius: 12px;
+    padding: 3px 12px;
+    border-radius: 18px;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 25px;
     color: rgb(26, 25, 25);
     background-color: #43d748;
     text-align: center;
@@ -306,19 +361,19 @@ button:hover {
 
 .gridContainer {
     width: 800px;
-    margin-top: auto;
-    padding: 20px;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    margin-top: 280px;
 }
 
 .grid {
     width: 100%;
     border-collapse: collapse;
+    max-height: 500px;
+    overflow-y: auto;
 }
+
 
 .grid th,
 .grid td {
@@ -352,15 +407,43 @@ button:hover {
 }
 
 .statusButtonStarted {
-    background-color: #98fb98;
+    background-color: #98adfb;
 }
 
 .linkButton {
     background: none;
     border: none;
-    color: rgb(178, 178, 224);
-    text-decoration: underline;
-    cursor: pointer;
+    color: rgb(13, 13, 14);
     padding: 0;
-    font: inherit;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.cardTags {
+    display: flex;
+    gap: 100px;
+    margin-bottom: 60px;
+    padding-right: 180px;
+
+}
+
+.tag {
+    background-color: #c5b0e9;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 1.1em;
+}
+
+.circleContainer {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #262262;
+    margin: 0 10px;
 }

@@ -22,6 +22,7 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
+    // const storedToken = "aces"
     const storedToken = localStorage.getItem('accessToken');
     if (storedToken) {
       setAccessToken(storedToken);
