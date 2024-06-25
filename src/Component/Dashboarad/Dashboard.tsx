@@ -412,9 +412,9 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
         {showCards && (
           <div className={styles.cardContainer}>
             <div className={styles.cardTags}>
-              <span className={styles.tag}>Deals</span>
-              <span className={styles.tag}>In Progress</span>
-              <span className={styles.tag}>Received Commission</span>
+              <span className={styles.tag}>Deals: </span>
+              <span className={styles.tag}>In Progress:   </span>
+              <span className={styles.tag}>Received Commission:  </span>
             </div>
             <div className={styles.cardList} >
               {deals.map((deal, index) => (
