@@ -9,6 +9,7 @@ const Registration: React.FC = () => {
     const [lastname, setLastname] = useState('');
     const [mobileno, setMobileno] = useState('');
     const [password, setPassword] = useState('');
+    const [disableState, setDisableState] = useState(false);
     const [confirmpassword, setConfirmpassword] = useState('');
     const [validationErrorMessage, setValidationErrorMessage] = useState('');
     const [validationSucessMessage, setValidationSucessMessage] = useState('');
@@ -50,14 +51,19 @@ const Registration: React.FC = () => {
         const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
         const numberPattern = /\d/g;
         if (password.trim() === '') {
+            setDisableState(false);
             return 'Password is required.';
         } else if (password.length < 8) {
+            setDisableState(false);
             return 'Password should be at least 8 characters long.';
         } else if (!specialCharPattern.test(password)) {
+            setDisableState(false);
             return 'Password should contain at least one special character.';
         } else if ((password.match(numberPattern) || []).length < 2) {
+            setDisableState(false);
             return 'Password should contain at least two numerical digits.';
         } else {
+            setDisableState(true);
             return '';
         }
     };
@@ -218,6 +224,7 @@ const Registration: React.FC = () => {
                                         type="password"
                                         id="confirmPassword"
                                         placeholder="Confirm your password"
+                                        disabled={!disableState}
                                         value={confirmpassword}
                                         onChange={(e) => {
                                             setConfirmpassword(e.target.value);

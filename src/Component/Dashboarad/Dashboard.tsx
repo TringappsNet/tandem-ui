@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './Dashboard.module.css';
+import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
+import DealForm from '../Milestone/Milestone'; // Ensure correct import path
+import styles from './Dashboard.module.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 
@@ -90,6 +93,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
   const [roleId, setRoleId] = useState('admin');
   const [showCards, setShowCards] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
+  const [openStepper, setOpenStepper] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const resetFormRef = useRef<HTMLDivElement>(null);
   const inviteFormRef = useRef<HTMLDivElement>(null);
@@ -291,7 +295,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
       <nav className={styles.navbar}>
         <h1 className={styles.navbarTitle}>TANDEM INFRASTRUCTURE</h1>
         <div className={styles.buttonContainer}>
-          <button className={styles.createButton}>Create</button>
+          <button className={styles.createButton} onClick={() => setOpenStepper(true)}>Create</button>
           <div className={styles.dropdown} ref={dropdownRef}>
             <span onClick={toggleDropdown}>
               <FontAwesomeIcon icon={faEllipsisV} />
@@ -363,7 +367,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
                 />
               </div>
               <div className={styles.formGroup}>
-                <label htmlFor="confirmPassword">Confirm Password:</label>
+                <label htmlFor="confirmPassword">Confirm New Password:</label>
                 <input
                   type="password"
                   id="confirmPassword"
@@ -463,9 +467,37 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
           </div>
         )}
       </div>
+      <>
+        <Dialog
+        fullScreen
+          sx={{ margin:'30px'}}
+          open={openStepper}
+          onClose={() => setOpenStepper(false)}
+          className={styles.popupmain}
+        >
+          <DialogTitle sx={{textAlign:'center'}}>
+            Deal Form
+            <IconButton
+              aria-label="close"
+              onClick={() => setOpenStepper(false)}
+              sx={{
+                position: 'absolute',
+                right: 25,
+                top: 8,
+                width:40,
+                color: (theme) => theme.palette.grey[500],
+              }}
+            >
+              <CloseIcon sx={{color:'#999'}} />
+            </IconButton>
+          </DialogTitle>
+          <DialogContent>
+            <DealForm />
+          </DialogContent>
+        </Dialog>
+      </>
     </div>
   );
 };
 
 export default Dashboard;
-
