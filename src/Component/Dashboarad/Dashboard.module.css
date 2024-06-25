@@ -1,16 +1,6 @@
 @import url("@fontsource/montserrat");
 @import url("@fontsource/public-sans");
 
-
-html,
-body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
-
-
 .pageContainer {
     display: flex;
     flex-direction: column;
@@ -18,6 +8,7 @@ body {
     background-color: rgb(248, 250, 252);
     font-family: 'Public Sans', sans-serif;
     overflow: hidden;
+    
 }
 
 .navbar {
@@ -42,6 +33,7 @@ body {
 .buttonContainer {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .createButton {
@@ -70,7 +62,6 @@ body {
     display: inline-block;
     margin-right: 20px;
     cursor: pointer;
-    padding-top: 30px;
 }
 
 .dropdown span {
@@ -206,7 +197,7 @@ button:hover {
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #b14650;
-}
+}   
 
 @keyframes fadeInOut {
     0% {
@@ -284,7 +275,6 @@ button:hover {
     padding-top: 10px;
     padding-left: 20px;
     justify-content: space-evenly;
-    overflow-x: auto;
 }
 
 .cardList {
@@ -319,7 +309,7 @@ button:hover {
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
-    height: 1750x;
+    height: 175px;
     width: 165px;
     justify-content: space-between;
 }
@@ -328,6 +318,7 @@ button:hover {
     text-align: left;
     display: flex;
     flex-direction: column;
+    padding-bottom: 10px;
 }
 
 .statusLine {
@@ -372,7 +363,6 @@ button:hover {
     width: 800px;
     background-color: white;
     border-radius: 8px;
-    margin-top: 200px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
@@ -407,12 +397,6 @@ button:hover {
     background-color: #f1f1f1;
 }
 
-* {
-    margin: 0;
-    padding-bottom: 10px;
-    box-sizing: border-box;
-    font-family: "Public Sans";
-}
 
 .statusButtonFinished {
     background-color: #43d748;
@@ -439,6 +423,7 @@ button:hover {
     display: flex;
     gap: 100px;
     margin-bottom: 60px;
+    padding-right: 180px;
 
 }
 
@@ -446,5 +431,19 @@ button:hover {
     background-color: #c5b0e9;
     padding: 5px 10px;
     border-radius: 15px;
-    font-size: 1.9em;
+    font-size: 1.1em;
+}
+
+.circleContainer {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #262262;
+    margin: 0 10px;
 }
