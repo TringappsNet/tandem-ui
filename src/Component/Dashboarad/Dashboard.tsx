@@ -4,6 +4,8 @@ import styles from './Dashboard.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
+import 'bootstrap/dist/css/bootstrap.css';
+
 
 interface DashboardProps {
   accessToken: string;
@@ -12,15 +14,9 @@ interface DashboardProps {
 
 const deals = [
   {
-    Name: "DD",
-    "phone number": "2347",
-    "deal ID": "Deal #1",
-    "Status": "In Progress"
-  },
-  {
     Name: "ABC",
     "phone number": "23677",
-    "deal ID": "Deal #2",
+    "deal ID": "Deal #1",
     "Status": "Started"
   },
   {
@@ -39,7 +35,7 @@ const deals = [
     Name: "UFD",
     "phone number": "888487",
     "deal ID": "Deal #5",
-    "Status": "In Progress"
+    "Status": "InProgress"
   },
   {
     Name: "GHD",
@@ -62,19 +58,24 @@ const deals = [
   {
     Name: "GGHD",
     "phone number": "888487",
-    "deal ID": "Deal #7",
+    "deal ID": "Deal #9",
     "Status": "Started"
   },
+  {
+    Name: "UFD",
+    "phone number": "888487",
+    "deal ID": "Deal #10",
+    "Status": "InProgress"
+  }
 
 ];
 
-const gridData = [
-  { id: 1, broker: "ABC", status: "Start", comments: "" },
-  { id: 2, broker: "CBS", status: "Inprogress", comments: "" },
-  { id: 3, broker: "HGT", status: "Start", comments: "" },
-  { id: 4, broker: "UIY", status: "Inprogress", comments: "" },
-  { id: 5, broker: "ABH", status: "Completed", comments: "" }
-];
+interface BrokerData {
+  id: number;
+  firstname: string;
+  status: "",
+  comments: ""
+}
 
 const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -86,7 +87,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
   const [responseMessage, setResponseMessage] = useState('');
   const [responseType, setResponseType] = useState('');
   const [email, setEmail] = useState('');
-  const [roleId, setRoleId] = useState(1);
+  const [roleId, setRoleId] = useState('admin');
   const [showCards, setShowCards] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -132,7 +133,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
         setNewPassword('');
         setConfirmPassword('');
         setEmail('');
-        setRoleId(1);
+        setRoleId('admin');
         setResponseType('');
       }, 1000);
       return () => clearTimeout(timer);
@@ -142,6 +143,9 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
+
+  const [gridData, setGridData] = useState<BrokerData[]>([]);
+
 
   const handleResetClick = () => {
     setShowResetForm(true);
@@ -235,6 +239,26 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchBrokers = async () => {
+      try {
+        const response = await fetch('http://192.168.1.223:3008/brokers');
+        const data = await response.json();
+        console.log(data);
+        const formattedData = data.map(({ id, firstname }: any) => ({ id, firstname, status: "In Progress", comments: "" }));
+        console.log("format", formattedData)
+        setGridData(formattedData);
+      } catch (error) {
+        console.error(`Error fetching broker data ${error}:`, error);
+      }
+    };
+
+    fetchBrokers();
+  }, []);
+
+
+
+
   const handleCardsClick = () => {
     setShowCards(true);
     setShowResetForm(false);
@@ -249,12 +273,11 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
     setShowInviteForm(false);
   };
 
-
   const getStatusButtonClass = (status: string) => {
     switch (status) {
       case "Finished":
         return styles.statusButtonFinished;
-      case "In Progress":
+      case "InProgress":
         return styles.statusButtonInProgress;
       case "Started":
         return styles.statusButtonStarted;
@@ -263,34 +286,38 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
     }
   };
 
-
   return (
     <div className={styles.pageContainer}>
       <nav className={styles.navbar}>
         <h1 className={styles.navbarTitle}>TANDEM INFRASTRUCTURE</h1>
-        <div className={styles.dropdown} ref={dropdownRef}>
-          <span onClick={toggleDropdown}>
-            <FontAwesomeIcon icon={faEllipsisV} />
-          </span>
-          <div className={classNames(styles.dropdownContent, { [styles.show]: dropdownOpen })}>
-            {dropdownOpen && (
-              <>
-                <div className={styles.dropdownItem}>
-                  <button onClick={handleResetClick} className={styles.linkButton}>Reset</button>
-                </div>
-
-                <div className={styles.dropdownItem}>
-                  <button onClick={handleInviteClick} className={styles.linkButton}>Send Invite</button>
-                </div>
-                <div className={styles.dropdownItem}>
-                  <button onClick={handleLogout} className={styles.linkButton}>Log out</button>
-                </div>
-
-              </>
-            )}
+        <div className={styles.buttonContainer}>
+          <button className={styles.createButton}>Create</button>
+          <div className={styles.dropdown} ref={dropdownRef}>
+            <span onClick={toggleDropdown}>
+              <FontAwesomeIcon icon={faEllipsisV} />
+            </span>
+            <div className={classNames(styles.dropdownContent, { [styles.show]: dropdownOpen })}>
+              {dropdownOpen && (
+                <>
+                  <div className={styles.dropdownItem}>
+                    <button onClick={handleResetClick} className={styles.linkButton}>Reset</button>
+                  </div>
+                  <div className={styles.dropdownItem}>
+                    <button onClick={handleInviteClick} className={styles.linkButton}>Send Invite</button>
+                  </div>
+                  <div className={styles.dropdownItem}>
+                    <button className={styles.linkButton}>Support</button>
+                  </div>
+                  <div className={styles.dropdownItem}>
+                    <button onClick={handleLogout} className={styles.linkButton}>Log out</button>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </nav>
+
       {responseMessage && (
         <div
           className={classNames(styles.responseMessage, {
@@ -367,15 +394,16 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
                 />
               </div>
               <div className={styles.formGroup}>
-                <label htmlFor="roleId">Role ID:</label>
-                <input
-                  type="number"
+                <label htmlFor="roleId">Role:</label>
+                <select
                   id="roleId"
                   name="roleId"
                   value={roleId}
-                  onChange={(e) => setRoleId(parseInt(e.target.value))}
-                  required
-                />
+                  onChange={(e) => setRoleId(e.target.value)}
+                  required >
+                  <option value="admin">Admin</option>
+                  <option value="broker">Broker</option>
+                </select>
               </div>
               <button type="submit">Send Invite</button>
             </form>
@@ -383,18 +411,23 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
         )}
         {showCards && (
           <div className={styles.cardContainer}>
-            <div className={styles.cardList}>
+            <div className={styles.cardTags}>
+              <span className={styles.tag}>Deals</span>
+              <span className={styles.tag}>In Progress</span>
+              <span className={styles.tag}>Received Commission</span>
+            </div>
+            <div className={styles.cardList} >
               {deals.map((deal, index) => (
                 <div key={index} className={styles.card}>
                   <div className={styles.cardTitle}>{deal["deal ID"]}</div>
                   <div className={styles.cardContent}>
-                    <p className={styles.brokerName}><strong>Broker Name:</strong> {deal.Name}</p>
-                    <p className={styles.statusLine}>
-                      <strong>Status:</strong>
+                    <p className={styles.brokerName}><span>Broker Name:</span> {deal.Name}</p>
+                    <div className={styles.statusLine}>
+                      <span className={styles.statusLabel}>Status:</span>
                       <span className={`${styles.statusButton} ${getStatusButtonClass(deal.Status)}`}>
                         {deal.Status}
                       </span>
-                    </p>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -406,6 +439,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
             <table className={styles.grid}>
               <thead>
                 <tr>
+                  <th>ID</th>
                   <th>Broker</th>
                   <th>Status</th>
                   <th>Comments</th>
@@ -414,7 +448,8 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
               <tbody>
                 {gridData.map((data) => (
                   <tr key={data.id}>
-                    <td>{data.broker}</td>
+                    <td>{data.id}</td>
+                    <td>{data.firstname}</td>
                     <td>{data.status}</td>
                     <td>{data.comments}</td>
                   </tr>
@@ -429,3 +464,4 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
 };
 
 export default Dashboard;
+
