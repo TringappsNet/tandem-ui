@@ -3,16 +3,16 @@ import { Stepper, Step, StepLabel, Button, Typography, MenuItem, TextField, Box,
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor'; // Make sure this path is correct
 
 const steps = [
-    { label: 'Tandem', fields: [{ type: 'dropdown', label: 'Broker Name', options: ['Joe', 'Doe'] }, { type: 'date', label: 'Date' }] },
+    { label: 'Tandem', fields: [{ type: 'dropdown', label: 'Property Name', options: ['Land', 'Land1'] }, { type: 'dropdown', label: 'Broker Name', options: ['Joe', 'Doe'] }, { type: 'date', label: 'Date' }] },
     { label: 'Proposal', fields: [{ type: 'date', label: 'Date' }] },
     { label: 'LOI Execute', fields: [{ type: 'date', label: 'Date' }] },
     { label: 'Lease Signed', fields: [{ type: 'date', label: 'Date' }] },
     { label: 'Notice to Proceed', fields: [{ type: 'date', label: 'Date' }] },
     { label: 'Commercial Operation', fields: [{ type: 'date', label: 'Date' }] },
-    { label: 'Potential Commission', fields: [{ type: 'date', label: 'Date' }] },
+    { label: 'Potential Commission', fields: [{ type: 'date', label: 'Date' }, { type: 'text', label: 'Commission Rate' }] },
 ];
 
-const StepperComponent: React.FC = () => {
+const DealForm: React.FC = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [formData, setFormData] = useState<any>(steps.map(() => ({})));
 
@@ -40,6 +40,7 @@ const StepperComponent: React.FC = () => {
         const payload = {
             activestep: activeStep + 1,
             status,
+            propertyname: formData[0]['Property Name'] || null,
             brokername: formData[0]['Broker Name'] || null,
             dealstartdate: formData[0]['Date'] || null,
             proposaldate: formData[1]['Date'] || null,
@@ -48,7 +49,7 @@ const StepperComponent: React.FC = () => {
             noticetoprocceddate: formData[4]['Date'] || null,
             commercialoperationdate: formData[5]['Date'] || null,
             potentialcommissiondate: formData[6]['Date'] || null,
-            potentialcommission: formData[6]['Potential Commission'] || null,
+            commissionrate: formData[6]['Commission Rate'] || null,
         };
 
         try {
@@ -104,13 +105,27 @@ const StepperComponent: React.FC = () => {
                         }}
                     />
                 );
+            case 'text':
+                return (
+                    <TextField
+                        key={index}
+                        type="number"
+                        label={field.label}
+                        name={field.label}
+                        value={formData[activeStep][field.label] || ''}
+                        onChange={handleChange}
+                        margin="normal"
+                        size="small"
+                        sx={{ width: 200 }}
+                    />
+                );
             default:
                 return null;
         }
     };
 
     return (
-        <Box sx={{ width: 1, marginTop: '7rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        <Box sx={{ width: 1, marginTop: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             <Stepper activeStep={activeStep} alternativeLabel connector={<StepConnector />} sx={{ width: 1 }}>
                 {steps.map((step, index) => (
                     <Step key={index}>
@@ -121,20 +136,21 @@ const StepperComponent: React.FC = () => {
             <Box sx={{ width: '100%', marginTop: '30px', display: 'flex', flexDirection: 'column', padding: '30px' }}>
                 {activeStep === steps.length ? (
                     <Box>
-                        <Typography>All steps completed</Typography>
-                        <Button onClick={() => setActiveStep(0)}>Reset</Button>
+                        <Typography variant='h3' sx={{textAlign:'center',color:'green'}}>Deal is Completed</Typography>
+                        {/* <Button onClick={() => setActiveStep(0)}>Reset</Button> */}
                     </Box>
                 ) : (
                     <Box>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
-                                <Button disabled={activeStep === 0} onClick={handleBack} sx={{ marginRight: 1 }}>
+                                <Button disabled={activeStep === 0} onClick={handleBack} sx={{ width: 100 }}>
                                     Back
                                 </Button>
                                 <Button
                                     variant="contained"
                                     color="primary"
                                     onClick={handleNext}
+                                    sx={{ width: 100 }}
                                     disabled={!isFormValid()}
                                 >
                                     {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
@@ -147,7 +163,7 @@ const StepperComponent: React.FC = () => {
                                 variant="contained"
                                 color="primary"
                                 onClick={saveFormData}
-                                sx={{ width: 100 }}
+                                sx={{ width: 100, marginTop: 2 }}
                                 disabled={!isFormValid()}
                             >
                                 Save
@@ -170,4 +186,4 @@ const StepperComponent: React.FC = () => {
     }
 };
 
-export default StepperComponent;
+export default DealForm;

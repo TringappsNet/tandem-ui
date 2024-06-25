@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from './Dashboard.module.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
+import DealForm from '../Milestone/Milestone'; // Ensure correct import path
+import styles from './Dashboard.module.css';
+import { WidthFull } from '@mui/icons-material';
 
 interface DashboardProps {
   accessToken: string;
@@ -65,7 +69,6 @@ const deals = [
     "deal ID": "Deal #7",
     "Status": "Started"
   },
-
 ];
 
 const gridData = [
@@ -89,6 +92,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
   const [roleId, setRoleId] = useState(1);
   const [showCards, setShowCards] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
+  const [openStepper, setOpenStepper] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const resetFormRef = useRef<HTMLDivElement>(null);
   const inviteFormRef = useRef<HTMLDivElement>(null);
@@ -249,7 +253,6 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
     setShowInviteForm(false);
   };
 
-
   const getStatusButtonClass = (status: string) => {
     switch (status) {
       case "Finished":
@@ -263,11 +266,16 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
     }
   };
 
-
   return (
     <div className={styles.pageContainer}>
       <nav className={styles.navbar}>
         <h1 className={styles.navbarTitle}>TANDEM INFRASTRUCTURE</h1>
+        <button
+          style={{ textDecoration: 'none', color: '#fff' }}
+          onClick={() => setOpenStepper(true)}
+        >
+          click here
+        </button>
         <div className={styles.dropdown} ref={dropdownRef}>
           <span onClick={toggleDropdown}>
             <FontAwesomeIcon icon={faEllipsisV} />
@@ -278,14 +286,12 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
                 <div className={styles.dropdownItem}>
                   <button onClick={handleResetClick} className={styles.linkButton}>Reset</button>
                 </div>
-
                 <div className={styles.dropdownItem}>
                   <button onClick={handleInviteClick} className={styles.linkButton}>Send Invite</button>
                 </div>
                 <div className={styles.dropdownItem}>
                   <button onClick={handleLogout} className={styles.linkButton}>Log out</button>
                 </div>
-
               </>
             )}
           </div>
@@ -337,7 +343,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
                 />
               </div>
               <div className={styles.formGroup}>
-                <label htmlFor="confirmPassword">Confirm Password:</label>
+                <label htmlFor="confirmPassword">Confirm New Password:</label>
                 <input
                   type="password"
                   id="confirmPassword"
@@ -367,15 +373,12 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
                 />
               </div>
               <div className={styles.formGroup}>
-                <label htmlFor="roleId">Role ID:</label>
-                <input
-                  type="number"
-                  id="roleId"
-                  name="roleId"
-                  value={roleId}
-                  onChange={(e) => setRoleId(parseInt(e.target.value))}
-                  required
-                />
+                <label htmlFor="role">Role:</label>
+                <select id="role" name="role" value={roleId} onChange={(e) => setRoleId(parseInt(e.target.value, 10))}>
+                  <option value={1}>Admin</option>
+                  <option value={2}>User</option>
+                  <option value={3}>Supervisor</option>
+                </select>
               </div>
               <button type="submit">Send Invite</button>
             </form>
@@ -383,47 +386,72 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
         )}
         {showCards && (
           <div className={styles.cardContainer}>
-            <div className={styles.cardList}>
-              {deals.map((deal, index) => (
-                <div key={index} className={styles.card}>
-                  <div className={styles.cardTitle}>{deal["deal ID"]}</div>
-                  <div className={styles.cardContent}>
-                    <p className={styles.brokerName}><strong>Broker Name:</strong> {deal.Name}</p>
-                    <p className={styles.statusLine}>
-                      <strong>Status:</strong>
-                      <span className={`${styles.statusButton} ${getStatusButtonClass(deal.Status)}`}>
-                        {deal.Status}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              ))}
+            <div className={styles.card}>
+              <div className={styles.cardTitle}>Total Capacity</div>
+              <div className={styles.cardContent}>Total Capacity Value</div>
+            </div>
+            <div className={styles.card}>
+              <div className={styles.cardTitle}>Available Capacity</div>
+              <div className={styles.cardContent}>Available Capacity Value</div>
+            </div>
+            <div className={styles.card}>
+              <div className={styles.cardTitle}>Capacity in Use</div>
+              <div className={styles.cardContent}>Capacity in Use Value</div>
             </div>
           </div>
         )}
         {showGrid && (
           <div className={styles.gridContainer}>
-            <table className={styles.grid}>
-              <thead>
-                <tr>
-                  <th>Broker</th>
-                  <th>Status</th>
-                  <th>Comments</th>
-                </tr>
-              </thead>
-              <tbody>
-                {gridData.map((data) => (
-                  <tr key={data.id}>
-                    <td>{data.broker}</td>
-                    <td>{data.status}</td>
-                    <td>{data.comments}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className={styles.gridItem}>
+              <div className={styles.gridTitle}>Battery</div>
+              <div className={styles.gridStatus}>
+                <span className={classNames(styles.statusButton, getStatusButtonClass("Finished"))}>Finished</span>
+              </div>
+            </div>
+            <div className={styles.gridItem}>
+              <div className={styles.gridTitle}>Work In Progress</div>
+              <div className={styles.gridStatus}>
+                <span className={classNames(styles.statusButton, getStatusButtonClass("In Progress"))}>In Progress</span>
+              </div>
+            </div>
+            <div className={styles.gridItem}>
+              <div className={styles.gridTitle}>Assignment</div>
+              <div className={styles.gridStatus}>
+                <span className={classNames(styles.statusButton, getStatusButtonClass("Started"))}>Started</span>
+              </div>
+            </div>
           </div>
         )}
       </div>
+      <>
+        <Dialog
+        fullScreen
+          sx={{ margin:'30px'}}
+          open={openStepper}
+          onClose={() => setOpenStepper(false)}
+          className={styles.popupmain}
+        >
+          <DialogTitle sx={{textAlign:'center'}}>
+            Deal Form
+            <IconButton
+              aria-label="close"
+              onClick={() => setOpenStepper(false)}
+              sx={{
+                position: 'absolute',
+                right: 25,
+                top: 8,
+                width:40,
+                color: (theme) => theme.palette.grey[500],
+              }}
+            >
+              <CloseIcon sx={{color:'#999'}} />
+            </IconButton>
+          </DialogTitle>
+          <DialogContent>
+            <DealForm />
+          </DialogContent>
+        </Dialog>
+      </>
     </div>
   );
 };
