@@ -329,13 +329,12 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
         </div>
       )}
       <div className={styles.sidePanel}>
-        <div className={styles.sidePanelTitle}>Dashboard</div>
         <div className={styles.sidePanelButtons}>
-          <button className={styles.sidePanelButton}>Profile</button>
-          <button className={styles.sidePanelButton} onClick={handleCardsClick}>Cards</button>
+          <button className={styles.sidePanelButton} onClick={handleCardsClick}>Dashboard</button>
           <button className={styles.sidePanelButton} onClick={handleStatusClick}>Status</button>
         </div>
       </div>
+
       <div className={styles.mainContent}>
         {showResetForm && (
           <div className={styles.formContainer} ref={resetFormRef}>
@@ -435,27 +434,32 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
           </div>
         )}
         {showGrid && (
-          <div className={styles.gridContainer}>
-            <table className={styles.grid}>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Broker</th>
-                  <th>Status</th>
-                  <th>Comments</th>
-                </tr>
-              </thead>
-              <tbody>
-                {gridData.map((data) => (
-                  <tr key={data.id}>
-                    <td>{data.id}</td>
-                    <td>{data.firstname}</td>
-                    <td>{data.status}</td>
-                    <td>{data.comments}</td>
+          <div className={styles.circleContainer}>
+            <div className={styles.circleone}></div>
+            <div className={styles.circletwo}></div>
+            <div className={styles.circlethree}></div>
+            <div className={styles.gridContainer}>
+              <table className={styles.grid}>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Broker</th>
+                    <th>Status</th>
+                    <th>Comments</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {gridData.map((data) => (
+                    <tr key={data.id}>
+                      <td>{data.id}</td>
+                      <td>{data.firstname}</td>
+                      <td>{data.status}</td>
+                      <td>{data.comments}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>
