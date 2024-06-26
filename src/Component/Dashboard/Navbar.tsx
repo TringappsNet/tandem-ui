@@ -14,11 +14,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [responseMessage, setResponseMessage] = useState('');
     const [responseType, setResponseType] = useState('');
-    const [email, setEmail] = useState('');
-    const [setRoleId] = useState('admin');
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const resetFormRef = useRef<HTMLDivElement>(null);
-    const inviteFormRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
 
 

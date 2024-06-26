@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import styles from './DashboardComp.module.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import Navbar from './Navbar';
@@ -76,8 +76,6 @@ const deals = [
 
 const Cards: React.FC<Cardsprops> = ({ onLogout }) => {
     const [showCards, setShowCards] = useState(false);
-    const [setSelectedButton] = useState(null);
-    const navigate = useNavigate();
     const location = useLocation();
 
 
