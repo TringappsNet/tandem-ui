@@ -75,11 +75,8 @@ const deals = [
 
 
 const Cards: React.FC<Cardsprops> = ({ onLogout }) => {
-    const [showResetForm, setShowResetForm] = useState(false);
-    const [showInviteForm, setShowInviteForm] = useState(false);
     const [showCards, setShowCards] = useState(false);
-    const [showGrid, setShowGrid] = useState(false);
-    const [selectedButton, setSelectedButton] = useState<string | null>(null);
+    const [setSelectedButton] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -87,8 +84,6 @@ const Cards: React.FC<Cardsprops> = ({ onLogout }) => {
     useEffect(() => {
         if (location.pathname === '/cards') {
             setShowCards(true);
-            setShowGrid(false);
-            setSelectedButton('Cards');
         }
     }, [location.pathname]);
 
@@ -106,16 +101,6 @@ const Cards: React.FC<Cardsprops> = ({ onLogout }) => {
         }
     };
 
-
-    const handleCardsClick = () => {
-        setShowCards(true);
-        setShowResetForm(false);
-        setShowInviteForm(false);
-        setShowGrid(false);
-        setSelectedButton('Cards');
-        navigate('/cards');
-
-    };
 
     return (
         <div className={styles.pageContainer}>
