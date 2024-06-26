@@ -208,6 +208,23 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
     }
   };
 
+  useEffect(() => {
+      const fetchBrokers = async () => {
+        try {
+          const response = await axiosInstance.get('/brokers');
+          const res = response.data.user;
+          console.log("Grid Data", res);
+          const formattedData = res.map(({ id, firstname }: BrokerData) => ({ id, firstname, status:"", comments: "" }));
+          console.log("format", formattedData)
+          setGridData(formattedData);
+        } catch (error) {
+          console.error(`Error fetching broker data ${error}:`, error);
+        }
+      };
+  
+      fetchBrokers();
+    }, []);
+
   const handleCardsClick = () => {
     setShowCards(true);
     setShowResetForm(false);
@@ -227,7 +244,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
     try {
       const deal: any = localStorage.getItem('dealdetails')
       const dealtemp: any = JSON.parse(deal)
-      if (dealtemp.isNew) {
+      if (dealtemp.isNew && isFirstSave) {
         const response = await axiosInstance.post('/deals/deal', dealtemp);
         console.log('Form data saved:', response.data);
         localStorage.removeItem('dealdetails');
