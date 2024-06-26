@@ -5,7 +5,6 @@ import Dashboard from './Component/Dashboarad/Dashboard';
 import './App.css';
 import Registration from './Component/Registration/Registration';
 import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
-import DealForm from './Component/Milestone/Milestone';
 import ChangePassword from './Component/ChangePassword/ChangePassword';
 
 const App: React.FC = () => {
@@ -35,7 +34,6 @@ const App: React.FC = () => {
           <Route path="/" element={accessToken ? <Navigate to="/dashboard" /> : <Login onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/registerform" element={<Registration />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/milestone" element={<DealForm />} />
           <Route path="/change" element= {<ChangePassword />} />
           <Route path="/dashboard" element={accessToken ? <Dashboard accessToken={accessToken} onLogout={handleLogout} /> : <Navigate to="/" />} />
           </Routes>

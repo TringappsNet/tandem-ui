@@ -5,9 +5,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-import DealForm from '../Milestone/Milestone'; // Ensure correct import path
+import DealForm from '../Milestone/Milestone';
 import styles from './Dashboard.module.css';
-import 'bootstrap/dist/css/bootstrap.css';
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+// import { Deal } from '../Interface/DealFormObject';
+// import 'bootstrap/dist/css/bootstrap.css';
 
 
 interface DashboardProps {
@@ -15,69 +17,30 @@ interface DashboardProps {
   onLogout: () => void;
 }
 
-const deals = [
-  {
-    Name: "ABC",
-    "phone number": "23677",
-    "deal ID": "Deal #1",
-    "Status": "Started"
-  },
-  {
-    Name: "XYZ",
-    "phone number": "2897",
-    "deal ID": "Deal #3",
-    "Status": "Finished"
-  },
-  {
-    Name: "YFZ",
-    "phone number": "28487",
-    "deal ID": "Deal #4",
-    "Status": "Started"
-  },
-  {
-    Name: "UFD",
-    "phone number": "888487",
-    "deal ID": "Deal #5",
-    "Status": "InProgress"
-  },
-  {
-    Name: "GHD",
-    "phone number": "888487",
-    "deal ID": "Deal #6",
-    "Status": "Finished"
-  },
-  {
-    Name: "GGHD",
-    "phone number": "888487",
-    "deal ID": "Deal #7",
-    "Status": "Started"
-  },
-  {
-    Name: "GGHD",
-    "phone number": "888487",
-    "deal ID": "Deal #8",
-    "Status": "Started"
-  },
-  {
-    Name: "GGHD",
-    "phone number": "888487",
-    "deal ID": "Deal #9",
-    "Status": "Started"
-  },
-  {
-    Name: "UFD",
-    "phone number": "888487",
-    "deal ID": "Deal #10",
-    "Status": "InProgress"
-  }
-
-];
-
 interface BrokerData {
   id: number;
   firstname: string;
   status: "",
   comments: ""
+}
+
+interface Deal {
+  activeStep: number;
+  status: string;
+  propertyName: string | null;
+  brokerName: string | null;
+  dealStartDate: string | null;
+  proposalDate: string | null;
+  loiExecuteDate: string | null;
+  leaseSignedDate: string | null;
+  noticeToProceedDate: string | null;
+  commercialOperationDate: string | null;
+  potentialcommissiondate: string | null;
+  potentialCommission: string | null;
+  createdBy: number;
+  updatedBy: number;
+  isNew: boolean;
+  id: number | null;
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
@@ -93,10 +56,13 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
   const [roleId, setRoleId] = useState('admin');
   const [showCards, setShowCards] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
+  const [dealsData, setDealsData] = useState<Deal[]>([]);
+  const [dealFormData, setDealFormData] = useState<Deal>();
   const [openStepper, setOpenStepper] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const resetFormRef = useRef<HTMLDivElement>(null);
   const inviteFormRef = useRef<HTMLDivElement>(null);
+  const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -126,6 +92,21 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+  }, []);
+
+  const fetchDeals = async () => {
+    try {
+      const response = await axiosInstance.get('/deals');
+      const fetchedDeals: Deal[] = response.data.deals;
+      setDealsData(fetchedDeals);
+      console.log('Deals Fetched value:', response.data);
+    } catch (error) {
+      console.error('Error fetching broker names:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDeals();
   }, []);
 
   useEffect(() => {
@@ -186,25 +167,17 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
     }
 
     try {
-      const response = await fetch('http://192.168.1.223:3008/api/auth/reset-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          oldPassword,
-          newPassword,
-          userId: 1,
-        }),
+      const response = await axiosInstance.post('/auth/reset-password', {
+        oldPassword,
+        newPassword,
+        userId: 1, // Assuming userId needs to be sent in the request
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (response.status === 200) {
         setResponseMessage('Password reset successful.');
         setResponseType('success');
       } else {
-        setResponseMessage(data.message || 'Unsuccessful message.');
+        setResponseMessage(response.data.message || 'Unsuccessful message.');
         setResponseType('error');
       }
     } catch (error) {
@@ -217,24 +190,16 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://192.168.1.223:3008/api/auth/invite', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          roleId,
-        }),
+      const response = await axiosInstance.post('/auth/invite', {
+        email,
+        roleId,
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (response.status === 200) {
         setResponseMessage('Invite sent successfully.');
         setResponseType('success');
       } else {
-        setResponseMessage(data.message || 'Failed to send invite.');
+        setResponseMessage(response.data.message || 'Failed to send invite.');
         setResponseType('error');
       }
     } catch (error) {
@@ -242,26 +207,6 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
       setResponseType('error');
     }
   };
-
-  useEffect(() => {
-    const fetchBrokers = async () => {
-      try {
-        const response = await fetch('http://192.168.1.223:3008/brokers');
-        const data = await response.json();
-        console.log(data);
-        const formattedData = data.map(({ id, firstname }: any) => ({ id, firstname, status: "In Progress", comments: "" }));
-        console.log("format", formattedData)
-        setGridData(formattedData);
-      } catch (error) {
-        console.error(`Error fetching broker data ${error}:`, error);
-      }
-    };
-
-    fetchBrokers();
-  }, []);
-
-
-
 
   const handleCardsClick = () => {
     setShowCards(true);
@@ -277,11 +222,49 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
     setShowInviteForm(false);
   };
 
+  const saveFormData = async () => {
+
+    try {
+      const deal: any = localStorage.getItem('dealdetails')
+      const dealtemp: any = JSON.parse(deal)
+      if (dealtemp.isNew) {
+        const response = await axiosInstance.post('/deals/deal', dealtemp);
+        console.log('Form data saved:', response.data);
+        localStorage.removeItem('dealdetails');
+        setIsFirstSave(false);
+        fetchDeals();
+        return
+      }
+
+      const response = await axiosInstance.put(`/deals/deal/${dealtemp.id}`, dealtemp);
+      console.log('Form data saved for put:', response.data);
+      localStorage.removeItem('dealdetails');
+      setIsFirstSave(true);
+      fetchDeals();
+
+    } catch (error) {
+      console.error('Error saving form data:', error);
+      return
+    }
+  };
+
+  const editDealForm = (deal: Deal) => {
+    setOpenStepper(true);
+    setDealFormData(deal);
+    console.log("card Deal respected value ", deal);
+  }
+
+  const createDealForm = () => {
+    setOpenStepper(true);
+    setDealFormData(undefined);
+    // console.log("card Deal respected value ", deal);
+  }
+
   const getStatusButtonClass = (status: string) => {
     switch (status) {
-      case "Finished":
+      case "Completed":
         return styles.statusButtonFinished;
-      case "InProgress":
+      case "In-Progress":
         return styles.statusButtonInProgress;
       case "Started":
         return styles.statusButtonStarted;
@@ -295,7 +278,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
       <nav className={styles.navbar}>
         <h1 className={styles.navbarTitle}>TANDEM INFRASTRUCTURE</h1>
         <div className={styles.buttonContainer}>
-          <button className={styles.createButton} onClick={() => setOpenStepper(true)}>Create</button>
+          <button className={styles.createButton} onClick={() => createDealForm()}>Create</button>
           <div className={styles.dropdown} ref={dropdownRef}>
             <span onClick={toggleDropdown}>
               <FontAwesomeIcon icon={faEllipsisV} />
@@ -421,15 +404,15 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
               <span className={styles.tag}>Received Commission:  </span>
             </div>
             <div className={styles.cardList} >
-              {deals.map((deal, index) => (
-                <div key={index} className={styles.card}>
-                  <div className={styles.cardTitle}>{deal["deal ID"]}</div>
+              {dealsData.map((deal, index) => (
+                <div key={index} className={styles.card} onClick={() => editDealForm(deal)}>
+                  <div className={styles.cardTitle}>Deal #{deal.id}</div>
                   <div className={styles.cardContent}>
-                    <p className={styles.brokerName}><span>Broker Name:</span> {deal.Name}</p>
+                    <p className={styles.brokerName}><span>Broker Name:</span> {deal.brokerName}</p>
                     <div className={styles.statusLine}>
                       <span className={styles.statusLabel}>Status:</span>
-                      <span className={`${styles.statusButton} ${getStatusButtonClass(deal.Status)}`}>
-                        {deal.Status}
+                      <span className={`${styles.statusButton} ${getStatusButtonClass(deal.status)}`}>
+                        {deal.status}
                       </span>
                     </div>
                   </div>
@@ -465,30 +448,38 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
       </div>
       <>
         <Dialog
-        fullScreen
-          sx={{ margin:'30px'}}
+          fullScreen
+          sx={{ margin: '30px 190px' }}
           open={openStepper}
-          onClose={() => setOpenStepper(false)}
+          onClose={() => {
+            setOpenStepper(false);
+            saveFormData();
+            setShowCards(true);
+          }}
           className={styles.popupmain}
         >
-          <DialogTitle sx={{textAlign:'center'}}>
+          <DialogTitle sx={{ backgroundColor: '#262262', color: 'white' }}>
             Deal Form
             <IconButton
               aria-label="close"
-              onClick={() => setOpenStepper(false)}
+              onClick={() => {
+                setOpenStepper(false);
+                saveFormData();
+                setShowCards(true);
+              }}
               sx={{
                 position: 'absolute',
                 right: 25,
                 top: 8,
-                width:40,
+                width: 40,
                 color: (theme) => theme.palette.grey[500],
               }}
             >
-              <CloseIcon sx={{color:'#999'}} />
+              <CloseIcon sx={{ color: '#999' }} />
             </IconButton>
           </DialogTitle>
           <DialogContent>
-            <DealForm />
+            <DealForm selectedDeal={dealFormData} />
           </DialogContent>
         </Dialog>
       </>
