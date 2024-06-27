@@ -4,11 +4,10 @@
 .pageContainer {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100%;
     background-color: rgb(248, 250, 252);
     font-family: 'Public Sans', sans-serif;
-    overflow: hidden;
-    
+    position: fixed;
 }
 
 .navbar {
@@ -110,7 +109,7 @@
     margin-left: 230px;
     padding: 20px;
     background-color: rgb(248, 250, 252);
-    height: calc(100vh - 80px);
+    height: 100%;
     overflow: hidden;
 }
 
@@ -197,7 +196,7 @@ button:hover {
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #b14650;
-}   
+}
 
 @keyframes fadeInOut {
     0% {
@@ -251,6 +250,7 @@ button:hover {
     padding-right: 50px;
     gap: 10px;
     height: 20px;
+    transition: background-color 0.3s ease;
 }
 
 .sidePanelButton {
@@ -266,6 +266,10 @@ button:hover {
 }
 
 .sidePanelButton:hover {
+    background-color: #9351e3;
+}
+
+.sidePanelButtonSelected {
     background-color: #49006a;
 }
 
@@ -275,6 +279,7 @@ button:hover {
     padding-top: 10px;
     padding-left: 20px;
     justify-content: space-evenly;
+    margin-bottom: 20000px;
 }
 
 .cardList {
@@ -283,6 +288,7 @@ button:hover {
     row-gap: 20px;
     column-gap: px;
     width: 100%;
+    height: 100%;
 }
 
 @media (max-width: 600px) {
@@ -338,7 +344,7 @@ button:hover {
 
 .brokerName {
     justify-content: space-between;
-    padding-bottom: 40px;
+    padding-bottom: 60px;
     width: 100%;
     font-size: 12px;
     margin-right: 2px;
@@ -438,12 +444,30 @@ button:hover {
     display: flex;
     justify-content: space-around;
     margin-bottom: 20px;
+    padding-left: 180px;
+    gap: 20px;
 }
 
-.circle {
-    width: 50px;
-    height: 50px;
+.circleone {
+    width: 200px;
+    height: 150px;
+    border-radius: 100%;
+    background-color: #7872c7;
+    margin: 0 10px;
+}
+
+.circletwo {
+    width: 200px;
+    height: 150px;
     border-radius: 50%;
-    background-color: #262262;
+    background-color: #da8ed6;
+    margin: 0 10px;
+}
+
+.circlethree {
+    width: 200px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #ee8d7e;
     margin: 0 10px;
 }
