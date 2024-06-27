@@ -6,6 +6,7 @@ import './App.css';
 import Registration from './Component/Registration/Registration';
 import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 import ChangePassword from './Component/ChangePassword/ChangePassword';
+import Cards from './Component/Dashboard/Cards';
 
 const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(localStorage.getItem('accessToken'));
@@ -20,6 +21,7 @@ const App: React.FC = () => {
     localStorage.removeItem('accessToken');
   };
 
+
   useEffect(() => {
     // const storedToken = "aces"
     const storedToken = localStorage.getItem('accessToken');
@@ -29,15 +31,16 @@ const App: React.FC = () => {
   }, []);
 
   return (
-      <Router>
-        <Routes>
-          <Route path="/" element={accessToken ? <Navigate to="/dashboard" /> : <Login onLoginSuccess={handleLoginSuccess} />} />
-          <Route path="/registerform" element={<Registration />} />
-          <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/change" element= {<ChangePassword />} />
-          <Route path="/dashboard" element={accessToken ? <Dashboard accessToken={accessToken} onLogout={handleLogout} /> : <Navigate to="/" />} />
-          </Routes>
-      </Router>
+    <Router>
+      <Routes>
+        <Route path="/" element={accessToken ? <Navigate to="/dashboard" /> : <Login onLoginSuccess={handleLoginSuccess} />} />
+        <Route path="/registerform" element={<Registration />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/change" element={<ChangePassword />} />
+        <Route path="/cards" element={<Cards onLogout={handleLogout} />} />
+        <Route path="/dashboard" element={accessToken ? <Dashboard accessToken={accessToken} onLogout={handleLogout} /> : <Navigate to="/" />} />
+      </Routes>
+    </Router>
   );
 };
 

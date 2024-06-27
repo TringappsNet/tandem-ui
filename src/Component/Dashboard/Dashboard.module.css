@@ -4,7 +4,7 @@
 .pageContainer {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     background-color: rgb(248, 250, 252);
     font-family: 'Public Sans', sans-serif;
     overflow: hidden;
