@@ -11,9 +11,22 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onLogout, onCreateDeal }) => {
+
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [responseMessage, setResponseMessage] = useState('');
+    const [responseType, setResponseType] = useState('');
+    const [showResetForm, setShowResetForm] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (responseMessage) {
+            const timer = setTimeout(() => {
+                setResponseMessage('');
+            }, 4000);
+            return () => clearTimeout(timer);
+        }
+    }, [responseMessage]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -28,6 +41,15 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout, onCreateDeal }) => {
         };
     }, []);
 
+    useEffect(() => {
+        if (responseType === 'success') {
+            const timer = setTimeout(() => {
+                setResponseType('');
+            }, 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [responseType]);
+
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
     };
@@ -39,6 +61,12 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout, onCreateDeal }) => {
         localStorage.removeItem('expireAt');
         onLogout();
         navigate('/', { replace: true });
+    };
+
+    const handleResetClick = () => {
+        if (!showResetForm) {
+            setShowResetForm(true);
+        }
     };
 
     return (
