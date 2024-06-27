@@ -15,7 +15,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout, onCreateDeal }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [responseMessage, setResponseMessage] = useState('');
     const [responseType, setResponseType] = useState('');
-    const [showResetForm, setShowResetForm] = useState(false);
+    // const [showResetForm, setShowResetForm] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
 
