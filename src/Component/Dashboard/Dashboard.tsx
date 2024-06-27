@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import styles from './DashboardComp.module.css';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
@@ -47,18 +47,9 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
     const [isFirstSave, setIsFirstSave] = useState(true);
     const [dealFormData, setDealFormData] = useState<Deal>();
     const [showCards, setShowCards] = useState(false);
-    const [selectedButton, setSelectedButton] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
-    const navigate = useNavigate();
-    const location = useLocation();
 
-    const handleCardsClick = () => {
-        setShowCards(true);
-        setShowGrid(false);
-        setSelectedButton('dashboard');
-        navigate('/dashboard');
 
-    };
 
     const fetchBrokerData = async () => {
         try {
@@ -81,7 +72,6 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
         fetchBrokerData();
     }, []);
 
-
     const fetchDeals = async () => {
         try {
             const response = await axiosInstance.get('/deals');
@@ -97,9 +87,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
         fetchDeals();
     }, []);
 
-
     const saveFormData = async () => {
-
         try {
             const deal: any = localStorage.getItem('dealdetails')
             const dealtemp: any = JSON.parse(deal)
@@ -133,7 +121,6 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
     const createDealForm = () => {
         setOpenStepper(true);
         setDealFormData(undefined);
-        // console.log("card Deal respected value ", deal);
     }
 
     return (
@@ -166,6 +153,24 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
                             </table>
                         </div>
                     )}
+                    {showCards && (
+                        <div className={styles.cardsContainer}>
+                            <h2>Deals</h2>
+                            <button onClick={createDealForm}>Create New Deal</button>
+                            {dealsData.map((deal) => (
+                                <div key={deal.id} className={styles.card} onClick={() => editDealForm(deal)}>
+                                    <h3>{deal.propertyName}</h3>
+                                    <p>Broker: {deal.brokerName}</p>
+                                    <p>Status: {deal.status}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    {/* {selectedButton && (
+                        <div className={styles.selectedButtonInfo}>
+                            <p>Selected Button: {selectedButton}</p>
+                        </div>
+                    )} */}
                 </div>
                 <Dialog
                     fullScreen
@@ -202,9 +207,6 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
                         <DealForm selectedDeal={dealFormData} />
                     </DialogContent>
                 </Dialog>
-
-
-
             </div>
         </div>
     );

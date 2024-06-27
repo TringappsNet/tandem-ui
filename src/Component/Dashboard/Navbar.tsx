@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-import SendInvite from './SendInvite';
-import Reset from './Reset';
 import styles from './DashboardComp.module.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -20,7 +18,6 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
 
-
     useEffect(() => {
         if (responseMessage) {
             const timer = setTimeout(() => {
@@ -29,7 +26,6 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
             return () => clearTimeout(timer);
         }
     }, [responseMessage]);
-
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -66,9 +62,10 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
         navigate('/', { replace: true });
     };
 
-
     const handleResetClick = () => {
-        setShowResetForm(true);
+        if (!showResetForm) {
+            setShowResetForm(true);
+        }
     };
 
     return (
