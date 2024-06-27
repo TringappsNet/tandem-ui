@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import DealForm from '../Milestone/Milestone';
 import styles from './Dashboard.module.css';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import { FiEdit } from "react-icons/fi";
 // import { Deal } from '../Interface/DealFormObject';
 // import 'bootstrap/dist/css/bootstrap.css';
 
@@ -422,8 +423,9 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
             </div>
             <div className={styles.cardList} >
               {dealsData.map((deal, index) => (
-                <div key={index} className={styles.card} onClick={() => editDealForm(deal)}>
-                  <div className={styles.cardTitle}>Deal #{deal.id}</div>
+                <div key={index} className={styles.card}>
+                  <div className={styles.cardTitle}>Deal #{deal.id} <div className={styles.hide}><FiEdit  onClick={() => editDealForm(deal)}/></div>
+                  </div>
                   <div className={styles.cardContent}>
                     <p className={styles.brokerName}><span>Broker Name:</span> {deal.brokerName}</p>
                     <div className={styles.statusLine}>

@@ -295,10 +295,6 @@ button:hover {
     }
 }
 
-.cardTitle {
-    font-weight: bold;
-}
-
 .card {
     padding: 20px 20px 0 20px;
     background-color: #fff;
@@ -312,6 +308,20 @@ button:hover {
     height: 175px;
     width: 165px;
     justify-content: space-between;
+}
+
+.cardTitle {
+    font-weight: bold;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.hide {
+    display: none;
+}
+
+.card:hover .hide {
+    display: block;
 }
 
 .cardContent {
