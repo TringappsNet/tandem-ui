@@ -63,11 +63,11 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout, onCreateDeal }) => {
         navigate('/', { replace: true });
     };
 
-    const handleResetClick = () => {
-        if (!showResetForm) {
-            setShowResetForm(true);
-        }
-    };
+    // const handleResetClick = () => {
+    //     if (!showResetForm) {
+    //         setShowResetForm(true);
+    //     }
+    // };
 
     return (
         <div>
