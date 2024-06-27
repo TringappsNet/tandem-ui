@@ -3,18 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-import styles from './DashboardComp.module.css';
-import 'bootstrap/dist/css/bootstrap.css';
+import styles from './Dashboard.module.css';
 
 interface NavbarProps {
     onLogout: () => void;
+    onCreateDeal: () => void; // Add this prop
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
+const Navbar: React.FC<NavbarProps> = ({ onLogout, onCreateDeal }) => {
+
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [responseMessage, setResponseMessage] = useState('');
     const [responseType, setResponseType] = useState('');
-    const [showResetForm, setShowResetForm] = useState(false);
+    // const [showResetForm, setShowResetForm] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
 
@@ -62,17 +63,18 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
         navigate('/', { replace: true });
     };
 
-    const handleResetClick = () => {
-        if (!showResetForm) {
-            setShowResetForm(true);
-        }
-    };
+    // const handleResetClick = () => {
+    //     if (!showResetForm) {
+    //         setShowResetForm(true);
+    //     }
+    // };
 
     return (
         <div>
             <nav className={styles.navbar}>
                 <h1 className={styles.navbarTitle}>TANDEM INFRASTRUCTURE</h1>
                 <div className={styles.buttonContainer}>
+                    <button className={styles.createButton} onClick={onCreateDeal}>Create</button>
                     <div className={styles.dropdown} ref={dropdownRef}>
                         <span onClick={toggleDropdown}>
                             <FontAwesomeIcon icon={faEllipsisV} />
@@ -80,9 +82,6 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
                         <div className={classNames(styles.dropdownContent, { [styles.show]: dropdownOpen })}>
                             {dropdownOpen && (
                                 <>
-                                    <div className={styles.dropdownItem}>
-                                        <button onClick={handleResetClick} className={styles.linkButton}>Reset</button>
-                                    </div>
                                     <div className={styles.dropdownItem}>
                                         <button className={styles.linkButton}>Support</button>
                                     </div>

@@ -21,6 +21,7 @@ const App: React.FC = () => {
     localStorage.removeItem('accessToken');
   };
 
+
   useEffect(() => {
     // const storedToken = "aces"
     const storedToken = localStorage.getItem('accessToken');
@@ -36,9 +37,8 @@ const App: React.FC = () => {
         <Route path="/registerform" element={<Registration />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/change" element={<ChangePassword />} />
-        <Route path="/dashboard" element={accessToken ? <Dashboard accessToken={accessToken} onLogout={handleLogout} /> : <Navigate to="/" />} />
         <Route path="/cards" element={<Cards onLogout={handleLogout} />} />
-
+        <Route path="/dashboard" element={accessToken ? <Dashboard accessToken={accessToken} onLogout={handleLogout} /> : <Navigate to="/" />} />
       </Routes>
     </Router>
   );
