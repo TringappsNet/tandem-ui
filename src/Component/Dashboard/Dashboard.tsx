@@ -43,18 +43,24 @@ interface Deal {
 const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
     const [showGrid, setShowGrid] = useState(false);
     const [gridData, setGridData] = useState<BrokerData[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
     const [dealsData, setDealsData] = useState<Deal[]>([]);
     const [isFirstSave, setIsFirstSave] = useState(true);
     const [dealFormData, setDealFormData] = useState<Deal>();
     const [showCards, setShowCards] = useState(false);
+    const [selectedButton, setSelectedButton] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
+    const handleCardsClick = () => {
+        setShowCards(true);
+        setShowGrid(false);
+        setSelectedButton('dashboard');
+        navigate('/dashboard');
+
+    };
 
     const fetchBrokerData = async () => {
-        setIsLoading(true);
         try {
             const response = await fetch('http://192.168.1.223:3008/api/brokers');
             const data = await response.json();
@@ -68,8 +74,6 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
             setShowGrid(true);
         } catch (error) {
             console.error(`Error fetching broker data:`, error);
-        } finally {
-            setIsLoading(false);
         }
     };
 

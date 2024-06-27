@@ -248,14 +248,14 @@ button:hover {
     display: flex;
     flex-direction: column;
     padding-right: 50px;
-    gap: 20px;
+    gap: 10px;
     height: 20px;
     transition: background-color 0.3s ease;
 }
 
 .sidePanelButton {
     width: 100%;
-    background-color: #8b87de;
+    background-color: #262262;
     color: white;
     border: none;
     border-radius: 66px !important;
@@ -266,7 +266,7 @@ button:hover {
 }
 
 .sidePanelButton:hover {
-    background-color: #ae6ccc;
+    background-color: #9351e3;
 }
 
 .sidePanelButtonSelected {
@@ -371,7 +371,6 @@ button:hover {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    margin-top: 241px;
 }
 
 .grid {
