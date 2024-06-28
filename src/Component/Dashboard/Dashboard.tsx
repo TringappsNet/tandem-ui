@@ -22,7 +22,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
 
     const fetchBrokerData = async () => {
         try {
-            const response = await fetch('http://192.168.1.223:3008/api/brokers');
+            const response = await fetch('http://localhost:3008/api/brokers');
             console.log(response);
         } catch (error) {
             console.error(`Error fetching broker data:`, error);
