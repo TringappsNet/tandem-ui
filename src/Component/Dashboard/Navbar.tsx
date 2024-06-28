@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import styles from './Dashboard.module.css';
+import { useDispatch } from 'react-redux';
+import { logout as authLogout } from '../Redux/store/authSlice';
 
 interface NavbarProps {
     onLogout: () => void;
@@ -11,6 +13,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onLogout, onCreateDeal }) => {
+    const dispatch = useDispatch();
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [responseMessage, setResponseMessage] = useState('');
@@ -60,6 +63,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout, onCreateDeal }) => {
         localStorage.removeItem('email');
         localStorage.removeItem('expireAt');
         onLogout();
+        dispatch(authLogout());
         navigate('/', { replace: true });
     };
 

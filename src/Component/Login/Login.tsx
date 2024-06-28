@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './Login.module.css';
 import { Link, Navigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../Redux/store/authSlice';
 
 interface LoginProps {
   onLoginSuccess: (accessToken: string) => void;
@@ -13,6 +15,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showFailureMessage, setShowFailureMessage] = useState(false);
   const [validationErrorMessage, setValidationErrorMessage] = useState('You have failed signed in.');
+  const dispatch = useDispatch();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -65,6 +68,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
         const { token, expiresAt } = data.session;
         const expirationDate = new Date(expiresAt);
         if (expirationDate > new Date()) {
+          dispatch(setCredentials({ token, userId: data.user.id, email: data.user.email }));
           localStorage.setItem('userid', JSON.stringify(data.user.id));
           localStorage.setItem('email', JSON.stringify(data.user.email));
           localStorage.setItem('sessiontoken', JSON.stringify(data.session.token));

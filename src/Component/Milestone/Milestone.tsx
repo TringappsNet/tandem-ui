@@ -3,7 +3,6 @@ import { Stepper, Step, StepLabel, Button, Typography, MenuItem, TextField, Box,
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { Deal } from '../Interface/DealFormObject';
 
-// Define your steps with labels and fields
 const steps = [
     { label: 'Tandem', fields: [{ type: 'dropdown', label: 'propertyName', options: ['Land', 'Land1'] }, { type: 'dropdown', label: 'brokerName', options: [] }, { type: 'date', label: 'dealStartDate' }] },
     { label: 'Proposal', fields: [{ type: 'date', label: 'proposalDate' }] },
@@ -45,7 +44,6 @@ const DealForm = (props: IMilestoneProps) => {
             const response = await axiosInstance.get('/brokers');
             const brokers = response.data.map((broker: any) => `${broker.user.firstname} ${broker.user.lastname}`);
             setBrokerOptions(brokers);
-            // Assuming you want to set the user ID from the broker's response
             if (response.data.length > 0) {
                 setUserId(response.data[0].user.id);
             }

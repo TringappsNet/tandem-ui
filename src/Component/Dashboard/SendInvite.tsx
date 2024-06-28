@@ -68,7 +68,7 @@ const SendInvite: React.FC = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://192.168.1.223:3008/api/auth/invite', {
+            const response = await fetch('http://192.168.1.77:3008/api/auth/invite', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

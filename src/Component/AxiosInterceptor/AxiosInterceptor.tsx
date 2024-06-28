@@ -1,10 +1,9 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://192.168.1.223:3008/api', 
+  baseURL: 'http://192.168.1.77:3008/api', 
 });
 
-// Request interceptor to add userId and token to headers
 
 axiosInstance.interceptors.request.use(
   (config) => {

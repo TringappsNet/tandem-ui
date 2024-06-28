@@ -2,9 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './Registration.module.css';
 import logo from './logo.jpeg';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { RootState } from '../Redux/store/index';
+import { setCredentials, setRegistering, setError, clearError } from '../Redux/store/registerSlice';
 
 
 const Registration: React.FC = () => {
+    const dispatch = useDispatch();
+
+    // const { registering, error } = useSelector((state: RootState) => state.register); // Update state selector
+
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [mobileno, setMobileno] = useState('');
@@ -25,9 +33,11 @@ const Registration: React.FC = () => {
         }
     }, []);
 
+
+    
     const validateInviteToken = async (token: string) => {
         try {
-            await axios.post('http://192.168.1.223:3008/api/auth/invite-validate', { token });
+            await axios.post('http://192.168.1.77:3008/api/auth/invite-validate', { token });
         } catch (error) {
             console.error('Invite validation failed:', error);
 
@@ -111,6 +121,7 @@ const Registration: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        dispatch(setRegistering(true));
 
         if (firstname === '' || lastname === '' || mobileno === '' || password === '' || confirmpassword === '') {
             setValidationErrorMessage("Pleaser Enter the values in the All Field.")
@@ -122,13 +133,23 @@ const Registration: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('http://192.168.1.223:3008/api/register', {
+            const response = await axios.post('http://192.168.1.77:3008/api/register', {
                 firstname,
                 lastname,
                 mobileno,
                 password,
                 role,
             });
+
+
+            dispatch(
+                setCredentials({
+                    token: response.data.token,
+                    userId: response.data.userId,
+                    email: response.data.email,
+                })
+            );
+
             console.log('Registration successful:', response.data);
             setValidationSucessMessage('Registration successful!');
 
@@ -137,10 +158,14 @@ const Registration: React.FC = () => {
             setMobileno('');
             setPassword('');
             setConfirmpassword('');
+            dispatch(clearError());
+
         }
         catch (error) {
             console.error('Registration failed:', error);
             setValidationErrorMessage('Registration failed. Please try again.');
+            dispatch(setError('Registration failed. Please try again.'));
+
         }
     };
 

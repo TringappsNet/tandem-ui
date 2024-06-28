@@ -1,31 +1,32 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styles from './ForgotPassword.module.css';
-
+import { RootState } from '../Redux/store/index';
+import {
+  setResettingPassword,
+  setResetPasswordSuccess,
+  setResetPasswordError,
+} from '../Redux/store/registerSlice';
 
 const ForgotPassword: React.FC = () => {
+  const dispatch = useDispatch();
+  const { resettingPassword, resetPasswordSuccess, resetPasswordError } = useSelector((state: RootState) => state.register);
+
   const [email, setEmail] = useState('');
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [showFailureMessage, setShowFailureMessage] = useState(false);
-  const [validationErrorMessage, setValidationErrorMessage] = useState(`You have failed Resetting the password.`);
+  const [validationErrorMessage, setValidationErrorMessage] = useState('');
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email === '') {
       setValidationErrorMessage('Email cannot be empty');
-      setShowFailureMessage(true);
-    }
-    else if (!emailRegex.test(email)) {
+    } else if (!emailRegex.test(email)) {
       setValidationErrorMessage('Invalid email address');
-      setShowFailureMessage(true);
-    }
-    else {
-      setShowFailureMessage(false);
-      setShowSuccessMessage(false);
+    } else {
+      setValidationErrorMessage('');
     }
   };
-
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -36,57 +37,41 @@ const ForgotPassword: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email === '') {
-      setValidationErrorMessage("Please Enter valid Email")
-      setShowFailureMessage(true);
+      setValidationErrorMessage('Please enter a valid email');
       return;
     }
+
+    dispatch(setResettingPassword(true)); // Dispatch action to indicate password reset in progress
+
     try {
-      const response = await axios.post('http://192.168.1.223:3008/auth/forgotpassword', { email }, {
+      const response = await axios.post('http://192.168.1.77:3008/auth/forgotpassword', { email }, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
+
       const data = response.data;
       if (data.message && response.status === 200) {
-        setShowSuccessMessage(true);
-        setShowFailureMessage(false);
-      }
-      else {
-        setShowSuccessMessage(false);
-        setShowFailureMessage(true);
-      }
-    } catch (error: any) {
-      try {
-        if (error.message === 'Network Error') {
-          setValidationErrorMessage(error.message)
-          setShowSuccessMessage(false);
-          setShowFailureMessage(true);
-          return
-        }
-        const res = error.response
-        if (res.status === 401 && res.data.message === 'Incorrect Email') {
-          let message = 'Incorrect Email! Please Enter Correct Email.'
-          setValidationErrorMessage(message)
-          setShowSuccessMessage(false);
-          setShowFailureMessage(true);
-        }
-        else if (res.status === 401 && res.data.message === 'You are not a registered user') {
-          const message = 'You are not a registered user. Please Register.'
-          setValidationErrorMessage(message)
-          setShowSuccessMessage(false);
-          setShowFailureMessage(true);
-        }
-        else {
-          setShowSuccessMessage(false);
-          setShowFailureMessage(true);
-        }
-      }
-      catch (e: any) {
-        setValidationErrorMessage(e.message)
-        setShowSuccessMessage(false);
-        setShowFailureMessage(true);
+        dispatch(setResetPasswordSuccess(true)); // Password reset success
+      } else {
+        dispatch(setResetPasswordError('Password reset failed')); // Password reset failed
       }
 
+    } catch (error: any) {
+      if (error.message === 'Network Error') {
+        dispatch(setResetPasswordError(error.message));
+      } else {
+        const res = error.response;
+        if (res.status === 401 && res.data.message === 'Incorrect Email') {
+          dispatch(setResetPasswordError('Incorrect Email! Please enter correct email.'));
+        } else if (res.status === 401 && res.data.message === 'You are not a registered user') {
+          dispatch(setResetPasswordError('You are not a registered user. Please Register.'));
+        } else {
+          dispatch(setResetPasswordError('Password reset failed.'));
+        }
+      }
+    } finally {
+      dispatch(setResettingPassword(false)); // Resetting password process complete
     }
   };
 
@@ -103,14 +88,14 @@ const ForgotPassword: React.FC = () => {
             <p>Reset your password here</p>
           </div>
           <form className={styles.loginsection} onSubmit={handleSubmit}>
-            {showSuccessMessage && (
+            {resetPasswordSuccess && (
               <div className={styles.success}>
                 Reset link has been sent to your mail!
               </div>
             )}
-            {showFailureMessage && (
+            {resetPasswordError && (
               <div className={styles.failure}>
-                {validationErrorMessage}
+                {resetPasswordError}
               </div>
             )}
             <div className={styles.inputGroup}>
@@ -123,8 +108,8 @@ const ForgotPassword: React.FC = () => {
                 onChange={handleEmailChange}
               />
             </div>
-            <button className={styles.loginbtn} type="submit">
-              Send Reset Link
+            <button className={styles.loginbtn} type="submit" disabled={resettingPassword}>
+              {resettingPassword ? 'Sending...' : 'Send Reset Link'}
             </button>
           </form>
           <div className={styles.rememberpwd}>

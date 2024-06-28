@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+
 import styles from './DashboardComp.module.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -48,7 +50,7 @@ const Reset: React.FC = () => {
         }
 
         try {
-            const response = await fetch('http://192.168.1.223:3008/api/auth/reset-password', {
+            const response = await fetch('http://192.168.1.77:3008/api/auth/reset-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
