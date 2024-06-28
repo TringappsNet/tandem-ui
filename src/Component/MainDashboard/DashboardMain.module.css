@@ -1,0 +1,63 @@
+@import url("@fontsource/montserrat");
+@import url("@fontsource/public-sans");
+
+.contentWrapper {
+    display: flex;
+    flex-direction: row;
+    margin: 100px;
+    width: 90%;
+}
+
+.card1 {
+    background-color:  #039803f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-right: 30px;
+    width: 30%;
+}
+.card2 {
+    background-color: #ffad33;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-right: 30px;
+    width: 30%;
+}
+.card3 {
+    background-color: #1aa3ff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-right: 30px;
+    width: 30%;
+}
+
+.cardHeader1 {
+    color: #f8f4f4;
+    padding: 10px;
+    font-size: 1.25em;
+    text-align: center;
+}
+.cardHeader2 {
+    color: #fff;
+    padding: 10px;
+    font-size: 1.25em;
+    text-align: center;
+}
+.cardHeader3{
+    color: #fff;
+    padding: 10px;
+    font-size: 1.25em;
+    text-align: center;
+}
+
+.cardContent {
+    padding: 10px;
+    font-size: 1.25em;
+    text-align: center;
+    color: #fff;
+}

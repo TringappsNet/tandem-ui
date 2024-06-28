@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Dashboard.module.css';
-import SidePanel from './SidePanel';
+import DashboardMain from '../MainDashboard/DashboardMain';
 import Navbar from './Navbar';
 import { Deal } from '../Interface/DealFormObject';
 import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
@@ -74,7 +74,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
         <div className={styles.pageContainer}>
             <Navbar onLogout={onLogout} onCreateDeal={handleCreateDeal} />
             <div className={styles.contentWrapper}>
-                <SidePanel />
+                <DashboardMain/>
                 <div className={styles.mainContent}></div>
             </div>
             <>
