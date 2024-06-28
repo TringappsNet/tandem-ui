@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
+<<<<<<< Updated upstream
 import styles from './DashboardComp.module.css';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+=======
+import styles from './Dashboard.module.css';
+import Navbar from './Navbar';
+import { Deal } from '../Interface/DealFormObject';
+>>>>>>> Stashed changes
 import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -126,6 +132,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
         <div className={styles.pageContainer}>
             <Navbar onLogout={onLogout} />
             <div className={styles.contentWrapper}>
+<<<<<<< Updated upstream
                 <SidePanel />
                 <div className={styles.mainContent}>
                     {showGrid && (
@@ -171,6 +178,25 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
                         </div>
                     )} */}
                 </div>
+=======
+                <div className={styles.metro}>
+                    <div className={styles.cardHeader}>Completed Deals</div>
+                    <div className={styles.cardContent}></div>
+                </div>
+                <div className={styles.metro}>
+                    <div className={styles.cardHeader}>In progress Deals</div>
+                    <div className={styles.cardContent}></div>
+                </div>
+                <div className={styles.metro}>
+                    <div className={styles.cardHeader}>Commission</div>
+                    <div className={styles.cardContent}></div>
+                </div>
+                <div className={styles.mainContent}>
+                    
+                </div>
+            </div>
+            <>
+>>>>>>> Stashed changes
                 <Dialog
                     fullScreen
                     sx={{ margin: '30px 190px' }}
