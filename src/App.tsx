@@ -8,7 +8,6 @@ import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 import ChangePassword from './Component/ChangePassword/ChangePassword';
 import Cards from './Component/Dashboard/Cards';
 import Navbar from './Component/Navbar/Navbar';
-import SendInvite from './Component/SendInvite/SendInvite';
 
 const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(localStorage.getItem('accessToken'));
@@ -42,7 +41,6 @@ const App: React.FC = () => {
         <Route path="/cards" element={<Cards onLogout={handleLogout} />} />
         <Route path="/dashboard" element={accessToken ? <Dashboard accessToken={accessToken} onLogout={handleLogout} /> : <Navigate to="/" />} />
         <Route path="/navbar" element={<Navbar />} />
-        <Route path="/sendinvite" element={<SendInvite />} />
       </Routes>
     </Router>
   );

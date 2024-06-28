@@ -64,7 +64,7 @@ const SendInvite: React.FC = () => {
     };
 
     return (
-        <div className={styles.app}>
+        <>
             {showInviteForm && (
                 <div className={styles.formContainer} ref={inviteFormRef}>
                     <h2>Send Invite</h2>
@@ -104,7 +104,7 @@ const SendInvite: React.FC = () => {
                     )}
                 </div>
             )}
-        </div>
+        </>
     );
 };
 

@@ -1,11 +1,4 @@
-.app {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* height: 100vh; */
-    background-color: #f9fafb;
-  }
-  
+
   .formContainer {
     background-color: white;
     padding: 1rem;
