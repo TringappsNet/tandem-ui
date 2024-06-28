@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './Registration.module.css';
 import logo from './logo.jpeg';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { RootState } from '../Redux/store/index';
 import { setCredentials, setRegistering, setError, clearError } from '../Redux/store/registerSlice';
 
 
@@ -34,7 +33,7 @@ const Registration: React.FC = () => {
     }, []);
 
 
-    
+
     const validateInviteToken = async (token: string) => {
         try {
             await axios.post('http://192.168.1.77:3008/api/auth/invite-validate', { token });

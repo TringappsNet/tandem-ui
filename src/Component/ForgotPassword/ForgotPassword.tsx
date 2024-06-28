@@ -15,7 +15,7 @@ const ForgotPassword: React.FC = () => {
   const { resettingPassword, resetPasswordSuccess, resetPasswordError } = useSelector((state: RootState) => state.register);
 
   const [email, setEmail] = useState('');
-  const [validationErrorMessage, setValidationErrorMessage] = useState('');
+  const [, setValidationErrorMessage] = useState('');
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
