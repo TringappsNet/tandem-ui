@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Stepper, Step, StepLabel, Button, Typography, MenuItem, TextField, Box, StepConnector } from '@mui/material';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { Deal } from '../Interface/DealFormObject';
+import { useDispatch } from 'react-redux';
+// import { RootState } from '../Redux/reducers/index';
+import { setDealDetails } from '../Redux/slice/dealSlice';
 
-// Define your steps with labels and fields
 const steps = [
     { label: 'Tandem', fields: [{ type: 'dropdown', label: 'propertyName', options: ['Land', 'Land1'] }, { type: 'dropdown', label: 'brokerName', options: [] }, { type: 'date', label: 'dealStartDate' }] },
     { label: 'Proposal', fields: [{ type: 'date', label: 'proposalDate' }] },
@@ -19,6 +21,9 @@ interface IMilestoneProps {
 }
 
 const DealForm = (props: IMilestoneProps) => {
+    const dispatch = useDispatch();
+    // const dealDetails = useSelector((state: RootState) => state.deal.dealDetails);
+
     const [activeStep, setActiveStep] = useState(0);
     const [formData, setFormData] = useState<Deal>({
         id: null,
@@ -40,20 +45,6 @@ const DealForm = (props: IMilestoneProps) => {
     const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
     const [saveSuccess, setSaveSuccess] = useState(false); // Track save success
 
-    const fetchBrokers = async () => {
-        try {
-            const response = await axiosInstance.get('/brokers');
-            const brokers = response.data.map((broker: any) => `${broker.user.firstname} ${broker.user.lastname}`);
-            setBrokerOptions(brokers);
-            // Assuming you want to set the user ID from the broker's response
-            if (response.data.length > 0) {
-                setUserId(response.data[0].user.id);
-            }
-        } catch (error) {
-            console.error('Error fetching broker names:', error);
-        }
-    };
-
     useEffect(() => {
         fetchBrokers();
     }, []);
@@ -65,6 +56,19 @@ const DealForm = (props: IMilestoneProps) => {
             setIsFirstSave(false);
         }
     }, [props.selectedDeal]);
+
+    const fetchBrokers = async () => {
+        try {
+            const response = await axiosInstance.get('/brokers');
+            const brokers = response.data.map((broker: any) => `${broker.user.firstname} ${broker.user.lastname}`);
+            setBrokerOptions(brokers);
+            if (response.data.length > 0) {
+                setUserId(response.data[0].user.id);
+            }
+        } catch (error) {
+            console.error('Error fetching broker names:', error);
+        }
+    };
 
     const handleNext = () => {
         if (saveSuccess) {
@@ -96,6 +100,7 @@ const DealForm = (props: IMilestoneProps) => {
             }));
         }
     };
+
     const saveFormData = () => {
         const status = getStatus(activeStep);
         const payload = {
@@ -115,7 +120,8 @@ const DealForm = (props: IMilestoneProps) => {
             setSaveSuccess(false);
         }
 
-        // Handle axios post/put request here
+        // Dispatch action to update dealDetails in Redux store
+        dispatch(setDealDetails(payload));
     };
 
     const getStatus = (step: number) => {
@@ -191,6 +197,16 @@ const DealForm = (props: IMilestoneProps) => {
         }
     };
 
+    function isFormValid() {
+        const currentFields = steps[activeStep].fields;
+        for (const field of currentFields) {
+            if (!formData[field.label as keyof Deal]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     return (
         <Box sx={{ width: 1, marginTop: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             <Stepper activeStep={activeStep} alternativeLabel connector={<StepConnector />} sx={{ width: 1 }}>
@@ -242,16 +258,6 @@ const DealForm = (props: IMilestoneProps) => {
             </Box>
         </Box>
     );
-
-    function isFormValid() {
-        const currentFields = steps[activeStep].fields;
-        for (const field of currentFields) {
-            if (!formData[field.label as keyof Deal]) {
-                return false;
-            }
-        }
-        return true;
-    }
 };
 
 export default DealForm;
