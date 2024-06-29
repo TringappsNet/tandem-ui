@@ -1,72 +1,43 @@
-import React, { useState, useEffect, useRef } from 'react';
-import classNames from 'classnames';
-import styles from './DashboardComp.module.css';
-import 'bootstrap/dist/css/bootstrap.css';
+import React, { useState } from 'react';
+import axios from 'axios';
+import styles from './ResetPassword.module.css';
 
 const Reset: React.FC = () => {
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [showResetForm, setShowResetForm] = useState(false);
-    const [showInviteForm, setShowInviteForm] = useState(false);
+    const [showResetForm, setShowResetForm] = useState(true);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
     const [responseType, setResponseType] = useState('');
-    const dropdownRef = useRef<HTMLDivElement>(null);
-    const resetFormRef = useRef<HTMLDivElement>(null);
-    const inviteFormRef = useRef<HTMLDivElement>(null);
-
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setDropdownOpen(false);
-            }
-            if (resetFormRef.current && !resetFormRef.current.contains(event.target as Node)) {
-                setShowResetForm(true);
-            }
-            if (inviteFormRef.current && !inviteFormRef.current.contains(event.target as Node)) {
-                setShowInviteForm(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
-
 
     const handleResetPassword = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (newPassword !== confirmPassword) {
-            setResponseMessage('Password match failed.');
+            setResponseMessage('Passwords do not match.');
             setResponseType('error');
             return;
         }
 
         try {
-            const response = await fetch('http://localhost:3008/api/auth/reset-password', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    oldPassword,
-                    newPassword,
-                    userId: 1,
-                }),
+            const response = await axios.post('http://localhost:3008/api/auth/reset-password', {
+                oldPassword,
+                newPassword,
+                userId: 1,
             });
 
-            const data = await response.json();
-
-            if (response.ok) {
+            if (response.status === 200) {
                 setResponseMessage('Password reset successful.');
                 setResponseType('success');
+                setTimeout(() => {
+                    setShowResetForm(false);
+                    setOldPassword('');
+                    setNewPassword('');
+                    setConfirmPassword('');
+                    setResponseType('');
+                }, 1000);
             } else {
-                setResponseMessage(data.message || 'Unsuccessful message.');
+                setResponseMessage(response.data.message || 'Password reset failed.');
                 setResponseType('error');
             }
         } catch (error) {
@@ -76,61 +47,51 @@ const Reset: React.FC = () => {
     };
 
     return (
-        <div className={styles.pageContainer}>
-            <div className={classNames(styles.dropdownContent, { [styles.show]: dropdownOpen })}>
-                {dropdownOpen && (
-                    <>
-                        <div className={styles.dropdownItem}>
-                            <button className={styles.linkButton}>Reset</button>
+        <>
+            {showResetForm && (
+                <div className={styles.formContainer}>
+                    <h2>Reset Password</h2>
+                    {responseMessage && (
+                        <div className={styles[responseType]}>
+                            {responseMessage}
                         </div>
-                    </>
-                )}
-            </div>
-
-            <div className={styles.mainContent}>
-                {showResetForm && (
-                    <div className={styles.formContainer} ref={resetFormRef}>
-                        <h2>Reset Password</h2>
-                        <form onSubmit={handleResetPassword}>
-                            <div className={styles.formGroup}>
-                                <label htmlFor="oldPassword">Old Password:</label>
-                                <input
-                                    type="password"
-                                    id="oldPassword"
-                                    name="oldPassword"
-                                    value={oldPassword}
-                                    onChange={(e) => setOldPassword(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label htmlFor="newPassword">New Password:</label>
-                                <input
-                                    type="password"
-                                    id="newPassword"
-                                    name="newPassword"
-                                    value={newPassword}
-                                    onChange={(e) => setNewPassword(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label htmlFor="confirmPassword">Confirm New Password:</label>
-                                <input
-                                    type="password"
-                                    id="confirmPassword"
-                                    name="confirmPassword"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <button type="submit">Reset Password</button>
-                        </form>
-                    </div>
-                )}
-            </div>
-        </div>
+                    )}
+                    <form onSubmit={handleResetPassword}>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="oldPassword">Old Password:</label>
+                            <input
+                                type="password"
+                                id="oldPassword"
+                                value={oldPassword}
+                                onChange={(e) => setOldPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="newPassword">New Password:</label>
+                            <input
+                                type="password"
+                                id="newPassword"
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="confirmPassword">Confirm New Password:</label>
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <button type="submit">Reset Password</button>
+                    </form>
+                </div>
+            )}
+        </>
     );
 };
 

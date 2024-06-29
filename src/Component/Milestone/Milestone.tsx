@@ -5,6 +5,7 @@ import { Deal } from '../Interface/DealFormObject';
 import { useDispatch } from 'react-redux';
 // import { RootState } from '../Redux/reducers/index';
 import { setDealDetails } from '../Redux/slice/dealSlice';
+import styles from './Milestone.module.css';
 
 const steps = [
     { label: 'Tandem', fields: [{ type: 'dropdown', label: 'propertyName', options: ['Land', 'Land1'] }, { type: 'dropdown', label: 'brokerName', options: [] }, { type: 'date', label: 'dealStartDate' }] },
@@ -16,11 +17,11 @@ const steps = [
     { label: 'Potential Commission', fields: [{ type: 'date', label: 'potentialCommissionDate' }, { type: 'text', label: 'potentialCommission' }] },
 ];
 
-interface IMilestoneProps {
-    selectedDeal: Deal | undefined;
-}
+// interface IMilestoneProps {
+//     selectedDeal: Deal | undefined;
+// }
 
-const DealForm = (props: IMilestoneProps) => {
+const DealForm = () => {
     const dispatch = useDispatch();
     // const dealDetails = useSelector((state: RootState) => state.deal.dealDetails);
 
@@ -49,13 +50,13 @@ const DealForm = (props: IMilestoneProps) => {
         fetchBrokers();
     }, []);
 
-    useEffect(() => {
-        if (props.selectedDeal) {
-            setFormData(props.selectedDeal);
-            setActiveStep(props.selectedDeal.activeStep || 0);
-            setIsFirstSave(false);
-        }
-    }, [props.selectedDeal]);
+    // useEffect(() => {
+    //     if (props.selectedDeal) {
+    //         setFormData(props.selectedDeal);
+    //         setActiveStep(props.selectedDeal.activeStep || 0);
+    //         setIsFirstSave(false);
+    //     }
+    // }, [props.selectedDeal]);
 
     const fetchBrokers = async () => {
         try {
@@ -83,12 +84,12 @@ const DealForm = (props: IMilestoneProps) => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-    
+
         // Ensure date fields are formatted correctly
         if (name.endsWith('Date')) {
             // Format the date to yyyy-MM-dd if it's a date field
             const formattedDate = value.split('T')[0]; // Extract yyyy-MM-dd from ISO format
-            
+
             setFormData((prevData) => ({
                 ...prevData,
                 [name]: formattedDate,
@@ -115,6 +116,8 @@ const DealForm = (props: IMilestoneProps) => {
         try {
             localStorage.setItem('dealdetails', JSON.stringify(payload));
             setSaveSuccess(true);
+            setIsFirstSave(false);
+
         } catch (error) {
             console.error('Error saving form data:', error);
             setSaveSuccess(false);
@@ -150,15 +153,15 @@ const DealForm = (props: IMilestoneProps) => {
                     >
                         {label === 'brokerName'
                             ? brokerOptions.map((option, idx) => (
-                                  <MenuItem key={idx} value={option}>
-                                      {option}
-                                  </MenuItem>
-                              ))
+                                <MenuItem key={idx} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))
                             : options.map((option: string, idx: number) => (
-                                  <MenuItem key={idx} value={option}>
-                                      {option}
-                                  </MenuItem>
-                              ))}
+                                <MenuItem key={idx} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
                     </TextField>
                 );
             case 'date':
@@ -208,55 +211,58 @@ const DealForm = (props: IMilestoneProps) => {
     }
 
     return (
-        <Box sx={{ width: 1, marginTop: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <Stepper activeStep={activeStep} alternativeLabel connector={<StepConnector />} sx={{ width: 1 }}>
-                {steps.map((step, index) => (
-                    <Step key={index}>
-                        <StepLabel>{step.label}</StepLabel>
-                    </Step>
-                ))}
-            </Stepper>
-            <Box sx={{ width: '100%', marginTop: '30px', display: 'flex', flexDirection: 'column', padding: '30px' }}>
-                {activeStep === steps.length ? (
-                    <Box>
-                        <Typography variant="h3" sx={{ textAlign: 'center', color: 'green' }}>
-                            Deal is Completed
-                        </Typography>
-                    </Box>
-                ) : (
-                    <Box>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
-                                <Button disabled={activeStep === 0} onClick={handleBack} sx={{ width: 100 }}>
-                                    Back
-                                </Button>
+        <div className={styles.dealcontainer}>
+            <Box sx={{ width: 1, marginTop: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                <Stepper activeStep={activeStep} alternativeLabel connector={<StepConnector />} sx={{ width: 1 }}>
+                    {steps.map((step, index) => (
+                        <Step key={index}>
+                            <StepLabel>{step.label}</StepLabel>
+                        </Step>
+                    ))}
+                </Stepper>
+                <Box sx={{ width: '100%', marginTop: '30px', display: 'flex', flexDirection: 'column', padding: '30px' }}>
+                    {activeStep === steps.length ? (
+                        <Box>
+                            <Typography variant="h3" sx={{ textAlign: 'center', color: 'green' }}>
+                                Deal is Completed
+                            </Typography>
+                        </Box>
+                    ) : (
+                        <Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+                                    <Button disabled={activeStep === 0} onClick={handleBack} sx={{ width: 100 }}>
+                                        Back
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={handleNext}
+                                        sx={{ width: 100 }}
+                                        disabled={!saveSuccess || !isFormValid()}
+                                    >
+                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                    </Button>
+                                </Box>
+                            </Box>
+                            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                {steps[activeStep].fields.map((field, index) => renderField(field, index))}
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    onClick={handleNext}
-                                    sx={{ width: 100 }}
-                                    disabled={!saveSuccess || !isFormValid()}
+                                    onClick={saveFormData}
+                                    sx={{ width: 100, marginTop: 2 }}
+                                    disabled={!isFormValid()}
                                 >
-                                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                    Save
                                 </Button>
                             </Box>
                         </Box>
-                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                            {steps[activeStep].fields.map((field, index) => renderField(field, index))}
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={saveFormData}
-                                sx={{ width: 100, marginTop: 2 }}
-                                disabled={!isFormValid()}
-                            >
-                                Save
-                            </Button>
-                        </Box>
-                    </Box>
-                )}
+                    )}
+                </Box>
             </Box>
-        </Box>
+        </div>
+
     );
 };
 
