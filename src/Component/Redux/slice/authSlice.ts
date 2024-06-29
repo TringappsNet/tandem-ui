@@ -1,42 +1,45 @@
-// authSlice.ts
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+interface User {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  mobile: string;
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  zipcode: string;
+}
+
+interface Session {
+  token: string;
+  expiresAt: string;
+}
+
 interface AuthState {
-  token: string | null;
-  userId: string | null;
-  email: string | null;
+  user: User | null;
+  session: Session | null;
 }
 
 const initialState: AuthState = {
-  token: localStorage.getItem('sessionToken') || null,
-  userId: localStorage.getItem('userId') || null,
-  email: localStorage.getItem('email') || null,
+  user: null,
+  session: null,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setCredentials: (state: AuthState, action: PayloadAction<{ token: string; userId: string; email: string }>) => {
-      state.token = action.payload.token;
-      state.userId = action.payload.userId;
-      state.email = action.payload.email;
-
-      // Store credentials in localStorage
-      localStorage.setItem('sessionToken', action.payload.token);
-      localStorage.setItem('userId', action.payload.userId);
-      localStorage.setItem('email', action.payload.email);
+    setCredentials: (state: AuthState, action: PayloadAction<{ user: User; session: Session }>) => {
+      state.user = action.payload.user;
+      state.session = action.payload.session;
     },
+    
     logout: (state: AuthState) => {
-      state.token = null;
-      state.userId = null;
-      state.email = null;
-
-      // Clear localStorage on logout
-      localStorage.removeItem('sessionToken');
-      localStorage.removeItem('userId');
-      localStorage.removeItem('email');
+      state.user = null;
+      state.session = null;
     },
   },
 });
