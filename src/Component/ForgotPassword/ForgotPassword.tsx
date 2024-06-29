@@ -41,7 +41,7 @@ const ForgotPassword: React.FC = () => {
       return;
     }
     try {
-      const response = await axios.post('http://192.168.1.223:3008/auth/forgotpassword', { email }, {
+      const response = await axios.post('http://localhost:3008/auth/forgotpassword', { email }, {
         headers: {
           'Content-Type': 'application/json'
         }

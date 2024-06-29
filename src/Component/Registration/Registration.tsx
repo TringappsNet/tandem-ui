@@ -27,7 +27,7 @@ const Registration: React.FC = () => {
 
     const validateInviteToken = async (token: string) => {
         try {
-            await axios.post('http://192.168.1.223:3008/api/auth/invite-validate', { token });
+            await axios.post('http://localhost:3008/api/auth/invite-validate', { token });
         } catch (error) {
             console.error('Invite validation failed:', error);
 
@@ -122,7 +122,7 @@ const Registration: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('http://192.168.1.223:3008/api/register', {
+            const response = await axios.post('http://localhost:3008/api/register', {
                 firstname,
                 lastname,
                 mobileno,

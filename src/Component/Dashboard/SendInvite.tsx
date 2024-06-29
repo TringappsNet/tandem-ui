@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import styles from './DashboardComp.module.css';
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 
 
 const SendInvite: React.FC = () => {
@@ -68,7 +68,7 @@ const SendInvite: React.FC = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://192.168.1.223:3008/api/auth/invite', {
+            const response = await fetch('http://localhost:3008/api/auth/invite', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
