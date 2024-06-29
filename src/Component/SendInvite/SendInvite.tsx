@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './SendInvite.module.css';
 import classNames from 'classnames';
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 
 const SendInvite: React.FC = () => {
     const [showInviteForm, setShowInviteForm] = useState(true);
@@ -13,18 +14,11 @@ const SendInvite: React.FC = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:3008/api/auth/invite', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, roleId }),
-            });
+            const response = await axiosInstance.post('/auth/invite', { email, roleId });
+            const data = await response.data;
 
-            const data = await response.json();
-
-            if (response.ok) {
-                setResponseMessage('Invite sent successfully.');
+            if (response.data) {
+                setResponseMessage(data.message);
                 setResponseType('success');
                 setTimeout(() => {
                     setShowInviteForm(false);
