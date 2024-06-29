@@ -38,7 +38,6 @@ const App: React.FC = () => {
         <Route path="/change" element={<ChangePassword />} />
         <Route path="/dashboard" element={accessToken ? <Dashboard accessToken={accessToken} onLogout={handleLogout} /> : <Navigate to="/" />} />
         <Route path="/cards" element={<Cards onLogout={handleLogout} />} />
-
       </Routes>
     </Router>
   );

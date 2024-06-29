@@ -3,43 +3,38 @@ import axios from 'axios';
 import styles from './Registration.module.css';
 import logo from './logo.jpeg';
 
-
 const Registration: React.FC = () => {
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
-    const [mobileno, setMobileno] = useState('');
+    const [firstName, setFirstname] = useState('');
+    const [lastName, setLastname] = useState('');
+    const [mobileNo, setMobileno] = useState('');
+    const [address, setAddress] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [country, setCountry] = useState('');
+    const [zipcode, setZipcode] = useState('');
     const [password, setPassword] = useState('');
-    const [disableState, setDisableState] = useState(false);
     const [confirmpassword, setConfirmpassword] = useState('');
+    const [disableState, setDisableState] = useState(false);
     const [validationErrorMessage, setValidationErrorMessage] = useState('');
     const [validationSucessMessage, setValidationSucessMessage] = useState('');
-
-    const [role] = useState(2);
-
+    const [inviteTokenError, setInviteTokenError] = useState('');
+    const [inviteToken, setInviteToken] = useState('');
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
-        const inviteToken = urlParams.get('token');
-        if (inviteToken) {
-            validateInviteToken(inviteToken);
+        const token = urlParams.get('inviteToken');
+        console.log(token);
+        if (token) {
+            setInviteToken(token);
         }
     }, []);
-
-    const validateInviteToken = async (token: string) => {
-        try {
-            await axios.post('http://192.168.1.223:3008/api/auth/invite-validate', { token });
-        } catch (error) {
-            console.error('Invite validation failed:', error);
-
-        }
-    };
 
     const validateName = (name: string): string => {
         const namePattern = /^[a-zA-Z\s]+$/;
         if (name.trim() === '') {
             return 'Name is required.';
-        } else if (name.length > 30) {
-            return 'Name should not exceed 30 characters.';
+        } else if (name.length > 20) {
+            return 'Name should not exceed 20 characters.';
         } else if (!namePattern.test(name)) {
             return 'Name should contain only alphabets and spaces.';
         } else {
@@ -78,30 +73,52 @@ const Registration: React.FC = () => {
         }
     };
 
-    const validateMobileNo = (mobileno: string): string => {
-        const mobilenoPattern = /^\d{10}$/;
-        if (mobileno.trim() === '') {
+    const validateAddress = (address: string): string => {
+        if (address.trim() === '') {
+            return 'Address field should not be empty.';
+        }
+        return '';
+    };
+
+    const validateMobileNo = (mobileNo: string): string => {
+        const mobileNoPattern = /^\d{10}$/;
+        if (mobileNo.trim() === '') {
             return 'Mobile number is required.';
-        } else if (!mobilenoPattern.test(mobileno)) {
+        } else if (!mobileNoPattern.test(mobileNo)) {
             return 'Mobile number should be exactly 10 digits and contain only numbers.';
         } else {
             return '';
         }
     };
 
+    const validateZipcode = (zipcode: string): string => {
+        const zipcodePattern = /^\d{5}$/;
+        if (zipcode.trim() === '') {
+            return 'Zipcode is required.';
+        } else if (!zipcodePattern.test(zipcode)) {
+            return 'Zipcode should be exactly 5 digits.';
+        } else {
+            return '';
+        }
+    };
+
     const handleValidation = () => {
-        const firstnameError = validateName(firstname);
-        const lastnameError = validateName(lastname);
+        const firstNameError = validateName(firstName);
+        const lastNameError = validateName(lastName);
+        const mobileNoError = validateMobileNo(mobileNo);
         const passwordError = validatePassword(password);
+        const addressError = validateAddress(address);
         const confirmpasswordError = validateConfirmpassword(password, confirmpassword);
-        const mobilenoError = validateMobileNo(mobileno);
+        const zipcodeError = validateZipcode(zipcode);
 
         const errors = [
-            firstnameError,
-            lastnameError,
+            firstNameError,
+            lastNameError,
+            mobileNoError,
             passwordError,
+            addressError,
             confirmpasswordError,
-            mobilenoError
+            zipcodeError
         ].filter(error => error);
 
         setValidationErrorMessage(errors.length > 0 ? errors[0] : '');
@@ -109,12 +126,28 @@ const Registration: React.FC = () => {
         return errors.length === 0;
     };
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        console.log("fields", firstName, lastName, mobileNo, address, city, state, country, zipcode, password, confirmpassword);
+        if (firstName === '' && lastName === '' && mobileNo === '' &&
+            address === '' && city === '' && state === '' && country === '' &&
+            zipcode === '' && password === '' && confirmpassword === '') {
+            setValidationErrorMessage("Fill out all the fields and register.");
+            return;
+        }
 
-        if (firstname === '' || lastname === '' || mobileno === '' || password === '' || confirmpassword === '') {
-            setValidationErrorMessage("Pleaser Enter the values in the All Field.")
-            return
+        if (firstName !== '' && lastName !== '' && mobileNo !== '' &&
+            address !== '' && city !== '' && state !== '' && country !== '' &&
+            zipcode !== '' && (password === '' || confirmpassword === '')) {
+            setValidationErrorMessage("Fill the password and confirm it.");
+            return;
+        }
+
+        if (firstName === '' || lastName === '' || mobileNo === '' ||
+            address === '' || city === '' || state === '' || country === '' ||
+            zipcode === '' || password === '' || confirmpassword === '') {
+            setValidationErrorMessage("Please enter values in all required fields.");
+            return;
         }
 
         if (!handleValidation()) {
@@ -122,25 +155,47 @@ const Registration: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('http://192.168.1.223:3008/api/register', {
-                firstname,
-                lastname,
-                mobileno,
+            const response = await axios.post('http://192.168.1.223:3008/api/auth/register', {
+                firstName,
+                lastName,
+                mobileNo,
+                address,
+                city,
+                state,
+                country,
+                zipcode,
                 password,
-                role,
+                inviteToken,
             });
             console.log('Registration successful:', response.data);
             setValidationSucessMessage('Registration successful!');
+            setInviteTokenError('');
+
 
             setFirstname('');
             setLastname('');
             setMobileno('');
+            setAddress('');
+            setCity('');
+            setState('');
+            setCountry('');
+            setZipcode('');
             setPassword('');
             setConfirmpassword('');
-        }
-        catch (error) {
+            setDisableState(false);
+            setInviteToken('');
+            setInviteTokenError('');
+        } catch (error: any) {
             console.error('Registration failed:', error);
-            setValidationErrorMessage('Registration failed. Please try again.');
+            if (error.response && error.response.status === 400) {
+                if (error.response.data && error.response.data.message) {
+                    setInviteTokenError(error.response.data.message);
+                } else {
+                    setInviteTokenError('Invalid invite token. Please check and try again.');
+                }
+            } else {
+                setValidationErrorMessage('Registration failed. Please try again.');
+            }
         }
     };
 
@@ -155,10 +210,15 @@ const Registration: React.FC = () => {
                         </div>
                         <h4 className={styles.formTitle}>REGISTER HERE</h4>
                         <div className={styles.formContainer}>
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={(e) => handleSubmit(e)}>
                                 {validationErrorMessage && (
                                     <div className={styles.errorshow}>
                                         {validationErrorMessage}
+                                    </div>
+                                )}
+                                {inviteTokenError && (
+                                    <div className={styles.errorshow}>
+                                        {inviteTokenError}
                                     </div>
                                 )}
                                 {validationSucessMessage && (
@@ -166,74 +226,142 @@ const Registration: React.FC = () => {
                                         {validationSucessMessage}
                                     </div>
                                 )}
-                                <div className={styles.formGroup}>
-                                    <label htmlFor="firstName">First Name</label>
-                                    <input
-                                        type="text"
-                                        id="firstName"
-                                        placeholder="Enter your first name"
-                                        value={firstname}
-                                        onChange={(e) => {
-                                            setFirstname(e.target.value);
-                                            setValidationErrorMessage(validateName(e.target.value));
-                                        }}
-                                    />
+                                <div className={styles.formRow}>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="firstName">First Name</label>
+                                        <input
+                                            type="text"
+                                            id="firstName"
+                                            placeholder="Enter your first name"
+                                            value={firstName}
+                                            onChange={(e) => {
+                                                setFirstname(e.target.value);
+                                                setValidationErrorMessage(validateName(e.target.value));
+                                            }}
+                                        />
+                                    </div>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="lastName">Last Name</label>
+                                        <input
+                                            type="text"
+                                            id="lastName"
+                                            placeholder="Enter your last name"
+                                            value={lastName}
+                                            onChange={(e) => {
+                                                setLastname(e.target.value);
+                                                setValidationErrorMessage(validateName(e.target.value));
+                                            }}
+                                        />
+                                    </div>
                                 </div>
-                                <div className={styles.formGroup}>
-                                    <label htmlFor="lastName">Last Name</label>
-                                    <input
-                                        type="text"
-                                        id="lastName"
-                                        placeholder="Enter your last name"
-                                        value={lastname}
-                                        onChange={(e) => {
-                                            setLastname(e.target.value);
-                                            setValidationErrorMessage(validateName(e.target.value));
-                                        }}
-                                    />
+                                <div className={styles.formRow}>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="address">Address</label>
+                                        <input
+                                            type="text"
+                                            id="address"
+                                            placeholder="Enter your address"
+                                            value={address}
+                                            onChange={(e) => {
+                                                setAddress(e.target.value);
+                                                setValidationErrorMessage(validateAddress(e.target.value));
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="mobileNo">Mobile No</label>
+                                        <input
+                                            type="tel"
+                                            id="mobileNo"
+                                            placeholder="Enter your mobile number"
+                                            value={mobileNo}
+                                            onChange={(e) => {
+                                                setMobileno(e.target.value);
+                                                setValidationErrorMessage(validateMobileNo(e.target.value));
+                                            }}
+                                        />
+                                    </div>
                                 </div>
-                                <div className={styles.formGroup}>
-                                    <label htmlFor="mobileno">Mobile No</label>
-                                    <input
-                                        type="tel"
-                                        id="mobileno"
-                                        placeholder="Enter your mobile number"
-                                        value={mobileno}
-                                        onChange={(e) => {
-                                            setMobileno(e.target.value);
-                                            setValidationErrorMessage(validateMobileNo(e.target.value));
-                                        }}
-                                    />
+                                <div className={styles.formRow}>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="city">City</label>
+                                        <input
+                                            type="text"
+                                            id="city"
+                                            placeholder="Enter your city"
+                                            value={city}
+                                            onChange={(e) => setCity(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="state">State</label>
+                                        <input
+                                            type="text"
+                                            id="state"
+                                            placeholder="Enter your state"
+                                            value={state}
+                                            onChange={(e) => setState(e.target.value)}
+                                        />
+                                    </div>
                                 </div>
-                                <div className={styles.formGroup}>
-                                    <label htmlFor="password">Password</label>
-                                    <input
-                                        type="password"
-                                        id="password"
-                                        placeholder="Enter your password"
-                                        value={password}
-                                        onChange={(e) => {
-                                            setPassword(e.target.value);
-                                            setValidationErrorMessage(validatePassword(e.target.value));
-                                        }}
-                                    />
+                                <div className={styles.formRow}>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="country">Country</label>
+                                        <input
+                                            type="text"
+                                            id="country"
+                                            placeholder="Enter your country"
+                                            value={country}
+                                            onChange={(e) => setCountry(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="zipcode">Zipcode</label>
+                                        <input
+                                            type="text"
+                                            id="zipcode"
+                                            placeholder="Enter your zipcode"
+                                            value={zipcode}
+                                            onChange={(e) => {
+                                                setZipcode(e.target.value);
+                                                setValidationErrorMessage(validateZipcode(e.target.value));
+                                            }}
+                                        />
+                                    </div>
                                 </div>
-                                <div className={styles.formGroup}>
-                                    <label htmlFor="confirmPassword">Confirm Password</label>
-                                    <input
-                                        type="password"
-                                        id="confirmPassword"
-                                        placeholder="Confirm your password"
-                                        disabled={!disableState}
-                                        value={confirmpassword}
-                                        onChange={(e) => {
-                                            setConfirmpassword(e.target.value);
-                                            setValidationErrorMessage(validateConfirmpassword(password, e.target.value));
-                                        }}
-                                    />
+                                <div className={styles.formRow}>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="password">Password</label>
+                                        <input
+                                            type="password"
+                                            id="password"
+                                            placeholder="Enter your password"
+                                            value={password}
+                                            onChange={(e) => {
+                                                setPassword(e.target.value);
+                                                setValidationErrorMessage(validatePassword(e.target.value));
+                                            }}
+                                        />
+                                    </div>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="confirmPassword">Confirm Password</label>
+                                        <input
+                                            type="password"
+                                            id="confirmPassword"
+                                            placeholder="Confirm your password"
+                                            disabled={!disableState}
+                                            value={confirmpassword}
+                                            onChange={(e) => {
+                                                setConfirmpassword(e.target.value);
+                                                setValidationErrorMessage(validateConfirmpassword(password, e.target.value));
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                                 <div className={styles.buttonContainer}>
-                                    <button type="submit" className={styles.buttoncls}>Register</button>
+                                    <button type="submit"
+                                        className={styles.buttoncls}>Register</button>
                                 </div>
                             </form>
                         </div>

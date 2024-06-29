@@ -237,14 +237,14 @@ const InviteForm: React.FC<InviteFormProps> = ({ onClose }) => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://192.168.1.223:3008/api/auth/send-invite', {
+            const response = await fetch('http://192.168.1.223:3008/api/auth/invite', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     email,
-                    userId: localStorage.getItem('userid'),
+                    roleId: 1,
                 }),
             });
 
