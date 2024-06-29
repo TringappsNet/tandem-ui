@@ -12,6 +12,7 @@ const Dashboard: React.FC = () => {
       <div className={styles.mainContent}>
         <Routes>
           {/* <Route path="/" element={<Main />} /> */}
+          
           <Route path="/cards" element={<Cards />} />
         </Routes>
       </div>
