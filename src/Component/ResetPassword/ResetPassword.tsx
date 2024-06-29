@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 const Reset: React.FC = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [showResetForm, setShowResetForm] = useState(false);
+    const [showInviteForm, setShowInviteForm] = useState(false);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -13,6 +14,8 @@ const Reset: React.FC = () => {
     const [responseType, setResponseType] = useState('');
     const dropdownRef = useRef<HTMLDivElement>(null);
     const resetFormRef = useRef<HTMLDivElement>(null);
+    const inviteFormRef = useRef<HTMLDivElement>(null);
+
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -20,7 +23,10 @@ const Reset: React.FC = () => {
                 setDropdownOpen(false);
             }
             if (resetFormRef.current && !resetFormRef.current.contains(event.target as Node)) {
-                setShowResetForm(false);
+                setShowResetForm(true);
+            }
+            if (inviteFormRef.current && !inviteFormRef.current.contains(event.target as Node)) {
+                setShowInviteForm(false);
             }
         };
 
@@ -31,11 +37,12 @@ const Reset: React.FC = () => {
         };
     }, []);
 
+
     const handleResetPassword = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (newPassword !== confirmPassword) {
-            setResponseMessage('New passwords do not match.');
+            setResponseMessage('Password match failed.');
             setResponseType('error');
             return;
         }
@@ -49,7 +56,7 @@ const Reset: React.FC = () => {
                 body: JSON.stringify({
                     oldPassword,
                     newPassword,
-                    // userId should be obtained from authentication context or props
+                    userId: 1,
                 }),
             });
 
@@ -58,9 +65,8 @@ const Reset: React.FC = () => {
             if (response.ok) {
                 setResponseMessage('Password reset successful.');
                 setResponseType('success');
-                setShowResetForm(false);
             } else {
-                setResponseMessage(data.message || 'Password reset failed.');
+                setResponseMessage(data.message || 'Unsuccessful message.');
                 setResponseType('error');
             }
         } catch (error) {
@@ -71,12 +77,13 @@ const Reset: React.FC = () => {
 
     return (
         <div className={styles.pageContainer}>
-            <button onClick={() => setDropdownOpen(!dropdownOpen)}>Menu</button>
-            <div className={classNames(styles.dropdownContent, { [styles.show]: dropdownOpen })} ref={dropdownRef}>
+            <div className={classNames(styles.dropdownContent, { [styles.show]: dropdownOpen })}>
                 {dropdownOpen && (
-                    <div className={styles.dropdownItem}>
-                        <button className={styles.linkButton} onClick={() => setShowResetForm(true)}>Reset Password</button>
-                    </div>
+                    <>
+                        <div className={styles.dropdownItem}>
+                            <button className={styles.linkButton}>Reset</button>
+                        </div>
+                    </>
                 )}
             </div>
 
@@ -91,7 +98,6 @@ const Reset: React.FC = () => {
                                     type="password"
                                     id="oldPassword"
                                     name="oldPassword"
-                                    placeholder="Enter the old password"
                                     value={oldPassword}
                                     onChange={(e) => setOldPassword(e.target.value)}
                                     required
@@ -121,11 +127,6 @@ const Reset: React.FC = () => {
                             </div>
                             <button type="submit">Reset Password</button>
                         </form>
-                        {responseMessage && (
-                            <div className={responseType === 'success' ? styles.success : styles.error}>
-                                {responseMessage}
-                            </div>
-                        )}
                     </div>
                 )}
             </div>

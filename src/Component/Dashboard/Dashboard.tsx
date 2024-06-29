@@ -52,6 +52,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
 
     const fetchBrokerData = async () => {
         try {
+
             const response = await fetch('http://192.168.1.223:3008/api/brokers');
             const data = await response.json();
             const formattedData = data.map(({ id, firstname }: any) => ({
@@ -62,6 +63,7 @@ const Dashboard: React.FC<DashboardProps> = ({ accessToken, onLogout }) => {
             }));
             setGridData(formattedData);
             setShowGrid(true);
+
         } catch (error) {
             console.error(`Error fetching broker data:`, error);
         }
