@@ -57,13 +57,14 @@ const ForgotPassword: React.FC = () => {
       }
     } catch (error: any) {
       try {
-        if (error.message === 'Network Error') {
+        const res = error.response
+        if (res.status === 500) {
+          let message = 'Server busy, Try again later'
           setValidationErrorMessage(error.message)
           setShowSuccessMessage(false);
           setShowFailureMessage(true);
           return
         }
-        const res = error.response
         if (res.status === 401 && res.data.message === 'Incorrect Email') {
           let message = 'Incorrect Email! Please Enter Correct Email.'
           setValidationErrorMessage(message)

@@ -11,6 +11,43 @@
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(122, 119, 119, 0.5);
+  z-index: 1000;
+}
+
+.loader {
+  width: 60px;
+  height: 60px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #262262;
+  border-radius: 70%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loginbtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .card img {
   width: 3rem;
   height: 2.5rem;
@@ -41,9 +78,12 @@
   margin-top: 2.5rem;
 }
 
-.inputGroup, .success, .failure {
+.inputGroup,
+.success,
+.failure {
   margin-bottom: .75rem;
 }
+
 .success {
   --tw-text-opacity: 1;
   color: rgb(36 151 130 / var(--tw-text-opacity));
@@ -53,6 +93,7 @@
   border-color: rgb(160 232 219 / var(--tw-border-opacity)) !important;
   padding: .75rem 1rem !important;
 }
+
 .failure {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
@@ -70,7 +111,9 @@
   font-size: .875rem;
 }
 
-.section input, .success, .failure {
+.section input,
+.success,
+.failure {
   width: 100%;
   border: 1px solid #e5e7eb;
   border-radius: .375rem;
