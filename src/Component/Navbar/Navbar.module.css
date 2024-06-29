@@ -21,10 +21,12 @@
     width: 2.2rem;
     object-fit: contain;
 }
-.header h3{
+
+.header h3 {
     font-weight: 600;
 }
-.header a{
+
+.header a {
     margin-left: 30px;
     text-decoration: none;
     color: #fff;
@@ -81,8 +83,6 @@
     padding: 5px 20px;
     text-decoration: none;
     color: black;
-    /* transition: color .5s; */
-
 }
 
 .dropdownMenu a:hover {
