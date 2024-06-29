@@ -47,7 +47,7 @@ const Reset: React.FC = () => {
     };
 
     return (
-        <div className={styles.pageContainer}>
+        <>
             {showResetForm && (
                 <div className={styles.formContainer}>
                     <h2>Reset Password</h2>
@@ -91,7 +91,7 @@ const Reset: React.FC = () => {
                     </form>
                 </div>
             )}
-        </div>
+        </>
     );
 };
 

@@ -3,7 +3,7 @@ import styles from './DashboardComp.module.css';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import 'bootstrap/dist/css/bootstrap.css';
+//import 'bootstrap/dist/css/bootstrap.css';
 import DealForm from '../Milestone/Milestone';
 import SidePanel from './SidePanel';
 import Navbar from './Navbar';

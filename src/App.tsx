@@ -9,6 +9,7 @@ import ChangePassword from './Component/ChangePassword/ChangePassword';
 import Cards from './Component/Dashboard/Cards';
 import Navbar from './Component/Navbar/Navbar';
 import Reset from './Component/ResetPassword/ResetPassword';
+import NewDashboard from './Component/NewDashboard/Dashboard';
 
 const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(localStorage.getItem('accessToken'));
@@ -41,6 +42,7 @@ const App: React.FC = () => {
         <Route path="/dashboard" element={accessToken ? <Dashboard accessToken={accessToken} onLogout={handleLogout} /> : <Navigate to="/" />} />
         <Route path="/navbar" element={<Navbar />} />
         <Route path="/reset" element={<Reset />} />
+        <Route path="/newdashboard" element={<NewDashboard />} />
         <Route path="/cards" element={<Cards onLogout={handleLogout} />} />
       </Routes>
     </Router>

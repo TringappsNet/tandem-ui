@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import styles from './DashboardComp.module.css';
-// import 'bootstrap/dist/css/bootstrap.css';
+// //import 'bootstrap/dist/css/bootstrap.css';
 
 
 const SendInvite: React.FC = () => {

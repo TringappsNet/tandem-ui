@@ -9,7 +9,7 @@ import DealForm from '../Milestone/Milestone';
 import styles from './Dashboard.module.css';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 // import { Deal } from '../Interface/DealFormObject';
-// import 'bootstrap/dist/css/bootstrap.css';
+// //import 'bootstrap/dist/css/bootstrap.css';
 
 
 interface DashboardProps {

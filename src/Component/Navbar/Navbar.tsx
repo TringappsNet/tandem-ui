@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Dialog, DialogContent, IconButton, DialogActions, Icon } from '@mui/material';
+import { Dialog, DialogContent, IconButton, DialogActions, Icon, DialogTitle } from '@mui/material';
 import styles from './Navbar.module.css';
 import SendInvite from '../SendInvite/SendInvite';
 import Reset from '../ResetPassword/ResetPassword';
@@ -15,10 +15,7 @@ const Navbar: React.FC = () => {
 
     const handleOpenPopup = (componentName: string) => {
         setSelectedComponent(componentName);
-        if (componentName !== null) {
-            setOpenPopup(true);
-            setIsDropdownOpen(false);
-        }
+        setOpenPopup(true);
     };
 
     const handleClosePopup = () => {
@@ -48,24 +45,26 @@ const Navbar: React.FC = () => {
                 </div>
             </nav>
 
-            <Dialog open={openPopup} onClose={handleClosePopup}>
+            <Dialog open={openPopup} onClose={handleClosePopup} sx={{padding:0,margin:0}}>
+                <DialogTitle sx={{padding:0}}>
                 <Icon
                     aria-label="close"
                     onClick={handleClosePopup}
                     sx={{
                         position: 'absolute',
-                        right: 8,
+                        right: 18,
                         top: 8,
-                        color: (theme) => theme.palette.grey[500],
+                        zIndex: 999,
+                        fontSize: 30
                     }}
                 >
                     <CloseIcon />
                 </Icon>
+                </DialogTitle>    
 
-                <DialogContent>
-                    {selectedComponent === 'SendInvite'  && <SendInvite />}
+                <DialogContent sx={{padding:0}}>
+                    {selectedComponent === 'SendInvite' && <SendInvite />}
                     {selectedComponent === 'Reset' && <Reset />}
-                    {/* Add other components here */}
                 </DialogContent>
             </Dialog>
         </>
