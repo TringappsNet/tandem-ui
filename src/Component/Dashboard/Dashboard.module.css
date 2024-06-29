@@ -482,3 +482,26 @@ button:hover {
     background-color: #ee8d7e;
     margin: 0 10px;
 }
+.metro {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 30%;
+    margin-right: 30px;
+    display: flex;
+    flex-direction: column;
+}
+.card-header {
+    background-color: #0078D7;
+    color: #fff;
+    padding: 10px;
+    font-size: 1.25em;
+    text-align: center;
+}
+.contentWrapper {
+    display: flex;
+    flex-direction: row;
+    margin: 100px;
+}

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
-import styles from './Dashboard.module.css';
-// import 'bootstrap/dist/css/bootstrap.css';
+import styles from './DashboardComp.module.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 const SidePanel: React.FC = () => {
     const [selectedButton, setSelectedButton] = useState<string | null>(null);
