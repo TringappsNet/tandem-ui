@@ -15,6 +15,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showFailureMessage, setShowFailureMessage] = useState(false);
   const [validationErrorMessage, setValidationErrorMessage] = useState('You have failed signed in.');
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const validateEmail = (email: string) => {
@@ -61,6 +62,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       setShowFailureMessage(true);
       return;
     }
+    setIsLoading(true);
     try {
       const response = await axiosInstance.post('/auth/login', { email, password });
       const data = response.data;
@@ -68,8 +70,6 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
         const { token, expiresAt } = data.session;
         const expirationDate = new Date(expiresAt);
         if (expirationDate > new Date()) {
-
-
           dispatch(setCredentials({ token, userId: data.user.id, email: data.user.email }));
 
 
@@ -77,7 +77,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           localStorage.setItem('email', JSON.stringify(data.user.email));
           localStorage.setItem('sessiontoken', JSON.stringify(data.session.token));
           localStorage.setItem('expireAt', JSON.stringify(data.session.expiresAt));
-          
+
           setShowSuccessMessage(true);
           setShowFailureMessage(false);
           onLoginSuccess(token);
@@ -93,13 +93,14 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       }
     } catch (error: any) {
       try {
-        if (error.message === 'Network Error') {
-          setValidationErrorMessage(error.message);
+        const res = error.response;
+        if (res.status === 500 && res.data.message === 'internal server error') {
+          let message = 'Server busy. Try again later';
+          setValidationErrorMessage(message);
           setShowSuccessMessage(false);
           setShowFailureMessage(true);
           return;
         }
-        const res = error.response;
         if (res.status === 401 && res.data.message === 'Incorrect Password') {
           let message = 'Incorrect Password! Please Enter Correct Password.';
           setValidationErrorMessage(message);
@@ -120,6 +121,10 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
         setShowFailureMessage(true);
       }
     }
+    finally {
+      setIsLoading(false);
+    }
+
   };
 
   return (
@@ -167,10 +172,15 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
             <Link to="/forgotpassword" className={styles.forgotPassword}>
               Forgot password?
             </Link>
-            <button className={styles.loginbtn} type="submit">
-              Sign In
+            <button className={styles.loginbtn} type="submit" disabled={isLoading}>
+              {isLoading ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
+          {isLoading && (
+            <div className={styles.loaderContainer}>
+              <div className={styles.loader}></div>
+            </div>
+          )}
         </div>
       </div>
     </div>
