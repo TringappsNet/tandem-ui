@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
+// import Main from '../Main/Main'; // Make sure to import Main component
+import Cards from '../Cards/Cards';
 import styles from './Dashboard.module.css';
 import FullGrid from '../Grids/parent_grid/broker-grid';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
@@ -28,6 +31,10 @@ const Dashboard: React.FC = () => {
             <Navbar />
             <div className={styles.mainContent}>
                 <div className={styles.tagsContainer}>
+                   <Routes>
+                    {/* <Route path="/" element={<Main />} /> */}
+                    <Route path="/cards" element={<Cards />} />
+                    </Routes>
                     <span className={styles.tag}>{}</span>
                     <span className={styles.tag}>Tag 2</span>
                     <span className={styles.tag}>Tag 3</span>
@@ -38,6 +45,7 @@ const Dashboard: React.FC = () => {
             </div>
         </div>
     );
+
 };
 
 

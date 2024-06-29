@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './Login.module.css';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../Redux/slice/authSlice';
 
-interface LoginProps {
-  onLoginSuccess: (accessToken: string) => void;
-}
-
-const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
+const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showFailureMessage, setShowFailureMessage] = useState(false);
-  const [validationErrorMessage, setValidationErrorMessage] = useState('You have failed signed in.');
+  const [validationErrorMessage, setValidationErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -36,10 +33,8 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     if (password === '') {
       setValidationErrorMessage('Password cannot be empty');
       setShowFailureMessage(true);
-      return;
     } else {
       setShowFailureMessage(false);
-      return;
     }
   };
 
@@ -58,7 +53,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email === '' || password === '') {
-      setValidationErrorMessage('Please Enter valid Email and Password');
+      setValidationErrorMessage('Please enter valid Email and Password');
       setShowFailureMessage(true);
       return;
     }
@@ -66,65 +61,28 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     try {
       const response = await axiosInstance.post('/auth/login', { email, password });
       const data = response.data;
-      if (data.message && response.status === 200) {
-        const { token, expiresAt } = data.session;
-        const expirationDate = new Date(expiresAt);
-        if (expirationDate > new Date()) {
-          dispatch(setCredentials({ token, userId: data.user.id, email: data.user.email }));
-
-
-          localStorage.setItem('userid', JSON.stringify(data.user.id));
-          localStorage.setItem('email', JSON.stringify(data.user.email));
-          localStorage.setItem('sessiontoken', JSON.stringify(data.session.token));
-          localStorage.setItem('expireAt', JSON.stringify(data.session.expiresAt));
-
-          setShowSuccessMessage(true);
-          setShowFailureMessage(false);
-          onLoginSuccess(token);
-          <Navigate to="/dashboard" replace={true} />
-        } else {
-          setValidationErrorMessage('Session expired. Please try again.');
-          setShowFailureMessage(true);
-          setShowSuccessMessage(false);
-        }
-      } else {
+      if (data.message === 'Login successful' && response.status === 200) {
+        const { session, user } = data;
+        console.log("data",data);
+        dispatch(setCredentials({ user, session }));
+        setShowSuccessMessage(true);
+        setShowFailureMessage(false);
+        navigate('/newdashboard');
+       } else {
         setShowSuccessMessage(false);
         setShowFailureMessage(true);
       }
-    } catch (error: any) {
-      try {
-        const res = error.response;
-        if (res.status === 500 && res.data.message === 'internal server error') {
-          let message = 'Server busy. Try again later';
-          setValidationErrorMessage(message);
-          setShowSuccessMessage(false);
-          setShowFailureMessage(true);
-          return;
-        }
-        if (res.status === 401 && res.data.message === 'Incorrect Password') {
-          let message = 'Incorrect Password! Please Enter Correct Password.';
-          setValidationErrorMessage(message);
-          setShowSuccessMessage(false);
-          setShowFailureMessage(true);
-        } else if (res.status === 401 && res.data.message === 'You are not a registered user') {
-          const message = 'You are not a registered user. Please Register and sign in again';
-          setValidationErrorMessage(message);
-          setShowSuccessMessage(false);
-          setShowFailureMessage(true);
-        } else {
-          setShowSuccessMessage(false);
-          setShowFailureMessage(true);
-        }
-      } catch (e: any) {
-        setValidationErrorMessage(e.message);
-        setShowSuccessMessage(false);
-        setShowFailureMessage(true);
-      }
-    }
-    finally {
+    } catch (error) {
+      let message = 'Something went wrong. Please try again later.';
+      // if (error.response && error.response.status === 401) {
+      //   message = 'Incorrect Email or Password. Please try again.';
+      // }
+      setValidationErrorMessage(message);
+      setShowSuccessMessage(false);
+      setShowFailureMessage(true);
+    } finally {
       setIsLoading(false);
     }
-
   };
 
   return (
