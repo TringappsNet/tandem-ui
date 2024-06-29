@@ -7,7 +7,6 @@ import Registration from './Component/Registration/Registration';
 import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 import ChangePassword from './Component/ChangePassword/ChangePassword';
 import Cards from './Component/Dashboard/Cards';
-import Navbar from './Component/Navbar/Navbar';
 
 const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(localStorage.getItem('accessToken'));
@@ -21,7 +20,6 @@ const App: React.FC = () => {
     setAccessToken(null);
     localStorage.removeItem('accessToken');
   };
-
 
   useEffect(() => {
     // const storedToken = "aces"
@@ -38,9 +36,8 @@ const App: React.FC = () => {
         <Route path="/registerform" element={<Registration />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/change" element={<ChangePassword />} />
-        <Route path="/cards" element={<Cards onLogout={handleLogout} />} />
         <Route path="/dashboard" element={accessToken ? <Dashboard accessToken={accessToken} onLogout={handleLogout} /> : <Navigate to="/" />} />
-        <Route path="/navbar" element={<Navbar />} />
+        <Route path="/cards" element={<Cards onLogout={handleLogout} />} />
       </Routes>
     </Router>
   );

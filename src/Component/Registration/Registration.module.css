@@ -1,15 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 @import url("@fontsource/public-sans");
 
-
 .backgroundContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 500px;
+    width: 900px;
     height: 100%;
     background-color: rgb(248, 250, 252);
-    max-width: 650px;
+    max-width: 680px;
 }
 
 .successshow {
@@ -57,10 +56,10 @@
     --tw-shadow: var(--tw-shadow-colored);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
     border-radius: 0.5rem;
-    width: 100%;
+    width: 120%;
     max-width: 1200px;
     box-sizing: border-box;
-    max-height: 700px;
+    max-height: 650px;
 }
 
 .mainCard {
@@ -88,6 +87,7 @@ h4 {
     font-weight: bold;
     color: #262262;
     margin: 0px 0px 4px;
+    margin-right: 30px;
 }
 
 .registrationContainer {
@@ -98,10 +98,19 @@ h4 {
     align-items: center;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 .formContainer {
     width: 100%;
+    max-height: 500px;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.formContainer::-webkit-scrollbar {
+    display: none;
 }
 
 .logoContainer {
@@ -114,40 +123,64 @@ h4 {
 
 .formGroup {
     margin-bottom: 0.75rem;
-    /* Updated margin-bottom */
+    flex: 0 0 48%;
     display: flex;
     flex-direction: column;
     position: relative;
     width: 100%;
+    margin-top: 20px;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.formRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: -19px;
+    margin-right: 4px;
 }
 
 .formGroup:first-of-type {
     margin-top: 20px;
 }
 
+.formGroupRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .formGroup label {
     display: block;
     font-weight: normal;
-    margin-bottom: 0.25rem;
+    margin-bottom: 5px;
     font-size: 0.875rem;
-    line-height: 1;
+    line-height: 1.5;
+    min-height: 1.5em;
     padding-top: 0.1rem;
     padding-bottom: 0.1rem;
+
 }
 
 .formGroup input,
 .formGroup textarea,
 .formGroup input[type="file"] {
     width: 100%;
+    max-height: 38px;
     padding: 0.8rem;
     border: 1px solid rgb(226, 232, 240);
     background-color: #fff;
     border-width: 1px;
     border-radius: 0.375rem;
     box-sizing: border-box;
+
 }
 
 .formGroup input:focus,
@@ -159,8 +192,9 @@ h4 {
 .buttonContainer {
     display: flex;
     justify-content: center;
-    margin-top: 1.75rem;
-    width: 100%;
+    /* margin-top: 1.75rem; */
+    margin-top: 40px;
+    height: 48px;
 }
 
 .buttoncls[type="submit"] {
@@ -175,7 +209,8 @@ h4 {
     overflow: hidden;
     z-index: 1;
     width: 100%;
-    max-width: 500px;
+    width: 100%;
+    max-height: 48px;
     margin-left: auto;
     margin-right: auto;
     box-sizing: border-box;
@@ -236,12 +271,15 @@ h4 {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
+    margin-right: 20px;
+
 }
 
 .companyName {
     font-size: 20px;
     font-family: 'Public Sans', sans-serif;
     font-weight: bolder;
+    margin-left: 10px;
 }
 
 .formTitle {
@@ -257,6 +295,7 @@ h4 {
 
 .formContainer .formGroup:first-of-type {
     margin-top: 20px;
+    overflow-y: auto;
 }
 
 .invalid {
