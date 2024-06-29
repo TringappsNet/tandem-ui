@@ -7,7 +7,6 @@ import Registration from './Component/Registration/Registration';
 import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 import ChangePassword from './Component/ChangePassword/ChangePassword';
 import Cards from './Component/Dashboard/Cards';
-import Navbar from './Component/Navbar/Navbar';
 
 const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(localStorage.getItem('accessToken'));
