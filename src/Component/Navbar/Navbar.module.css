@@ -45,6 +45,10 @@
     cursor: pointer;
 }
 
+.userdropdown:hover .dropdownMenu {
+    display: block;
+}
+
 .userdropdown .circle {
     width: 25px;
     height: 25px;
@@ -58,6 +62,7 @@
 }
 
 .dropdownMenu {
+    display: none;
     position: absolute;
     top: 50px;
     right: 0;
@@ -76,10 +81,14 @@
     padding: 5px 20px;
     text-decoration: none;
     color: black;
-    transition: color .5s;
+    /* transition: color .5s; */
 
 }
 
 .dropdownMenu a:hover {
-    color: #312b69;
+    background-color: #312b69;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 12px;
+    margin: 0 5px;
 }
