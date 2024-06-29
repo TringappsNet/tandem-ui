@@ -4,7 +4,7 @@
     padding: 1rem;
     border-radius: 0.5rem;
     width: 500px;
-    height: 300px;
+    height: 350px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,7 +12,7 @@
   }
   
   .formContainer h2 {
-    margin-bottom: 2rem;
+    margin-bottom:1rem;
     margin-top: .5rem;
     text-align: center;
     color: #262262;
@@ -59,7 +59,7 @@
   }
   
   .responseMessage {
-    margin-top: 1rem;
+    margin: 1rem 0;
     padding: 0.75rem;
     border-radius: 0.375rem;
     font-size: 0.875rem;

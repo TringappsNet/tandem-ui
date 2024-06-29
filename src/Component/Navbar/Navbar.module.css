@@ -26,15 +26,24 @@
     font-weight: 600;
 }
 
-.header a {
+.header p {
     margin-left: 30px;
     text-decoration: none;
     color: #fff;
-    font-size: 20px;
 }
 
-.header a:hover {
+.header p:hover {
     color: #7c76cf;
+}
+
+.rightheadersection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.rightheadersection .createdeal {
+    cursor: pointer;
 }
 
 .userdropdown {
@@ -45,6 +54,10 @@
     align-items: center;
     margin-right: 25px;
     cursor: pointer;
+}
+
+.userdropdown p {
+    text-transform: capitalize;
 }
 
 .userdropdown:hover .dropdownMenu {
@@ -78,17 +91,23 @@
     padding: 6px 0;
 }
 
-.dropdownMenu a {
+.dropdownMenu button {
     display: block;
+    width: 100%;
+    background: none;
+    border: none;
     padding: 5px 20px;
-    text-decoration: none;
+    text-align: left;
     color: black;
+    font-size: inherit;
+    cursor: pointer;
 }
 
-.dropdownMenu a:hover {
+.dropdownMenu button:hover {
     background-color: #312b69;
     color: #fff;
     border-radius: 5px;
-    padding: 5px 12px;
-    margin: 0 5px;
+    padding: 5px 20px;
+    margin: 0 3px;
+    width: 96%;
 }

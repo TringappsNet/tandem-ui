@@ -47,6 +47,14 @@ const SendInvite: React.FC = () => {
             {showInviteForm && (
                 <div className={styles.formContainer}>
                     <h2>Send Invite</h2>
+                    {responseMessage && (
+                        <div className={classNames(styles.responseMessage, {
+                            [styles.success]: responseType === 'success',
+                            [styles.error]: responseType === 'error',
+                        })}>
+                            {responseMessage}
+                        </div>
+                    )}
                     <form onSubmit={handleSendInvite}>
                         <div className={styles.formGroup}>
                             <label htmlFor="email">Email:</label>
@@ -73,14 +81,7 @@ const SendInvite: React.FC = () => {
                         </div>
                         <button type="submit">Send Invite</button>
                     </form>
-                    {responseMessage && (
-                        <div className={classNames(styles.responseMessage, {
-                            [styles.success]: responseType === 'success',
-                            [styles.error]: responseType === 'error',
-                        })}>
-                            {responseMessage}
-                        </div>
-                    )}
+                    
                 </div>
             )}
         </>
