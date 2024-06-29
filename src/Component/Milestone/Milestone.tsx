@@ -61,7 +61,7 @@ const DealForm = () => {
     const fetchBrokers = async () => {
         try {
             const response = await axiosInstance.get('/brokers');
-            const brokers = response.data.map((broker: any) => `${broker.user.firstname} ${broker.user.lastname}`);
+            const brokers = response.data.map((broker: any) => `${broker.user.firstName} ${broker.user.lastName}`);
             setBrokerOptions(brokers);
             console.log(brokers);
             if (response.data.length > 0) {
