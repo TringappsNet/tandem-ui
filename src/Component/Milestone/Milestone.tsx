@@ -63,6 +63,7 @@ const DealForm = () => {
             const response = await axiosInstance.get('/brokers');
             const brokers = response.data.map((broker: any) => `${broker.user.firstName} ${broker.user.lastName}`);
             setBrokerOptions(brokers);
+            console.log(brokers);
             if (response.data.length > 0) {
                 setUserId(response.data[0].user.id);
             }
