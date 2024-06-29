@@ -1,15 +1,13 @@
+// Login.tsx
+
 import React, { useState } from 'react';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './Login.module.css';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../Redux/slice/authSlice';
 
-interface LoginProps {
-  onLoginSuccess: (accessToken: string) => void;
-}
-
-const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
+const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -17,6 +15,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const [validationErrorMessage, setValidationErrorMessage] = useState('You have failed signed in.');
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -67,25 +66,18 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       const response = await axiosInstance.post('/auth/login', { email, password });
       const data = response.data;
       if (data.message && response.status === 200) {
-        const { token, expiresAt } = data.session;
+        const { token,expiresAt } = data.session;
+        
         const expirationDate = new Date(expiresAt);
         if (expirationDate > new Date()) {
-          dispatch(setCredentials({ token, userId: data.user.id, email: data.user.email }));
 
 
-          localStorage.setItem('userid', JSON.stringify(data.user.id));
-          localStorage.setItem('email', JSON.stringify(data.user.email));
-          localStorage.setItem('sessiontoken', JSON.stringify(data.session.token));
-          localStorage.setItem('expireAt', JSON.stringify(data.session.expiresAt));
+        dispatch(setCredentials({ token, userId: data.user.id, email: data.user.email  }));
 
-          setShowSuccessMessage(true);
-          setShowFailureMessage(false);
-          onLoginSuccess(token);
-          <Navigate to="/dashboard" replace={true} />
-        } else {
-          setValidationErrorMessage('Session expired. Please try again.');
-          setShowFailureMessage(true);
-          setShowSuccessMessage(false);
+        setShowSuccessMessage(true);
+        setShowFailureMessage(false);
+
+        navigate('/newdashboard');
         }
       } else {
         setShowSuccessMessage(false);
@@ -99,9 +91,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           setValidationErrorMessage(message);
           setShowSuccessMessage(false);
           setShowFailureMessage(true);
-          return;
-        }
-        if (res.status === 401 && res.data.message === 'Incorrect Password') {
+        } else if (res.status === 401 && res.data.message === 'Incorrect Password') {
           let message = 'Incorrect Password! Please Enter Correct Password.';
           setValidationErrorMessage(message);
           setShowSuccessMessage(false);
@@ -120,11 +110,9 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
         setShowSuccessMessage(false);
         setShowFailureMessage(true);
       }
-    }
-    finally {
+    } finally {
       setIsLoading(false);
     }
-
   };
 
   return (

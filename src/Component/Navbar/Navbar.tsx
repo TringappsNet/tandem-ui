@@ -5,12 +5,12 @@ import SendInvite from '../SendInvite/SendInvite';
 import Reset from '../ResetPassword/ResetPassword';
 import CloseIcon from '@mui/icons-material/Close';
 import CreateDeal from '../Milestone/Milestone';
-
-
+import { useNavigate } from 'react-router-dom';
 const Navbar: React.FC = () => {
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
 
+   const navigate =useNavigate();
     const handleOpenPopup = (componentName: string) => {
         setSelectedComponent(componentName);
         setOpenPopup(true);
@@ -20,7 +20,9 @@ const Navbar: React.FC = () => {
         setOpenPopup(false);
         setSelectedComponent(null);
     };
-
+    const handlelogOut =()=>{
+        navigate('/login');
+    }
     return (
         <>
             <nav className={styles.navbarcontainer}>
@@ -43,7 +45,7 @@ const Navbar: React.FC = () => {
                             <button onClick={() => handleOpenPopup('Reset')}>Reset</button>
                             <button onClick={() => handleOpenPopup('Site')}>Site</button>
                             <button onClick={() => handleOpenPopup('Landlord')}>Landlord</button>
-                            <button>Logout</button>
+                            <button onClick={()=>handlelogOut()}>Logout</button>
                         </div>
                     </div>
 
