@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './Registration.module.css';
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import logo from './logo.jpeg';
 
 const Registration: React.FC = () => {
@@ -20,20 +20,47 @@ const Registration: React.FC = () => {
     const [inviteTokenError, setInviteTokenError] = useState('');
     const [inviteToken, setInviteToken] = useState('');
 
+    const firstNameRef = useRef<HTMLInputElement>(null);
+    const lastNameRef = useRef<HTMLInputElement>(null);
+    const addressRef = useRef<HTMLInputElement>(null);
+    const mobileNoRef = useRef<HTMLInputElement>(null);
+    const cityRef = useRef<HTMLInputElement>(null);
+    const stateRef = useRef<HTMLInputElement>(null);
+    const countryRef = useRef<HTMLInputElement>(null);
+    const zipcodeRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const confirmPasswordRef = useRef<HTMLInputElement>(null);
+
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('inviteToken');
-        console.log(token);
         if (token) {
             setInviteToken(token);
         }
     }, []);
 
-    const validateName = (name: string): string => {
+    const validatefirstName = (name: string): string => {
         const namePattern = /^[a-zA-Z\s]+$/;
         if (name.trim() === '') {
-            return 'Name is required.';
+            return 'First Name is required.';
         } else if (name.length > 20) {
+            return 'Name should not exceed 20 characters.';
+        } else if (!namePattern.test(name)) {
+            return 'Name should contain only alphabets and spaces.';
+        } else {
+            return '';
+        }
+    };
+
+    const validatelastName = (name: string): string => {
+        const namePattern = /^[a-zA-Z\s]+$/;
+        if (firstName === '') {
+            return ' First Name is required.';
+        }
+        else if (name.trim() === '') {
+            return 'Last Name is required.';
+        }
+        else if (name.length > 20) {
             return 'Name should not exceed 20 characters.';
         } else if (!namePattern.test(name)) {
             return 'Name should contain only alphabets and spaces.';
@@ -45,7 +72,31 @@ const Registration: React.FC = () => {
     const validatePassword = (password: string): string => {
         const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
         const numberPattern = /\d/g;
-        if (password.trim() === '') {
+        if (firstName === '') {
+            return 'first name is required.';
+        }
+        else if (lastName === '') {
+            return 'last name is required.';
+        }
+        else if (address === '') {
+            return 'address is required.';
+        }
+        else if (mobileNo === '') {
+            return 'mobile number is required';
+        }
+        else if (city === '') {
+            return 'City is required';
+        }
+        else if (state === '') {
+            return 'State is required';
+        }
+        else if (country === '') {
+            return 'Country is required';
+        }
+        else if (zipcode === '') {
+            return 'Zipcode is required';
+        }
+        else if (password.trim() === '') {
             setDisableState(false);
             return 'Password is required.';
         } else if (password.length < 8) {
@@ -64,7 +115,34 @@ const Registration: React.FC = () => {
     };
 
     const validateConfirmpassword = (password: string, confirmpassword: string): string => {
-        if (confirmpassword.trim() === '') {
+        if (firstName === '') {
+            return 'first name is required.';
+        }
+        else if (lastName === '') {
+            return 'last name is required.';
+        }
+        else if (address === '') {
+            return 'address is required.';
+        }
+        else if (mobileNo === '') {
+            return 'mobile number is required';
+        }
+        else if (city === '') {
+            return 'City is required';
+        }
+        else if (state === '') {
+            return 'State is required';
+        }
+        else if (country === '') {
+            return 'Country is required';
+        }
+        else if (zipcode === '') {
+            return 'Zipcode is required';
+        }
+        else if (password === '') {
+            return 'Password is required';
+        }
+        else if (confirmpassword.trim() === '') {
             return 'Please confirm your password.';
         } else if (password !== confirmpassword) {
             return 'Passwords do not match.';
@@ -74,7 +152,13 @@ const Registration: React.FC = () => {
     };
 
     const validateAddress = (address: string): string => {
-        if (address.trim() === '') {
+        if (firstName === '') {
+            return 'first name is required.';
+        }
+        else if (lastName === '') {
+            return 'last name is required.';
+        }
+        else if (address.trim() === '') {
             return 'Address field should not be empty.';
         }
         return '';
@@ -82,18 +166,111 @@ const Registration: React.FC = () => {
 
     const validateMobileNo = (mobileNo: string): string => {
         const mobileNoPattern = /^\d{10}$/;
-        if (mobileNo.trim() === '') {
-            return 'Mobile number is required.';
+        if (firstName === '') {
+            return 'first name is required.';
+        }
+        else if (lastName === '') {
+            return 'last name is required.';
+        }
+        else if (address === '') {
+            return 'address is required.';
+        }
+        else if (mobileNo.trim() === '') {
+            return 'Mobile number should not be empty.';
         } else if (!mobileNoPattern.test(mobileNo)) {
-            return 'Mobile number should be exactly 10 digits and contain only numbers.';
+            return 'Mobile number should be exactly 10';
         } else {
             return '';
         }
     };
 
+    const validateCity = () => {
+        if (firstName === '') {
+            return 'first name is required.';
+        }
+        else if (lastName === '') {
+            return 'last name is required.';
+        }
+        else if (address === '') {
+            return 'address is required.';
+        }
+        else if (mobileNo === '') {
+            return 'mobile number is required';
+        }
+        else {
+            return '';
+        }
+    };
+
+    const validateState = () => {
+        if (firstName === '') {
+            return 'first name is required.';
+        }
+        else if (lastName === '') {
+            return 'last name is required.';
+        }
+        else if (address === '') {
+            return 'address is required.';
+        }
+        else if (mobileNo === '') {
+            return 'mobile number is required';
+        }
+        else if (city === '') {
+            return 'City is required';
+        }
+        else {
+            return '';
+        }
+    }
+
+    const validateCountry = () => {
+        if (firstName === '') {
+            return 'first name is required.';
+        }
+        else if (lastName === '') {
+            return 'last name is required.';
+        }
+        else if (address === '') {
+            return 'address is required.';
+        }
+        else if (mobileNo === '') {
+            return 'mobile number is required';
+        }
+        else if (city === '') {
+            return 'City is required';
+        }
+        else if (state === '') {
+            return 'State is required';
+        }
+        else {
+            return '';
+        }
+    }
+
     const validateZipcode = (zipcode: string): string => {
         const zipcodePattern = /^\d{5}$/;
-        if (zipcode.trim() === '') {
+        if (firstName === '') {
+            return 'first name is required.';
+        }
+        else if (lastName === '') {
+            return 'last name is required.';
+        }
+        else if (address === '') {
+            return 'address is required.';
+        }
+        else if (mobileNo === '') {
+            return 'mobile number is required';
+        }
+        else if (city === '') {
+            return 'City is required';
+        }
+        else if (state === '') {
+            return 'State is required';
+        }
+        else if (country === '') {
+            return 'Country is required';
+        }
+        else if (zipcode.trim() === '') {
             return 'Zipcode is required.';
         } else if (!zipcodePattern.test(zipcode)) {
             return 'Zipcode should be exactly 5 digits.';
@@ -101,10 +278,9 @@ const Registration: React.FC = () => {
             return '';
         }
     };
-
     const handleValidation = () => {
-        const firstNameError = validateName(firstName);
-        const lastNameError = validateName(lastName);
+        const firstNameError = validatefirstName(firstName);
+        const lastNameError = validatelastName(lastName);
         const mobileNoError = validateMobileNo(mobileNo);
         const passwordError = validatePassword(password);
         const addressError = validateAddress(address);
@@ -128,34 +304,36 @@ const Registration: React.FC = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        console.log("fields", firstName, lastName, mobileNo, address, city, state, country, zipcode, password, confirmpassword);
-        if (firstName === '' && lastName === '' && mobileNo === '' &&
-            address === '' && city === '' && state === '' && country === '' &&
-            zipcode === '' && password === '' && confirmpassword === '') {
-            setValidationErrorMessage("Fill out all the fields and register.");
-            return;
-        }
 
-        if (firstName !== '' && lastName !== '' && mobileNo !== '' &&
-            address !== '' && city !== '' && state !== '' && country !== '' &&
-            zipcode !== '' && (password === '' || confirmpassword === '')) {
-            setValidationErrorMessage("Fill the password and confirm it.");
-            return;
-        }
 
-        if (firstName === '' || lastName === '' || mobileNo === '' ||
-            address === '' || city === '' || state === '' || country === '' ||
-            zipcode === '' || password === '' || confirmpassword === '') {
-            setValidationErrorMessage("Please enter values in all required fields.");
-            return;
-        }
+
+        // if (firstName === '' && lastName === '' && mobileNo === '' &&
+        //     address === '' && city === '' && state === '' && country === '' &&
+        //     zipcode === '' && password === '' && confirmpassword === '') {
+        //     setValidationErrorMessage("Fill out all the fields and register.");
+        //     return;
+        // }
+
+        // if (firstName !== '' && lastName !== '' && mobileNo !== '' &&
+        //     address !== '' && city !== '' && state !== '' && country !== '' &&
+        //     zipcode !== '' && (password === '' || confirmpassword === '')) {
+        //     setValidationErrorMessage("Fill the password and confirm it.");
+        //     return;
+        // }
+
+        // if (firstName === '' || lastName === '' || mobileNo === '' ||
+        //     address === '' || city === '' || state === '' || country === '' ||
+        //     zipcode === '' || password === '' || confirmpassword === '') {
+        //     setValidationErrorMessage("Please enter values in all required fields.");
+        //     return;
+        // }
 
         if (!handleValidation()) {
             return;
         }
 
         try {
-            const response = await axios.post('http://192.168.1.223:3008/api/auth/register', {
+            const response = await axiosInstance.post('/api/auth/register', {
                 firstName,
                 lastName,
                 mobileNo,
@@ -171,7 +349,6 @@ const Registration: React.FC = () => {
             setValidationSucessMessage('Registration successful!');
             setInviteTokenError('');
 
-
             setFirstname('');
             setLastname('');
             setMobileno('');
@@ -186,7 +363,6 @@ const Registration: React.FC = () => {
             setInviteToken('');
             setInviteTokenError('');
         } catch (error: any) {
-            console.error('Registration failed:', error);
             if (error.response && error.response.status === 400) {
                 if (error.response.data && error.response.data.message) {
                     setInviteTokenError(error.response.data.message);
@@ -198,6 +374,92 @@ const Registration: React.FC = () => {
             }
         }
     };
+
+    // const handleBlur = (field: string) => {
+    //     let error = '';
+    //     switch (field) {
+    //         case 'firstName':
+    //             error = validatefirstName(firstName);
+    //             if (error === '') {
+    //                 lastNameRef.current?.focus();
+    //             } else {
+    //                 setValidationErrorMessage(error);
+    //             }
+    //             break;
+    //         case 'lastName':
+    //             error = validatelastName(lastName);
+    //             if (error === '') {
+    //                 addressRef.current?.focus();
+    //             } else {
+    //                 setValidationErrorMessage(error);
+    //             }
+    //             break;
+    //         case 'address':
+    //             error = validateAddress(address);
+    //             if (error === '') {
+    //                 mobileNoRef.current?.focus();
+    //             } else {
+    //                 setValidationErrorMessage(error);
+    //             }
+    //             break;
+    //         case 'mobileNo':
+    //             error = validateMobileNo(mobileNo);
+    //             if (error === '') {
+    //                 cityRef.current?.focus();
+    //             } else {
+    //                 setValidationErrorMessage(error);
+    //             }
+    //             break;
+    //         case 'city':
+    //             if (city.trim() === '') {
+    //                 setValidationErrorMessage('City is required.');
+    //             } else {
+    //                 stateRef.current?.focus();
+    //             }
+    //             break;
+    //         case 'state':
+    //             if (state.trim() === '') {
+    //                 setValidationErrorMessage('State is required.');
+    //             } else {
+    //                 countryRef.current?.focus();
+    //             }
+    //             break;
+    //         case 'country':
+    //             if (country.trim() === '') {
+    //                 setValidationErrorMessage('Country is required.');
+    //             } else {
+    //                 zipcodeRef.current?.focus();
+    //             }
+    //             break;
+    //         case 'zipcode':
+    //             error = validateZipcode(zipcode);
+    //             if (error === '') {
+    //                 passwordRef.current?.focus();
+    //             } else {
+    //                 setValidationErrorMessage(error);
+    //             }
+    //             break;
+    //         case 'password':
+    //             error = validatePassword(password);
+    //             if (error === '') {
+    //                 confirmPasswordRef.current?.focus();
+    //             } else {
+    //                 setValidationErrorMessage(error);
+    //             }
+    //             break;
+    //         case 'confirmpassword':
+    //             error = validateConfirmpassword(password, confirmpassword);
+    //             if (error === '') {
+    //                 setValidationErrorMessage('');
+    //             } else {
+    //                 setValidationErrorMessage(error);
+    //             }
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // };
+
 
     return (
         <div className='app'>
@@ -234,9 +496,11 @@ const Registration: React.FC = () => {
                                             id="firstName"
                                             placeholder="Enter your first name"
                                             value={firstName}
+                                            ref={firstNameRef}
+                                            autoFocus
                                             onChange={(e) => {
                                                 setFirstname(e.target.value);
-                                                setValidationErrorMessage(validateName(e.target.value));
+                                                setValidationErrorMessage(validatefirstName(e.target.value));
                                             }}
                                         />
                                     </div>
@@ -246,11 +510,13 @@ const Registration: React.FC = () => {
                                             type="text"
                                             id="lastName"
                                             placeholder="Enter your last name"
+                                            ref={lastNameRef}
                                             value={lastName}
                                             onChange={(e) => {
                                                 setLastname(e.target.value);
-                                                setValidationErrorMessage(validateName(e.target.value));
+                                                setValidationErrorMessage(validatelastName(e.target.value));
                                             }}
+
                                         />
                                     </div>
                                 </div>
@@ -261,11 +527,13 @@ const Registration: React.FC = () => {
                                             type="text"
                                             id="address"
                                             placeholder="Enter your address"
+                                            ref={addressRef}
                                             value={address}
                                             onChange={(e) => {
                                                 setAddress(e.target.value);
                                                 setValidationErrorMessage(validateAddress(e.target.value));
                                             }}
+
                                         />
                                     </div>
 
@@ -275,11 +543,13 @@ const Registration: React.FC = () => {
                                             type="tel"
                                             id="mobileNo"
                                             placeholder="Enter your mobile number"
+                                            ref={mobileNoRef}
                                             value={mobileNo}
                                             onChange={(e) => {
                                                 setMobileno(e.target.value);
                                                 setValidationErrorMessage(validateMobileNo(e.target.value));
                                             }}
+
                                         />
                                     </div>
                                 </div>
@@ -290,8 +560,13 @@ const Registration: React.FC = () => {
                                             type="text"
                                             id="city"
                                             placeholder="Enter your city"
+                                            ref={cityRef}
                                             value={city}
-                                            onChange={(e) => setCity(e.target.value)}
+                                            onChange={(e) => {
+                                                setCity(e.target.value)
+                                                setValidationErrorMessage(validateCity());
+                                            }}
+
                                         />
                                     </div>
                                     <div className={styles.formGroup}>
@@ -300,8 +575,14 @@ const Registration: React.FC = () => {
                                             type="text"
                                             id="state"
                                             placeholder="Enter your state"
+                                            ref={stateRef}
                                             value={state}
-                                            onChange={(e) => setState(e.target.value)}
+                                            onChange={(e) => {
+                                                setState(e.target.value)
+                                                setValidationErrorMessage(validateState());
+                                            }
+                                            }
+
                                         />
                                     </div>
                                 </div>
@@ -312,8 +593,13 @@ const Registration: React.FC = () => {
                                             type="text"
                                             id="country"
                                             placeholder="Enter your country"
+                                            ref={countryRef}
                                             value={country}
-                                            onChange={(e) => setCountry(e.target.value)}
+                                            onChange={(e) => {
+                                                setCountry(e.target.value)
+                                                setValidationErrorMessage(validateCountry());
+                                            }}
+
                                         />
                                     </div>
                                     <div className={styles.formGroup}>
@@ -322,11 +608,13 @@ const Registration: React.FC = () => {
                                             type="text"
                                             id="zipcode"
                                             placeholder="Enter your zipcode"
+                                            ref={zipcodeRef}
                                             value={zipcode}
                                             onChange={(e) => {
                                                 setZipcode(e.target.value);
                                                 setValidationErrorMessage(validateZipcode(e.target.value));
                                             }}
+
                                         />
                                     </div>
                                 </div>
@@ -337,11 +625,13 @@ const Registration: React.FC = () => {
                                             type="password"
                                             id="password"
                                             placeholder="Enter your password"
+                                            ref={passwordRef}
                                             value={password}
                                             onChange={(e) => {
                                                 setPassword(e.target.value);
                                                 setValidationErrorMessage(validatePassword(e.target.value));
                                             }}
+
                                         />
                                     </div>
                                     <div className={styles.formGroup}>
@@ -351,11 +641,13 @@ const Registration: React.FC = () => {
                                             id="confirmPassword"
                                             placeholder="Confirm your password"
                                             disabled={!disableState}
+                                            ref={confirmPasswordRef}
                                             value={confirmpassword}
                                             onChange={(e) => {
                                                 setConfirmpassword(e.target.value);
                                                 setValidationErrorMessage(validateConfirmpassword(password, e.target.value));
                                             }}
+
                                         />
                                     </div>
                                 </div>

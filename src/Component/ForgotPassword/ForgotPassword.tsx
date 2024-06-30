@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styles from './ForgotPassword.module.css';
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 
 
 const ForgotPassword: React.FC = () => {
@@ -41,7 +42,7 @@ const ForgotPassword: React.FC = () => {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:3008/auth/forgotpassword', { email }, {
+      const response = await axiosInstance.post('/auth/forgotpassword', { email }, {
         headers: {
           'Content-Type': 'application/json'
         }
