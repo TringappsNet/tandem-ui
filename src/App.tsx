@@ -13,10 +13,10 @@ import Milestone from '../src/Component/Milestone/Milestone';
 const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(localStorage.getItem('accessToken'));
 
-  const handleLoginSuccess = (token: string) => {
-    setAccessToken(token);
-    localStorage.setItem('accessToken', token);
-  };
+  // const handleLoginSuccess = (token: string) => {
+  //   setAccessToken(token);
+  //   localStorage.setItem('accessToken', token);
+  // };
 
   // const handleLogout = () => {
   //   setAccessToken(null);
@@ -34,13 +34,15 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={accessToken ? <Navigate to="/dashboard" /> : <Login onLoginSuccess={handleLoginSuccess} />} />
+        <Route path="/" element={accessToken ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path="/registerform" element={<Registration />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/change" element={<ChangePassword />} />
-        <Route path="/dashboard" element={accessToken ? <NewDashboard /> : <Navigate to="/" />} />
         <Route path="/newdashboard" element={<NewDashboard />} />
         <Route path="/mile" element={<Milestone />} />
+        <Route path="/login" element={<Login />} />
+        {/* <Route path="/cards" element={<Cards />} /> */}
+
       </Routes>
     </Router>
   );

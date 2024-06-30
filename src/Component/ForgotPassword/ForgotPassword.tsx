@@ -61,7 +61,7 @@ const ForgotPassword: React.FC = () => {
         const res = error.response
         if (res.status === 500) {
           let message = 'Server busy, Try again later'
-          setValidationErrorMessage(error.message)
+          setValidationErrorMessage(message)
           setShowSuccessMessage(false);
           setShowFailureMessage(true);
           return
