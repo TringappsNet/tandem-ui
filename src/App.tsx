@@ -7,7 +7,6 @@ import ChangePassword from './Component/ChangePassword/ChangePassword';
 import NewDashboard from './Component/NewDashboard/Dashboard';
 import Milestone from '../src/Component/Milestone/Milestone';
 import Login from './Component/Login/Login';
-import Cards from './Component/Cards/Cards';
 const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(localStorage.getItem('accessToken'));
 
@@ -32,14 +31,13 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={accessToken ? <Navigate to="/dashboard" /> : <Login />} />
+        <Route path="/" element={accessToken ? <Navigate to="/newdashboard" /> : <Login />} />
         <Route path="/registerform" element={<Registration />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/change" element={<ChangePassword />} />
         <Route path="/newdashboard" element={<NewDashboard />} />
         <Route path="/mile" element={<Milestone />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/cards" element={<Cards />} />
 
       </Routes>
     </Router>
