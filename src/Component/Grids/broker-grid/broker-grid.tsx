@@ -1,8 +1,17 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
-import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import axios from 'axios';
-import axiosInstance from '../../AxiosInterceptor/AxiosInterceptor';
+import React, { useState, ChangeEvent, useEffect } from "react";
+import { DataGrid, GridColDef, GridPaginationModel } from "@mui/x-data-grid";
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
+import axios from "axios";
+import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
+import styles from "./broker-grid.module.css";
+
 
 interface User {
   id: number;
@@ -27,15 +36,15 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<User>({
     id: 0,
-    email: '',
-    firstName: '',
-    lastName: '',
-    mobile: '',
-    address: '',
-    city: '',
-    state: '',
-    country: '',
-    zipcode: '',
+    email: "",
+    firstName: "",
+    lastName: "",
+    mobile: "",
+    address: "",
+    city: "",
+    state: "",
+    country: "",
+    zipcode: "",
     isActive: true,
   });
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
@@ -49,7 +58,7 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
 
   const fetchBrokers = async () => {
     try {
-      const response = await axiosInstance.get('/brokers');
+      const response = await axiosInstance.get("/brokers");
       const brokers = response.data.map((broker: any) => ({
         id: broker.user.id,
         email: broker.user.email,
@@ -71,7 +80,7 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
       }));
       setRows(brokers);
     } catch (error) {
-      console.error('Error fetching broker names:', error);
+      console.error("Error fetching broker names:", error);
     }
   };
 
@@ -89,7 +98,7 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
       setRows([...rows, response.data]);
       handleClose();
     } catch (error) {
-      console.error('Error adding user:', error);
+      console.error("Error adding user:", error);
     }
   };
 
@@ -104,10 +113,12 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
   const handleUpdate = async () => {
     try {
       const response = await axios.put(`${apiUrl}/${formData.id}`, formData);
-      setRows(rows.map((row) => (row.id === formData.id ? response.data : row)));
+      setRows(
+        rows.map((row) => (row.id === formData.id ? response.data : row))
+      );
       handleClose();
     } catch (error) {
-      console.error('Error updating user:', error);
+      console.error("Error updating user:", error);
     }
   };
 
@@ -116,48 +127,34 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
       await axios.delete(`${apiUrl}/${id}`);
       setRows(rows.filter((row) => row.id !== id));
     } catch (error) {
-      console.error('Error deleting user:', error);
+      console.error("Error deleting user:", error);
     }
   };
 
   const columns: GridColDef[] = [
-    // { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'email', headerName: 'Email', width: 200 },
-    { field: 'firstName', headerName: 'First name', width: 150 },
-    { field: 'lastName', headerName: 'Last name', width: 150 },
-    { field: 'mobile', headerName: 'Mobile', width: 150 },
-    { field: 'address', headerName: 'Address', width: 150 },
-    { field: 'city', headerName: 'City', width: 100 },
-    { field: 'state', headerName: 'State', width: 100 },
-    { field: 'country', headerName: 'Country', width: 100 },
-    { field: 'zipcode', headerName: 'Zipcode', width: 100 },
-    { field: 'isActive', headerName: 'Active', width: 100 },
-
-    { field: 'totalDeals', headerName: 'Total Deals', width: 100 },
-    { field: 'dealsOpened', headerName: 'Deals Opened', width: 100 },
-    { field: 'dealsInProgress', headerName: 'Deals In-Progress', width: 100 },
-    { field: 'dealsClosed', headerName: 'Deals Closed', width: 100 },
-    { field: 'totalCommission', headerName: 'Total Commission', width: 100 },
-
-    // {
-    //   field: 'actions',
-    //   headerName: 'Actions',
-    //   width: 150,
-    //   renderCell: (params) => (
-    //     <>
-    //       <Button onClick={() => handleEdit(params.row.id)}>Edit</Button>
-    //       <Button onClick={() => handleDelete(params.row.id)}>Delete</Button>
-    //     </>
-    //   ),
-    // },
+    { field: "email", 
+      headerClassName: 'super-app-theme--header',
+      headerName: "Email", width: 200 },
+    { field: "firstName", headerName: "First name", width: 150 },
+    { field: "lastName", headerName: "Last name", width: 150 },
+    { field: "mobile", headerName: "Mobile", width: 150 },
+    { field: "address", headerName: "Address", width: 150 },
+    { field: "city", headerName: "City", width: 100 },
+    { field: "state", headerName: "State", width: 100 },
+    { field: "country", headerName: "Country", width: 100 },
+    { field: "zipcode", headerName: "Zipcode", width: 100 },
+    { field: "isActive", headerName: "Active", width: 100 },
+    { field: "totalDeals", headerName: "Total Deals", width: 100 },
+    { field: "dealsOpened", headerName: "Deals Opened", width: 100 },
+    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 100 },
+    { field: "dealsClosed", headerName: "Deals Closed", width: 100 },
+    { field: "totalCommission", headerName: "Total Commission", width: 100 },
   ];
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
-      {/* <Button variant="contained" color="primary" onClick={handleOpen}>
-        Add User
-      </Button> */}
+    <div className={styles.gridContainer}>
       <DataGrid
+        className={styles.dataGrid}
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}
@@ -165,7 +162,7 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
         checkboxSelection
       />
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{formData.id ? 'Edit User' : 'Add User'}</DialogTitle>
+        <DialogTitle>{formData.id ? "Edit User" : "Add User"}</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -254,8 +251,11 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={formData.id ? handleUpdate : handleAdd} color="primary">
-            {formData.id ? 'Update' : 'Add'}
+          <Button
+            onClick={formData.id ? handleUpdate : handleAdd}
+            color="primary"
+          >
+            {formData.id ? "Update" : "Add"}
           </Button>
         </DialogActions>
       </Dialog>
