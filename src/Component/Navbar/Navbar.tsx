@@ -1,3 +1,4 @@
+// Navbar.tsx
 import React, { useState } from 'react';
 import { Dialog, DialogContent, Icon, DialogTitle } from '@mui/material';
 import styles from './Navbar.module.css';
@@ -5,12 +6,14 @@ import SendInvite from '../SendInvite/SendInvite';
 import Reset from '../ResetPassword/ResetPassword';
 import CloseIcon from '@mui/icons-material/Close';
 import CreateDeal from '../Milestone/Milestone';
+import Landlord from '../Grids/landlordGrid/landlord-grid';
 import { useNavigate } from 'react-router-dom';
+
 const Navbar: React.FC = () => {
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
 
-   const navigate =useNavigate();
+    const navigate = useNavigate();
     const handleOpenPopup = (componentName: string) => {
         setSelectedComponent(componentName);
         setOpenPopup(true);
@@ -20,19 +23,22 @@ const Navbar: React.FC = () => {
         setOpenPopup(false);
         setSelectedComponent(null);
     };
-    const handlelogOut =()=>{
+
+    const handlelogOut = () => {
         navigate('/login');
-    }
-    const handleCards = ()=>{
+    };
+
+    const handleCards = () => {
         navigate('/cards');
-    }
+    };
+
     return (
         <>
             <nav className={styles.navbarcontainer}>
                 <div className={styles.header}>
                     <img src='https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0' alt="Tandem Logo" />
                     <h3>TANDEM INFRASTRUCTURE</h3>
-                    <p onClick={() => handleCards} style={{cursor:'pointer'}}>CARDS</p>
+                    <p onClick={() => handleCards()} style={{ cursor: 'pointer' }}>CARDS</p>
                 </div>
 
                 <div className={styles.rightheadersection}>
@@ -48,14 +54,19 @@ const Navbar: React.FC = () => {
                             <button onClick={() => handleOpenPopup('Reset')}>Reset</button>
                             <button onClick={() => handleOpenPopup('Site')}>Site</button>
                             <button onClick={() => handleOpenPopup('Landlord')}>Landlord</button>
-                            <button onClick={()=>handlelogOut()}>Logout</button>
+                            <button onClick={() => handlelogOut()}>Logout</button>
                         </div>
                     </div>
-
                 </div>
             </nav>
 
-            <Dialog open={openPopup} onClose={handleClosePopup} sx={{ padding: 0, margin: 0 }}>
+            <Dialog
+                open={openPopup}
+                onClose={handleClosePopup}
+                maxWidth={selectedComponent === 'Landlord' ? 'lg' : 'sm'} // Conditionally set maxWidth
+                fullWidth={selectedComponent === 'Landlord'} // Conditionally set fullWidth
+                sx={{ padding: 0, margin: 0 }}
+            >
                 <DialogTitle sx={{ padding: 0 }}>
                     <Icon
                         aria-label="close"
@@ -72,10 +83,11 @@ const Navbar: React.FC = () => {
                     </Icon>
                 </DialogTitle>
 
-                <DialogContent sx={{ padding: 0 }}>
+                <DialogContent sx={{ padding: selectedComponent === 'Landlord' ? 2 : 0 }}> {/* Conditionally adjust padding */}
                     {selectedComponent === 'SendInvite' && <SendInvite />}
                     {selectedComponent === 'Reset' && <Reset />}
                     {selectedComponent === 'CreateDeal' && <CreateDeal />}
+                    {selectedComponent === 'Landlord' && <Landlord />}
                 </DialogContent>
             </Dialog>
         </>

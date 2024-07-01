@@ -6,6 +6,7 @@ import Cards from "../Cards/Cards";
 import styles from "./Dashboard.module.css";
 import axiosInstance from "../AxiosInterceptor/AxiosInterceptor";
 import BrokerGrid from "../Grids/brokerGrid/broker-grid";
+import LandlordGrid from "../Grids/landlordGrid/landlord-grid";
 
 type Deal = {
   totalDeals: number;
