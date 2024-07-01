@@ -71,7 +71,9 @@ const Dashboard: React.FC = () => {
           Brokers
         </h1>
         <br></br>
-        <FullGrid apiUrl={"/brokers"} />
+        <div>
+          <FullGrid apiUrl={"/brokers"} />
+        </div>
       </div>
     </div>
   );

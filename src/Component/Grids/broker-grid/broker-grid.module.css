@@ -1,11 +1,14 @@
-
 .gridContainer {
-    height: 400px;
+    display: flex;
+    flex-direction: column;
+    height: 45vh;
     width: 100%;
 }
 
 .dataGrid {
+    flex-grow: 1;
     background-color: #f8f9fa;
+    height: 80%; 
 }
 
 .dataGrid .MuiDataGrid-columnHeaders {
@@ -25,11 +28,14 @@
     color: #000000;
 }
 
-.super-app-theme--header {
-    background-color: #f0f0f0; 
-    color: #333;             
-    font-weight: bold;   
-    text-align: center;       
-    padding: 10px;         
-    border-bottom: 2px solid #ccc; 
-  }
+@media (max-width: 768px) {
+    .gridContainer {
+        height: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gridContainer {
+        height: 500px;
+    }
+}
