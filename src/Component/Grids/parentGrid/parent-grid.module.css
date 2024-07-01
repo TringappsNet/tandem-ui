@@ -1,7 +1,7 @@
 .gridContainer {
     display: flex;
     flex-direction: column;
-    height: 60vh;
+    height: 45vh;
     width: 100%;
 }
 
@@ -11,9 +11,14 @@
     height: 80%; 
 }
 
+.dataGrid .MuiDataGrid-footerContainer {
+    display: none;
+}
+
 .dataGrid .MuiDataGrid-columnHeaders {
-    background-color: #ede9e9;
+    background-color: #0078d4;
     color: #ffffff;
+    overflow: hidden;
 }
 
 .dataGrid .MuiDataGrid-row {
@@ -38,8 +43,4 @@
     .gridContainer {
         height: 500px;
     }
-}
-.header{
-    background-color:#262262;
-    color: white;
 }

@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import {
   Button,
   TextField,
@@ -9,44 +9,41 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
-import styles from "./broker-grid.module.css";
+import styles from "./landlord-grid.module.css";
 import FullGrid from "../parentGrid/parent-grid";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 
-interface User {
+interface Landlord {
   id: number;
+  name: string;
+  phoneNumber: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  mobile: string;
-  address: string;
+  address1: string;
+  address2: string;
   city: string;
   state: string;
   country: string;
   zipcode: string;
-  isActive: boolean;
 }
 
-
 const config = {
-  apiUrl: "/brokers",
+  apiUrl: "/landlords",
 };
 
-const BrokerGrid: React.FC = () => {
-  const [rows, setRows] = useState<User[]>([]);
+const LandlordGrid: React.FC = () => {
+  const [rows, setRows] = useState<Landlord[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-  const [formData, setFormData] = useState<User>({
+  const [formData, setFormData] = useState<Landlord>({
     id: 0,
+    name: "",
+    phoneNumber: "",
     email: "",
-    firstName: "",
-    lastName: "",
-    mobile: "",
-    address: "",
+    address1: "",
+    address2: "",
     city: "",
     state: "",
     country: "",
     zipcode: "",
-    isActive: true,
   });
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     pageSize: 5,
@@ -54,36 +51,15 @@ const BrokerGrid: React.FC = () => {
   });
 
   useEffect(() => {
-    fetchBrokers();
+    fetchLandlords();
   }, []);
 
-  const fetchBrokers = async () => {
+  const fetchLandlords = async () => {
     try {
       const response = await axiosInstance.get(config.apiUrl);
-      const brokers = response.data.map((broker: any) => {
-        const fullName = `${broker.user.firstName} ${broker.user.lastName}`;
-        return {
-          id: broker.user.id,
-          email: broker.user.email,
-          fullName: fullName,
-          mobile: broker.user.mobile,
-          address: broker.user.address,
-          city: broker.user.city,
-          state: broker.user.state,
-          country: broker.user.country,
-          zipcode: broker.user.zipcode,
-          isActive: broker.user.isActive,
-          totalDeals: broker.totalDeals,
-          dealsOpened: broker.dealsOpened,
-          dealsInProgress: broker.dealsInProgress,
-          dealsClosed: broker.dealsClosed,
-          totalCommission: broker.totalCommission,
-        };
-      });
-
-      setRows(brokers);
+      setRows(response.data);
     } catch (error) {
-      console.error("Error fetching broker names:", error);
+      console.error("Error fetching landlords:", error);
     }
   };
 
@@ -101,7 +77,7 @@ const BrokerGrid: React.FC = () => {
       setRows([...rows, response.data]);
       handleClose();
     } catch (error) {
-      console.error("Error adding user:", error);
+      console.error("Error adding landlord:", error);
     }
   };
 
@@ -119,7 +95,7 @@ const BrokerGrid: React.FC = () => {
       setRows(rows.map((row) => (row.id === formData.id ? response.data : row)));
       handleClose();
     } catch (error) {
-      console.error("Error updating user:", error);
+      console.error("Error updating landlord:", error);
     }
   };
 
@@ -128,23 +104,24 @@ const BrokerGrid: React.FC = () => {
       await axios.delete(`${config.apiUrl}/${id}`);
       setRows(rows.filter((row) => row.id !== id));
     } catch (error) {
-      console.error("Error deleting user:", error);
+      console.error("Error deleting landlord:", error);
     }
   };
 
   const columns: GridColDef[] = [
-    { field: "fullName", headerName: "Name", width: 150, align: "center", headerAlign: "center" },
-    { field: "mobile", headerName: "Mobile", width: 150, align: "center", headerAlign: "center" },
-    { field: "totalDeals", headerName: "Total Deals", width: 150, align: "center", headerAlign: "center" },
-    { field: "dealsOpened", headerName: "Deals Opened", width: 150, align: "center", headerAlign: "center" },
-    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 150, align: "center", headerAlign: "center" },
-    { field: "dealsClosed", headerName: "Deals Closed", width: 150, align: "center", headerAlign: "center" },
-    { field: "totalCommission", headerName: "Total Commission", width: 150, align: "center", headerAlign: "center" },
-    { field: "isActive", headerName: "Active", width: 150, align: "center", headerAlign: "center" },
+    { field: "name", headerName: "Name", width: 150, align: "center", headerAlign: "center" },
+    { field: "phoneNumber", headerName: "Phone Number", width: 150, align: "center", headerAlign: "center" },
+    { field: "email", headerName: "Email", width: 200, align: "center", headerAlign: "center" },
+    { field: "address1", headerName: "Address 1", width: 150, align: "center", headerAlign: "center" },
+    { field: "address2", headerName: "Address 2", width: 150, align: "center", headerAlign: "center" },
+    { field: "city", headerName: "City", width: 100, align: "center", headerAlign: "center" },
+    { field: "state", headerName: "State", width: 100, align: "center", headerAlign: "center" },
+    { field: "country", headerName: "Country", width: 100, align: "center", headerAlign: "center" },
+    { field: "zipcode", headerName: "Zipcode", width: 100, align: "center", headerAlign: "center" },
   ];
 
   return (
-    <div>
+    <div className={styles.gridContainer}> 
       <FullGrid
         rows={rows}
         columns={columns}
@@ -152,12 +129,31 @@ const BrokerGrid: React.FC = () => {
         setPaginationModel={setPaginationModel}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
+        className={styles.gridContainer} 
       />
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{formData.id ? "Edit User" : "Add User"}</DialogTitle>
+        <DialogTitle>{formData.id ? "Edit Landlord" : "Add Landlord"}</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
+            margin="dense"
+            name="name"
+            label="Name"
+            type="text"
+            fullWidth
+            value={formData.name}
+            onChange={handleChange}
+          />
+          <TextField
+            margin="dense"
+            name="phoneNumber"
+            label="Phone Number"
+            type="text"
+            fullWidth
+            value={formData.phoneNumber}
+            onChange={handleChange}
+          />
+          <TextField
             margin="dense"
             name="email"
             label="Email"
@@ -168,38 +164,20 @@ const BrokerGrid: React.FC = () => {
           />
           <TextField
             margin="dense"
-            name="firstName"
-            label="First Name"
+            name="address1"
+            label="Address 1"
             type="text"
             fullWidth
-            value={formData.firstName}
+            value={formData.address1}
             onChange={handleChange}
           />
           <TextField
             margin="dense"
-            name="lastName"
-            label="Last Name"
+            name="address2"
+            label="Address 2"
             type="text"
             fullWidth
-            value={formData.lastName}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            name="mobile"
-            label="Mobile"
-            type="text"
-            fullWidth
-            value={formData.mobile}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            name="address"
-            label="Address"
-            type="text"
-            fullWidth
-            value={formData.address}
+            value={formData.address2}
             onChange={handleChange}
           />
           <TextField
@@ -252,4 +230,4 @@ const BrokerGrid: React.FC = () => {
   );
 };
 
-export default BrokerGrid;
+export default LandlordGrid;
