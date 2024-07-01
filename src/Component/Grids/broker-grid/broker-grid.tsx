@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import { DataGrid, GridColDef, GridPaginationModel } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridPaginationModel, GridValueGetter } from "@mui/x-data-grid";
 import {
   Button,
   TextField,
@@ -11,7 +11,6 @@ import {
 import axios from "axios";
 import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
 import styles from "./broker-grid.module.css";
-
 
 interface User {
   id: number;
@@ -59,25 +58,28 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
   const fetchBrokers = async () => {
     try {
       const response = await axiosInstance.get("/brokers");
-      const brokers = response.data.map((broker: any) => ({
-        id: broker.user.id,
-        email: broker.user.email,
-        firstName: broker.user.firstName,
-        lastName: broker.user.lastName,
-        mobile: broker.user.mobile,
-        address: broker.user.address,
-        city: broker.user.city,
-        state: broker.user.state,
-        country: broker.user.country,
-        zipcode: broker.user.zipcode,
-        isActive: broker.user.isActive,
-
-        totalDeals: broker.totalDeals,
-        dealsOpened: broker.dealsOpened,
-        dealsInProgress: broker.dealsInProgress,
-        dealsClosed: broker.dealsClosed,
-        totalCommission: broker.totalCommission,
-      }));
+      const brokers = response.data.map((broker: any) => {
+        const fullName = `${broker.user.firstName} ${broker.user.lastName}`;
+        return {
+          id: broker.user.id,
+          email: broker.user.email,
+          fullName: fullName,
+          mobile: broker.user.mobile,
+          address: broker.user.address,
+          city: broker.user.city,
+          state: broker.user.state,
+          country: broker.user.country,
+          zipcode: broker.user.zipcode,
+          isActive: broker.user.isActive,
+      
+          totalDeals: broker.totalDeals,
+          dealsOpened: broker.dealsOpened,
+          dealsInProgress: broker.dealsInProgress,
+          dealsClosed: broker.dealsClosed,
+          totalCommission: broker.totalCommission,
+        };
+      });
+      
       setRows(brokers);
     } catch (error) {
       console.error("Error fetching broker names:", error);
@@ -132,23 +134,14 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
   };
 
   const columns: GridColDef[] = [
-    { field: "email", 
-      headerClassName: 'super-app-theme--header',
-      headerName: "Email", width: 200 },
-    { field: "firstName", headerName: "First name", width: 150 },
-    { field: "lastName", headerName: "Last name", width: 150 },
+    { field: "fullName", headerName: "Name", width: 150 },
     { field: "mobile", headerName: "Mobile", width: 150 },
-    { field: "address", headerName: "Address", width: 150 },
-    { field: "city", headerName: "City", width: 100 },
-    { field: "state", headerName: "State", width: 100 },
-    { field: "country", headerName: "Country", width: 100 },
-    { field: "zipcode", headerName: "Zipcode", width: 100 },
-    { field: "isActive", headerName: "Active", width: 100 },
-    { field: "totalDeals", headerName: "Total Deals", width: 100 },
-    { field: "dealsOpened", headerName: "Deals Opened", width: 100 },
-    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 100 },
-    { field: "dealsClosed", headerName: "Deals Closed", width: 100 },
-    { field: "totalCommission", headerName: "Total Commission", width: 100 },
+    { field: "totalDeals", headerName: "Total Deals", width: 150 },
+    { field: "dealsOpened", headerName: "Deals Opened", width: 150 },
+    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 150 },
+    { field: "dealsClosed", headerName: "Deals Closed", width: 150 },
+    { field: "totalCommission", headerName: "Total Commission", width: 150 },
+    { field: "isActive", headerName: "Active", width: 150 },
   ];
 
   return (
