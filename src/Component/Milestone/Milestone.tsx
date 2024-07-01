@@ -245,7 +245,7 @@ const DealForm = () => {
                                     </Button>
                                 </Box>
                             </Box>
-                            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', position:'absolute',top:"260px", zIndex:999 }}>
                                 {steps[activeStep].fields.map((field, index) => renderField(field, index))}
                                 <Button
                                     variant="contained"

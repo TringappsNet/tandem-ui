@@ -27,7 +27,7 @@
 }
 
 .header p {
-    margin-left: 40px;
+    margin-left: 20px;
     text-decoration: none;
     color: #fff;
 }
@@ -86,7 +86,7 @@
     position: absolute;
     top: 50px;
     right: 0;
-    width: 160px;
+    width: 180px;
     background-color: #fff;
     color: #262262;
     border: 1px solid #ccc;
