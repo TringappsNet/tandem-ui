@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styles from './Cards.module.css';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { FiEdit } from "react-icons/fi";
-import Navbar from '../Navbar/Navbar';
 
 interface Deal {
     activeStep: number;
@@ -61,26 +60,22 @@ const Cards: React.FC = () => {
     };
 
     return (
-        <>
-            {/* <Navbar /> */}
-            <div className={styles.cardList} >
-                {dealsData.map((deal, index) => (
-                    <div key={index} className={styles.card}>
-                        <div>
-                            <div className={styles.cardTitle}>Deal #{deal.id} <div className={styles.hide}><FiEdit onClick={() => editDealForm(deal)} /></div></div>
-                            <p className={styles.brokerName}><span>Broker Name:</span> {deal.brokerName}</p>
-                        </div>
-                        <div className={styles.statusLine}>
-                            <div className={styles.statusLabel}>Status:</div>
-                            <div className={`${styles.statusButton} ${getStatusButtonClass(deal.status)}`}>
-                                {deal.status}
-                            </div>
+        <div className={styles.cardList} >
+            {dealsData.map((deal, index) => (
+                <div key={index} className={styles.card}>
+                    <div>
+                        <div className={styles.cardTitle}>Deal #{deal.id} <div className={styles.hide}><FiEdit onClick={() => editDealForm(deal)} /></div></div>
+                        <p className={styles.brokerName}><span>Broker Name:</span> {deal.brokerName}</p>
+                    </div>
+                    <div className={styles.statusLine}>
+                        <div className={styles.statusLabel}>Status:</div>
+                        <div className={`${styles.statusButton} ${getStatusButtonClass(deal.status)}`}>
+                            {deal.status}
                         </div>
                     </div>
-                ))}
-            </div>
-        </>
-
+                </div>
+            ))}
+        </div>
     );
 };
 

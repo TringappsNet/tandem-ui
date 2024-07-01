@@ -94,6 +94,40 @@ const Navbar: React.FC = () => {
         }
     }, [openStepper]);
 
+    const saveFormData = async () => {
+
+        try {
+          const deal: any = localStorage.getItem('dealdetails')
+          const dealtemp: any = JSON.parse(deal)
+          if (dealtemp.isNew && isFirstSave) {
+            const response = await axiosInstance.post('/deals/deal', dealtemp);
+            console.log('Form data saved:', response.data);
+            localStorage.removeItem('dealdetails');
+            setIsFirstSave(false);
+            return
+          }
+          const response = await axiosInstance.put(`/deals/deal/${dealtemp.id}`, dealtemp);
+          console.log('Form data saved for put:', response.data);
+          localStorage.removeItem('dealdetails');
+          setIsFirstSave(true);
+    
+        } catch (error) {
+          console.error('Error saving form data:', error);
+          return
+        }
+      };
+    const createDealForm = () => {
+        setOpenStepper(true);
+        setDealFormData(undefined);
+        // console.log("card Deal respected value ", deal);
+    }
+
+    useEffect(() => {
+        if (!openStepper) {
+            saveFormData();
+        }
+    }, [openStepper]);
+
     return (
         <>
             <nav className={styles.navbarcontainer}>
