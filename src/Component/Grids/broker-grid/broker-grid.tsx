@@ -135,14 +135,14 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
   };
 
   const columns: GridColDef[] = [
-    { field: "fullName", headerName: "Name", width: 150, align: "center", headerAlign:"center" },
-    { field: "mobile", headerName: "Mobile", width: 150, align: "center", headerAlign:"center" },
-    { field: "totalDeals", headerName: "Total Deals", width: 150, align: "center", headerAlign:"center" },
-    { field: "dealsOpened", headerName: "Deals Opened", width: 150, align: "center", headerAlign:"center" },
-    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 150, align: "center", headerAlign:"center" },
-    { field: "dealsClosed", headerName: "Deals Closed", width: 150, align: "center", headerAlign:"center" },
-    { field: "totalCommission", headerName: "Total Commission", width: 150, align: "center", headerAlign:"center" },
-    { field: "isActive", headerName: "Active", width: 150, align: "center", headerAlign:"center" },
+    { field: "fullName", headerName: "Name", width: 150, align: "center", headerAlign:"center", headerClassName: styles.header },
+    { field: "mobile", headerName: "Mobile", width: 150, align: "center", headerAlign:"center", headerClassName: styles.header  },
+    { field: "totalDeals", headerName: "Total Deals", width: 150, align: "center", headerAlign:"center", headerClassName: styles.header  },
+    { field: "dealsOpened", headerName: "Deals Opened", width: 150, align: "center", headerAlign:"center", headerClassName: styles.header  },
+    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 150, align: "center", headerAlign:"center", headerClassName: styles.header  },
+    { field: "dealsClosed", headerName: "Deals Closed", width: 150, align: "center", headerAlign:"center" , headerClassName: styles.header },
+    { field: "totalCommission", headerName: "Total Commission", width: 150, align: "center", headerAlign:"center", headerClassName: styles.header  },
+    { field: "isActive", headerName: "Active", width: 150, align: "center", headerAlign:"center", headerClassName: styles.header  },
   ];
 
   return (
@@ -153,7 +153,6 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
         columns={columns}
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
-
       />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{formData.id ? "Edit User" : "Add User"}</DialogTitle>

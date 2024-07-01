@@ -12,7 +12,7 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     margin: 2rem;
-    overflow: auto; /* Add this line to make the content scrollable */
+    /* overflow: auto; */
   }
   
   .b_title {
@@ -47,43 +47,43 @@
   }
   
   .tag:nth-child(1) {
-    background-color: #0078d4;
-  }
-  
-  .tag:nth-child(2) {
-    background-color: #e81123;
-  }
-  
-  .tag:nth-child(3) {
-    background-color: #107c10;
-  }
-  
-  .tag:nth-child(4) {
-    background-color: #ffb900;
-  }
-  
-  .tag:nth-child(5) {
-    background-color: #5c2d91;
-  }
-  
-  .tag:hover:nth-child(1) {
     background-color: #005a9e;
   }
   
-  .tag:hover:nth-child(2) {
+  .tag:nth-child(2) {
     background-color: #c50f1f;
   }
   
-  .tag:hover:nth-child(3) {
+  .tag:nth-child(3) {
     background-color: #0b6a0b;
   }
   
-  .tag:hover:nth-child(4) {
+  .tag:nth-child(4) {
     background-color: #eaa300;
   }
   
-  .tag:hover:nth-child(5) {
+  .tag:nth-child(5) {
     background-color: #4b217a;
+  }
+  
+  .tag:hover:nth-child(1) {
+    background-color: #0078d4;
+  }
+  
+  .tag:hover:nth-child(2) {
+    background-color: #e81123;
+  }
+  
+  .tag:hover:nth-child(3) {
+    background-color: #107c10;
+  }
+  
+  .tag:hover:nth-child(4) {
+    background-color:#ffb900;
+  }
+  
+  .tag:hover:nth-child(5) {
+    background-color: #5c2d91;
   }
   
   .tag:hover {
