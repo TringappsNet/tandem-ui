@@ -1,5 +1,4 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import { DataGrid, GridColDef, GridPaginationModel, GridValueGetter } from "@mui/x-data-grid";
 import {
   Button,
   TextField,
@@ -11,7 +10,8 @@ import {
 import axios from "axios";
 import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
 import styles from "./broker-grid.module.css";
-import { CenterFocusStrong } from "@mui/icons-material";
+import FullGrid from "../parentGrid/parent-grid";
+import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 
 interface User {
   id: number;
@@ -27,11 +27,12 @@ interface User {
   isActive: boolean;
 }
 
-interface UserGridProps {
-  apiUrl: string;
-}
 
-const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
+const config = {
+  apiUrl: "/brokers",
+};
+
+const BrokerGrid: React.FC = () => {
   const [rows, setRows] = useState<User[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<User>({
@@ -58,7 +59,7 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
 
   const fetchBrokers = async () => {
     try {
-      const response = await axiosInstance.get("/brokers");
+      const response = await axiosInstance.get(config.apiUrl);
       const brokers = response.data.map((broker: any) => {
         const fullName = `${broker.user.firstName} ${broker.user.lastName}`;
         return {
@@ -72,7 +73,6 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
           country: broker.user.country,
           zipcode: broker.user.zipcode,
           isActive: broker.user.isActive,
-      
           totalDeals: broker.totalDeals,
           dealsOpened: broker.dealsOpened,
           dealsInProgress: broker.dealsInProgress,
@@ -80,7 +80,7 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
           totalCommission: broker.totalCommission,
         };
       });
-      
+
       setRows(brokers);
     } catch (error) {
       console.error("Error fetching broker names:", error);
@@ -97,7 +97,7 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
 
   const handleAdd = async () => {
     try {
-      const response = await axios.post(apiUrl, formData);
+      const response = await axios.post(config.apiUrl, formData);
       setRows([...rows, response.data]);
       handleClose();
     } catch (error) {
@@ -115,10 +115,8 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
 
   const handleUpdate = async () => {
     try {
-      const response = await axios.put(`${apiUrl}/${formData.id}`, formData);
-      setRows(
-        rows.map((row) => (row.id === formData.id ? response.data : row))
-      );
+      const response = await axios.put(`${config.apiUrl}/${formData.id}`, formData);
+      setRows(rows.map((row) => (row.id === formData.id ? response.data : row)));
       handleClose();
     } catch (error) {
       console.error("Error updating user:", error);
@@ -127,7 +125,7 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`${apiUrl}/${id}`);
+      await axios.delete(`${config.apiUrl}/${id}`);
       setRows(rows.filter((row) => row.id !== id));
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -135,25 +133,25 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
   };
 
   const columns: GridColDef[] = [
-    { field: "fullName", headerName: "Name", width: 150, align: "center", headerAlign:"center" },
-    { field: "mobile", headerName: "Mobile", width: 150, align: "center", headerAlign:"center" },
-    { field: "totalDeals", headerName: "Total Deals", width: 150, align: "center", headerAlign:"center" },
-    { field: "dealsOpened", headerName: "Deals Opened", width: 150, align: "center", headerAlign:"center" },
-    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 150, align: "center", headerAlign:"center" },
-    { field: "dealsClosed", headerName: "Deals Closed", width: 150, align: "center", headerAlign:"center" },
-    { field: "totalCommission", headerName: "Total Commission", width: 150, align: "center", headerAlign:"center" },
-    { field: "isActive", headerName: "Active", width: 150, align: "center", headerAlign:"center" },
+    { field: "fullName", headerName: "Name", width: 150, align: "center", headerAlign: "center" },
+    { field: "mobile", headerName: "Mobile", width: 150, align: "center", headerAlign: "center" },
+    { field: "totalDeals", headerName: "Total Deals", width: 150, align: "center", headerAlign: "center" },
+    { field: "dealsOpened", headerName: "Deals Opened", width: 150, align: "center", headerAlign: "center" },
+    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 150, align: "center", headerAlign: "center" },
+    { field: "dealsClosed", headerName: "Deals Closed", width: 150, align: "center", headerAlign: "center" },
+    { field: "totalCommission", headerName: "Total Commission", width: 150, align: "center", headerAlign: "center" },
+    { field: "isActive", headerName: "Active", width: 150, align: "center", headerAlign: "center" },
   ];
 
   return (
-    <div className={styles.gridContainer}>
-      <DataGrid
-        className={styles.dataGrid}
+    <div>
+      <FullGrid
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}
-        onPaginationModelChange={setPaginationModel}
-
+        setPaginationModel={setPaginationModel}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
       />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{formData.id ? "Edit User" : "Add User"}</DialogTitle>
@@ -245,10 +243,7 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button
-            onClick={formData.id ? handleUpdate : handleAdd}
-            color="primary"
-          >
+          <Button onClick={formData.id ? handleUpdate : handleAdd} color="primary">
             {formData.id ? "Update" : "Add"}
           </Button>
         </DialogActions>
@@ -257,4 +252,4 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
   );
 };
 
-export default FullGrid;
+export default BrokerGrid;

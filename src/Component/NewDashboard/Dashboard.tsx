@@ -4,8 +4,8 @@ import Navbar from "../Navbar/Navbar";
 // import Main from '../Main/Main'; // Make sure to import Main component
 import Cards from "../Cards/Cards";
 import styles from "./Dashboard.module.css";
-import FullGrid from "../Grids/broker-grid/broker-grid";
 import axiosInstance from "../AxiosInterceptor/AxiosInterceptor";
+import BrokerGrid from "../Grids/brokerGrid/broker-grid";
 
 type Deal = {
   totalDeals: number;
@@ -72,7 +72,7 @@ const Dashboard: React.FC = () => {
         </h1>
         <br></br>
         <div>
-          <FullGrid apiUrl={"/brokers"} />
+          <BrokerGrid />
         </div>
       </div>
     </div>
