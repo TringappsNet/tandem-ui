@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor'; // Adjust path as necessary
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styles from './ForgotPassword.module.css';
 

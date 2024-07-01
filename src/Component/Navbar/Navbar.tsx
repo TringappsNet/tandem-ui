@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent, Icon, DialogTitle, IconButton } from '@mui/material';
+import { Dialog, DialogContent, Icon, DialogTitle, IconButton, Box } from '@mui/material';
 import styles from './Navbar.module.css';
 import SendInvite from '../SendInvite/SendInvite';
 import Reset from '../ResetPassword/ResetPassword';
 import CloseIcon from '@mui/icons-material/Close';
 import CreateDeal from '../Milestone/Milestone';
+import Landlord from '../Grids/landlordGrid/landlord-grid';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { useSelector } from 'react-redux';
@@ -134,7 +135,19 @@ const Navbar: React.FC = () => {
                 </div>
             </nav>
 
-            <Dialog open={openPopup} onClose={handleClosePopup} sx={{ padding: 0, margin: 0 }}>
+            <Dialog
+                open={openPopup}
+                onClose={handleClosePopup}
+                maxWidth={selectedComponent === 'Landlord' ? 'xl' : 'sm'}
+                fullWidth={selectedComponent === 'Landlord'}
+                PaperProps={{
+                    sx: {
+                        height: selectedComponent === 'Landlord' ? '100vh' : 'auto', 
+                        width: selectedComponent === 'Landlord' ? '100vw' : 'auto', 
+                    }
+                }}
+                sx={{ padding: 0, margin: 0 }}
+            >
                 <DialogTitle sx={{ padding: 0 }}>
                     <Icon
                         aria-label="close"
@@ -151,7 +164,7 @@ const Navbar: React.FC = () => {
                     </Icon>
                 </DialogTitle>
 
-                <DialogContent sx={{ padding: 0 }}>
+                <DialogContent sx={{ padding: selectedComponent === 'Landlord' ? 2 : 0 }}> {/* Conditionally adjust padding */}
                     {selectedComponent === 'SendInvite' && <SendInvite />}
                     {selectedComponent === 'Reset' && <Reset />}
                     {/* {selectedComponent === 'CreateDeal' && <CreateDeal />} */}
