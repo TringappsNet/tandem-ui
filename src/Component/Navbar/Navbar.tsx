@@ -98,6 +98,14 @@ const Navbar: React.FC = () => {
         }
     }, [openStepper]);
 
+
+
+    useEffect(() => {
+        if (!openStepper) {
+            saveFormData();
+        }
+    }, [openStepper]);
+
     return (
         <>
             <nav className={styles.navbarcontainer}>
