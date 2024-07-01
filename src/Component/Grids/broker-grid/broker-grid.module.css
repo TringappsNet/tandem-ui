@@ -1,0 +1,41 @@
+.gridContainer {
+    display: flex;
+    flex-direction: column;
+    height: 45vh;
+    width: 100%;
+}
+
+.dataGrid {
+    flex-grow: 1;
+    background-color: #f8f9fa;
+    height: 80%; 
+}
+
+.dataGrid .MuiDataGrid-columnHeaders {
+    background-color: #0078d4;
+    color: #ffffff;
+}
+
+.dataGrid .MuiDataGrid-row {
+    background-color: #ffffff; 
+}
+
+.dataGrid .MuiDataGrid-row:hover {
+    background-color: #e0f7fa;
+}
+
+.dataGrid .MuiDataGrid-cell {
+    color: #000000;
+}
+
+@media (max-width: 768px) {
+    .gridContainer {
+        height: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gridContainer {
+        height: 500px;
+    }
+}
