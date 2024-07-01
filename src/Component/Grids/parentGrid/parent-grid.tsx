@@ -9,6 +9,8 @@ interface FullGridProps {
   setPaginationModel: (model: GridPaginationModel) => void;
   handleEdit: (id: number) => void;
   handleDelete: (id: number) => void;
+  className?: string;
+  disablePagination?: boolean;
 }
 
 const FullGrid: React.FC<FullGridProps> = ({
@@ -18,9 +20,10 @@ const FullGrid: React.FC<FullGridProps> = ({
   setPaginationModel,
   handleEdit,
   handleDelete,
+  className,
 }) => {
   return (
-    <div className={styles.gridContainer}>
+    <div className={`${styles.gridContainer} ${className}`}>
       <DataGrid
         className={styles.dataGrid}
         rows={rows}

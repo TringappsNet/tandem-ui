@@ -1,6 +1,5 @@
-// Navbar.tsx
 import React, { useState } from 'react';
-import { Dialog, DialogContent, Icon, DialogTitle } from '@mui/material';
+import { Dialog, DialogContent, Icon, DialogTitle, Box } from '@mui/material';
 import styles from './Navbar.module.css';
 import SendInvite from '../SendInvite/SendInvite';
 import Reset from '../ResetPassword/ResetPassword';
@@ -63,8 +62,14 @@ const Navbar: React.FC = () => {
             <Dialog
                 open={openPopup}
                 onClose={handleClosePopup}
-                maxWidth={selectedComponent === 'Landlord' ? 'lg' : 'sm'} // Conditionally set maxWidth
-                fullWidth={selectedComponent === 'Landlord'} // Conditionally set fullWidth
+                maxWidth={selectedComponent === 'Landlord' ? 'xl' : 'sm'}
+                fullWidth={selectedComponent === 'Landlord'}
+                PaperProps={{
+                    sx: {
+                        height: selectedComponent === 'Landlord' ? '100vh' : 'auto', 
+                        width: selectedComponent === 'Landlord' ? '100vw' : 'auto', 
+                    }
+                }}
                 sx={{ padding: 0, margin: 0 }}
             >
                 <DialogTitle sx={{ padding: 0 }}>
@@ -87,7 +92,14 @@ const Navbar: React.FC = () => {
                     {selectedComponent === 'SendInvite' && <SendInvite />}
                     {selectedComponent === 'Reset' && <Reset />}
                     {selectedComponent === 'CreateDeal' && <CreateDeal />}
-                    {selectedComponent === 'Landlord' && <Landlord />}
+                    {selectedComponent === 'Landlord' && (
+                    <Box sx={{ padding: 1, borderRadius: 1, height: '100%', width: '100%', maxHeight: 'calc(100vh - 64px)', overflow: 'auto' }}>
+                        <br></br>
+                        <h1>Landlord Details</h1>
+                        <br></br>
+                        <Landlord />
+                    </Box>
+                    )}
                 </DialogContent>
             </Dialog>
         </>
