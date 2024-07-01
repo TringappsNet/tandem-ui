@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, Icon, DialogTitle, IconButton } from '@mui/material';
 import styles from './Navbar.module.css';
 import SendInvite from '../SendInvite/SendInvite';
@@ -8,27 +8,15 @@ import CreateDeal from '../Milestone/Milestone';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { useSelector } from 'react-redux';
+import { RootState } from '../Redux/reducers/index';
 
-interface RootState {
-    auth: {
-        user: {
-            firstName: string;
-            lastName: string;
-        } | null;
-    };
-}
 
 const Navbar: React.FC = () => {
-    const user = useSelector((state: RootState) => state.auth.user);
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
     const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
     const [dealFormData, setDealFormData] = useState<Deal>();
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-
-
 
     interface Deal {
         activeStep: number;
@@ -68,24 +56,7 @@ const Navbar: React.FC = () => {
     const handleCards = () => {
         navigate('/cards');
     };
-
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
-    };
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsDropdownOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
-
+    const dealDetails: any = useSelector((state: RootState) => state.deal.dealDetails);
 
 
     const saveFormData = async () => {
@@ -95,6 +66,7 @@ const Navbar: React.FC = () => {
             const dealtemp: any = dealDetails
             if (dealtemp.isNew && isFirstSave) {
                 const response = await axiosInstance.post('/deals/deal', dealtemp);
+                
                 console.log('Form data saved:', response.data);
                 localStorage.removeItem('dealdetails');
                 setIsFirstSave(false);
@@ -122,7 +94,6 @@ const Navbar: React.FC = () => {
         }
     }, [openStepper]);
 
-
     return (
         <>
             <nav className={styles.navbarcontainer}>
@@ -136,22 +107,17 @@ const Navbar: React.FC = () => {
                     <div className={styles.createdeal}>
                         <p onClick={() => createDealForm()}>CREATE</p>
                     </div>
-                    <div className={styles.userdropdown} onClick={toggleDropdown} ref={dropdownRef}>
-                        <p>{user ? `${user.firstName} ${user.lastName}` : 'Guest'}</p>
-                        <div className={styles.circle}>
-                            <p>{user ? user.firstName[0] : 'G'}</p>
+                    <div className={styles.userdropdown}>
+                        <p>dineshkumar@gmail.com</p>
+                        <div className={styles.circle}><p>A</p></div>
+                        <div className={styles.dropdownMenu}>
+                            <button onClick={() => handleOpenPopup('Profile')}>Profile</button>
+                            <button onClick={() => handleOpenPopup('SendInvite')}>Send Invite</button>
+                            <button onClick={() => handleOpenPopup('Reset')}>Reset</button>
+                            <button onClick={() => handleOpenPopup('Site')}>Site</button>
+                            <button onClick={() => handleOpenPopup('Landlord')}>Landlord</button>
+                            <button onClick={handleLogout}>Logout</button>
                         </div>
-                        {isDropdownOpen && (
-                            <div className={styles.dropdownMenu}>
-                                <button onClick={() => handleOpenPopup('Profile')}>Profile</button>
-                                <button onClick={() => handleOpenPopup('SendInvite')}>Send Invite</button>
-                                <button onClick={() => handleOpenPopup('Reset')}>Reset</button>
-                                <button onClick={() => handleOpenPopup('Site')}>Site</button>
-                                <button onClick={() => handleOpenPopup('Landlord')}>Landlord</button>
-                                <button onClick={handleLogout}>Logout</button>
-                            </div>
-                        )}
-
                     </div>
                 </div>
             </nav>
