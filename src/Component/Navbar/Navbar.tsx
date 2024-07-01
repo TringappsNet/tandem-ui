@@ -1,15 +1,39 @@
-import React, { useState } from 'react';
-import { Dialog, DialogContent, Icon, DialogTitle } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Dialog, DialogContent, Icon, DialogTitle, IconButton } from '@mui/material';
 import styles from './Navbar.module.css';
 import SendInvite from '../SendInvite/SendInvite';
 import Reset from '../ResetPassword/ResetPassword';
 import CloseIcon from '@mui/icons-material/Close';
 import CreateDeal from '../Milestone/Milestone';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 
 const Navbar: React.FC = () => {
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
+    const [openStepper, setOpenStepper] = useState(false);
+    const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
+    const [dealFormData, setDealFormData] = useState<Deal>();
+
+    interface Deal {
+        activeStep: number;
+        status: string;
+        propertyName: string | null;
+        brokerName: string | null;
+        dealStartDate: string | null;
+        proposalDate: string | null;
+        loiExecuteDate: string | null;
+        leaseSignedDate: string | null;
+        noticeToProceedDate: string | null;
+        commercialOperationDate: string | null;
+        potentialcommissiondate: string | null;
+        potentialCommission: string | null;
+        createdBy: number;
+        updatedBy: number;
+        isNew: boolean;
+        id: number | null;
+      }
+
     const navigate = useNavigate();
 
     const handleOpenPopup = (componentName: string) => {
@@ -30,6 +54,40 @@ const Navbar: React.FC = () => {
         navigate('/cards');
     };
 
+    const saveFormData = async () => {
+
+        try {
+          const deal: any = localStorage.getItem('dealdetails')
+          const dealtemp: any = JSON.parse(deal)
+          if (dealtemp.isNew && isFirstSave) {
+            const response = await axiosInstance.post('/deals/deal', dealtemp);
+            console.log('Form data saved:', response.data);
+            localStorage.removeItem('dealdetails');
+            setIsFirstSave(false);
+            return
+          }
+          const response = await axiosInstance.put(`/deals/deal/${dealtemp.id}`, dealtemp);
+          console.log('Form data saved for put:', response.data);
+          localStorage.removeItem('dealdetails');
+          setIsFirstSave(true);
+    
+        } catch (error) {
+          console.error('Error saving form data:', error);
+          return
+        }
+      };
+    const createDealForm = () => {
+        setOpenStepper(true);
+        setDealFormData(undefined);
+        // console.log("card Deal respected value ", deal);
+    }
+
+    useEffect(() => {
+        if (!openStepper) {
+            saveFormData();
+        }
+    }, [openStepper]);
+
     return (
         <>
             <nav className={styles.navbarcontainer}>
@@ -41,7 +99,7 @@ const Navbar: React.FC = () => {
 
                 <div className={styles.rightheadersection}>
                     <div className={styles.createdeal}>
-                        <p onClick={() => handleOpenPopup('CreateDeal')}>CREATE</p>
+                        <p onClick={() => createDealForm()}>CREATE</p>
                     </div>
                     <div className={styles.userdropdown}>
                         <p>dineshkumar@gmail.com</p>
@@ -78,7 +136,41 @@ const Navbar: React.FC = () => {
                 <DialogContent sx={{ padding: 0 }}>
                     {selectedComponent === 'SendInvite' && <SendInvite />}
                     {selectedComponent === 'Reset' && <Reset />}
-                    {selectedComponent === 'CreateDeal' && <CreateDeal />}
+                    {/* {selectedComponent === 'CreateDeal' && <CreateDeal />} */}
+                </DialogContent>
+            </Dialog>
+
+            <Dialog
+                fullScreen
+                sx={{ margin: '30px 190px' }}
+                open={openStepper}
+                onClose={() => {
+                    setOpenStepper(false);
+                    saveFormData();
+                }}
+                className={styles.popupmain}
+            >
+                <DialogTitle sx={{ backgroundColor: '#262262', color: 'white' }}>
+                    Deal Form
+                    <IconButton
+                        aria-label="close"
+                        onClick={() => {
+                            setOpenStepper(false);
+                            saveFormData();
+                          }}
+                        sx={{
+                            position: 'absolute',
+                            right: 25,
+                            top: 8,
+                            width: 40,
+                            color: (theme) => theme.palette.grey[500],
+                        }}
+                    >
+                        <CloseIcon sx={{ color: '#999' }} />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>
+                    <CreateDeal />
                 </DialogContent>
             </Dialog>
         </>

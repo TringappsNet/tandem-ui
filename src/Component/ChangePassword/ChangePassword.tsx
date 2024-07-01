@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './ChangePassword.module.css';
 
 const ChangePassword: React.FC = () => {
     const [password, setPassword] = useState('');
     const [confirmpassword, setConfirmpassword] = useState('');
-    const [disableState,setDisableState] = useState(false);
+    const [disableState, setDisableState] = useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [showFailureMessage, setShowFailureMessage] = useState(false);
     const [validationErrorMessage, setValidationErrorMessage] = useState('');
@@ -76,8 +76,8 @@ const ChangePassword: React.FC = () => {
         if (password === '' || confirmpassword === '') {
             setShowFailureMessage(true);
             setShowSuccessMessage(false);
-            setValidationErrorMessage("Pleaser Enter the values in the All Field.")
-            return
+            setValidationErrorMessage('Please enter values in all fields.');
+            return;
         }
 
         if (!handleValidation()) {
@@ -87,11 +87,11 @@ const ChangePassword: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:3008/api/change-password', {
+            const response = await axiosInstance.post('auth/change-password', {
                 password,
             });
 
-            console.log('Password changes successfully:', response.data);
+            console.log('Password changed successfully:', response.data);
             setShowSuccessMessage(true);
             setShowFailureMessage(false);
             setPassword('');
@@ -155,7 +155,7 @@ const ChangePassword: React.FC = () => {
                             />
                         </div>
                         <button className={styles.loginbtn} type="submit">
-                            Send Reset link
+                            Send Reset Link
                         </button>
                     </form>
                 </div>

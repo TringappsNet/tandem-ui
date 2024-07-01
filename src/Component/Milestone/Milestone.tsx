@@ -117,7 +117,6 @@ const DealForm = () => {
         try {
             localStorage.setItem('dealdetails', JSON.stringify(payload));
             setSaveSuccess(true);
-            setIsFirstSave(false);
 
         } catch (error) {
             console.error('Error saving form data:', error);

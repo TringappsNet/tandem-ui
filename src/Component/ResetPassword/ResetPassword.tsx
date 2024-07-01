@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor'; // Adjust path as necessary
 import styles from './ResetPassword.module.css';
 
 const Reset: React.FC = () => {
@@ -20,7 +20,7 @@ const Reset: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:3008/api/auth/reset-password', {
+            const response = await axiosInstance.post('/auth/reset-password', {
                 oldPassword,
                 newPassword,
                 userId: 1,

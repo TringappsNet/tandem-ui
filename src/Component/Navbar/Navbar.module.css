@@ -27,13 +27,18 @@
 }
 
 .header p {
-    margin-left: 30px;
+    margin-left: 40px;
     text-decoration: none;
     color: #fff;
 }
 
-.header p:hover {
-    color: #7c76cf;
+.header p:hover,  .rightheadersection .createdeal:hover{
+    color: #262262;
+    height: 50%;
+    /* width: 70px; */
+    background-color: #fff;
+    align-content: center;
+    border-radius: 5px;
 }
 
 .rightheadersection {
