@@ -43,7 +43,7 @@ const DealForm = () => {
     });
     const [brokerOptions, setBrokerOptions] = useState<string[]>([]);
     const [userId, setUserId] = useState<number | null>(null);
-    const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
+    // const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
     const [saveSuccess, setSaveSuccess] = useState(false); // Track save success
 
     useEffect(() => {
@@ -111,13 +111,12 @@ const DealForm = () => {
             status,
             createdBy: userId,
             updatedBy: userId,
-            isNew: isFirstSave,
+            isNew: true,
         };
 
         try {
             localStorage.setItem('dealdetails', JSON.stringify(payload));
             setSaveSuccess(true);
-            setIsFirstSave(false);
 
         } catch (error) {
             console.error('Error saving form data:', error);
@@ -246,7 +245,7 @@ const DealForm = () => {
                                     </Button>
                                 </Box>
                             </Box>
-                            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', position:'absolute',top:"260px", zIndex:999 }}>
                                 {steps[activeStep].fields.map((field, index) => renderField(field, index))}
                                 <Button
                                     variant="contained"
