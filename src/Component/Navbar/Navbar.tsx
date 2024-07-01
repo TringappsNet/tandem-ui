@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
-    const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
+    const [isFirstSave, setIsFirstSave] = useState(true);
     const [dealFormData, setDealFormData] = useState<Deal>();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -113,7 +113,6 @@ const Navbar: React.FC = () => {
     const createDealForm = () => {
         setOpenStepper(true);
         setDealFormData(undefined);
-        // console.log("card Deal respected value ", deal);
     }
 
     useEffect(() => {
