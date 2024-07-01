@@ -21,8 +21,8 @@ const Dashboard: React.FC = () => {
         <Navbar />
         <div className={styles.mainContent}>
           <Routes>
-            {/* <Route path="/" element={<Main />} /> */}
-            <Route path="/" element={<Cards />} />
+            <Route path="/" element={<Main />} />
+            <Route path="/cards" element={<Cards />} />
           </Routes>
         </div>
       </div>
