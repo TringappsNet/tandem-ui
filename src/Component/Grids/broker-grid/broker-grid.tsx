@@ -142,7 +142,7 @@ const FullGrid: React.FC<UserGridProps> = ({ apiUrl }) => {
     { field: "dealsInProgress", headerName: "Deals In-Progress", width: 150, align: "center", headerAlign:"center", headerClassName: styles.header  },
     { field: "dealsClosed", headerName: "Deals Closed", width: 150, align: "center", headerAlign:"center" , headerClassName: styles.header },
     { field: "totalCommission", headerName: "Total Commission", width: 150, align: "center", headerAlign:"center", headerClassName: styles.header  },
-    { field: "isActive", headerName: "Active", width: 150, align: "center", headerAlign:"center", headerClassName: styles.header  },
+    { field: "isActive", headerName: "Active", width: 200, align: "center", headerAlign:"center", headerClassName: styles.header  },
   ];
 
   return (
