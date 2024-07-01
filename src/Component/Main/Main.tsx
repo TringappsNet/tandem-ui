@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Main.module.css";
-import FullGrid from "../Grids/broker-grid/broker-grid";
 import axiosInstance from "../AxiosInterceptor/AxiosInterceptor";
+import BrokerGrid from "../Grids/broker-grid/broker-grid";
 
 type Deal = {
     totalDeals: number;
@@ -62,7 +62,7 @@ const Main: React.FC = () => {
             </h1>
             <br></br>
             <div>
-                <FullGrid apiUrl={"/brokers"} />
+                <BrokerGrid />
             </div>
         </>
     );

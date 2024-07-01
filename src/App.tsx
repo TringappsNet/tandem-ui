@@ -7,6 +7,7 @@ import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 import ChangePassword from './Component/ChangePassword/ChangePassword';
 import NewDashboard from './Component/NewDashboard/Dashboard';
 import Milestone from '../src/Component/Milestone/Milestone';
+import Cards from './Component/Cards/Cards';
 
 
 
@@ -41,6 +42,8 @@ const App: React.FC = () => {
         <Route path="/newdashboard" element={<NewDashboard />} />
         <Route path="/mile" element={<Milestone />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/cards" element={<Cards />} />
+
 
       </Routes>
     </Router>

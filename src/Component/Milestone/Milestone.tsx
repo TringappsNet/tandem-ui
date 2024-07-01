@@ -43,7 +43,7 @@ const DealForm = () => {
     });
     const [brokerOptions, setBrokerOptions] = useState<string[]>([]);
     const [userId, setUserId] = useState<number | null>(null);
-    const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
+    // const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
     const [saveSuccess, setSaveSuccess] = useState(false); // Track save success
 
     useEffect(() => {
@@ -111,7 +111,7 @@ const DealForm = () => {
             status,
             createdBy: userId,
             updatedBy: userId,
-            isNew: isFirstSave,
+            isNew: true,
         };
 
         try {

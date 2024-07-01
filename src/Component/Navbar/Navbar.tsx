@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent, Icon, DialogTitle, IconButton, Box } from '@mui/material';
+import React, { useState } from 'react';
+import { Dialog, DialogContent, Icon, DialogTitle, IconButton } from '@mui/material';
 import styles from './Navbar.module.css';
 import SendInvite from '../SendInvite/SendInvite';
 import Reset from '../ResetPassword/ResetPassword';
 import CloseIcon from '@mui/icons-material/Close';
 import CreateDeal from '../Milestone/Milestone';
-import Landlord from '../Grids/landlordGrid/landlord-grid';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
-import { useSelector } from 'react-redux';
-import { RootState } from '../Redux/reducers/index';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../Redux/reducers/index';
 
 
 const Navbar: React.FC = () => {
@@ -17,26 +16,26 @@ const Navbar: React.FC = () => {
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
     const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
-    const [dealFormData, setDealFormData] = useState<Deal>();
+    // const [dealFormData, setDealFormData] = useState<Deal>();
 
-    interface Deal {
-        activeStep: number;
-        status: string;
-        propertyName: string | null;
-        brokerName: string | null;
-        dealStartDate: string | null;
-        proposalDate: string | null;
-        loiExecuteDate: string | null;
-        leaseSignedDate: string | null;
-        noticeToProceedDate: string | null;
-        commercialOperationDate: string | null;
-        potentialcommissiondate: string | null;
-        potentialCommission: string | null;
-        createdBy: number;
-        updatedBy: number;
-        isNew: boolean;
-        id: number | null;
-    }
+    // interface Deal {
+    //     activeStep: number;
+    //     status: string;
+    //     propertyName: string | null;
+    //     brokerName: string | null;
+    //     dealStartDate: string | null;
+    //     proposalDate: string | null;
+    //     loiExecuteDate: string | null;
+    //     leaseSignedDate: string | null;
+    //     noticeToProceedDate: string | null;
+    //     commercialOperationDate: string | null;
+    //     potentialcommissiondate: string | null;
+    //     potentialCommission: string | null;
+    //     createdBy: number;
+    //     updatedBy: number;
+    //     isNew: boolean;
+    //     id: number | null;
+    // }
 
     const navigate = useNavigate();
 
@@ -57,13 +56,7 @@ const Navbar: React.FC = () => {
     const handleCards = () => {
         navigate('/cards');
     };
-    const dealDetails: any = useSelector((state: RootState) => state.deal.dealDetails);
-
-    useEffect(() => {
-        if (!openStepper) {
-            saveFormData();
-        }
-    }, [openStepper]);
+    // const dealDetails: any = useSelector((state: RootState) => state.deal.dealDetails);
 
     const saveFormData = async () => {
 
@@ -87,25 +80,14 @@ const Navbar: React.FC = () => {
           return
         }
       };
+
+
     const createDealForm = () => {
         setOpenStepper(true);
-        setDealFormData(undefined);
+        // setDealFormData(undefined);
         // console.log("card Deal respected value ", deal);
     }
 
-    useEffect(() => {
-        if (!openStepper) {
-            saveFormData();
-        }
-    }, [openStepper]);
-
-
-
-    useEffect(() => {
-        if (!openStepper) {
-            saveFormData();
-        }
-    }, [openStepper]);
 
     return (
         <>
