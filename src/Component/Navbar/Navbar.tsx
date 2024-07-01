@@ -7,6 +7,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import CreateDeal from '../Milestone/Milestone';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import { useSelector } from 'react-redux';
+import { RootState } from '../Redux/reducers/index';
+
 
 const Navbar: React.FC = () => {
     const [openPopup, setOpenPopup] = useState<boolean>(false);
@@ -32,7 +35,7 @@ const Navbar: React.FC = () => {
         updatedBy: number;
         isNew: boolean;
         id: number | null;
-      }
+    }
 
     const navigate = useNavigate();
 
@@ -53,29 +56,32 @@ const Navbar: React.FC = () => {
     const handleCards = () => {
         navigate('/cards');
     };
+    const dealDetails: any = useSelector((state: RootState) => state.deal.dealDetails);
+
 
     const saveFormData = async () => {
 
         try {
-          const deal: any = localStorage.getItem('dealdetails')
-          const dealtemp: any = JSON.parse(deal)
-          if (dealtemp.isNew && isFirstSave) {
-            const response = await axiosInstance.post('/deals/deal', dealtemp);
-            console.log('Form data saved:', response.data);
+            const deal: any = localStorage.getItem('dealdetails')
+            const dealtemp: any = dealDetails
+            if (dealtemp.isNew && isFirstSave) {
+                const response = await axiosInstance.post('/deals/deal', dealtemp);
+                
+                console.log('Form data saved:', response.data);
+                localStorage.removeItem('dealdetails');
+                setIsFirstSave(false);
+                return
+            }
+            const response = await axiosInstance.put(`/deals/deal/${dealtemp.id}`, dealtemp);
+            console.log('Form data saved for put:', response.data);
             localStorage.removeItem('dealdetails');
-            setIsFirstSave(false);
-            return
-          }
-          const response = await axiosInstance.put(`/deals/deal/${dealtemp.id}`, dealtemp);
-          console.log('Form data saved for put:', response.data);
-          localStorage.removeItem('dealdetails');
-          setIsFirstSave(true);
-    
+            setIsFirstSave(true);
+
         } catch (error) {
-          console.error('Error saving form data:', error);
-          return
+            console.error('Error saving form data:', error);
+            return
         }
-      };
+    };
     const createDealForm = () => {
         setOpenStepper(true);
         setDealFormData(undefined);
@@ -157,7 +163,7 @@ const Navbar: React.FC = () => {
                         onClick={() => {
                             setOpenStepper(false);
                             saveFormData();
-                          }}
+                        }}
                         sx={{
                             position: 'absolute',
                             right: 25,
