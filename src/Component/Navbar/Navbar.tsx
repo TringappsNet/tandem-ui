@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, Icon, DialogTitle, IconButton } from '@mui/material';
 import styles from './Navbar.module.css';
 import SendInvite from '../SendInvite/SendInvite';
@@ -26,6 +26,8 @@ const Navbar: React.FC = () => {
     const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
     const [dealFormData, setDealFormData] = useState<Deal>();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
 
 
     interface Deal {
@@ -71,6 +73,20 @@ const Navbar: React.FC = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+
 
     const saveFormData = async () => {
 
@@ -106,6 +122,7 @@ const Navbar: React.FC = () => {
         }
     }, [openStepper]);
 
+
     return (
         <>
             <nav className={styles.navbarcontainer}>
@@ -119,7 +136,7 @@ const Navbar: React.FC = () => {
                     <div className={styles.createdeal}>
                         <p onClick={() => createDealForm()}>CREATE</p>
                     </div>
-                    <div className={styles.userdropdown} onClick={toggleDropdown}>
+                    <div className={styles.userdropdown} onClick={toggleDropdown} ref={dropdownRef}>
                         <p>{user ? `${user.firstName} ${user.lastName}` : 'Guest'}</p>
                         <div className={styles.circle}>
                             <p>{user ? user.firstName[0] : 'G'}</p>
