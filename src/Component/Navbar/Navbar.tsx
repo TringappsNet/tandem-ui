@@ -62,7 +62,7 @@ const Navbar: React.FC = () => {
     const saveFormData = async () => {
 
         try {
-            const deal: any = localStorage.getItem('dealdetails')
+            // const deal: any = localStorage.getItem('dealdetails')
             const dealtemp: any = dealDetails
             if (dealtemp.isNew && isFirstSave) {
                 const response = await axiosInstance.post('/deals/deal', dealtemp);
