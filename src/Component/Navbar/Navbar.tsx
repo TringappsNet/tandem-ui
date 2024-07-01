@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dialog, DialogContent, Icon, DialogTitle, IconButton } from '@mui/material';
+import { Dialog, DialogContent, Icon, DialogTitle, IconButton, Box } from '@mui/material';
 import styles from './Navbar.module.css';
 import SendInvite from '../SendInvite/SendInvite';
 import Reset from '../ResetPassword/ResetPassword';
@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import CreateDeal from '../Milestone/Milestone';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '../Redux/reducers/index';
 
@@ -150,6 +151,14 @@ const Navbar: React.FC = () => {
                     {selectedComponent === 'SendInvite' && <SendInvite />}
                     {selectedComponent === 'Reset' && <Reset />}
                     {/* {selectedComponent === 'CreateDeal' && <CreateDeal />} */}
+                    {selectedComponent === 'Landlord' && (
+                    <Box sx={{ padding: 1, borderRadius: 1, height: '100%', width: '100%', maxHeight: 'calc(100vh - 64px)', overflow: 'auto' }}>
+                        <br></br>
+                        <h1>Landlord Details</h1>
+                        <br></br>
+                        <LandlordGrid />
+                    </Box>
+                    )}
                 </DialogContent>
             </Dialog>
 
