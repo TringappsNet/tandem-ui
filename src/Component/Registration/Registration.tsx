@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import styles from './Registration.module.css';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import logo from './logo.jpeg';
+import { useNavigate } from 'react-router-dom';
 
 const Registration: React.FC = () => {
+    const navigate = useNavigate();
     const [firstName, setFirstname] = useState('');
     const [lastName, setLastname] = useState('');
     const [mobileNo, setMobileno] = useState('');
@@ -333,7 +335,7 @@ const Registration: React.FC = () => {
         }
 
         try {
-            const response = await axiosInstance.post('/api/auth/register', {
+            const response = await axiosInstance.post('/auth/register', {
                 firstName,
                 lastName,
                 mobileNo,
@@ -362,6 +364,7 @@ const Registration: React.FC = () => {
             setDisableState(false);
             setInviteToken('');
             setInviteTokenError('');
+            navigate('/login')
         } catch (error: any) {
             if (error.response && error.response.status === 400) {
                 if (error.response.data && error.response.data.message) {

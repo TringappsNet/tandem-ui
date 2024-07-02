@@ -12,7 +12,11 @@ import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
 // import { RootState } from '../Redux/reducers/index';
 import SiteGrid from '../Grids/Site-grid/site-grid';
 
+
 const Navbar: React.FC = () => {
+    const auth :any= localStorage.getItem('auth');
+    const userdetails = JSON.parse(auth)
+    console.log("User detal",userdetails)
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
@@ -51,6 +55,7 @@ const Navbar: React.FC = () => {
     };
 
     const handleLogout = () => {
+        localStorage.clear();
         navigate('/login');
     };
 
@@ -99,6 +104,8 @@ const Navbar: React.FC = () => {
                     <p onClick={handleCards} style={{ cursor: 'pointer' }}>DEALS</p>
                     <p onClick={() => handleOpenPopup('Site')} style={{ cursor: 'pointer' }} >SITE</p>
                     <p onClick={() => handleOpenPopup('Landlord')} style={{ cursor: 'pointer' }}>LANDLORD</p>
+                    </div>
+                    <p onClick={handleCards}>DEALS</p>
                 </div>
 
                 <div className={styles.rightheadersection}>
@@ -114,6 +121,11 @@ const Navbar: React.FC = () => {
                             <button onClick={() => handleOpenPopup('Reset')}>Reset</button>
                            
                             <button onClick={handleLogout}>Logout</button>
+
+                    <div className={styles.userdropdown} onClick={toggleDropdown} ref={dropdownRef}>
+                        <p>{userdetails ? `${userdetails.user.firstName} ${userdetails.user.lastName}` : 'Guest'}</p>
+                        <div className={styles.circle}>
+                            <p>{userdetails ? userdetails.user.firstName[0] : 'G'}</p>
                         </div>
                     </div>
                 </div>
