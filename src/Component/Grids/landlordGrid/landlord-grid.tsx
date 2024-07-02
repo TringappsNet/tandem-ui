@@ -7,10 +7,11 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
+import axios from "axios";
 import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
 import styles from "./landlord-grid.module.css";
-import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import FullGrid from "../parentGrid/parent-grid";
+import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 
 interface Landlord {
   id: number;
@@ -28,7 +29,6 @@ interface Landlord {
 const config = {
   apiUrl: "/landlords",
 };
-
 
 const LandlordGrid: React.FC = () => {
   const [rows, setRows] = useState<Landlord[]>([]);
@@ -73,7 +73,7 @@ const LandlordGrid: React.FC = () => {
 
   const handleAdd = async () => {
     try {
-      const response = await axiosInstance.post('landlords/landlord/', formData);
+      const response = await axios.post(config.apiUrl, formData);
       setRows([...rows, response.data]);
       handleClose();
     } catch (error) {
@@ -89,18 +89,9 @@ const LandlordGrid: React.FC = () => {
     }
   };
 
-  const handleEditnew = () => {
-   
-      handleOpen();
-    
-  };
-
   const handleUpdate = async () => {
     try {
-      const response = await axiosInstance.patch(
-        `landlords/landlord/${formData.id}`,
-        formData
-      );
+      const response = await axios.put(`${config.apiUrl}/${formData.id}`, formData);
       setRows(rows.map((row) => (row.id === formData.id ? response.data : row)));
       handleClose();
     } catch (error) {
@@ -110,7 +101,7 @@ const LandlordGrid: React.FC = () => {
 
   const handleDelete = async (id: number) => {
     try {
-      await axiosInstance.delete(`landlords/landlord/${id}`);
+      await axios.delete(`${config.apiUrl}/${id}`);
       setRows(rows.filter((row) => row.id !== id));
     } catch (error) {
       console.error("Error deleting landlord:", error);
@@ -118,67 +109,28 @@ const LandlordGrid: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Name", width: 150, align: "center" },
-    { field: "phoneNumber", headerName: "Phone Number", width: 150, align: "center" },
-    { field: "email", headerName: "Email", width: 200, align: "center" },
-    { field: "address1", headerName: "Address 1", width: 150, align: "center" },
-    { field: "address2", headerName: "Address 2", width: 150, align: "center" },
-    { field: "city", headerName: "City", width: 100, align: "center" },
-    { field: "state", headerName: "State", width: 100, align: "center" },
-    { field: "country", headerName: "Country", width: 100, align: "center" },
-    { field: "zipcode", headerName: "Zipcode", width: 100, align: "center" },
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 200,
-      align: "center",
-      renderCell: (params) => (
-        <>
-          <Button
-            variant="contained"
-            color="primary"
-
-            style={{ marginRight: 8,height:20 }}
-            onClick={() => handleEdit(params.row.id)}
-          >
-            Edit
-          </Button>
-          <Button
-            style={{ marginRight: 8,height:20 }}
-
-            variant="contained"
-            color="secondary"
-            onClick={() => handleDelete(params.row.id)}
-          >
-            Delete
-          </Button>
-        </>
-      ),
-    },
+    { field: "name", headerName: "Name", width: 150, align: "center", headerAlign: "center" },
+    { field: "phoneNumber", headerName: "Phone Number", width: 150, align: "center", headerAlign: "center" },
+    { field: "email", headerName: "Email", width: 200, align: "center", headerAlign: "center" },
+    { field: "address1", headerName: "Address 1", width: 150, align: "center", headerAlign: "center" },
+    { field: "address2", headerName: "Address 2", width: 150, align: "center", headerAlign: "center" },
+    { field: "city", headerName: "City", width: 100, align: "center", headerAlign: "center" },
+    { field: "state", headerName: "State", width: 100, align: "center", headerAlign: "center" },
+    { field: "country", headerName: "Country", width: 100, align: "center", headerAlign: "center" },
+    { field: "zipcode", headerName: "Zipcode", width: 100, align: "center", headerAlign: "center" },
   ];
 
   return (
-    <div className={styles.gridContainer}>
-          <Button
-            variant="contained"
-            color="primary"
-
-            style={{ marginRight: 8 , width:'30px',margin:10,position:'relative',float:'right'}}
-            onClick={() => handleEditnew()}
-          >Add  </Button>
+    <div className={styles.gridContainer}> 
       <FullGrid
-      
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}
         setPaginationModel={setPaginationModel}
         handleEdit={handleEdit}
-        // handleDelete={handleDelete}
-        handleAdd={handleAdd}
+        handleDelete={handleDelete}
+        className={styles.gridContainer} 
       />
-  
-        
-
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{formData.id ? "Edit Landlord" : "Add Landlord"}</DialogTitle>
         <DialogContent>
@@ -263,20 +215,15 @@ const LandlordGrid: React.FC = () => {
             fullWidth
             value={formData.zipcode}
             onChange={handleChange}
-
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}  
-          color="primary">
+          <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={formData.id ? handleUpdate : handleAdd} 
-          color="primary">
+          <Button onClick={formData.id ? handleUpdate : handleAdd} color="primary">
             {formData.id ? "Update" : "Add"}
           </Button>
-
-        
         </DialogActions>
       </Dialog>
     </div>
