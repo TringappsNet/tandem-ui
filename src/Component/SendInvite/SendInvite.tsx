@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './SendInvite.module.css';
 import classNames from 'classnames';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
@@ -9,6 +9,7 @@ const SendInvite: React.FC = () => {
     const [responseType, setResponseType] = useState('');
     const [email, setEmail] = useState('');
     const [roleId, setRoleId] = useState('admin');
+    const selectRef = useRef<HTMLSelectElement>(null);
 
     const handleSendInvite = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -34,7 +35,9 @@ const SendInvite: React.FC = () => {
             setResponseMessage('An error occurred. Please try again.');
             setResponseType('error');
         }
+
     };
+
 
     return (
         <>
@@ -56,6 +59,8 @@ const SendInvite: React.FC = () => {
                                 type="email"
                                 id="email"
                                 name="email"
+                                placeholder='Enter your Email'
+                                autoFocus
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
@@ -63,19 +68,23 @@ const SendInvite: React.FC = () => {
                         </div>
                         <div className={styles.formGroup}>
                             <label htmlFor="roleId">Role:</label>
-                            <select
-                                id="roleId"
-                                name="roleId"
-                                value={roleId}
-                                onChange={(e) => setRoleId(e.target.value)}
-                                required>
-                                <option value="admin">Admin</option>
-                                <option value="broker">Broker</option>
-                            </select>
+                            <div className={styles.selectWrapper}>
+                                <select
+                                    id="roleId"
+                                    name="roleId"
+                                    ref={selectRef}
+                                    className={styles.customSelect}
+                                    value={roleId}
+                                    onChange={(e) => setRoleId(e.target.value)}
+                                    required
+                                >
+                                    <option value="admin">Admin</option>
+                                    <option value="broker">Broker</option>
+                                </select>
+                            </div>
                         </div>
                         <button type="submit">Send Invite</button>
                     </form>
-                    
                 </div>
             )}
         </>

@@ -155,19 +155,7 @@ const Navbar: React.FC = () => {
                 </div>
             </nav>
 
-            <Dialog
-                open={openPopup}
-                onClose={handleClosePopup}
-                maxWidth={selectedComponent === 'Landlord' ? 'xl' : 'sm'}
-                fullWidth={selectedComponent === 'Landlord'}
-                PaperProps={{
-                    sx: {
-                        height: selectedComponent === 'Landlord' ? '100vh' : 'auto', 
-                        width: selectedComponent === 'Landlord' ? '100vw' : 'auto', 
-                    }
-                }}
-                sx={{ padding: 0, margin: 0 }}
-            >
+            <Dialog open={openPopup} onClose={handleClosePopup} sx={{ padding: 0, margin: 0 }}>
                 <DialogTitle sx={{ padding: 0 }}>
                     <Icon
                         aria-label="close"
@@ -177,14 +165,15 @@ const Navbar: React.FC = () => {
                             right: 18,
                             top: 8,
                             zIndex: 999,
-                            fontSize: 30
+                            fontSize: 30,
+                            cursor: 'pointer'
                         }}
                     >
                         <CloseIcon />
                     </Icon>
                 </DialogTitle>
 
-                <DialogContent sx={{ padding: selectedComponent === 'Landlord' ? 2 : 0 }}> {/* Conditionally adjust padding */}
+                <DialogContent sx={{ padding: 0 }}>
                     {selectedComponent === 'SendInvite' && <SendInvite />}
                     {selectedComponent === 'Reset' && <Reset />}
                     {/* {selectedComponent === 'CreateDeal' && <CreateDeal />} */}
