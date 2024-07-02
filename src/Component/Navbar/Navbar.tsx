@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Dialog, DialogContent, Icon, DialogTitle, IconButton, Box } from '@mui/material';
 import styles from './Navbar.module.css';
 import SendInvite from '../SendInvite/SendInvite';
@@ -8,35 +8,17 @@ import CreateDeal from '../Milestone/Milestone';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
-
 import BrokerGrid from '../Grids/broker-grid/broker-grid';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '../Redux/reducers/index';
 import SiteGrid from '../Grids/Site-grid/site-grid';
 
-import { useSelector } from 'react-redux';
-// import { RootState } from '../Redux/reducers/index';
-
-interface RootState {
-    auth: {
-        user: {
-            firstName: string;
-            lastName: string;
-        } | null;
-    };
-}
-
 const Navbar: React.FC = () => {
-    const user = useSelector((state: RootState) => state.auth.user);
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
-    const [isFirstSave, setIsFirstSave] = useState(true);
+    const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
     // const [dealFormData, setDealFormData] = useState<Deal>();
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-
-
 
     // interface Deal {
     //     activeStep: number;
@@ -76,72 +58,45 @@ const Navbar: React.FC = () => {
     const handleCards = () => {
         navigate('/cards');
     };
-
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
-    };
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsDropdownOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
-
-
+    // const dealDetails: any = useSelector((state: RootState) => state.deal.dealDetails);
 
     const saveFormData = async () => {
 
         try {
-            const deal: any = localStorage.getItem('dealdetails')
-            const dealtemp: any = JSON.parse(deal)
-            if (dealtemp.isNew && isFirstSave) {
-                const response = await axiosInstance.post('/deals/deal', dealtemp);
-                console.log('Form data saved:', response.data);
-                localStorage.removeItem('dealdetails');
-                setIsFirstSave(false);
-                return
-            }
-            const response = await axiosInstance.put(`/deals/deal/${dealtemp.id}`, dealtemp);
-            console.log('Form data saved for put:', response.data);
+          const deal: any = localStorage.getItem('dealdetails')
+          const dealtemp: any = JSON.parse(deal)
+          if (dealtemp.isNew && isFirstSave) {
+            const response = await axiosInstance.post('/deals/deal', dealtemp);
+            console.log('Form data saved:', response.data);
             localStorage.removeItem('dealdetails');
-            setIsFirstSave(true);
-
-        } catch (error) {
-            console.error('Error saving form data:', error);
+            setIsFirstSave(false);
             return
+          }
+          const response = await axiosInstance.put(`/deals/deal/${dealtemp.id}`, dealtemp);
+          console.log('Form data saved for put:', response.data);
+          localStorage.removeItem('dealdetails');
+          setIsFirstSave(true);
+    
+        } catch (error) {
+          console.error('Error saving form data:', error);
+          return
         }
-    };
+      };
+
+
     const createDealForm = () => {
         setOpenStepper(true);
         // setDealFormData(undefined);
-    }
-
-    // useEffect(() => {
-    //     if (!openStepper) {
-    //         saveFormData();
-    //     }
-    // }, [openStepper]);
-
-    const handlelogoclick = () => {
-        navigate('/dashboard')
+        // console.log("card Deal respected value ", deal);
     }
 
 
     return (
         <>
             <nav className={styles.navbarcontainer}>
-                <div className={styles.headersection}>
-                    <div className={styles.header} onClick={handlelogoclick}>
+                <div className={styles.header}>
                     <img src='https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0' alt="Tandem Logo" />
                     <h3>TANDEM INFRASTRUCTURE</h3>
-                    </div>
                     <p onClick={handleCards} style={{ cursor: 'pointer' }}>DEALS</p>
                     <p onClick={() => handleOpenPopup('Site')} style={{ cursor: 'pointer' }} >SITE</p>
                     <p onClick={() => handleOpenPopup('Landlord')} style={{ cursor: 'pointer' }}>LANDLORD</p>
@@ -160,22 +115,7 @@ const Navbar: React.FC = () => {
                             <button onClick={() => handleOpenPopup('Reset')}>Reset</button>
                            
                             <button onClick={handleLogout}>Logout</button>
-                    <div className={styles.userdropdown} onClick={toggleDropdown} ref={dropdownRef}>
-                        <p>{user ? `${user.firstName} ${user.lastName}` : 'Guest'}</p>
-                        <div className={styles.circle}>
-                            <p>{user ? user.firstName[0] : 'G'}</p>
                         </div>
-                        {isDropdownOpen && (
-                            <div className={styles.dropdownMenu}>
-                                <button onClick={() => handleOpenPopup('Profile')}>Profile</button>
-                                <button onClick={() => handleOpenPopup('SendInvite')}>Send Invite</button>
-                                <button onClick={() => handleOpenPopup('Reset')}>Reset</button>
-                                <button onClick={() => handleOpenPopup('Site')}>Site</button>
-                                <button onClick={() => handleOpenPopup('Landlord')}>Landlord</button>
-                                <button onClick={handleLogout}>Logout</button>
-                            </div>
-                        )}
-
                     </div>
                 </div>
             </nav>
@@ -197,8 +137,6 @@ const Navbar: React.FC = () => {
                 }}
                 sx={{ padding: 0, margin: 0 }}
             >
-
-            <Dialog open={openPopup} onClose={handleClosePopup} sx={{ padding: 0, margin: 0 }}>
                 <DialogTitle sx={{ padding: 0 }}>
                     <Icon
                         aria-label="close"
@@ -208,15 +146,14 @@ const Navbar: React.FC = () => {
                             right: 18,
                             top: 8,
                             zIndex: 999,
-                            fontSize: 30,
-                            cursor: 'pointer'
+                            fontSize: 30
                         }}
                     >
                         <CloseIcon />
                     </Icon>
                 </DialogTitle>
 
-                <DialogContent sx={{ padding: 0 }}>
+                <DialogContent sx={{ padding: selectedComponent === 'Landlord' ? 2 : 0 }}> {/* Conditionally adjust padding */}
                     {selectedComponent === 'SendInvite' && <SendInvite />}
                     {selectedComponent === 'Reset' && <Reset />}
                     {/* {selectedComponent === 'CreateDeal' && <CreateDeal />} */}
