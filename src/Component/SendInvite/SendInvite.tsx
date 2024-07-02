@@ -38,14 +38,6 @@ const SendInvite: React.FC = () => {
 
     };
 
-    const handleLabelClick = () => {
-        if (selectRef.current) {
-            selectRef.current.focus();
-            selectRef.current.click();
-        }
-    };
-
-
 
     return (
         <>

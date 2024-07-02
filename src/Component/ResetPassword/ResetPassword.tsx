@@ -9,10 +9,6 @@ const Reset: React.FC = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
     const [responseType, setResponseType] = useState('');
-    const [showOldPassword, setShowOldPassword] = useState(false);
-    const [showNewPassword, setShowNewPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
 
     const handleResetPassword = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -22,8 +18,6 @@ const Reset: React.FC = () => {
             setResponseType('error');
             return;
         }
-
-        
 
         try {
             const response = await axiosInstance.post('/auth/reset-password', {
