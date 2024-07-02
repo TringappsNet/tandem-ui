@@ -54,7 +54,7 @@
 }
 
 .rightheadersection .createdeal:hover {
-    background-color: #2d2589;
+    background-color: #221a79;
 }
 
 .userdropdown {
@@ -70,10 +70,6 @@
 .userdropdown p {
     text-transform: capitalize;
 }
-
-/* .userdropdown:hover .dropdownMenu {
-    display: block;
-} */
 
 .userdropdown .circle {
     width: 25px;

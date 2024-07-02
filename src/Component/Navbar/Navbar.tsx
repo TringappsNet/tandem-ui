@@ -165,7 +165,8 @@ const Navbar: React.FC = () => {
                             right: 18,
                             top: 8,
                             zIndex: 999,
-                            fontSize: 30
+                            fontSize: 30,
+                            cursor: 'pointer'
                         }}
                     >
                         <CloseIcon />

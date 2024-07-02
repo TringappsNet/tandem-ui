@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor'; // Adjust path as necessary
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './ResetPassword.module.css';
 
 const Reset: React.FC = () => {
@@ -9,6 +9,10 @@ const Reset: React.FC = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
     const [responseType, setResponseType] = useState('');
+    const [showOldPassword, setShowOldPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
 
     const handleResetPassword = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -18,6 +22,8 @@ const Reset: React.FC = () => {
             setResponseType('error');
             return;
         }
+
+        
 
         try {
             const response = await axiosInstance.post('/auth/reset-password', {
@@ -62,7 +68,9 @@ const Reset: React.FC = () => {
                             <input
                                 type="password"
                                 id="oldPassword"
+                                autoFocus
                                 value={oldPassword}
+                                placeholder='Enter your old password'
                                 onChange={(e) => setOldPassword(e.target.value)}
                                 required
                             />
@@ -73,6 +81,7 @@ const Reset: React.FC = () => {
                                 type="password"
                                 id="newPassword"
                                 value={newPassword}
+                                placeholder='Enter your new password'
                                 onChange={(e) => setNewPassword(e.target.value)}
                                 required
                             />
@@ -83,6 +92,7 @@ const Reset: React.FC = () => {
                                 type="password"
                                 id="confirmPassword"
                                 value={confirmPassword}
+                                placeholder='Confirm your password'
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
                             />
