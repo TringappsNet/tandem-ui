@@ -47,11 +47,6 @@ const DealForm = () => {
     // const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
     const [saveSuccess, setSaveSuccess] = useState(false); // Track save success
 
-    useEffect(() => {
-        fetchBrokers();
-        fetchSite();
-    }, []);
-
     // useEffect(() => {
     //     if (props.selectedDeal) {
     //         setFormData(props.selectedDeal);
@@ -60,28 +55,38 @@ const DealForm = () => {
     //     }
     // }, [props.selectedDeal]);
 
-    const sitedetails = [
-        {
-            "site": "ST Thomas Mount"
-        },
-        {
-            "site": "Adhampakkam"
-        },
-        {
-            "site": "Ekkatuthangal"
-        },
-        {
-            "site": "KK Nagar"
-        },
-    ]
+    // const sitedetails = [
+    //     {
+    //         "site": "ST Thomas Mount"
+    //     },
+    //     {
+    //         "site": "Adhampakkam"
+    //     },
+    //     {
+    //         "site": "Ekkatuthangal"
+    //     },
+    //     {
+    //         "site": "KK Nagar"
+    //     },
+    // ]
 
-    const fetchSite = () => {
-        const sitename : any = sitedetails.map(
-            (sitename) =>
-                sitename.site
-        )
-        setPropertyOptions(sitename);
-    }
+    // const fetchSite = () =>{ 
+    //     const sitename : any = sitedetails.map(
+    //         (sitename) =>
+    //             sitename.site
+    //     )
+    //     setPropertyOptions(sitename);
+    // }
+    const fetchSite = async () => {
+        try {
+            const response = await axiosInstance.get('/sites');
+            const sitename = response.data.map((sites: any) => `${sites.addressline1}, ${sites.addressline2}`);
+            setPropertyOptions(sitename);
+            console.log("Site Names",sitename);
+        } catch (error) {
+            console.error('Error fetching broker names:', error);
+        }
+    };
 
     const fetchBrokers = async () => {
         try {
@@ -96,6 +101,12 @@ const DealForm = () => {
             console.error('Error fetching broker names:', error);
         }
     };
+
+    
+    useEffect(() => {
+        fetchBrokers();
+        fetchSite();
+    },[] );
 
     const handleNext = () => {
         if (saveSuccess) {

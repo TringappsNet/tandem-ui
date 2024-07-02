@@ -64,6 +64,8 @@ const Login: React.FC = () => {
       if (data.message === 'Login successful' && response.status === 200) {
         const { session, user } = data;
         console.log("data",data);
+        localStorage.setItem('auth', JSON.stringify(data))
+        localStorage.setItem('accessToken', JSON.stringify(data.session.token))
         dispatch(setCredentials({ user, session }));
         setShowSuccessMessage(true);
         setShowFailureMessage(false);
