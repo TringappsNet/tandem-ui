@@ -24,30 +24,30 @@ const Navbar: React.FC = () => {
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
     const [isFirstSave, setIsFirstSave] = useState(true);
-    const [dealFormData, setDealFormData] = useState<Deal>();
+    // const [dealFormData, setDealFormData] = useState<Deal>();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
 
 
-    interface Deal {
-        activeStep: number;
-        status: string;
-        propertyName: string | null;
-        brokerName: string | null;
-        dealStartDate: string | null;
-        proposalDate: string | null;
-        loiExecuteDate: string | null;
-        leaseSignedDate: string | null;
-        noticeToProceedDate: string | null;
-        commercialOperationDate: string | null;
-        potentialcommissiondate: string | null;
-        potentialCommission: string | null;
-        createdBy: number;
-        updatedBy: number;
-        isNew: boolean;
-        id: number | null;
-    }
+    // interface Deal {
+    //     activeStep: number;
+    //     status: string;
+    //     propertyName: string | null;
+    //     brokerName: string | null;
+    //     dealStartDate: string | null;
+    //     proposalDate: string | null;
+    //     loiExecuteDate: string | null;
+    //     leaseSignedDate: string | null;
+    //     noticeToProceedDate: string | null;
+    //     commercialOperationDate: string | null;
+    //     potentialcommissiondate: string | null;
+    //     potentialCommission: string | null;
+    //     createdBy: number;
+    //     updatedBy: number;
+    //     isNew: boolean;
+    //     id: number | null;
+    // }
 
     const navigate = useNavigate();
 
@@ -112,14 +112,14 @@ const Navbar: React.FC = () => {
     };
     const createDealForm = () => {
         setOpenStepper(true);
-        setDealFormData(undefined);
+        // setDealFormData(undefined);
     }
 
-    useEffect(() => {
-        if (!openStepper) {
-            saveFormData();
-        }
-    }, [openStepper]);
+    // useEffect(() => {
+    //     if (!openStepper) {
+    //         saveFormData();
+    //     }
+    // }, [openStepper]);
 
 
     return (
