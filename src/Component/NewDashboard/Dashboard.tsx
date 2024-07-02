@@ -1,22 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
-import Main from '../Main/Main';
 import Cards from "../Cards/Cards";
 import styles from "./Dashboard.module.css";
-
-
-type Deal = {
-  totalDeals: number;
-  dealsOpened: number;
-  dealsInProgress: number;
-  dealsClosed: number;
-  totalCommission: number;
-};
+import Main from '../Main/Main';
 
 const Dashboard: React.FC = () => {
 
   return (
+    <>
       <div className={styles.dashboardContainer}>
         <Navbar />
         <div className={styles.mainContent}>
@@ -25,8 +17,10 @@ const Dashboard: React.FC = () => {
             <Route path="/cards" element={<Cards />} />
           </Routes>
         </div>
-      </div>
-  );
+        </div>
+      </>
+
+      );
 };
 
 export default Dashboard;

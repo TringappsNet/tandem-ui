@@ -1,0 +1,12 @@
+.gridContainer {
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    .gridContainer {
+      height: auto;
+    }
+  }
