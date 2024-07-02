@@ -8,20 +8,11 @@ import CreateDeal from '../Milestone/Milestone';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
-import { useSelector } from 'react-redux';
-// import { RootState } from '../Redux/reducers/index';
-
-interface RootState {
-    auth: {
-        user: {
-            firstName: string;
-            lastName: string;
-        } | null;
-    };
-}
 
 const Navbar: React.FC = () => {
-    const user = useSelector((state: RootState) => state.auth.user);
+    const auth :any= localStorage.getItem('auth');
+    const userdetails = JSON.parse(auth)
+    console.log("User detal",userdetails)
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
@@ -64,6 +55,7 @@ const Navbar: React.FC = () => {
     };
 
     const handleLogout = () => {
+        localStorage.clear();
         navigate('/login');
     };
 
@@ -136,7 +128,7 @@ const Navbar: React.FC = () => {
                     <img src='https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0' alt="Tandem Logo" />
                     <h3>TANDEM INFRASTRUCTURE</h3>
                     </div>
-                    <p onClick={handleCards} style={{ cursor: 'pointer' }}>DEALS</p>
+                    <p onClick={handleCards}>DEALS</p>
                 </div>
 
                 <div className={styles.rightheadersection}>
@@ -144,9 +136,9 @@ const Navbar: React.FC = () => {
                         <p onClick={() => createDealForm()}>CREATE</p>
                     </div>
                     <div className={styles.userdropdown} onClick={toggleDropdown} ref={dropdownRef}>
-                        <p>{user ? `${user.firstName} ${user.lastName}` : 'Guest'}</p>
+                        <p>{userdetails ? `${userdetails.user.firstName} ${userdetails.user.lastName}` : 'Guest'}</p>
                         <div className={styles.circle}>
-                            <p>{user ? user.firstName[0] : 'G'}</p>
+                            <p>{userdetails ? userdetails.user.firstName[0] : 'G'}</p>
                         </div>
                         {isDropdownOpen && (
                             <div className={styles.dropdownMenu}>
