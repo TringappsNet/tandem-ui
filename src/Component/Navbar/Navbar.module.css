@@ -14,9 +14,10 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: .5rem;
+    gap: 1rem;
     margin-left: 20px;
     align-content: center;
+    cursor: pointer;
 }
 
 .header {
@@ -54,10 +55,10 @@
     border: 1px solid #3c3c3c;
     background-color: #262262;
     padding: 6px 12px;
-    margin-top: 2px;
     border-radius: 5px;
     font-size: 0.8rem;
-    margin-right: 10px;
+    /* margin-right: 10px; */
+    align-items: center;
 }
 
 .rightheadersection .createdeal:hover {
