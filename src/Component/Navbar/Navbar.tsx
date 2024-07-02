@@ -8,7 +8,6 @@ import CreateDeal from '../Milestone/Milestone';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
-import BrokerGrid from '../Grids/broker-grid/broker-grid';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '../Redux/reducers/index';
 import SiteGrid from '../Grids/Site-grid/site-grid';
