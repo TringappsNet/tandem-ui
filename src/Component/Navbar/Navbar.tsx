@@ -8,9 +8,10 @@ import CreateDeal from '../Milestone/Milestone';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
+import BrokerGrid from '../Grids/broker-grid/broker-grid';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '../Redux/reducers/index';
-
+import SiteGrid from '../Grids/Site-grid/site-grid';
 
 const Navbar: React.FC = () => {
     const [openPopup, setOpenPopup] = useState<boolean>(false);
@@ -97,6 +98,8 @@ const Navbar: React.FC = () => {
                     <img src='https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0' alt="Tandem Logo" />
                     <h3>TANDEM INFRASTRUCTURE</h3>
                     <p onClick={handleCards} style={{ cursor: 'pointer' }}>DEALS</p>
+                    <p onClick={() => handleOpenPopup('Site')} style={{ cursor: 'pointer' }} >SITE</p>
+                    <p onClick={() => handleOpenPopup('Landlord')} style={{ cursor: 'pointer' }}>LANDLORD</p>
                 </div>
 
                 <div className={styles.rightheadersection}>
@@ -110,8 +113,7 @@ const Navbar: React.FC = () => {
                             <button onClick={() => handleOpenPopup('Profile')}>Profile</button>
                             <button onClick={() => handleOpenPopup('SendInvite')}>Send Invite</button>
                             <button onClick={() => handleOpenPopup('Reset')}>Reset</button>
-                            <button onClick={() => handleOpenPopup('Site')}>Site</button>
-                            <button onClick={() => handleOpenPopup('Landlord')}>Landlord</button>
+                           
                             <button onClick={handleLogout}>Logout</button>
                         </div>
                     </div>
@@ -121,13 +123,17 @@ const Navbar: React.FC = () => {
             <Dialog
                 open={openPopup}
                 onClose={handleClosePopup}
-                maxWidth={selectedComponent === 'Landlord' ? 'xl' : 'sm'}
-                fullWidth={selectedComponent === 'Landlord'}
+                maxWidth={{selectedComponent} ? 'xl' : 'sm'}
+                // fullWidth={{selectedComponent} }
                 PaperProps={{
                     sx: {
-                        height: selectedComponent === 'Landlord' ? '100vh' : 'auto', 
-                        width: selectedComponent === 'Landlord' ? '100vw' : 'auto', 
+                        height: {selectedComponent}  ? '100vh' : 'auto', 
+                        width: {selectedComponent} ? '100vw' : 'auto', 
+
+                        
                     }
+
+                   
                 }}
                 sx={{ padding: 0, margin: 0 }}
             >
@@ -157,8 +163,26 @@ const Navbar: React.FC = () => {
                         <h1>Landlord Details</h1>
                         <br></br>
                         <LandlordGrid />
+
                     </Box>
+
+
                     )}
+
+
+                   {selectedComponent === 'Site' && ( 
+                    <Box sx={{ padding: 1, borderRadius: 1, height: '100%', width: '100%', maxHeight: 'calc(100vh - 64px)', overflow: 'auto' }}>
+                        <br></br>
+                        <h1>Site Details</h1>
+                        <br></br>
+                        < SiteGrid/>
+
+                    </Box>
+
+
+                    )}
+
+
                 </DialogContent>
             </Dialog>
 

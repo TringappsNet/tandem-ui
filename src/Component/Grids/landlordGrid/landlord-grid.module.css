@@ -1,8 +1,10 @@
 .gridContainer {
     height: 450px;
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     width: 100%;
+    text-align: center;
+    font-size: small;
   }
   
   @media (max-width: 768px) {
@@ -10,3 +12,7 @@
       height: auto;
     }
   }
+
+
+
+  

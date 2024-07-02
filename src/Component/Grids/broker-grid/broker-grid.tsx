@@ -7,7 +7,6 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import axios from "axios";
 import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
 import FullGrid from "../parentGrid/parent-grid";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
@@ -56,6 +55,9 @@ const BrokerGrid: React.FC = () => {
     fetchBrokers();
   }, []);
 
+
+
+
   const fetchBrokers = async () => {
     try {
       const response = await axiosInstance.get(config.apiUrl);
@@ -96,7 +98,7 @@ const BrokerGrid: React.FC = () => {
 
   const handleAdd = async () => {
     try {
-      const response = await axios.post(config.apiUrl, formData);
+      const response = await axiosInstance.post('/sites/site', formData);
       setRows([...rows, response.data]);
       handleClose();
     } catch (error) {
@@ -114,7 +116,7 @@ const BrokerGrid: React.FC = () => {
 
   const handleUpdate = async () => {
     try {
-      const response = await axios.put(`${config.apiUrl}/${formData.id}`, formData);
+      const response = await axiosInstance.put(`sites/site/${formData.id}`, formData);
       setRows(rows.map((row) => (row.id === formData.id ? response.data : row)));
       handleClose();
     } catch (error) {
@@ -124,7 +126,7 @@ const BrokerGrid: React.FC = () => {
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`${config.apiUrl}/${id}`);
+      await axiosInstance.delete(`sites/site/${formData.id}`);
       setRows(rows.filter((row) => row.id !== id));
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -140,6 +142,31 @@ const BrokerGrid: React.FC = () => {
     { field: "dealsClosed", headerName: "Deals Closed", width: 150, align: "center", headerAlign: "center" },
     { field: "totalCommission", headerName: "Total Commission", width: 150, align: "center", headerAlign: "center" },
     { field: "isActive", headerName: "Active", width: 150, align: "center", headerAlign: "center" },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 200,
+      align: "center",
+      renderCell: (params) => (
+        <>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginRight: 8 }}
+            onClick={() => handleEdit(params.row.id)}
+          >
+            Edit
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => handleDelete(params.row.id)}
+          >
+            Delete
+          </Button>
+        </>
+      ),
+    },
   ];
 
   return (
@@ -150,7 +177,8 @@ const BrokerGrid: React.FC = () => {
         paginationModel={paginationModel}
         setPaginationModel={setPaginationModel}
         handleEdit={handleEdit}
-        handleDelete={handleDelete}
+        // handleDelete={handleDelete}
+        handleAdd={handleAdd}
       />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{formData.id ? "Edit User" : "Add User"}</DialogTitle>

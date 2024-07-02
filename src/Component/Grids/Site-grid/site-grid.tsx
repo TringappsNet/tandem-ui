@@ -8,11 +8,11 @@ import {
   DialogTitle,
 } from "@mui/material";
 import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
-import styles from "./landlord-grid.module.css";
+import styles from "./site-grid.module.css";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import FullGrid from "../parentGrid/parent-grid";
 
-interface Landlord {
+interface Site {
   id: number;
   name: string;
   phoneNumber: string;
@@ -26,14 +26,14 @@ interface Landlord {
 }
 
 const config = {
-  apiUrl: "/landlords",
+  apiUrl: "/sites",
 };
 
 
-const LandlordGrid: React.FC = () => {
-  const [rows, setRows] = useState<Landlord[]>([]);
+const SiteGrid: React.FC = () => {
+  const [rows, setRows] = useState<Site[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-  const [formData, setFormData] = useState<Landlord>({
+  const [formData, setFormData] = useState<Site>({
     id: 0,
     name: "",
     phoneNumber: "",
@@ -51,15 +51,15 @@ const LandlordGrid: React.FC = () => {
   });
 
   useEffect(() => {
-    fetchLandlords();
+    fetchSites();
   }, []);
 
-  const fetchLandlords = async () => {
+  const fetchSites = async () => {
     try {
       const response = await axiosInstance.get(config.apiUrl);
       setRows(response.data);
     } catch (error) {
-      console.error("Error fetching landlords:", error);
+      console.error("Error fetching Sites:", error);
     }
   };
 
@@ -73,11 +73,11 @@ const LandlordGrid: React.FC = () => {
 
   const handleAdd = async () => {
     try {
-      const response = await axiosInstance.post('landlords/landlord/', formData);
+      const response = await axiosInstance.post('Sites/Site/', formData);
       setRows([...rows, response.data]);
       handleClose();
     } catch (error) {
-      console.error("Error adding landlord:", error);
+      console.error("Error adding Site:", error);
     }
   };
 
@@ -89,37 +89,31 @@ const LandlordGrid: React.FC = () => {
     }
   };
 
-  const handleEditnew = () => {
-   
-      handleOpen();
-    
-  };
-
   const handleUpdate = async () => {
     try {
       const response = await axiosInstance.patch(
-        `landlords/landlord/${formData.id}`,
+        `Sites/Site/${formData.id}`,
         formData
       );
       setRows(rows.map((row) => (row.id === formData.id ? response.data : row)));
       handleClose();
     } catch (error) {
-      console.error("Error updating landlord:", error);
+      console.error("Error updating Site:", error);
     }
   };
 
   const handleDelete = async (id: number) => {
     try {
-      await axiosInstance.delete(`landlords/landlord/${id}`);
+      await axiosInstance.delete(`Sites/Site/${id}`);
       setRows(rows.filter((row) => row.id !== id));
     } catch (error) {
-      console.error("Error deleting landlord:", error);
+      console.error("Error deleting Site:", error);
     }
   };
 
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Name", width: 150, align: "center" },
-    { field: "phoneNumber", headerName: "Phone Number", width: 150, align: "center" },
+    { field: "addressline1", headerName: "addressline1", width: 150, align: "center" },
+    { field: "addressline2", headerName: "addressline2", width: 150, align: "center" },
     { field: "email", headerName: "Email", width: 200, align: "center" },
     { field: "address1", headerName: "Address 1", width: 150, align: "center" },
     { field: "address2", headerName: "Address 2", width: 150, align: "center" },
@@ -137,15 +131,12 @@ const LandlordGrid: React.FC = () => {
           <Button
             variant="contained"
             color="primary"
-
-            style={{ marginRight: 8,height:20 }}
+            style={{ marginRight: 8 }}
             onClick={() => handleEdit(params.row.id)}
           >
             Edit
           </Button>
           <Button
-            style={{ marginRight: 8,height:20 }}
-
             variant="contained"
             color="secondary"
             onClick={() => handleDelete(params.row.id)}
@@ -156,18 +147,23 @@ const LandlordGrid: React.FC = () => {
       ),
     },
   ];
+  const handleEditnew = () => {
+   
+    handleOpen();
+  
+};
 
   return (
     <div className={styles.gridContainer}>
-          <Button
+           <Button
             variant="contained"
             color="primary"
 
             style={{ marginRight: 8 , width:'30px',margin:10,position:'relative',float:'right'}}
             onClick={() => handleEditnew()}
           >Add  </Button>
+
       <FullGrid
-      
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}
@@ -176,11 +172,9 @@ const LandlordGrid: React.FC = () => {
         // handleDelete={handleDelete}
         handleAdd={handleAdd}
       />
-  
-        
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{formData.id ? "Edit Landlord" : "Add Landlord"}</DialogTitle>
+        <DialogTitle>{formData.id ? "Edit Site" : "Add Site"}</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -263,24 +257,19 @@ const LandlordGrid: React.FC = () => {
             fullWidth
             value={formData.zipcode}
             onChange={handleChange}
-
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}  
-          color="primary">
+          <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={formData.id ? handleUpdate : handleAdd} 
-          color="primary">
+          <Button onClick={formData.id ? handleUpdate : handleAdd} color="primary">
             {formData.id ? "Update" : "Add"}
           </Button>
-
-        
         </DialogActions>
       </Dialog>
     </div>
   );
 };
 
-export default LandlordGrid;
+export default SiteGrid;
