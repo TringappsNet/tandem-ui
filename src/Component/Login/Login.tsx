@@ -67,7 +67,7 @@ const Login: React.FC = () => {
         dispatch(setCredentials({ user, session }));
         setShowSuccessMessage(true);
         setShowFailureMessage(false);
-        navigate('/newdashboard');
+        navigate('/dashboard');
        } else {
         setShowSuccessMessage(false);
         setShowFailureMessage(true);

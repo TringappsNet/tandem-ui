@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor'; // Adjust path as necessary
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './ResetPassword.module.css';
 
 const Reset: React.FC = () => {
@@ -62,7 +62,9 @@ const Reset: React.FC = () => {
                             <input
                                 type="password"
                                 id="oldPassword"
+                                autoFocus
                                 value={oldPassword}
+                                placeholder='Enter your old password'
                                 onChange={(e) => setOldPassword(e.target.value)}
                                 required
                             />
@@ -73,6 +75,7 @@ const Reset: React.FC = () => {
                                 type="password"
                                 id="newPassword"
                                 value={newPassword}
+                                placeholder='Enter your new password'
                                 onChange={(e) => setNewPassword(e.target.value)}
                                 required
                             />
@@ -83,6 +86,7 @@ const Reset: React.FC = () => {
                                 type="password"
                                 id="confirmPassword"
                                 value={confirmPassword}
+                                placeholder='Confirm your password'
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
                             />
