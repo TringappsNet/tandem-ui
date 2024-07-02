@@ -11,6 +11,7 @@ type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, A
 
 // Define initial state interface
 interface DealState {
+  activeStep: number;
   dealDetails: Deal;
   loading: boolean;
   error: string | null;
@@ -18,6 +19,7 @@ interface DealState {
 
 // Initial state
 const initialState: DealState = {
+  activeStep:0,
   dealDetails: {
     id: null,
     brokerName: '',
@@ -62,7 +64,7 @@ const dealSlice = createSlice({
       state.dealDetails[action.payload.field] = action.payload.value;
     },
     setActiveStep: (state, action: PayloadAction<number>) => {
-      state.dealDetails.activeStep = action.payload;
+      state.activeStep = action.payload;
     },
   },
 });
