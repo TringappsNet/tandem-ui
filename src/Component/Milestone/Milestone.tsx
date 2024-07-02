@@ -8,7 +8,7 @@ import { setDealDetails } from '../Redux/slice/dealSlice';
 import styles from './Milestone.module.css';
 
 const steps = [
-    { label: 'Tandem', fields: [{ type: 'dropdown', label: 'propertyName', options: ['Land', 'Land1'] }, { type: 'dropdown', label: 'brokerName', options: [] }, { type: 'date', label: 'dealStartDate' }] },
+    { label: 'Tandem', fields: [{ type: 'dropdown', label: 'propertyName', options: [] }, { type: 'dropdown', label: 'brokerName', options: [] }, { type: 'date', label: 'dealStartDate' }] },
     { label: 'Proposal', fields: [{ type: 'date', label: 'proposalDate' }] },
     { label: 'LOI Execute', fields: [{ type: 'date', label: 'loiExecuteDate' }] },
     { label: 'Lease Signed', fields: [{ type: 'date', label: 'leaseSignedDate' }] },
@@ -42,12 +42,14 @@ const DealForm = () => {
         activeStep: 0,
     });
     const [brokerOptions, setBrokerOptions] = useState<string[]>([]);
+    const [propertyOptions, setPropertyOptions] = useState<string[]>([]);
     const [userId, setUserId] = useState<number | null>(null);
     // const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
     const [saveSuccess, setSaveSuccess] = useState(false); // Track save success
 
     useEffect(() => {
         fetchBrokers();
+        fetchSite();
     }, []);
 
     // useEffect(() => {
@@ -57,6 +59,29 @@ const DealForm = () => {
     //         setIsFirstSave(false);
     //     }
     // }, [props.selectedDeal]);
+
+    const sitedetails = [
+        {
+            "site": "ST Thomas Mount"
+        },
+        {
+            "site": "Adhampakkam"
+        },
+        {
+            "site": "Ekkatuthangal"
+        },
+        {
+            "site": "KK Nagar"
+        },
+    ]
+
+    const fetchSite = () => {
+        const sitename : any = sitedetails.map(
+            (sitename) =>
+                sitename.site
+        )
+        setPropertyOptions(sitename);
+    }
 
     const fetchBrokers = async () => {
         try {
@@ -151,17 +176,24 @@ const DealForm = () => {
                         margin="normal"
                         size="small"
                     >
-                        {label === 'brokerName'
+                        {
+                        label === 'brokerName'
                             ? brokerOptions.map((option, idx) => (
                                 <MenuItem key={idx} value={option}>
                                     {option}
                                 </MenuItem>
                             ))
-                            : options.map((option: string, idx: number) => (
+                            : label === 'propertyName' ? propertyOptions.map((option, idx) => (
                                 <MenuItem key={idx} value={option}>
                                     {option}
                                 </MenuItem>
-                            ))}
+                            )):  
+                            options.map((option: string, idx: number) => (
+                                <MenuItem key={idx} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))
+                        }
                     </TextField>
                 );
             case 'date':
@@ -245,7 +277,7 @@ const DealForm = () => {
                                     </Button>
                                 </Box>
                             </Box>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', position:'absolute',top:"260px", zIndex:999 }}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', position: 'absolute', top: "260px", zIndex: 999 }}>
                                 {steps[activeStep].fields.map((field, index) => renderField(field, index))}
                                 <Button
                                     variant="contained"

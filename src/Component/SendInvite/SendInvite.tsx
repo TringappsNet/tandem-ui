@@ -31,8 +31,8 @@ const SendInvite: React.FC = () => {
                 setResponseMessage(data.message || 'Failed to send invite.');
                 setResponseType('error');
             }
-        } catch (error) {
-            setResponseMessage('An error occurred. Please try again.');
+        } catch (error : any) {
+            setResponseMessage(error.response.data.message ||'An error occurred. Please try again.');
             setResponseType('error');
         }
 
@@ -78,8 +78,8 @@ const SendInvite: React.FC = () => {
                                     onChange={(e) => setRoleId(e.target.value)}
                                     required
                                 >
-                                    <option value="admin">Admin</option>
-                                    <option value="broker">Broker</option>
+                                    <option value='1'>Admin</option>
+                                    <option value="2">Broker</option>
                                 </select>
                             </div>
                         </div>

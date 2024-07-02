@@ -136,7 +136,7 @@ const Navbar: React.FC = () => {
                     <img src='https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0' alt="Tandem Logo" />
                     <h3>TANDEM INFRASTRUCTURE</h3>
                     </div>
-                    <p onClick={handleCards} style={{ cursor: 'pointer' }}>DEALS</p>
+                    <p onClick={handleCards}>DEALS</p>
                 </div>
 
                 <div className={styles.rightheadersection}>
