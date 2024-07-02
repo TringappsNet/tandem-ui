@@ -8,7 +8,7 @@ import ChangePassword from './Component/ChangePassword/ChangePassword';
 import Milestone from '../src/Component/Milestone/Milestone';
 import Cards from './Component/Cards/Cards';
 import Dashboard from '../src/Component/NewDashboard/Dashboard';
-import Profile from './Component/Profile/profile';
+// import Profile from './Component/Profile/profile';
 
 
 const App: React.FC = () => {
@@ -43,7 +43,7 @@ const App: React.FC = () => {
         <Route path="/mile" element={<Milestone />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cards" element={<Cards />} />
-        <Route path="/profile" element={<Profile />} />
+        {/* <Route path="/profile" element={<Profile />} /> */}
 
 
 

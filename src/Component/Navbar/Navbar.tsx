@@ -8,6 +8,8 @@ import CreateDeal from '../Milestone/Milestone';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { useSelector } from 'react-redux';
+import Profile from '../Profile/profile';
+
 
 interface RootState {
     auth: {
@@ -176,6 +178,8 @@ const Navbar: React.FC = () => {
                 <DialogContent sx={{ padding: 0 }}>
                     {selectedComponent === 'SendInvite' && <SendInvite />}
                     {selectedComponent === 'Reset' && <Reset />}
+                    {selectedComponent === 'Profile' && <Profile />}
+
                     {/* {selectedComponent === 'CreateDeal' && <CreateDeal />} */}
                 </DialogContent>
             </Dialog>
