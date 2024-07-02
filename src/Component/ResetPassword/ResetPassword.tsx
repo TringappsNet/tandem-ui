@@ -10,11 +10,25 @@ const Reset: React.FC = () => {
     const [responseMessage, setResponseMessage] = useState('');
     const [responseType, setResponseType] = useState('');
 
+    const validatePassword = (password: string) => {
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        const hasNumber = /\d/.test(password);
+        const hasUpperCase = /[A-Z]/.test(password);
+
+        return hasSpecialChar && hasNumber && hasUpperCase;
+    };
+
     const handleResetPassword = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (newPassword !== confirmPassword) {
             setResponseMessage('Passwords do not match.');
+            setResponseType('error');
+            return;
+        }
+
+        if (!validatePassword(newPassword)) {
+            setResponseMessage('Password must contain at least 1 special character, 1 number, and 1 capital letter.');
             setResponseType('error');
             return;
         }

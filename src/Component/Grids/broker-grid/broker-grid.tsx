@@ -6,8 +6,10 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Box,
 } from "@mui/material";
 import axios from "axios";
+import styles from './broker-grid.module.css'
 import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
 import FullGrid from "../parentGrid/parent-grid";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
@@ -143,7 +145,8 @@ const BrokerGrid: React.FC = () => {
   ];
 
   return (
-    <div>
+    <div className={styles.gridContainer}>
+      {/* <div className={styles.gridWrapper}> */}
       <FullGrid
         rows={rows}
         columns={columns}
@@ -151,7 +154,9 @@ const BrokerGrid: React.FC = () => {
         setPaginationModel={setPaginationModel}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
+        className={styles.gridContainer}
       />
+
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{formData.id ? "Edit User" : "Add User"}</DialogTitle>
         <DialogContent>
@@ -248,7 +253,9 @@ const BrokerGrid: React.FC = () => {
         </DialogActions>
       </Dialog>
     </div>
+    // </div>
   );
 };
 
 export default BrokerGrid;
+

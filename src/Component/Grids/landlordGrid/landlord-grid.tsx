@@ -121,7 +121,7 @@ const LandlordGrid: React.FC = () => {
   ];
 
   return (
-    <div className={styles.gridContainer}> 
+    <div className={styles.gridContainer}>
       <FullGrid
         rows={rows}
         columns={columns}
@@ -129,7 +129,8 @@ const LandlordGrid: React.FC = () => {
         setPaginationModel={setPaginationModel}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
-        className={styles.gridContainer} 
+        className={styles.gridContainer}
+
       />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{formData.id ? "Edit Landlord" : "Add Landlord"}</DialogTitle>

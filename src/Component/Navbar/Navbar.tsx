@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Dialog, DialogContent, Icon, DialogTitle, IconButton, Box } from '@mui/material';
+import { Dialog, DialogContent, Icon, DialogTitle, IconButton } from '@mui/material';
 import styles from './Navbar.module.css';
 import SendInvite from '../SendInvite/SendInvite';
 import Reset from '../ResetPassword/ResetPassword';
@@ -7,9 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import CreateDeal from '../Milestone/Milestone';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
-import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
 import { useSelector } from 'react-redux';
-// import { RootState } from '../Redux/reducers/index';
 
 interface RootState {
     auth: {
@@ -26,30 +24,30 @@ const Navbar: React.FC = () => {
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
     const [isFirstSave, setIsFirstSave] = useState(true);
-    // const [dealFormData, setDealFormData] = useState<Deal>();
+    const [dealFormData, setDealFormData] = useState<Deal>();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
 
 
-    // interface Deal {
-    //     activeStep: number;
-    //     status: string;
-    //     propertyName: string | null;
-    //     brokerName: string | null;
-    //     dealStartDate: string | null;
-    //     proposalDate: string | null;
-    //     loiExecuteDate: string | null;
-    //     leaseSignedDate: string | null;
-    //     noticeToProceedDate: string | null;
-    //     commercialOperationDate: string | null;
-    //     potentialcommissiondate: string | null;
-    //     potentialCommission: string | null;
-    //     createdBy: number;
-    //     updatedBy: number;
-    //     isNew: boolean;
-    //     id: number | null;
-    // }
+    interface Deal {
+        activeStep: number;
+        status: string;
+        propertyName: string | null;
+        brokerName: string | null;
+        dealStartDate: string | null;
+        proposalDate: string | null;
+        loiExecuteDate: string | null;
+        leaseSignedDate: string | null;
+        noticeToProceedDate: string | null;
+        commercialOperationDate: string | null;
+        potentialcommissiondate: string | null;
+        potentialCommission: string | null;
+        createdBy: number;
+        updatedBy: number;
+        isNew: boolean;
+        id: number | null;
+    }
 
     const navigate = useNavigate();
 
@@ -114,28 +112,22 @@ const Navbar: React.FC = () => {
     };
     const createDealForm = () => {
         setOpenStepper(true);
-        // setDealFormData(undefined);
+        setDealFormData(undefined);
     }
 
-    // useEffect(() => {
-    //     if (!openStepper) {
-    //         saveFormData();
-    //     }
-    // }, [openStepper]);
-
-    const handlelogoclick = () => {
-        navigate('/dashboard')
-    }
+    useEffect(() => {
+        if (!openStepper) {
+            saveFormData();
+        }
+    }, [openStepper]);
 
 
     return (
         <>
             <nav className={styles.navbarcontainer}>
-                <div className={styles.headersection}>
-                    <div className={styles.header} onClick={handlelogoclick}>
+                <div className={styles.header}>
                     <img src='https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0' alt="Tandem Logo" />
                     <h3>TANDEM INFRASTRUCTURE</h3>
-                    </div>
                     <p onClick={handleCards} style={{ cursor: 'pointer' }}>DEALS</p>
                 </div>
 
@@ -185,14 +177,6 @@ const Navbar: React.FC = () => {
                     {selectedComponent === 'SendInvite' && <SendInvite />}
                     {selectedComponent === 'Reset' && <Reset />}
                     {/* {selectedComponent === 'CreateDeal' && <CreateDeal />} */}
-                    {selectedComponent === 'Landlord' && (
-                    <Box sx={{ padding: 1, borderRadius: 1, height: '100%', width: '100%', maxHeight: 'calc(100vh - 64px)', overflow: 'auto' }}>
-                        <br></br>
-                        <h1>Landlord Details</h1>
-                        <br></br>
-                        <LandlordGrid />
-                    </Box>
-                    )}
                 </DialogContent>
             </Dialog>
 

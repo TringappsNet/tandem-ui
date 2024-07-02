@@ -8,7 +8,6 @@
 .dataGrid {
     flex-grow: 1;
     background-color: #f8f9fa;
-    height: 80%; 
 }
 
 .dataGrid .MuiDataGrid-footerContainer {
@@ -22,7 +21,7 @@
 }
 
 .dataGrid .MuiDataGrid-row {
-    background-color: #ffffff; 
+    background-color: #ffffff;
 }
 
 .dataGrid .MuiDataGrid-row:hover {
