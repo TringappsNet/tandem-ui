@@ -5,10 +5,9 @@ import Registration from './Component/Registration/Registration';
 import './App.css';
 import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 import ChangePassword from './Component/ChangePassword/ChangePassword';
-import NewDashboard from './Component/NewDashboard/Dashboard';
 import Milestone from '../src/Component/Milestone/Milestone';
 import Cards from './Component/Cards/Cards';
-
+import Dashboard from '../src/Component/NewDashboard/Dashboard';
 
 
 const App: React.FC = () => {
@@ -35,11 +34,11 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={accessToken ? <Navigate to="/newdashboard" /> : <Login />} />
+        <Route path="/" element={accessToken ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path="/registerform" element={<Registration />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/change" element={<ChangePassword />} />
-        <Route path="/newdashboard" element={<NewDashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/mile" element={<Milestone />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cards" element={<Cards />} />

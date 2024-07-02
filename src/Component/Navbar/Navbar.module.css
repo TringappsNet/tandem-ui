@@ -9,13 +9,20 @@
     justify-content: space-between;
 }
 
-.header {
+.headersection {
     height: 100%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: .1rem;
+    gap: .5rem;
     margin-left: 20px;
+    align-content: center;
+}
+
+.header {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     align-content: center;
 }
 
