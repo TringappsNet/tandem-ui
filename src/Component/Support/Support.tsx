@@ -12,6 +12,7 @@ const Support: React.FC = () => {
                         type="text"
                         placeholder='Enter the subject of concern'
                         id="subject"
+                        autoFocus
                         name="subject"
                     />
                 </div>
