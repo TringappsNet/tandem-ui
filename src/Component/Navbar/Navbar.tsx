@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { useSelector } from 'react-redux';
 import Profile from '../Profile/profile';
+import Support from '../Support/Support';
 
 
 interface RootState {
@@ -26,7 +27,6 @@ const Navbar: React.FC = () => {
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
     const [isFirstSave, setIsFirstSave] = useState(true);
-    // const [dealFormData, setDealFormData] = useState<Deal>();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -114,7 +114,6 @@ const Navbar: React.FC = () => {
     };
     const createDealForm = () => {
         setOpenStepper(true);
-        // setDealFormData(undefined);
     }
 
     useEffect(() => {
@@ -149,6 +148,7 @@ const Navbar: React.FC = () => {
                                 <button onClick={() => handleOpenPopup('Reset')}>Reset</button>
                                 <button onClick={() => handleOpenPopup('Site')}>Site</button>
                                 <button onClick={() => handleOpenPopup('Landlord')}>Landlord</button>
+                                <button onClick={() => handleOpenPopup('Support')}>Support</button>
                                 <button onClick={handleLogout}>Logout</button>
                             </div>
                         )}
@@ -157,7 +157,7 @@ const Navbar: React.FC = () => {
                 </div>
             </nav>
 
-            <Dialog open={openPopup} onClose={handleClosePopup} sx={{ padding: 0, margin: 0 }}>
+            <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }}>
                 <DialogTitle sx={{ padding: 0 }}>
                     <Icon
                         aria-label="close"
@@ -179,6 +179,8 @@ const Navbar: React.FC = () => {
                     {selectedComponent === 'SendInvite' && <SendInvite />}
                     {selectedComponent === 'Reset' && <Reset />}
                     {selectedComponent === 'Profile' && <Profile />}
+                    {selectedComponent === 'Support' && <Support />}
+
 
                     {/* {selectedComponent === 'CreateDeal' && <CreateDeal />} */}
                 </DialogContent>
