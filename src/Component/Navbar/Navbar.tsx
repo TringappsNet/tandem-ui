@@ -13,12 +13,11 @@ import { createNewDeal, updateDealDetails } from '../Redux/slice/dealSlice';
 import { AppDispatch } from '../Redux/store/index';
 import { RootState } from '../Redux/reducers';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
-import { useSelector } from 'react-redux';
 import Profile from '../Profile/profile';
 import Support from '../Support/Support';
 
 
-interface RootState {
+interface RegisterState {
     auth: {
         user: {
             firstName: string;
@@ -28,7 +27,7 @@ interface RootState {
 }
 
 const Navbar: React.FC = () => {
-    const user = useSelector((state: RootState) => state.auth.user);
+    const user = useSelector((state: RegisterState) => state.auth.user);
     const dispatch = useDispatch<AppDispatch>();
     const auth: any = localStorage.getItem('auth');
     const userdetails = JSON.parse(auth);
