@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Stepper, Step, StepLabel, Button, Typography, MenuItem, TextField, Box, StepConnector } from '@mui/material';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import { useDispatch } from '../Redux/store/index';
+import { setDealDetails, updateDealDetails } from '../Redux/slice/dealSlice';
 import { Deal } from '../Interface/DealFormObject';
-import { useDispatch } from 'react-redux';
-import { setDealDetails } from '../Redux/slice/dealSlice';
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import { Stepper, Step, StepLabel, Button, Typography, MenuItem, TextField, Box, StepConnector } from '@mui/material';
 import styles from './Milestone.module.css';
 
 const steps = [
@@ -46,22 +46,12 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
     const [userId, setUserId] = useState<number | null>(null);
     const [saveSuccess, setSaveSuccess] = useState(false);
 
-
-    // useEffect(() => {
-    //     if (props.selectedDeal) {
-    //         setFormData(props.selectedDeal);
-    //         setActiveStep(props.selectedDeal.activeStep || 0);
-    //         setIsFirstSave(false);
-    //     }
-    // }, [props.selectedDeal]);
-
-
     const fetchSite = async () => {
         try {
             const response = await axiosInstance.get('/sites');
             const sitename = response.data.map((sites: any) => `${sites.addressline1}, ${sites.addressline2}`);
             setPropertyOptions(sitename);
-            console.log("Site Names",sitename);
+            console.log("Site Names", sitename);
         } catch (error) {
             console.error('Error fetching broker names:', error);
         }
@@ -80,11 +70,10 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
         }
     };
 
-    
     useEffect(() => {
         fetchBrokers();
         fetchSite();
-    },[] );
+    }, []);
 
     const handleNext = () => {
         if (saveSuccess) {
@@ -119,20 +108,22 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
             ...formData,
             activeStep: activeStep + 1,
             status,
-            createdBy: userId || 0, 
+            createdBy: userId || 0,
             updatedBy: userId || 0,
             isNew: true,
         };
-
+    
         try {
-            localStorage.setItem('dealdetails', JSON.stringify(payload));
+            if (formData.id) {
+                dispatch(updateDealDetails(payload));
+            } else {
+                dispatch(setDealDetails(payload));
+            }
             setSaveSuccess(true);
         } catch (error) {
             console.error('Error saving form data:', error);
             setSaveSuccess(false);
         }
-
-        dispatch(setDealDetails(payload));
     };
 
     const getStatus = (step: number) => {
@@ -142,7 +133,7 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
         return '';
     };
 
-    const renderField = (field: any, index: number) => {
+    const renderField = (field: { label: string, type: string, options?: string[] }, index: number) => {
         const { label, type, options } = field;
         switch (type) {
             case 'dropdown':
@@ -159,22 +150,22 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
                         size="small"
                     >
                         {
-                        label === 'brokerName'
-                            ? brokerOptions.map((option, idx) => (
-                                <MenuItem key={idx} value={option}>
-                                    {option}
-                                </MenuItem>
-                            ))
-                            : label === 'propertyName' ? propertyOptions.map((option, idx) => (
-                                <MenuItem key={idx} value={option}>
-                                    {option}
-                                </MenuItem>
-                            )):  
-                            options.map((option: string, idx: number) => (
-                                <MenuItem key={idx} value={option}>
-                                    {option}
-                                </MenuItem>
-                            ))
+                            label === 'brokerName'
+                                ? brokerOptions.map((option, idx) => (
+                                    <MenuItem key={idx} value={option}>
+                                        {option}
+                                    </MenuItem>
+                                ))
+                                : label === 'propertyName' ? propertyOptions.map((option, idx) => (
+                                    <MenuItem key={idx} value={option}>
+                                        {option}
+                                    </MenuItem>
+                                )) :
+                                    options?.map((option: string, idx: number) => (
+                                        <MenuItem key={idx} value={option}>
+                                            {option}
+                                        </MenuItem>
+                                    ))
                         }
                     </TextField>
                 );

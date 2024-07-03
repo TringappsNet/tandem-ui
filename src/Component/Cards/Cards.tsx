@@ -51,6 +51,9 @@ const Cards: React.FC = () => {
         dispatch(fetchDealDetails());
     }, [dispatch]);
 
+    useEffect(() => {
+    }, [dealsData]);
+
     const editDealForm = (deal: Deal) => {
         setOpenStepper(true);
         setDealFormData({

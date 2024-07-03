@@ -6,17 +6,16 @@ import Reset from '../ResetPassword/ResetPassword';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import DealForm from '../Milestone/Milestone';
 import { createNewDeal, updateDealDetails } from '../Redux/slice/dealSlice';
-import { AppDispatch } from '../Redux/store'; 
-
+import { AppDispatch } from '../Redux/store/index';
+import { RootState } from '../Redux/reducers';
 
 const Navbar: React.FC = () => {
-    const dispatch = useDispatch<AppDispatch>(); 
-    const auth :any= localStorage.getItem('auth');
-    const userdetails = JSON.parse(auth)
-    console.log("User detal",userdetails)
+    const dispatch = useDispatch<AppDispatch>();
+    const auth: any = localStorage.getItem('auth');
+    const userdetails = JSON.parse(auth);
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
@@ -25,6 +24,10 @@ const Navbar: React.FC = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const navigate = useNavigate();
+
+    const dealDetails = useSelector((state: RootState) => state.deal.dealDetails);
+    // const dealsData = useSelector((state: RootState) => state.deal.dealDetails as unknown as DealsData);
+
 
     const handleOpenPopup = (componentName: string) => {
         setSelectedComponent(componentName);
@@ -64,18 +67,15 @@ const Navbar: React.FC = () => {
 
     const saveFormData = async () => {
         try {
-            const deal: any = localStorage.getItem('dealdetails');
-            const dealtemp: any = JSON.parse(deal);
+            const dealtemp = dealDetails[0];
             if (dealtemp.isNew && isFirstSave) {
                 await dispatch(createNewDeal(dealtemp));
                 console.log('Form data saved:', dealtemp);
-                localStorage.removeItem('dealdetails');
                 setIsFirstSave(false);
                 return;
             }
             await dispatch(updateDealDetails(dealtemp));
             console.log('Form data saved for put:', dealtemp);
-            localStorage.removeItem('dealdetails');
             setIsFirstSave(true);
         } catch (error) {
             console.error('Error saving form data:', error);
