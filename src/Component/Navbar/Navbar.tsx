@@ -26,7 +26,7 @@ interface RegisterState {
 const Navbar: React.FC = () => {
     const user = useSelector((state: RegisterState) => state.auth.user);
     const dispatch = useDispatch<AppDispatch>();
-    const auth: any = localStorage.getItem('auth');
+    // const auth: any = localStorage.getItem('auth');
     // const userdetails = JSON.parse(auth);
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
