@@ -7,7 +7,7 @@ import { setDealDetails } from '../Redux/slice/dealSlice';
 import styles from './Milestone.module.css';
 
 const steps = [
-    { label: 'Tandem', fields: [{ type: 'dropdown', label: 'propertyName', options: ['Land', 'Land1'] }, { type: 'dropdown', label: 'brokerName', options: [] }, { type: 'date', label: 'dealStartDate' }] },
+    { label: 'Tandem', fields: [{ type: 'dropdown', label: 'propertyName', options: [] }, { type: 'dropdown', label: 'brokerName', options: [] }, { type: 'date', label: 'dealStartDate' }] },
     { label: 'Proposal', fields: [{ type: 'date', label: 'proposalDate' }] },
     { label: 'LOI Execute', fields: [{ type: 'date', label: 'loiExecuteDate' }] },
     { label: 'Lease Signed', fields: [{ type: 'date', label: 'leaseSignedDate' }] },
@@ -42,12 +42,51 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
         isNew: deal?.isNew || true,
     });
     const [brokerOptions, setBrokerOptions] = useState<string[]>([]);
+    const [propertyOptions, setPropertyOptions] = useState<string[]>([]);
     const [userId, setUserId] = useState<number | null>(null);
     const [saveSuccess, setSaveSuccess] = useState(false);
 
-    useEffect(() => {
-        fetchBrokers();
-    }, []);
+
+    // useEffect(() => {
+    //     if (props.selectedDeal) {
+    //         setFormData(props.selectedDeal);
+    //         setActiveStep(props.selectedDeal.activeStep || 0);
+    //         setIsFirstSave(false);
+    //     }
+    // }, [props.selectedDeal]);
+
+    // const sitedetails = [
+    //     {
+    //         "site": "ST Thomas Mount"
+    //     },
+    //     {
+    //         "site": "Adhampakkam"
+    //     },
+    //     {
+    //         "site": "Ekkatuthangal"
+    //     },
+    //     {
+    //         "site": "KK Nagar"
+    //     },
+    // ]
+
+    // const fetchSite = () =>{ 
+    //     const sitename : any = sitedetails.map(
+    //         (sitename) =>
+    //             sitename.site
+    //     )
+    //     setPropertyOptions(sitename);
+    // }
+    const fetchSite = async () => {
+        try {
+            const response = await axiosInstance.get('/sites');
+            const sitename = response.data.map((sites: any) => `${sites.addressline1}, ${sites.addressline2}`);
+            setPropertyOptions(sitename);
+            console.log("Site Names",sitename);
+        } catch (error) {
+            console.error('Error fetching broker names:', error);
+        }
+    };
 
     const fetchBrokers = async () => {
         try {
@@ -61,6 +100,12 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
             console.error('Error fetching broker names:', error);
         }
     };
+
+    
+    useEffect(() => {
+        fetchBrokers();
+        fetchSite();
+    },[] );
 
     const handleNext = () => {
         if (saveSuccess) {
@@ -134,17 +179,24 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
                         margin="normal"
                         size="small"
                     >
-                        {label === 'brokerName'
+                        {
+                        label === 'brokerName'
                             ? brokerOptions.map((option, idx) => (
                                 <MenuItem key={idx} value={option}>
                                     {option}
                                 </MenuItem>
                             ))
-                            : options.map((option: string, idx: number) => (
+                            : label === 'propertyName' ? propertyOptions.map((option, idx) => (
                                 <MenuItem key={idx} value={option}>
                                     {option}
                                 </MenuItem>
-                            ))}
+                            )):  
+                            options.map((option: string, idx: number) => (
+                                <MenuItem key={idx} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))
+                        }
                     </TextField>
                 );
             case 'date':
@@ -228,7 +280,7 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
                                     </Button>
                                 </Box>
                             </Box>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', position:'absolute',top:"260px", zIndex:999 }}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', position: 'absolute', top: "260px", zIndex: 999 }}>
                                 {steps[activeStep].fields.map((field, index) => renderField(field, index))}
                                 <Button
                                     variant="contained"
