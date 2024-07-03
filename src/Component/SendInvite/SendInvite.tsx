@@ -8,11 +8,15 @@ const SendInvite: React.FC = () => {
     const [responseMessage, setResponseMessage] = useState('');
     const [responseType, setResponseType] = useState('');
     const [email, setEmail] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const [roleId, setRoleId] = useState('admin');
     const selectRef = useRef<HTMLSelectElement>(null);
 
     const handleSendInvite = async (e: React.FormEvent) => {
         e.preventDefault();
+
+
+        setIsLoading(true);
 
         try {
             const response = await axiosInstance.post('/auth/invite', { email, roleId });
@@ -35,6 +39,9 @@ const SendInvite: React.FC = () => {
             setResponseMessage('An error occurred. Please try again.');
             setResponseType('error');
         }
+        finally {
+            setIsLoading(false);
+        }
 
     };
 
@@ -52,6 +59,7 @@ const SendInvite: React.FC = () => {
                             {responseMessage}
                         </div>
                     )}
+
                     <form onSubmit={handleSendInvite}>
                         <div className={styles.formGroup}>
                             <label htmlFor="email">Email:</label>
@@ -83,9 +91,17 @@ const SendInvite: React.FC = () => {
                                 </select>
                             </div>
                         </div>
-                        <button type="submit">Send Invite</button>
+                        <button type="submit" disabled={isLoading}>Send Invite
+                            {isLoading ? 'Sending Invite' : 'Send Invite'}
+                        </button>
                     </form>
+                    {isLoading && (
+                        <div className={styles.loaderContainer}>
+                            <div className={styles.loader}></div>
+                        </div>
+                    )}
                 </div>
+
             )}
         </>
     );
