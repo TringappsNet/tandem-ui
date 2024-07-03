@@ -86,7 +86,7 @@ const BrokerGrid: React.FC = () => {
     }
   };
 
-  const handleOpen = () => setOpen(true);
+  // const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -104,13 +104,13 @@ const BrokerGrid: React.FC = () => {
     }
   };
 
-  const handleEdit = (id: number) => {
-    const row = rows.find((row) => row.id === id);
-    if (row) {
-      setFormData(row);
-      handleOpen();
-    }
-  };
+  // const handleEdit = (id: number) => {
+  //   const row = rows.find((row) => row.id === id);
+  //   if (row) {
+  //     setFormData(row);
+  //     handleOpen();
+  //   }
+  // };
 
   const handleUpdate = async () => {
     try {
@@ -149,8 +149,8 @@ const BrokerGrid: React.FC = () => {
         columns={columns}
         paginationModel={paginationModel}
         setPaginationModel={setPaginationModel}
-        handleEdit={handleEdit}
-        handleAdd={handleAdd}
+        // handleEdit={handleEdit}
+        // handleAdd={handleAdd}
         // handleDelete={handleDelete}
       />
       <Dialog open={open} onClose={handleClose}>

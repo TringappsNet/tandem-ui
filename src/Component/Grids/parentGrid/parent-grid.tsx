@@ -8,11 +8,11 @@ interface FullGridProps {
   columns: GridColDef[];
   paginationModel: GridPaginationModel;
   setPaginationModel: (model: GridPaginationModel) => void;
-  handleEdit: (id: number) => void;
+  // handleEdit: (id: number) => void;
   // handleDelete: (id: number) => void;
   className?: string;
   disablePagination?: boolean;
-  handleAdd: (id: number) => void;
+  // handleAdd: (id: number) => void;
 
 
 }
@@ -26,9 +26,9 @@ const FullGrid: React.FC<FullGridProps> = ({
   columns,
   paginationModel,
   setPaginationModel,
-  handleEdit,
+  // handleEdit,
   // handleDelete,
-  handleAdd,
+  // handleAdd,
   className,
 
 }) => {
@@ -43,7 +43,8 @@ const FullGrid: React.FC<FullGridProps> = ({
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
         rowHeight={34}
-        columnHeaderHeight={35}
+        columnHeaderHeight={39}
+        
           sx={{
                 boxShadow: 2,
               

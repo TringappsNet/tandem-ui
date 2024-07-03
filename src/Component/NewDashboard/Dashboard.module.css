@@ -12,7 +12,7 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     /* margin: 2rem; */
-    /* overflow: auto; */
+    overflow: auto;
   }
   
   .b_title {
@@ -107,3 +107,5 @@
       flex: 1 1 100%;
     }
   }
+
+  
