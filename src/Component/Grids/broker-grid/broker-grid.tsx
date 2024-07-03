@@ -8,7 +8,6 @@ import {
   DialogTitle,
 } from "@mui/material";
 import axios from "axios";
-import styles from './broker-grid.module.css'
 import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
 import FullGrid from "../parentGrid/parent-grid";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
@@ -123,14 +122,14 @@ const BrokerGrid: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: number) => {
-    try {
-      await axios.delete(`${config.apiUrl}/${id}`);
-      setRows(rows.filter((row) => row.id !== id));
-    } catch (error) {
-      console.error("Error deleting user:", error);
-    }
-  };
+  // const handleDelete = async (id: number) => {
+  //   try {
+  //     await axios.delete(`${config.apiUrl}/${id}`);
+  //     setRows(rows.filter((row) => row.id !== id));
+  //   } catch (error) {
+  //     console.error("Error deleting user:", error);
+  //   }
+  // };
 
   const columns: GridColDef[] = [
     { field: "fullName", headerName: "Name", width: 150, align: "center", headerAlign: "center" },
@@ -144,18 +143,16 @@ const BrokerGrid: React.FC = () => {
   ];
 
   return (
-    <div className={styles.gridContainer}>
-      {/* <div className={styles.gridWrapper}> */}
+    <div>
       <FullGrid
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}
         setPaginationModel={setPaginationModel}
         handleEdit={handleEdit}
-        handleDelete={handleDelete}
-        className={styles.gridContainer}
+        handleAdd={handleAdd}
+        // handleDelete={handleDelete}
       />
-
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{formData.id ? "Edit User" : "Add User"}</DialogTitle>
         <DialogContent>
@@ -252,9 +249,7 @@ const BrokerGrid: React.FC = () => {
         </DialogActions>
       </Dialog>
     </div>
-    // </div>
   );
 };
 
 export default BrokerGrid;
-

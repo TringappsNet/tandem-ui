@@ -1,13 +1,15 @@
 .gridContainer {
     display: flex;
     flex-direction: column;
-    height: 45vh;
+    height: 525px !important;
     width: 100%;
+
 }
 
 .dataGrid {
     flex-grow: 1;
     background-color: #f8f9fa;
+    height: 100%; 
 }
 
 .dataGrid .MuiDataGrid-footerContainer {
@@ -18,10 +20,12 @@
     background-color: #0078d4;
     color: #ffffff;
     overflow: hidden;
+    font-size: larger !important;
+    font-weight: 700 !important;
 }
 
 .dataGrid .MuiDataGrid-row {
-    background-color: #ffffff;
+    background-color: #ffffff; 
 }
 
 .dataGrid .MuiDataGrid-row:hover {
@@ -34,12 +38,14 @@
 
 @media (max-width: 768px) {
     .gridContainer {
-        height: 400px;
+        height: 520px;
     }
 }
 
 @media (max-width: 480px) {
     .gridContainer {
-        height: 500px;
+        height: 520px;
     }
 }
+
+

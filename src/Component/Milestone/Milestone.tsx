@@ -145,7 +145,7 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
                         name={label}
                         value={formData[label as keyof Deal] || ''}
                         onChange={handleChange}
-                        sx={{ width: 200 }}
+                        sx={{ width: 300 }}
                         margin="normal"
                         size="small"
                     >
@@ -180,7 +180,7 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
                         onChange={handleChange}
                         margin="normal"
                         size="small"
-                        sx={{ width: 200 }}
+                        sx={{ width: 300 }}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -197,7 +197,7 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
                         onChange={handleChange}
                         margin="normal"
                         size="small"
-                        sx={{ width: 200 }}
+                        sx={{ width: 300 }}
                     />
                 );
             default:

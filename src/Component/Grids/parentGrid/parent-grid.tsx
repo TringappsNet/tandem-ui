@@ -2,16 +2,24 @@ import React from "react";
 import { DataGrid, GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import styles from "./parent-grid.module.css";
 
+
 interface FullGridProps {
   rows: any[];
   columns: GridColDef[];
   paginationModel: GridPaginationModel;
   setPaginationModel: (model: GridPaginationModel) => void;
   handleEdit: (id: number) => void;
-  handleDelete: (id: number) => void;
+  // handleDelete: (id: number) => void;
   className?: string;
   disablePagination?: boolean;
+  handleAdd: (id: number) => void;
+
+
 }
+
+
+
+
 
 const FullGrid: React.FC<FullGridProps> = ({
   rows,
@@ -19,19 +27,41 @@ const FullGrid: React.FC<FullGridProps> = ({
   paginationModel,
   setPaginationModel,
   handleEdit,
-  handleDelete,
+  // handleDelete,
+  handleAdd,
   className,
+
 }) => {
   return (
-    <div className={`${styles.gridContainer} ${className}`}>
+    <div className={`${styles.gridContainer } ${className}`} style={{ height: 520, width: '100%',
+      fontSize: 'small',
+    }}>
       <DataGrid
         className={styles.dataGrid}
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
-        onRowDoubleClick={(params) => handleEdit(params.id as number)}
-        onRowClick={(params) => handleDelete(params.id as number)}
+        rowHeight={34}
+        columnHeaderHeight={35}
+          sx={{
+                boxShadow: 2,
+              
+                
+                height: 800,
+                marginTop:2,
+                background:'none',
+              
+                  
+                lineHeight:2,
+               
+               
+              
+            }}
+        
+       
+        
+
       />
     </div>
   );

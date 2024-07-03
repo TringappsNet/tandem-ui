@@ -6,14 +6,14 @@ import Reset from '../ResetPassword/ResetPassword';
 import CloseIcon from '@mui/icons-material/Close';
 import CreateDeal from '../Milestone/Milestone';
 import { useNavigate } from 'react-router-dom';
+import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
+import SiteGrid from '../Grids/Site-grid/site-grid';
 import { useDispatch, useSelector } from 'react-redux';
 import { createNewDeal, updateDealDetails } from '../Redux/slice/dealSlice';
 import { AppDispatch } from '../Redux/store/index';
 import { RootState } from '../Redux/reducers';
 import Profile from '../Profile/profile';
 import Support from '../Support/Support';
-
-
 interface RegisterState {
     auth: {
         user: {
@@ -22,9 +22,13 @@ interface RegisterState {
         } | null;
     };
 }
-
-const Navbar: React.FC = () => {
-    const user = useSelector((state: RegisterState) => state.auth.user);
+interface NavbarProps {
+    links: {
+      disabled: boolean | undefined; name: string; href: string; onClick?: () => void
+  }[];
+  }
+const Navbar: React.FC<NavbarProps> = ({links}) => {
+     const user = useSelector((state: RegisterState) => state.auth.user);
     const dispatch = useDispatch<AppDispatch>();
     // const auth: any = localStorage.getItem('auth');
     // const userdetails = JSON.parse(auth);
@@ -34,9 +38,6 @@ const Navbar: React.FC = () => {
     const [isFirstSave, setIsFirstSave] = useState(true);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
-
-
-
     // interface Deal {
     //     activeStep: number;
     //     status: string;
@@ -55,54 +56,47 @@ const Navbar: React.FC = () => {
     //     isNew: boolean;
     //     id: number | null;
     // }
-
     const navigate = useNavigate();
-
     const dealDetails = useSelector((state: RootState) => state.deal.dealDetails);
     // const dealsData = useSelector((state: RootState) => state.deal.dealDetails as unknown as DealsData);
-
-
     const handleOpenPopup = (componentName: string) => {
         setSelectedComponent(componentName);
         setOpenPopup(true);
     };
-
     const handleClosePopup = () => {
         setOpenPopup(false);
         setSelectedComponent(null);
     };
-
     const handleLogout = () => {
         navigate('/login');
     };
-
     const handleCards = () => {
         navigate('/cards');
     };
-
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
-
+    const handleRoute= (route:string)=>{
+        if(route==="site"){
+            navigate('/site');
+        }
+        else if(route==="landlord"){
+            navigate('/landlord');
+    }
+}
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
                 setIsDropdownOpen(false);
             }
         };
-
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
-
-
-
     const saveFormData = async () => {
-
         try {
-
             const dealtemp = dealDetails[0];
             if (dealtemp.isNew && isFirstSave) {
                 await dispatch(createNewDeal(dealtemp));
@@ -110,11 +104,9 @@ const Navbar: React.FC = () => {
                 setIsFirstSave(false);
                 return
             }
-
             await dispatch(updateDealDetails(dealtemp));
             console.log('Form data saved for put:', dealtemp);
             setIsFirstSave(true);
-
         } catch (error) {
             console.error('Error saving form data:', error);
             return
@@ -123,23 +115,23 @@ const Navbar: React.FC = () => {
     const createDealForm = () => {
         setOpenStepper(true);
     }
-
     useEffect(() => {
         if (!openStepper) {
             saveFormData();
         }
     });
-
-
     return (
         <>
             <nav className={styles.navbarcontainer}>
-                <div className={styles.header}>
-                    <img src='https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0' alt="Tandem Logo" />
-                    <h3>TANDEM INFRASTRUCTURE</h3>
-                    <p onClick={handleCards} style={{ cursor: 'pointer' }}>DEALS</p>
+                <div className={styles.headersection}>
+                    <div className={styles.header} onClick={handlelogoclick}>
+                        <img src='https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0' alt="Tandem Logo" />
+                        <h3>TANDEM INFRASTRUCTURE</h3>
+                    </div>
+                    <p onClick={handleCards} style={{ cursor: 'pointer' }} >DEALS</p>
+                    <p onClick={() => handleRoute('site')} style={{ cursor: 'pointer' }} >SITE</p>
+                    <p onClick={() => handleRoute('landlord')} style={{ cursor: 'pointer' }}>LANDLORD</p>
                 </div>
-
                 <div className={styles.rightheadersection}>
                     <div className={styles.createdeal}>
                         <p onClick={() => createDealForm()}>CREATE</p>
@@ -154,17 +146,15 @@ const Navbar: React.FC = () => {
                                 <button onClick={() => handleOpenPopup('Profile')}>Profile</button>
                                 <button onClick={() => handleOpenPopup('SendInvite')}>Send Invite</button>
                                 <button onClick={() => handleOpenPopup('Reset')}>Reset</button>
-                                <button onClick={() => handleOpenPopup('Site')}>Site</button>
-                                <button onClick={() => handleOpenPopup('Landlord')}>Landlord</button>
                                 <button onClick={() => handleOpenPopup('Support')}>Support</button>
+                                {/* <button onClick={() => handleOpenPopup('Site')}>Site</button> */}
+                                {/* <button onClick={() => handleOpenPopup('Landlord')}>Landlord</button> */}
                                 <button onClick={handleLogout}>Logout</button>
                             </div>
                         )}
-
                     </div>
                 </div>
             </nav>
-
             <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }}>
                 <DialogTitle sx={{ padding: 0 }}>
                     <Icon
@@ -182,18 +172,30 @@ const Navbar: React.FC = () => {
                         <CloseIcon />
                     </Icon>
                 </DialogTitle>
-
                 <DialogContent sx={{ padding: 0 }}>
                     {selectedComponent === 'SendInvite' && <SendInvite />}
                     {selectedComponent === 'Reset' && <Reset />}
                     {selectedComponent === 'Profile' && <Profile />}
                     {selectedComponent === 'Support' && <Support />}
-
-
                     {/* {selectedComponent === 'CreateDeal' && <CreateDeal />} */}
+                    {selectedComponent === 'Landlord' && (
+                        <Box sx={{ padding: 1, borderRadius: 1, height: '100%', width: '100%', maxHeight: 'calc(100vh - 64px)', overflow: 'auto' }}>
+                            <br></br>
+                            <h1>Landlord Details</h1>
+                            <br></br>
+                            <LandlordGrid />
+                        </Box>
+                    )}
+{selectedComponent === 'Site' && (
+                    <Box sx={{ padding: 1, borderRadius: 1, height: '100%', width: '100%', maxHeight: 'calc(100vh - 64px)', overflow: 'auto' }}>
+                        <br></br>
+                        <h1>Site Details</h1>
+                        <br></br>
+                        < SiteGrid/>
+                    </Box>
+                    )}
                 </DialogContent>
             </Dialog>
-
             <Dialog
                 fullScreen
                 sx={{ margin: '30px 190px' }}
@@ -230,5 +232,4 @@ const Navbar: React.FC = () => {
         </>
     );
 };
-
 export default Navbar;
