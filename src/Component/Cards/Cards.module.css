@@ -1,9 +1,8 @@
 .cardList {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px 40px;
+    gap: 20px 30px;
     margin: 30px 10px;
-    background-color: rgb(248, 250, 252);
 }
 
 .card {

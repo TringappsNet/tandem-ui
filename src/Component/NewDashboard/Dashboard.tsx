@@ -28,7 +28,6 @@ const Dashboard: React.FC = () => {
                 links={links}
 
 />
-{/* <Navbar /> */}
         <div className={styles.mainContent}>
           <Routes>
             <Route path="/" element={<Main />} />
@@ -36,8 +35,6 @@ const Dashboard: React.FC = () => {
             <Route path="/site" element={<SiteGrid /> } />
             <Route path="/landlord" element={<LandlordGrid /> }/>
             <Route path="*" element={<Navigate to="/dashboard" />} 
-          
-          
            />
           </Routes>
         </div>

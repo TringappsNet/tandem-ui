@@ -89,6 +89,8 @@ const SiteGrid: React.FC = () => {
       handleOpen();
     }
   };
+
+
   const handleUpdate = async () => {
     try {
        
@@ -114,24 +116,18 @@ const SiteGrid: React.FC = () => {
             );
 
             setRows(rows.map((row) => (row.id === updatedFormData.id ? response.data : row)));
+
+
             handleClose();
+
         } 
+
+
     } catch (error) {
         console.error("Error updating Site:", error);
     }
 };
-  // const handleUpdate = async () => {
-  //   try {
-  //     const response = await axiosInstance.put(
-  //       `sites/site/${formData.id}`,
-  //       formData
-  //     );
-  //     setRows(rows.map((row) => (row.id === formData.id ? response.data : row)));
-  //     handleClose();
-  //   } catch (error) {
-  //     console.error("Error updating Site:", error);
-  //   }
-  // };
+
 
   const handleDelete = async (id: number) => {
     try {
@@ -181,30 +177,41 @@ const SiteGrid: React.FC = () => {
       )
     },
   ];
-  const handleEditnew = () => {
-   
-    handleOpen();
-  
+  const handleEditNew = ( data :Boolean) => {
+    if (data) {
+                 handleOpen();
+    setFormData({
+      id: 0,
+      addressline1: "",
+      addressline2: "",
+      city: "",
+      state: "",
+      country: "",
+      zipcode: "",
+      isNew: true,
+      createdBy: 0,
+    });
+    handleOpen();
+  }
 };
 
   return (
     <div className={styles.gridContainer}>
-           <Button
-            variant="contained"
-            color="primary"
-
-            style={{ marginRight: 8 , width:'30px',margin:10,position:'relative',float:'right'}}
-            onClick={() => handleEditnew()}
-          >Add  </Button>
+          <Button
+  variant="contained"
+  color="primary"
+  style={{ marginRight: 8 , width:'30px',margin:10,position:'relative',float:'right'}}
+  onClick={() => handleEditNew(true)}
+>Add</Button>
 
       <FullGrid
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}
         setPaginationModel={setPaginationModel}
-        handleEdit={handleEdit}
+        // handleEdit={handleEdit}
         // handleDelete={handleDelete}
-        handleAdd={handleAdd}
+        // handleAdd={handleAdd}
       />
 
       <Dialog open={open} onClose={handleClose}>
