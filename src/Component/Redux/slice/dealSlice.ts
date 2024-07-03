@@ -58,9 +58,16 @@ const dealSlice = createSlice({
     setActiveStep: (state, action: PayloadAction<number>) => {
       state.activeStep = action.payload;
     },
+    deleteDealSuccess: (state, action: PayloadAction<number>) => {
+      if (!Array.isArray(state.dealDetails)) {
+        state.dealDetails = [];
+      }
+      state.dealDetails = state.dealDetails.filter(deal => deal.id !== action.payload);
+      state.loading = false;
+      state.error = null;
+    },    
   },
 });
-
 
 export const {
   fetchDealDetailsStart,
@@ -69,6 +76,7 @@ export const {
   setDealDetails,
   updateDealField,
   setActiveStep,
+  deleteDealSuccess,
 } = dealSlice.actions;
 
 export default dealSlice.reducer;
@@ -91,6 +99,17 @@ export const fetchDealDetailsById = (dealId: number): AppThunk<void> => async (d
     dispatch(fetchDealDetailsSuccess([response.data]));
   } catch (error) {
     console.error('Error fetching deal details:', error);
+    dispatch(fetchDealDetailsFailure((error as Error).message));
+  }
+};
+
+export const deleteDeal = (dealId: number): AppThunk<void> => async (dispatch: Dispatch) => {
+  try {
+    dispatch(fetchDealDetailsStart());
+    await axiosInstance.delete(`/deals/deal/${dealId}`);
+    dispatch(deleteDealSuccess(dealId));
+  } catch (error) {
+    console.error('Error deleting deal:', error);
     dispatch(fetchDealDetailsFailure((error as Error).message));
   }
 };

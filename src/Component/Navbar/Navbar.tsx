@@ -115,11 +115,6 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
     const createDealForm = () => {
         setOpenStepper(true);
     }
-    useEffect(() => {
-        if (!openStepper) {
-            saveFormData();
-        }
-    });
 
     const handlelogoclick = () => {
         navigate('/dashboard');
