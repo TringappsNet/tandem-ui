@@ -1,50 +1,76 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './SendInvite.module.css';
 import classNames from 'classnames';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+
+interface Role {
+    id: number;
+    roleName: string;
+}
 
 const SendInvite: React.FC = () => {
     const [showInviteForm, setShowInviteForm] = useState(true);
     const [responseMessage, setResponseMessage] = useState('');
     const [responseType, setResponseType] = useState('');
     const [email, setEmail] = useState('');
+    const [rolesDetails, setRolesDetails] = useState<Role[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [roleId, setRoleId] = useState('admin');
+    const [roleId, setRoleId] = useState<number | null>(null);
     const selectRef = useRef<HTMLSelectElement>(null);
 
     const handleSendInvite = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (roleId === null) {
+            setResponseMessage('Please select a role.');
+            setResponseType('error');
+            return;
+        }
 
 
         setIsLoading(true);
 
         try {
             const response = await axiosInstance.post('/auth/invite', { email, roleId });
-            const data = await response.data;
+            const data = response.data;
 
-            if (response.data) {
+            if (data) {
                 setResponseMessage(data.message);
                 setResponseType('success');
                 setTimeout(() => {
                     setShowInviteForm(false);
                     setEmail('');
-                    setRoleId('admin');
                     setResponseType('');
                 }, 1000);
             } else {
                 setResponseMessage(data.message || 'Failed to send invite.');
                 setResponseType('error');
             }
-        } catch (error) {
-            setResponseMessage('An error occurred. Please try again.');
+        } catch (error: any) {
+            setResponseMessage(error.response.data.message || 'An error occurred. Please try again.');
             setResponseType('error');
         }
         finally {
             setIsLoading(false);
         }
-
     };
 
+    const getRoles = async () => {
+        try {
+            const response = await axiosInstance.get('/roles');
+            const roles: Role[] = response.data.map((role: any) => ({
+                id: role.id,
+                roleName: role.roleName
+            }));
+            setRolesDetails(roles);
+        } catch (error) {
+            console.error('Error fetching roles:', error);
+        }
+    };
+
+    useEffect(() => {
+        getRoles();
+    }, []);
 
     return (
         <>
@@ -67,7 +93,7 @@ const SendInvite: React.FC = () => {
                                 type="email"
                                 id="email"
                                 name="email"
-                                placeholder='Enter your Email'
+                                placeholder='Enter your email'
                                 autoFocus
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -82,12 +108,14 @@ const SendInvite: React.FC = () => {
                                     name="roleId"
                                     ref={selectRef}
                                     className={styles.customSelect}
-                                    value={roleId}
-                                    onChange={(e) => setRoleId(e.target.value)}
+                                    value={roleId ?? ''}
+                                    onChange={(e) => setRoleId(Number(e.target.value))}
                                     required
                                 >
-                                    <option value="admin">Admin</option>
-                                    <option value="broker">Broker</option>
+                                    <option value="" disabled>Select a role</option>
+                                    {rolesDetails.map((role) => (
+                                        <option key={role.id} value={role.id}>{role.roleName}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>

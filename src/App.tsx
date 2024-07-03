@@ -35,11 +35,11 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={accessToken ? <Navigate to="/dashboard" /> : <Login />} />
+        <Route path="/" index element={accessToken ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path="/registerform" element={<Registration />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/change" element={<ChangePassword />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard /> } />
         <Route path="/mile" element={<Milestone />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cards" element={<Cards />} />
