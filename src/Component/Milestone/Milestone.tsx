@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Stepper, Step, StepLabel, Button, Typography, MenuItem, TextField, Box, StepConnector } from '@mui/material';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import { useDispatch } from '../Redux/store/index';
+import { setDealDetails, updateDealDetails } from '../Redux/slice/dealSlice';
 import { Deal } from '../Interface/DealFormObject';
-import { useDispatch } from 'react-redux';
-// import { RootState } from '../Redux/reducers/index';
-import { setDealDetails } from '../Redux/slice/dealSlice';
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import { Stepper, Step, StepLabel, Button, Typography, MenuItem, TextField, Box, StepConnector } from '@mui/material';
 import styles from './Milestone.module.css';
 
 const steps = [
@@ -17,72 +16,42 @@ const steps = [
     { label: 'Potential Commission', fields: [{ type: 'date', label: 'potentialCommissionDate' }, { type: 'text', label: 'potentialCommission' }] },
 ];
 
-// interface IMilestoneProps {
-//     selectedDeal: Deal | undefined;
-// }
+interface DealFormProps {
+    deal?: Deal;
+}
 
-const DealForm = () => {
+const DealForm: React.FC<DealFormProps> = ({ deal }) => {
     const dispatch = useDispatch();
-    // const dealDetails = useSelector((state: RootState) => state.deal.dealDetails);
-
-    const [activeStep, setActiveStep] = useState(0);
+    const [activeStep, setActiveStep] = useState(deal?.activeStep || 0);
     const [formData, setFormData] = useState<Deal>({
-        id: null,
-        brokerName: '',
-        propertyName: '',
-        dealStartDate: '',
-        proposalDate: '',
-        loiExecuteDate: '',
-        leaseSignedDate: '',
-        noticeToProceedDate: '',
-        commercialOperationDate: '',
-        potentialcommissiondate: '',
-        potentialCommission: null,
-        status: '',
-        activeStep: 0,
+        id: deal?.id || null,
+        brokerName: deal?.brokerName || '',
+        propertyName: deal?.propertyName || '',
+        dealStartDate: deal?.dealStartDate || '',
+        proposalDate: deal?.proposalDate || '',
+        loiExecuteDate: deal?.loiExecuteDate || '',
+        leaseSignedDate: deal?.leaseSignedDate || '',
+        noticeToProceedDate: deal?.noticeToProceedDate || '',
+        commercialOperationDate: deal?.commercialOperationDate || '',
+        potentialcommissiondate: deal?.potentialcommissiondate || '',
+        potentialCommission: deal?.potentialCommission || null,
+        status: deal?.status || '',
+        activeStep: deal?.activeStep ?? 0,
+        createdBy: deal?.createdBy || 0,
+        updatedBy: deal?.updatedBy || 0,
+        isNew: deal?.isNew || true,
     });
     const [brokerOptions, setBrokerOptions] = useState<string[]>([]);
     const [propertyOptions, setPropertyOptions] = useState<string[]>([]);
     const [userId, setUserId] = useState<number | null>(null);
-    // const [isFirstSave, setIsFirstSave] = useState(true); // Track if it's the first save
-    const [saveSuccess, setSaveSuccess] = useState(false); // Track save success
+    const [saveSuccess, setSaveSuccess] = useState(false);
 
-    // useEffect(() => {
-    //     if (props.selectedDeal) {
-    //         setFormData(props.selectedDeal);
-    //         setActiveStep(props.selectedDeal.activeStep || 0);
-    //         setIsFirstSave(false);
-    //     }
-    // }, [props.selectedDeal]);
-
-    // const sitedetails = [
-    //     {
-    //         "site": "ST Thomas Mount"
-    //     },
-    //     {
-    //         "site": "Adhampakkam"
-    //     },
-    //     {
-    //         "site": "Ekkatuthangal"
-    //     },
-    //     {
-    //         "site": "KK Nagar"
-    //     },
-    // ]
-
-    // const fetchSite = () =>{ 
-    //     const sitename : any = sitedetails.map(
-    //         (sitename) =>
-    //             sitename.site
-    //     )
-    //     setPropertyOptions(sitename);
-    // }
     const fetchSite = async () => {
         try {
             const response = await axiosInstance.get('/sites');
             const sitename = response.data.map((sites: any) => `${sites.addressline1}, ${sites.addressline2}`);
             setPropertyOptions(sitename);
-            console.log("Site Names",sitename);
+            console.log("Site Names", sitename);
         } catch (error) {
             console.error('Error fetching broker names:', error);
         }
@@ -93,7 +62,6 @@ const DealForm = () => {
             const response = await axiosInstance.get('/brokers');
             const brokers = response.data.map((broker: any) => `${broker.user.firstName} ${broker.user.lastName}`);
             setBrokerOptions(brokers);
-            console.log(brokers);
             if (response.data.length > 0) {
                 setUserId(response.data[0].user.id);
             }
@@ -102,11 +70,10 @@ const DealForm = () => {
         }
     };
 
-    
     useEffect(() => {
         fetchBrokers();
         fetchSite();
-    },[] );
+    }, []);
 
     const handleNext = () => {
         if (saveSuccess) {
@@ -121,12 +88,8 @@ const DealForm = () => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-
-        // Ensure date fields are formatted correctly
         if (name.endsWith('Date')) {
-            // Format the date to yyyy-MM-dd if it's a date field
-            const formattedDate = value.split('T')[0]; // Extract yyyy-MM-dd from ISO format
-
+            const formattedDate = value.split('T')[0];
             setFormData((prevData) => ({
                 ...prevData,
                 [name]: formattedDate,
@@ -145,22 +108,22 @@ const DealForm = () => {
             ...formData,
             activeStep: activeStep + 1,
             status,
-            createdBy: userId,
-            updatedBy: userId,
+            createdBy: userId || 0,
+            updatedBy: userId || 0,
             isNew: true,
         };
-
+    
         try {
-            localStorage.setItem('dealdetails', JSON.stringify(payload));
+            if (formData.id) {
+                dispatch(updateDealDetails(payload));
+            } else {
+                dispatch(setDealDetails(payload));
+            }
             setSaveSuccess(true);
-
         } catch (error) {
             console.error('Error saving form data:', error);
             setSaveSuccess(false);
         }
-
-        // Dispatch action to update dealDetails in Redux store
-        dispatch(setDealDetails(payload));
     };
 
     const getStatus = (step: number) => {
@@ -170,9 +133,8 @@ const DealForm = () => {
         return '';
     };
 
-    const renderField = (field: any, index: number) => {
+    const renderField = (field: { label: string, type: string, options?: string[] }, index: number) => {
         const { label, type, options } = field;
-
         switch (type) {
             case 'dropdown':
                 return (
@@ -183,27 +145,27 @@ const DealForm = () => {
                         name={label}
                         value={formData[label as keyof Deal] || ''}
                         onChange={handleChange}
-                        sx={{ width: 200 }}
+                        sx={{ width: 300 }}
                         margin="normal"
                         size="small"
                     >
                         {
-                        label === 'brokerName'
-                            ? brokerOptions.map((option, idx) => (
-                                <MenuItem key={idx} value={option}>
-                                    {option}
-                                </MenuItem>
-                            ))
-                            : label === 'propertyName' ? propertyOptions.map((option, idx) => (
-                                <MenuItem key={idx} value={option}>
-                                    {option}
-                                </MenuItem>
-                            )):  
-                            options.map((option: string, idx: number) => (
-                                <MenuItem key={idx} value={option}>
-                                    {option}
-                                </MenuItem>
-                            ))
+                            label === 'brokerName'
+                                ? brokerOptions.map((option, idx) => (
+                                    <MenuItem key={idx} value={option}>
+                                        {option}
+                                    </MenuItem>
+                                ))
+                                : label === 'propertyName' ? propertyOptions.map((option, idx) => (
+                                    <MenuItem key={idx} value={option}>
+                                        {option}
+                                    </MenuItem>
+                                )) :
+                                    options?.map((option: string, idx: number) => (
+                                        <MenuItem key={idx} value={option}>
+                                            {option}
+                                        </MenuItem>
+                                    ))
                         }
                     </TextField>
                 );
@@ -218,7 +180,7 @@ const DealForm = () => {
                         onChange={handleChange}
                         margin="normal"
                         size="small"
-                        sx={{ width: 200 }}
+                        sx={{ width: 300 }}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -235,7 +197,7 @@ const DealForm = () => {
                         onChange={handleChange}
                         margin="normal"
                         size="small"
-                        sx={{ width: 200 }}
+                        sx={{ width: 300 }}
                     />
                 );
             default:
@@ -305,7 +267,6 @@ const DealForm = () => {
                 </Box>
             </Box>
         </div>
-
     );
 };
 

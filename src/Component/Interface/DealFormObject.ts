@@ -1,15 +1,18 @@
 export interface Deal {
     id: number | null;
-    brokerName: string | null;
-    propertyName?: string | null;
-    dealStartDate?: string | null;
-    proposalDate?: string | null;
-    loiExecuteDate?: string | null;
-    leaseSignedDate?: string | null;
-    noticeToProceedDate?: string | null;
-    commercialOperationDate?: string | null;
-    potentialcommissiondate?: string | null;
-    potentialCommission?: string | null;
-    status: string | null;
-    activeStep: number | null;
+    brokerName: string;
+    propertyName: string;
+    dealStartDate: string;
+    proposalDate: string;
+    loiExecuteDate: string;
+    leaseSignedDate: string;
+    noticeToProceedDate: string;
+    commercialOperationDate: string;
+    potentialcommissiondate: string;
+    potentialCommission: number | null;
+    status: string; 
+    activeStep: number; 
+    createdBy: number;
+    updatedBy: number;
+    isNew: boolean;
 }

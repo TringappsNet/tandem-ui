@@ -4,15 +4,9 @@ import styles from './Navbar.module.css';
 import SendInvite from '../SendInvite/SendInvite';
 import Reset from '../ResetPassword/ResetPassword';
 import CloseIcon from '@mui/icons-material/Close';
-import CreateDeal from '../Milestone/Milestone';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
 import SiteGrid from '../Grids/Site-grid/site-grid';
-// import Nav from 'react-bootstrap/Nav';
-// import Navbar from 'react-bootstrap/Navbar';
-
-
 
 interface NavbarProps {
     links: {
@@ -20,42 +14,29 @@ interface NavbarProps {
   }[];
    
   }
-
   
+import { useDispatch, useSelector } from 'react-redux';
+import DealForm from '../Milestone/Milestone';
+import { createNewDeal, updateDealDetails } from '../Redux/slice/dealSlice';
+import { AppDispatch } from '../Redux/store/index';
+import { RootState } from '../Redux/reducers';
+
 const Navbar: React.FC<NavbarProps> = ({links}) => {
-    const auth :any= localStorage.getItem('auth');
-    const userdetails = JSON.parse(auth)
-    console.log("User detal",userdetails)
+    const dispatch = useDispatch<AppDispatch>();
+    const auth: any = localStorage.getItem('auth');
+    const userdetails = JSON.parse(auth);
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
     const [isFirstSave, setIsFirstSave] = useState(true);
-    // const [dealFormData, setDealFormData] = useState<Deal>();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-
-
-    // interface Deal {
-    //     activeStep: number;
-    //     status: string;
-    //     propertyName: string | null;
-    //     brokerName: string | null;
-    //     dealStartDate: string | null;
-    //     proposalDate: string | null;
-    //     loiExecuteDate: string | null;
-    //     leaseSignedDate: string | null;
-    //     noticeToProceedDate: string | null;
-    //     commercialOperationDate: string | null;
-    //     potentialcommissiondate: string | null;
-    //     potentialCommission: string | null;
-    //     createdBy: number;
-    //     updatedBy: number;
-    //     isNew: boolean;
-    //     id: number | null;
-    // }
-
     const navigate = useNavigate();
+
+    const dealDetails = useSelector((state: RootState) => state.deal.dealDetails);
+    // const dealsData = useSelector((state: RootState) => state.deal.dealDetails as unknown as DealsData);
+
 
     const handleOpenPopup = (componentName: string) => {
         setSelectedComponent(componentName);
@@ -103,53 +84,39 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
         };
     }, []);
 
-
-
     const saveFormData = async () => {
-
         try {
-            const deal: any = localStorage.getItem('dealdetails')
-            const dealtemp: any = JSON.parse(deal)
+            const dealtemp = dealDetails[0];
             if (dealtemp.isNew && isFirstSave) {
-                const response = await axiosInstance.post('/deals/deal', dealtemp);
-                console.log('Form data saved:', response.data);
-                localStorage.removeItem('dealdetails');
+                await dispatch(createNewDeal(dealtemp));
+                console.log('Form data saved:', dealtemp);
                 setIsFirstSave(false);
-                return
+                return;
             }
-            const response = await axiosInstance.put(`/deals/deal/${dealtemp.id}`, dealtemp);
-            console.log('Form data saved for put:', response.data);
-            localStorage.removeItem('dealdetails');
+            await dispatch(updateDealDetails(dealtemp));
+            console.log('Form data saved for put:', dealtemp);
             setIsFirstSave(true);
-
         } catch (error) {
             console.error('Error saving form data:', error);
-            return
+            return;
         }
     };
+
     const createDealForm = () => {
         setOpenStepper(true);
-        // setDealFormData(undefined);
-    }
-
-    // useEffect(() => {
-    //     if (!openStepper) {
-    //         saveFormData();
-    //     }
-    // }, [openStepper]);
+    };
 
     const handlelogoclick = () => {
-        navigate('/dashboard')
-    }
-
+        navigate('/dashboard');
+    };
 
     return (
         <>
             <nav className={styles.navbarcontainer}>
                 <div className={styles.headersection}>
                     <div className={styles.header} onClick={handlelogoclick}>
-                    <img src='https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0' alt="Tandem Logo" />
-                    <h3>TANDEM INFRASTRUCTURE</h3>
+                        <img src='https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0' alt="Tandem Logo" />
+                        <h3>TANDEM INFRASTRUCTURE</h3>
                     </div>
 
      
@@ -179,7 +146,6 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
                                 <button onClick={handleLogout}>Logout</button>
                             </div>
                         )}
-
                     </div>
                 </div>
             </nav>
@@ -205,14 +171,13 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
                 <DialogContent sx={{ padding: 0 }}>
                     {selectedComponent === 'SendInvite' && <SendInvite />}
                     {selectedComponent === 'Reset' && <Reset />}
-                    {/* {selectedComponent === 'CreateDeal' && <CreateDeal />} */}
                     {selectedComponent === 'Landlord' && (
-                    <Box sx={{ padding: 1, borderRadius: 1, height: '100%', width: '100%', maxHeight: 'calc(100vh - 64px)', overflow: 'auto' }}>
-                        <br></br>
-                        <h1>Landlord Details</h1>
-                        <br></br>
-                        <LandlordGrid />
-                    </Box>
+                        <Box sx={{ padding: 1, borderRadius: 1, height: '100%', width: '100%', maxHeight: 'calc(100vh - 64px)', overflow: 'auto' }}>
+                            <br></br>
+                            <h1>Landlord Details</h1>
+                            <br></br>
+                            <LandlordGrid />
+                        </Box>
                     )}
 
 
@@ -262,7 +227,7 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    <CreateDeal />
+                    <DealForm />
                 </DialogContent>
             </Dialog>
         </>
