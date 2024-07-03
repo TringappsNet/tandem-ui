@@ -6,8 +6,9 @@ import './App.css';
 import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 import ChangePassword from './Component/ChangePassword/ChangePassword';
 import Milestone from '../src/Component/Milestone/Milestone';
-import Cards from './Component/Cards/Cards';
 import Dashboard from '../src/Component/NewDashboard/Dashboard';
+// import SiteGrid from './Component/Grids/Site-grid/site-grid';
+// import LandlordGrid from './Component/Grids/landlordGrid/landlord-grid';
 
 
 const App: React.FC = () => {
@@ -41,7 +42,11 @@ const App: React.FC = () => {
         <Route path="/dashboard" element={<Dashboard /> } />
         <Route path="/mile" element={<Milestone />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/cards" element={<Cards />} />
+        {/* <Route path="/cards" element={<Cards />} /> */}
+          {/* <Route path="/site" element={<SiteGrid /> } />
+          <Route path="/landlord" element={<LandlordGrid /> } /> */}
+        <Route path="/*"  element={<Dashboard/>} />
+
 
 
       </Routes>

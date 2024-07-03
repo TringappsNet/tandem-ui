@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './Cards.module.css';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { FiEdit } from "react-icons/fi";
-import Navbar from '../Navbar/Navbar';
+// import Navbar from '../Navbar/Navbar';
 
 interface Deal {
     activeStep: number;
@@ -62,7 +62,7 @@ const Cards: React.FC = () => {
 
     return (
         <>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className={styles.cardList} >
             {dealsData.map((deal, index) => (
                 <div key={index} className={styles.card}>

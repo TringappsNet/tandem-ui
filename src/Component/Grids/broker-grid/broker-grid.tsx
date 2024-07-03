@@ -122,14 +122,14 @@ const BrokerGrid: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: number) => {
-    try {
-      await axios.delete(`${config.apiUrl}/${id}`);
-      setRows(rows.filter((row) => row.id !== id));
-    } catch (error) {
-      console.error("Error deleting user:", error);
-    }
-  };
+  // const handleDelete = async (id: number) => {
+  //   try {
+  //     await axios.delete(`${config.apiUrl}/${id}`);
+  //     setRows(rows.filter((row) => row.id !== id));
+  //   } catch (error) {
+  //     console.error("Error deleting user:", error);
+  //   }
+  // };
 
   const columns: GridColDef[] = [
     { field: "fullName", headerName: "Name", width: 150, align: "center", headerAlign: "center" },
@@ -150,7 +150,8 @@ const BrokerGrid: React.FC = () => {
         paginationModel={paginationModel}
         setPaginationModel={setPaginationModel}
         handleEdit={handleEdit}
-        handleDelete={handleDelete}
+        handleAdd={handleAdd}
+        // handleDelete={handleDelete}
       />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{formData.id ? "Edit User" : "Add User"}</DialogTitle>
