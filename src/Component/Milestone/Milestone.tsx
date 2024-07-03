@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from '../Redux/store/index';
-import { setDealDetails, updateDealDetails, updateDealField } from '../Redux/slice/dealSlice';
+import { setDealDetails, updateDealDetails } from '../Redux/slice/dealSlice';
 import { Deal } from '../Interface/DealFormObject';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { Stepper, Step, StepLabel, Button, Typography, MenuItem, TextField, Box, StepConnector } from '@mui/material';
@@ -114,7 +114,6 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
         };
     
         try {
-            localStorage.setItem('dealdetails', JSON.stringify(payload));
             if (formData.id) {
                 dispatch(updateDealDetails(payload));
             } else {
