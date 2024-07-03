@@ -2,8 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 30px 40px;
-    margin: 0 auto;
-    margin :  30px 40px;
+    margin: 30px 10px;
     background-color: rgb(248, 250, 252);
 }
 
@@ -79,4 +78,40 @@
     background-color: #262262;
 }
 
+.filterContainer {
+    box-sizing: border-box;
+    height: 35px;
+    display: flex;
+    margin: 10px;
+    gap: 2rem;
+}
 
+.filterContainer input,
+.filterContainer select {
+    border: 1px solid #e5e7eb;
+    border-radius: .375rem;
+    font-size: .875rem;
+    padding: .5rem 1rem;
+    line-height: 21px;
+}
+
+
+.filterContainer input {
+    width: 25%;
+}
+
+.filterContainer select {
+    width: 12%;
+    appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 4px top 50%;
+}
+
+.filterContainer input:focus,
+.filterContainer select:focus {
+    outline: 2px solid #0000;
+    outline-offset: 2px;
+    border-color: #262262;
+}

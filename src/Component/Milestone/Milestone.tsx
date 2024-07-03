@@ -55,28 +55,7 @@ const DealForm = () => {
     //     }
     // }, [props.selectedDeal]);
 
-    // const sitedetails = [
-    //     {
-    //         "site": "ST Thomas Mount"
-    //     },
-    //     {
-    //         "site": "Adhampakkam"
-    //     },
-    //     {
-    //         "site": "Ekkatuthangal"
-    //     },
-    //     {
-    //         "site": "KK Nagar"
-    //     },
-    // ]
 
-    // const fetchSite = () =>{ 
-    //     const sitename : any = sitedetails.map(
-    //         (sitename) =>
-    //             sitename.site
-    //     )
-    //     setPropertyOptions(sitename);
-    // }
     const fetchSite = async () => {
         try {
             const response = await axiosInstance.get('/sites');
@@ -183,7 +162,7 @@ const DealForm = () => {
                         name={label}
                         value={formData[label as keyof Deal] || ''}
                         onChange={handleChange}
-                        sx={{ width: 200 }}
+                        sx={{ width: 300 }}
                         margin="normal"
                         size="small"
                     >
@@ -218,7 +197,7 @@ const DealForm = () => {
                         onChange={handleChange}
                         margin="normal"
                         size="small"
-                        sx={{ width: 200 }}
+                        sx={{ width: 300 }}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -235,7 +214,7 @@ const DealForm = () => {
                         onChange={handleChange}
                         margin="normal"
                         size="small"
-                        sx={{ width: 200 }}
+                        sx={{ width: 300 }}
                     />
                 );
             default:

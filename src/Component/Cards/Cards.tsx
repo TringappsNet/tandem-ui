@@ -4,6 +4,7 @@ import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { FiEdit } from "react-icons/fi";
 import Navbar from '../Navbar/Navbar';
 
+
 interface Deal {
     activeStep: number;
     status: string;
@@ -25,6 +26,8 @@ interface Deal {
 
 const Cards: React.FC = () => {
     const [dealsData, setDealsData] = useState<Deal[]>([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filterStatus, setFilterStatus] = useState('');
 
     useEffect(() => {
         const fetchDeals = async () => {
@@ -60,27 +63,55 @@ const Cards: React.FC = () => {
         }
     };
 
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setFilterStatus(event.target.value);
+    };
+
+    const filteredDeals = dealsData.filter(deal => {
+        const matchesSearch = deal.brokerName?.toLowerCase().includes(searchTerm.toLowerCase()) || deal.propertyName?.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesStatus = filterStatus ? deal.status === filterStatus : true;
+        return matchesSearch && matchesStatus;
+    });
+
     return (
         <>
-        <Navbar />
-        <div className={styles.cardList} >
-            {dealsData.map((deal, index) => (
-                <div key={index} className={styles.card}>
-                    <div>
-                        <div className={styles.cardTitle}>Deal #{deal.id} <div className={styles.hide}><FiEdit onClick={() => editDealForm(deal)} /></div></div>
-                        <p className={styles.brokerName}><span>Broker Name:</span> {deal.brokerName}</p>
-                    </div>
-                    <div className={styles.statusLine}>
-                        <div className={styles.statusLabel}>Status:</div>
-                        <div className={`${styles.statusButton} ${getStatusButtonClass(deal.status)}`}>
-                            {deal.status}
+            <Navbar />
+            <div className={styles.filterContainer}>
+                <input
+                    type="text"
+                    placeholder="Search by broker or property name"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    className={styles.searchInput}
+                />
+                <select value={filterStatus} onChange={handleFilterChange} className={styles.filterSelect}>
+                    <option value="">All Statuses</option>
+                    <option value="Started">Started</option>
+                    <option value="In-Progress">In-Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+            <div className={styles.cardList}>
+                {filteredDeals.map((deal, index) => (
+                    <div key={index} className={styles.card}>
+                        <div>
+                            <div className={styles.cardTitle}>Deal #{deal.id} <div className={styles.hide}><FiEdit onClick={() => editDealForm(deal)} /></div></div>
+                            <p className={styles.brokerName}><span>Broker Name:</span> {deal.brokerName}</p>
+                        </div>
+                        <div className={styles.statusLine}>
+                            <div className={styles.statusLabel}>Status:</div>
+                            <div className={`${styles.statusButton} ${getStatusButtonClass(deal.status)}`}>
+                                {deal.status}
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
-        </div>
+                ))}
+            </div>
         </>
-        
     );
 };
 
