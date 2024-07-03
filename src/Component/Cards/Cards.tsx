@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Cards.module.css";
 import { FiEdit } from "react-icons/fi";
-import Navbar from "../Navbar/Navbar";
 import DealForm from "../Milestone/Milestone";
 import { Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -97,7 +96,6 @@ const Cards: React.FC = () => {
 
     return (
         <>
-            <Navbar />
             <div className={styles.filterContainer}>
                 <input
                     type="text"
