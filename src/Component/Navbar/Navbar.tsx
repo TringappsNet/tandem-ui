@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Dialog, DialogContent, Icon, DialogTitle, IconButton } from '@mui/material';
+import { Dialog, DialogContent, Icon, DialogTitle, IconButton, Box } from '@mui/material';
 import styles from './Navbar.module.css';
 import SendInvite from '../SendInvite/SendInvite';
 import Reset from '../ResetPassword/ResetPassword';
@@ -120,6 +120,11 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
             saveFormData();
         }
     });
+
+    const handlelogoclick = () => {
+        navigate('/dashboard');
+    };
+    
     return (
         <>
             <nav className={styles.navbarcontainer}>
