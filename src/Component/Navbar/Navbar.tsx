@@ -16,7 +16,6 @@ const Navbar: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>(); 
     const auth :any= localStorage.getItem('auth');
     const userdetails = JSON.parse(auth)
-    console.log("User detal",userdetails)
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
