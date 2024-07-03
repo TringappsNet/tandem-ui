@@ -90,11 +90,24 @@ const LandlordGrid: React.FC = () => {
     }
   };
 
-  const handleEditnew = () => {
-   
-      handleOpen();
-    
-  };
+  const handleEditNew = ( data :Boolean) => {
+      if (data) {
+                 handleOpen();
+
+        setFormData({
+          id: 0,
+         name: "",
+  phoneNumber: "",
+  email: "",
+  address1: "",
+  address2: "",
+  city: "",
+  state: "",
+  country: "",
+  zipcode: "",
+        });
+      }
+    };
 
   const handleUpdate = async () => {
     try {
@@ -156,7 +169,7 @@ const LandlordGrid: React.FC = () => {
             color="primary"
 
             style={{ marginRight: 8 , width:'30px',margin:10,position:'relative',float:'right'}}
-            onClick={() => handleEditnew()}
+            onClick={() => handleEditNew(true)}
           >Add  </Button>
       <FullGrid
       
@@ -164,9 +177,9 @@ const LandlordGrid: React.FC = () => {
         columns={columns}
         paginationModel={paginationModel}
         setPaginationModel={setPaginationModel}
-        handleEdit={handleEdit}
+        // handleEdit={handleEdit}
         // handleDelete={handleDelete}
-        handleAdd={handleAdd}
+        // handleAdd={handleAdd}
       />
   
         
