@@ -7,6 +7,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
 import SiteGrid from '../Grids/Site-grid/site-grid';
+import { useDispatch, useSelector } from 'react-redux';
+import DealForm from '../Milestone/Milestone';
+import { createNewDeal, updateDealDetails } from '../Redux/slice/dealSlice';
+import { AppDispatch } from '../Redux/store/index';
+import { RootState } from '../Redux/reducers';
+
 
 interface NavbarProps {
     links: {
@@ -15,11 +21,6 @@ interface NavbarProps {
    
   }
   
-import { useDispatch, useSelector } from 'react-redux';
-import DealForm from '../Milestone/Milestone';
-import { createNewDeal, updateDealDetails } from '../Redux/slice/dealSlice';
-import { AppDispatch } from '../Redux/store/index';
-import { RootState } from '../Redux/reducers';
 
 const Navbar: React.FC<NavbarProps> = ({links}) => {
     const dispatch = useDispatch<AppDispatch>();
