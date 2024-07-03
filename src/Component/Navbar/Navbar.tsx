@@ -6,13 +6,10 @@ import Reset from '../ResetPassword/ResetPassword';
 import CloseIcon from '@mui/icons-material/Close';
 import CreateDeal from '../Milestone/Milestone';
 import { useNavigate } from 'react-router-dom';
-import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
 import { useDispatch, useSelector } from 'react-redux';
-import DealForm from '../Milestone/Milestone';
 import { createNewDeal, updateDealDetails } from '../Redux/slice/dealSlice';
 import { AppDispatch } from '../Redux/store/index';
 import { RootState } from '../Redux/reducers';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import Profile from '../Profile/profile';
 import Support from '../Support/Support';
 
@@ -30,7 +27,7 @@ const Navbar: React.FC = () => {
     const user = useSelector((state: RegisterState) => state.auth.user);
     const dispatch = useDispatch<AppDispatch>();
     const auth: any = localStorage.getItem('auth');
-    const userdetails = JSON.parse(auth);
+    // const userdetails = JSON.parse(auth);
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
