@@ -10,7 +10,7 @@ export interface Deal {
     commercialOperationDate: string;
     potentialcommissiondate: string;
     potentialCommission: number | null;
-    status: string; // Ensure this is string
+    status: string; 
     activeStep: number; 
     createdBy: number;
     updatedBy: number;
