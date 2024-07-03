@@ -1,10 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 import styles from './Support.module.css';
 
+interface RootState {
+    auth: {
+        user: {
+            id: number;
+        } | null;
+    };
+}
+
 const Support: React.FC = () => {
+    const [subject, setSubject] = useState('');
+    const [description, setDescription] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const user = useSelector((state: RootState) => state.auth.user);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!user) {
+            alert('User not logged in. Please log in to raise a ticket.');
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            const response = await axios.post('http://192.168.1.223:3008/api/support/raise-ticket', {
+                ticketSubject: subject,
+                ticketDescription: description,
+                senderId: user.id
+            });
+            if (response.status === 200) {
+                alert('Ticket raised successfully!');
+                setSubject('');
+                setDescription('');
+            } else {
+                alert('Failed to raise ticket. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error raising ticket:', error);
+            alert('An error occurred while raising the ticket. Please try again.');
+        }
+        finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <div className={styles.contactsContainer}>
-            <div className={styles.contactForm}>
+            <form className={styles.contactForm} onSubmit={handleSubmit}>
                 <h2 className={styles.supportName}>Support</h2>
                 <div className={styles.formGroup}>
                     <label htmlFor="subject">Subject:</label>
@@ -14,19 +60,32 @@ const Support: React.FC = () => {
                         id="subject"
                         autoFocus
                         name="subject"
+                        value={subject}
+                        onChange={(e) => setSubject(e.target.value)}
+                        required
                     />
                 </div>
                 <div className={styles.formGroup}>
                     <label htmlFor="description">Description:</label>
-                    <textarea id="description"
+                    <textarea
+                        id="description"
                         name="description"
                         placeholder='Enter the description'
                         rows={7}
-                    >
-                    </textarea>
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        required
+                    />
                 </div>
-                <button className={styles.sendButton}>Send</button>
-            </div>
+                <button type="submit" disabled={isLoading} className={styles.sendButton}>
+                    {isLoading ? 'Sending...' : 'Concern Accepted'}
+                </button>
+            </form>
+            {isLoading && (
+                <div className={styles.loaderContainer}>
+                    <div className={styles.loader}></div>
+                </div>
+            )}
         </div>
     );
 };
