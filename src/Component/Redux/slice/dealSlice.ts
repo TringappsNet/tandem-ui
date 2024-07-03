@@ -26,6 +26,7 @@ const dealSlice = createSlice({
   initialState,
   reducers: {
     fetchDealDetailsStart: (state) => {
+      console.log(state)
       state.loading = true;
       state.error = null;
     },
@@ -76,7 +77,6 @@ export const fetchDealDetails = (): AppThunk<void> => async (dispatch: Dispatch)
   try {
     dispatch(fetchDealDetailsStart());
     const response = await axiosInstance.get(`/deals`);
-    console.log('API response:', response.data); // Log the response
     dispatch(fetchDealDetailsSuccess(response.data));
   } catch (error) {
     console.error('Error fetching deal details:', error);

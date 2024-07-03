@@ -30,9 +30,18 @@ interface Deal extends DealFormObjectDeal {
     id: number | null;
 }
 
+interface DealsData {
+    totalDeals: number;
+    dealsOpened: number;
+    dealsInProgress: number;
+    dealsClosed: number;
+    totalCommission: number;
+    deals: Deal[];
+}
+
 const Cards: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>(); 
-    const dealsData = useSelector((state: RootState) => state.deal.dealDetails);
+    const dealsData = useSelector((state: RootState) => state.deal.dealDetails as unknown as DealsData);
     const [openStepper, setOpenStepper] = useState(false);
     const [dealFormData, setDealFormData] = useState<Deal | null>(null);
 
@@ -75,7 +84,7 @@ const Cards: React.FC = () => {
         <>
             <Navbar />
             <div className={styles.cardList}>
-                {Array.isArray(dealsData) && dealsData.map((deal, index) => (
+                {dealsData?.deals && dealsData.deals.map((deal: Deal, index: number) => (
                     <div key={index} className={styles.card}>
                         <div>
                             <div className={styles.cardTitle}>
@@ -104,6 +113,7 @@ const Cards: React.FC = () => {
 
             <Dialog
                 fullScreen
+                sx={{ margin: '30px 190px' }}
                 open={openStepper}
                 onClose={handleCloseStepper}
                 className={styles.popupmain}

@@ -95,8 +95,8 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
             ...formData,
             activeStep: activeStep + 1,
             status,
-            createdBy: userId || 0, // Ensure createdBy is a number
-            updatedBy: userId || 0, // Ensure updatedBy is a number
+            createdBy: userId || 0, 
+            updatedBy: userId || 0,
             isNew: true,
         };
 
