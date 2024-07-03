@@ -15,48 +15,51 @@ const Login: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const validateEmail = (email: string) => {
+  const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email === '') {
       setValidationErrorMessage('Email cannot be empty');
-      setShowFailureMessage(true);
+      return false;
     } else if (!emailRegex.test(email)) {
       setValidationErrorMessage('Invalid email address');
-      setShowFailureMessage(true);
-    } else {
-      setShowFailureMessage(false);
-      setShowSuccessMessage(false);
+      return false;
     }
+    return true;
   };
 
-  const validatePassword = (password: string) => {
+  const validatePassword = (password: string): boolean => {
     if (password === '') {
       setValidationErrorMessage('Password cannot be empty');
-      setShowFailureMessage(true);
-    } else {
-      setShowFailureMessage(false);
+      return false;
     }
+    return true;
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setEmail(value);
-    validateEmail(value);
+    setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPassword(value);
-    validatePassword(value);
+    setPassword(e.target.value);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email === '' || password === '') {
-      setValidationErrorMessage('Please enter valid Email and Password');
+
+    if(email === "" || password===""){
+      setValidationErrorMessage('Please Enter all the field.');
+      setShowFailureMessage(true);
+      return
+    }
+    
+    const isEmailValid = validateEmail(email);
+    const isPasswordValid = validatePassword(password);
+
+    if (!isEmailValid || !isPasswordValid) {
       setShowFailureMessage(true);
       return;
     }
+
     setIsLoading(true);
     try {
       const response = await axiosInstance.post('/auth/login', { email, password });
@@ -74,14 +77,14 @@ const Login: React.FC = () => {
         setShowSuccessMessage(false);
         setShowFailureMessage(true);
       }
-    } catch (error) {
-      let message = 'Something went wrong. Please try again later.';
-      // if (error.response && error.response.status === 401) {
-      //   message = 'Incorrect Email or Password. Please try again.';
-      // }
-      setValidationErrorMessage(message);
+    } catch (error: any) {
+      // let message = 'Something went wrong. Please try again later.';
+      if (error.response && error.response.status === 401) {
+        // let message = 'Incorrect Email or Password. Please try again.';
+      setValidationErrorMessage(error.response.data.message);
       setShowSuccessMessage(false);
       setShowFailureMessage(true);
+      }
     } finally {
       setIsLoading(false);
     }

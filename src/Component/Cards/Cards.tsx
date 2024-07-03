@@ -107,7 +107,7 @@ const Cards: React.FC = () => {
                     className={styles.searchInput}
                 />
                 <select value={filterStatus} onChange={handleFilterChange} className={styles.filterSelect}>
-                    <option value="">All Statuses</option>
+                    <option value="">All Status</option>
                     <option value="Started">Started</option>
                     <option value="In-Progress">In-Progress</option>
                     <option value="Completed">Completed</option>
@@ -128,6 +128,7 @@ const Cards: React.FC = () => {
                         </div>
                     </div>
                 ))}
+
             </div>
 
             <Dialog
