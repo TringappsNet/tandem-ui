@@ -16,6 +16,7 @@ html {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.3);
     border: 1px solid #e0e0e0;
+    background-image: none;
     width: 579px;
 }
 
@@ -118,4 +119,23 @@ html {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.messageBox {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-family: 'Public Sans', sans-serif;
+}
+
+.successBox {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.errorBox {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }
