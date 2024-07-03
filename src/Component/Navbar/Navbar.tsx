@@ -6,13 +6,23 @@ import Reset from '../ResetPassword/ResetPassword';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
+import SiteGrid from '../Grids/Site-grid/site-grid';
 import { useDispatch, useSelector } from 'react-redux';
 import DealForm from '../Milestone/Milestone';
 import { createNewDeal, updateDealDetails } from '../Redux/slice/dealSlice';
 import { AppDispatch } from '../Redux/store/index';
 import { RootState } from '../Redux/reducers';
 
-const Navbar: React.FC = () => {
+
+interface NavbarProps {
+    links: {
+      disabled: boolean | undefined; name: string; href: string; onClick?: () => void 
+  }[];
+   
+  }
+  
+
+const Navbar: React.FC<NavbarProps> = ({links}) => {
     const dispatch = useDispatch<AppDispatch>();
     const auth: any = localStorage.getItem('auth');
     const userdetails = JSON.parse(auth);
@@ -52,6 +62,16 @@ const Navbar: React.FC = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
+
+    const handleRoute= (route:string)=>{
+        if(route==="site"){
+            navigate('/site');
+        }
+        else if(route==="landlord"){
+            navigate('/landlord');
+            
+    }
+}
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -99,7 +119,13 @@ const Navbar: React.FC = () => {
                         <img src='https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0' alt="Tandem Logo" />
                         <h3>TANDEM INFRASTRUCTURE</h3>
                     </div>
-                    <p onClick={handleCards}>DEALS</p>
+
+     
+                    
+                    <p onClick={handleCards} style={{ cursor: 'pointer' }} >DEALS</p>
+                    <p onClick={() => handleRoute('site')} style={{ cursor: 'pointer' }} >SITE</p>
+                    <p onClick={() => handleRoute('landlord')} style={{ cursor: 'pointer' }}>LANDLORD</p>
+
                 </div>
 
                 <div className={styles.rightheadersection}>
@@ -116,8 +142,8 @@ const Navbar: React.FC = () => {
                                 <button onClick={() => handleOpenPopup('Profile')}>Profile</button>
                                 <button onClick={() => handleOpenPopup('SendInvite')}>Send Invite</button>
                                 <button onClick={() => handleOpenPopup('Reset')}>Reset</button>
-                                <button onClick={() => handleOpenPopup('Site')}>Site</button>
-                                <button onClick={() => handleOpenPopup('Landlord')}>Landlord</button>
+                                {/* <button onClick={() => handleOpenPopup('Site')}>Site</button> */}
+                                {/* <button onClick={() => handleOpenPopup('Landlord')}>Landlord</button> */}
                                 <button onClick={handleLogout}>Logout</button>
                             </div>
                         )}
@@ -154,6 +180,21 @@ const Navbar: React.FC = () => {
                             <LandlordGrid />
                         </Box>
                     )}
+
+
+{selectedComponent === 'Site' && ( 
+                    <Box sx={{ padding: 1, borderRadius: 1, height: '100%', width: '100%', maxHeight: 'calc(100vh - 64px)', overflow: 'auto' }}>
+                        <br></br>
+                        <h1>Site Details</h1>
+                        <br></br>
+                        < SiteGrid/>
+
+                    </Box>
+
+
+                    )}
+
+
                 </DialogContent>
             </Dialog>
 
