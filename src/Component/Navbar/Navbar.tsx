@@ -6,16 +6,14 @@ import Reset from '../ResetPassword/ResetPassword';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import DealForm from '../Milestone/Milestone';
-import { RootState } from '../Redux/reducers/index';
 import { createNewDeal, updateDealDetails } from '../Redux/slice/dealSlice';
-import { AppDispatch } from '../Redux/store'; // Import AppDispatch
+import { AppDispatch } from '../Redux/store'; 
 
 
 const Navbar: React.FC = () => {
-    const user = useSelector((state: RootState) => state.auth.user);
-    const dispatch = useDispatch<AppDispatch>(); // Use AppDispatch type
+    const dispatch = useDispatch<AppDispatch>(); 
     const auth :any= localStorage.getItem('auth');
     const userdetails = JSON.parse(auth)
     console.log("User detal",userdetails)
