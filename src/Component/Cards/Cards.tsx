@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Cards.module.css";
-import { FiEdit, FiTrash } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
 import DealForm from "../Milestone/Milestone";
 import { Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/reducers";
 import { fetchDealDetails } from "../Redux/slice/dealSlice";
-import { AppDispatch } from "../Redux/store"; 
+import { AppDispatch } from "../Redux/store";
 import { Deal as DealFormObjectDeal } from "../Interface/DealFormObject";
-import { deleteDeal } from '../Redux/slice/dealSlice';
 
 interface Deal extends DealFormObjectDeal {
     activeStep: number;
@@ -40,7 +39,9 @@ interface DealsData {
 }
 
 const Cards: React.FC = () => {
-    const dispatch = useDispatch<AppDispatch>(); 
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filterStatus, setFilterStatus] = useState('');
+    const dispatch = useDispatch<AppDispatch>();
     const dealsData = useSelector((state: RootState) => state.deal.dealDetails as unknown as DealsData);
     const [openStepper, setOpenStepper] = useState(false);
     const [dealFormData, setDealFormData] = useState<Deal | null>(null);
@@ -61,12 +62,6 @@ const Cards: React.FC = () => {
         console.log("card Deal respected value ", deal);
     };
 
-    const   deleteDealHandler = (dealId: number | null) => {
-        if (dealId !== null) {
-          dispatch(deleteDeal(dealId));
-        }
-      };
-
     const getStatusButtonClass = (status: string | null) => {
         switch (status) {
             case "Completed":
@@ -85,41 +80,53 @@ const Cards: React.FC = () => {
         setDealFormData(null);
     };
 
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value);
+    };
 
+    const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setFilterStatus(event.target.value);
+    };
 
-      
+    const filteredDeals = dealsData?.deals?.filter((deal: Deal) => {
+        const matchesSearch = deal.brokerName?.toLowerCase().includes(searchTerm.toLowerCase()) || deal.propertyName?.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesStatus = filterStatus ? deal.status === filterStatus : true;
+        return matchesSearch && matchesStatus;
+    }) || [];
+
     return (
         <>
-            {/* <Navbar links={links} /> */}
+            <div className={styles.filterContainer}>
+                <input
+                    type="text"
+                    placeholder="Search by broker or property name"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    className={styles.searchInput}
+                />
+                <select value={filterStatus} onChange={handleFilterChange} className={styles.filterSelect}>
+                    <option value="">All Status</option>
+                    <option value="Started">Started</option>
+                    <option value="In-Progress">In-Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
             <div className={styles.cardList}>
-                {dealsData?.deals && dealsData.deals.map((deal: Deal, index: number) => (
+                {filteredDeals.map((deal: Deal, index: number) => (
                     <div key={index} className={styles.card}>
                         <div>
-                            <div className={styles.cardTitle}>
-                                Deal #{deal.id}
-                                <div className={styles.icons}>
-                                    <div className={styles.hide}>
-                                        <FiEdit onClick={() => editDealForm(deal)} />
-                                    </div>
-                                    <FiTrash onClick={() => deleteDealHandler(deal.id)} />
-                                </div>
-                            </div>
-                            <p className={styles.brokerName}>
-                                <span>Broker Name:</span> {deal.brokerName}
-                            </p>
+                            <div className={styles.cardTitle}>Deal #{deal.id} <div className={styles.hide}><FiEdit onClick={() => editDealForm(deal)} /></div></div>
+                            <p className={styles.brokerName}><span>Broker Name:</span> {deal.brokerName}</p>
                         </div>
                         <div className={styles.statusLine}>
                             <div className={styles.statusLabel}>Status:</div>
-                            <div
-                                className={`${styles.statusButton} ${getStatusButtonClass(
-                                    deal.status
-                                )}`}
-                            >
+                            <div className={`${styles.statusButton} ${getStatusButtonClass(deal.status)}`}>
                                 {deal.status}
                             </div>
                         </div>
                     </div>
                 ))}
+
             </div>
 
             <Dialog

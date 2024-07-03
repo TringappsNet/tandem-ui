@@ -14,48 +14,31 @@ import { AppDispatch } from '../Redux/store/index';
 import { RootState } from '../Redux/reducers';
 import Profile from '../Profile/profile';
 import Support from '../Support/Support';
-interface RegisterState {
-    auth: {
-        user: {
-            firstName: string;
-            lastName: string;
-        } | null;
-    };
-}
+// interface RegisterState {
+//     auth: {
+//         user: {
+//             firstName: string;
+//             lastName: string;
+//         } | null;
+//     };
+// }
 interface NavbarProps {
     links: {
       disabled: boolean | undefined; name: string; href: string; onClick?: () => void
   }[];
   }
 const Navbar: React.FC<NavbarProps> = ({links}) => {
-     const user = useSelector((state: RegisterState) => state.auth.user);
+    // const user = useSelector((state: RegisterState) => state.auth.user);
     const dispatch = useDispatch<AppDispatch>();
-    // const auth: any = localStorage.getItem('auth');
-    // const userdetails = JSON.parse(auth);
+    const auth: any = localStorage.getItem('auth');
+    const userdetails = JSON.parse(auth);
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
     const [isFirstSave, setIsFirstSave] = useState(true);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    // interface Deal {
-    //     activeStep: number;
-    //     status: string;
-    //     propertyName: string | null;
-    //     brokerName: string | null;
-    //     dealStartDate: string | null;
-    //     proposalDate: string | null;
-    //     loiExecuteDate: string | null;
-    //     leaseSignedDate: string | null;
-    //     noticeToProceedDate: string | null;
-    //     commercialOperationDate: string | null;
-    //     potentialcommissiondate: string | null;
-    //     potentialCommission: string | null;
-    //     createdBy: number;
-    //     updatedBy: number;
-    //     isNew: boolean;
-    //     id: number | null;
-    // }
+
     const navigate = useNavigate();
     const dealDetails = useSelector((state: RootState) => state.deal.dealDetails);
     // const dealsData = useSelector((state: RootState) => state.deal.dealDetails as unknown as DealsData);
@@ -137,9 +120,9 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
                         <p onClick={() => createDealForm()}>CREATE</p>
                     </div>
                     <div className={styles.userdropdown} onClick={toggleDropdown} ref={dropdownRef}>
-                        <p>{user ? `${user.firstName} ${user.lastName}` : 'Guest'}</p>
+                    <p>{userdetails ? `${userdetails.user.firstName} ${userdetails.user.lastName}` : 'Guest'}</p>
                         <div className={styles.circle}>
-                            <p>{user ? user.firstName[0] : 'G'}</p>
+                            <p>{userdetails ? userdetails.user.firstName[0] : 'G'}</p>
                         </div>
                         {isDropdownOpen && (
                             <div className={styles.dropdownMenu}>
