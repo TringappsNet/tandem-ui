@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import styles from './SendInvite.module.css';
 import classNames from 'classnames';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import { useNavigate } from 'react-router-dom';
 
 interface Role {
     id: number;
@@ -9,13 +10,16 @@ interface Role {
 }
 
 const SendInvite: React.FC = () => {
+    const navigate = useNavigate();
     const [showInviteForm, setShowInviteForm] = useState(true);
     const [responseMessage, setResponseMessage] = useState('');
     const [responseType, setResponseType] = useState('');
     const [email, setEmail] = useState('');
     const [rolesDetails, setRolesDetails] = useState<Role[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [roleId, setRoleId] = useState<number | null>(null);
     const selectRef = useRef<HTMLSelectElement>(null);
+
 
     const handleSendInvite = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -26,10 +30,12 @@ const SendInvite: React.FC = () => {
             return;
         }
 
+
+        setIsLoading(true);
+
         try {
             const response = await axiosInstance.post('/auth/invite', { email, roleId });
             const data = response.data;
-
             if (data) {
                 setResponseMessage(data.message);
                 setResponseType('success');
@@ -37,6 +43,7 @@ const SendInvite: React.FC = () => {
                     setShowInviteForm(false);
                     setEmail('');
                     setResponseType('');
+                    navigate('/dashboard');
                 }, 1000);
             } else {
                 setResponseMessage(data.message || 'Failed to send invite.');
@@ -45,6 +52,9 @@ const SendInvite: React.FC = () => {
         } catch (error: any) {
             setResponseMessage(error.response.data.message || 'An error occurred. Please try again.');
             setResponseType('error');
+        }
+        finally {
+            setIsLoading(false);
         }
     };
 
@@ -60,6 +70,7 @@ const SendInvite: React.FC = () => {
             console.error('Error fetching roles:', error);
         }
     };
+
 
     useEffect(() => {
         getRoles();
@@ -78,6 +89,7 @@ const SendInvite: React.FC = () => {
                             {responseMessage}
                         </div>
                     )}
+
                     <form onSubmit={handleSendInvite}>
                         <div className={styles.formGroup}>
                             <label htmlFor="email">Email:</label>
@@ -111,8 +123,15 @@ const SendInvite: React.FC = () => {
                                 </select>
                             </div>
                         </div>
-                        <button type="submit">Send Invite</button>
+                        <button type="submit" disabled={isLoading}>
+                            {isLoading ? 'Sending Invite' : 'Send Invite'}
+                        </button>
                     </form>
+                    {isLoading && (
+                        <div className={styles.loaderContainer}>
+                            <div className={styles.loader}></div>
+                        </div>
+                    )}
                 </div>
             )}
         </>

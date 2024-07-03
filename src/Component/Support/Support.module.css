@@ -1,0 +1,89 @@
+@import url("@fontsource/public-sans");
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.contactsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.3);
+    border: 1px solid #e0e0e0;
+    padding: 93px;
+    width: 598px;
+}
+
+.contactForm {
+
+    background-color: rgb(255, 255, 255);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid #e0e0e0;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.formGroup label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: rgb(15, 8, 8);
+    font-family: 'Public Sans', sans-serif;
+    font-weight: bolder;
+}
+
+.formGroup input,
+.formGroup textarea {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: 'Public Sans', sans-serif;
+
+}
+
+.formGroup textarea {
+    resize: vertical;
+}
+
+.supportName {
+    font-size: 24px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: bolder;
+    margin: 0 0 1rem 0;
+    color: rgb(12, 12, 12);
+    justify-content: center;
+    align-items: center;
+    padding-left: 168px;
+}
+
+.sendButton {
+    background-color: #262262;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.sendButton:hover {
+    background-color: #494490;
+}
