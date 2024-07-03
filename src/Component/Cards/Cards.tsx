@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Cards.module.css";
-import { FiEdit } from "react-icons/fi";
+import { FiEdit, FiTrash } from "react-icons/fi";
 import DealForm from "../Milestone/Milestone";
 import { Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/reducers";
-import { fetchDealDetails } from "../Redux/slice/dealSlice";
+import { deleteDeal, fetchDealDetails } from "../Redux/slice/dealSlice";
 import { AppDispatch } from "../Redux/store";
 import { Deal as DealFormObjectDeal } from "../Interface/DealFormObject";
 
@@ -62,6 +62,12 @@ const Cards: React.FC = () => {
         console.log("card Deal respected value ", deal);
     };
 
+    const   deleteDealHandler = (dealId: number | null) => {
+        if (dealId !== null) {
+          dispatch(deleteDeal(dealId));
+        }
+      };
+      
     const getStatusButtonClass = (status: string | null) => {
         switch (status) {
             case "Completed":
@@ -115,8 +121,18 @@ const Cards: React.FC = () => {
                 {filteredDeals.map((deal: Deal, index: number) => (
                     <div key={index} className={styles.card}>
                         <div>
-                            <div className={styles.cardTitle}>Deal #{deal.id} <div className={styles.hide}><FiEdit onClick={() => editDealForm(deal)} /></div></div>
-                            <p className={styles.brokerName}><span>Broker Name:</span> {deal.brokerName}</p>
+                        <div className={styles.cardTitle}>
+                                Deal #{deal.id}
+                                <div className={styles.icons}>
+                                    <div className={styles.hide}>
+                                        <FiEdit onClick={() => editDealForm(deal)} />
+                                    </div>
+                                    <FiTrash onClick={() => deleteDealHandler(deal.id)} />
+                                </div>
+                            </div>
+                            <p className={styles.brokerName}>
+                                <span>Broker Name:</span> {deal.brokerName}
+                            </p>
                         </div>
                         <div className={styles.statusLine}>
                             <div className={styles.statusLabel}>Status:</div>
