@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Cards.module.css";
-import { FiEdit } from "react-icons/fi";
+import { FiEdit, FiTrash } from "react-icons/fi";
 import DealForm from "../Milestone/Milestone";
 import { Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -9,6 +9,7 @@ import { RootState } from "../Redux/reducers";
 import { fetchDealDetails } from "../Redux/slice/dealSlice";
 import { AppDispatch } from "../Redux/store"; 
 import { Deal as DealFormObjectDeal } from "../Interface/DealFormObject";
+import { deleteDeal } from '../Redux/slice/dealSlice';
 
 interface Deal extends DealFormObjectDeal {
     activeStep: number;
@@ -60,6 +61,12 @@ const Cards: React.FC = () => {
         console.log("card Deal respected value ", deal);
     };
 
+    const   deleteDealHandler = (dealId: number | null) => {
+        if (dealId !== null) {
+          dispatch(deleteDeal(dealId));
+        }
+      };
+
     const getStatusButtonClass = (status: string | null) => {
         switch (status) {
             case "Completed":
@@ -78,6 +85,9 @@ const Cards: React.FC = () => {
         setDealFormData(null);
     };
 
+
+
+      
     return (
         <>
             {/* <Navbar links={links} /> */}
@@ -87,8 +97,11 @@ const Cards: React.FC = () => {
                         <div>
                             <div className={styles.cardTitle}>
                                 Deal #{deal.id}
-                                <div className={styles.hide}>
-                                    <FiEdit onClick={() => editDealForm(deal)} />
+                                <div className={styles.icons}>
+                                    <div className={styles.hide}>
+                                        <FiEdit onClick={() => editDealForm(deal)} />
+                                    </div>
+                                    <FiTrash onClick={() => deleteDealHandler(deal.id)} />
                                 </div>
                             </div>
                             <p className={styles.brokerName}>
