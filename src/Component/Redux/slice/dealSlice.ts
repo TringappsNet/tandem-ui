@@ -16,7 +16,7 @@ interface DealState {
 
 const initialState: DealState = {
   activeStep: 0,
-  dealDetails: [],
+  dealDetails: [], 
   loading: false,
   error: null,
 };
@@ -26,7 +26,6 @@ const dealSlice = createSlice({
   initialState,
   reducers: {
     fetchDealDetailsStart: (state) => {
-      console.log(state)
       state.loading = true;
       state.error = null;
     },
@@ -50,10 +49,10 @@ const dealSlice = createSlice({
         state.dealDetails.push(action.payload);
       }
     },
-    updateDealField: (state, action: PayloadAction<{ id: number | null; field: keyof Deal; value: never }>) => {
+    updateDealField: (state, action: PayloadAction<{ id: number | null; field: keyof Deal; value: string | number | boolean | null }>) => {
       const deal = state.dealDetails.find(deal => deal.id === action.payload.id);
       if (deal) {
-        deal[action.payload.field] = action.payload.value;
+        (deal[action.payload.field] as string | number | boolean | null) = action.payload.value;
       }
     },
     setActiveStep: (state, action: PayloadAction<number>) => {
@@ -61,6 +60,7 @@ const dealSlice = createSlice({
     },
   },
 });
+
 
 export const {
   fetchDealDetailsStart,

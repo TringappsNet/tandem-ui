@@ -50,7 +50,6 @@ const Cards: React.FC = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        console.log("dealsData:", dealsData);
     }, [dealsData]);
 
     const editDealForm = (deal: Deal) => {
