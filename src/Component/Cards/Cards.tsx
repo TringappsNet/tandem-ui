@@ -1,53 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import styles from './Cards.module.css';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import React, { useEffect, useState } from "react";
+import styles from "./Cards.module.css";
 import { FiEdit } from "react-icons/fi";
-import Navbar from '../Navbar/Navbar';
+import Navbar from "../Navbar/Navbar";
+import DealForm from "../Milestone/Milestone";
+import { Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../Redux/reducers";
+import { fetchDealDetails } from "../Redux/slice/dealSlice";
+import { AppDispatch } from "../Redux/store"; 
+import { Deal as DealFormObjectDeal } from "../Interface/DealFormObject";
 
-interface Deal {
+interface Deal extends DealFormObjectDeal {
     activeStep: number;
     status: string;
-    propertyName: string | null;
-    brokerName: string | null;
-    dealStartDate: string | null;
-    proposalDate: string | null;
-    loiExecuteDate: string | null;
-    leaseSignedDate: string | null;
-    noticeToProceedDate: string | null;
-    commercialOperationDate: string | null;
-    potentialcommissiondate: string | null;
-    potentialCommission: string | null;
+    propertyName: string;
+    brokerName: string;
+    dealStartDate: string;
+    proposalDate: string;
+    loiExecuteDate: string;
+    leaseSignedDate: string;
+    noticeToProceedDate: string;
+    commercialOperationDate: string;
+    potentialcommissiondate: string;
+    potentialCommission: number | null;
     createdBy: number;
     updatedBy: number;
     isNew: boolean;
     id: number | null;
 }
 
+interface DealsData {
+    totalDeals: number;
+    dealsOpened: number;
+    dealsInProgress: number;
+    dealsClosed: number;
+    totalCommission: number;
+    deals: Deal[];
+}
+
 const Cards: React.FC = () => {
-    const [dealsData, setDealsData] = useState<Deal[]>([]);
+    const dispatch = useDispatch<AppDispatch>(); 
+    const dealsData = useSelector((state: RootState) => state.deal.dealDetails as unknown as DealsData);
+    const [openStepper, setOpenStepper] = useState(false);
+    const [dealFormData, setDealFormData] = useState<Deal | null>(null);
 
     useEffect(() => {
-        const fetchDeals = async () => {
-            try {
-                const response = await axiosInstance.get('/deals');
-                const fetchedDeals: Deal[] = response.data.deals;
-                setDealsData(fetchedDeals);
-                console.log('Deals Fetched value:', response.data);
-            } catch (error) {
-                console.error('Error fetching broker names:', error);
-            }
-        };
+        dispatch(fetchDealDetails());
+    }, [dispatch]);
 
-        fetchDeals();
-    }, []); // Empty dependency array ensures this runs only once when the component mounts
+    useEffect(() => {
+    }, [dealsData]);
 
     const editDealForm = (deal: Deal) => {
-        // setOpenStepper(true);
-        // setDealFormData(deal);
+        setOpenStepper(true);
+        setDealFormData({
+            ...deal,
+            activeStep: deal.activeStep || 0,
+        });
         console.log("card Deal respected value ", deal);
-    }
+    };
 
-    const getStatusButtonClass = (status: string) => {
+    const getStatusButtonClass = (status: string | null) => {
         switch (status) {
             case "Completed":
                 return styles.statusButtonFinished;
@@ -56,31 +70,74 @@ const Cards: React.FC = () => {
             case "Started":
                 return styles.statusButtonStarted;
             default:
-                return '';
+                return "";
         }
+    };
+
+    const handleCloseStepper = () => {
+        setOpenStepper(false);
+        setDealFormData(null);
     };
 
     return (
         <>
-        <Navbar />
-        <div className={styles.cardList} >
-            {dealsData.map((deal, index) => (
-                <div key={index} className={styles.card}>
-                    <div>
-                        <div className={styles.cardTitle}>Deal #{deal.id} <div className={styles.hide}><FiEdit onClick={() => editDealForm(deal)} /></div></div>
-                        <p className={styles.brokerName}><span>Broker Name:</span> {deal.brokerName}</p>
-                    </div>
-                    <div className={styles.statusLine}>
-                        <div className={styles.statusLabel}>Status:</div>
-                        <div className={`${styles.statusButton} ${getStatusButtonClass(deal.status)}`}>
-                            {deal.status}
+            <Navbar />
+            <div className={styles.cardList}>
+                {dealsData?.deals && dealsData.deals.map((deal: Deal, index: number) => (
+                    <div key={index} className={styles.card}>
+                        <div>
+                            <div className={styles.cardTitle}>
+                                Deal #{deal.id}
+                                <div className={styles.hide}>
+                                    <FiEdit onClick={() => editDealForm(deal)} />
+                                </div>
+                            </div>
+                            <p className={styles.brokerName}>
+                                <span>Broker Name:</span> {deal.brokerName}
+                            </p>
+                        </div>
+                        <div className={styles.statusLine}>
+                            <div className={styles.statusLabel}>Status:</div>
+                            <div
+                                className={`${styles.statusButton} ${getStatusButtonClass(
+                                    deal.status
+                                )}`}
+                            >
+                                {deal.status}
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
-        </div>
+                ))}
+            </div>
+
+            <Dialog
+                fullScreen
+                sx={{ margin: '30px 190px' }}
+                open={openStepper}
+                onClose={handleCloseStepper}
+                className={styles.popupmain}
+            >
+                <DialogTitle sx={{ backgroundColor: "#262262", color: "white" }}>
+                    Deal Form
+                    <IconButton
+                        aria-label="close"
+                        onClick={handleCloseStepper}
+                        sx={{
+                            position: "absolute",
+                            right: 25,
+                            top: 8,
+                            width: 40,
+                            color: (theme) => theme.palette.grey[500],
+                        }}
+                    >
+                        <CloseIcon sx={{ color: "#999" }} />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>
+                    {dealFormData && <DealForm deal={dealFormData} />}
+                </DialogContent>
+            </Dialog>
         </>
-        
     );
 };
 

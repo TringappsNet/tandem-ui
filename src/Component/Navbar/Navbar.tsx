@@ -6,6 +6,12 @@ import Reset from '../ResetPassword/ResetPassword';
 import CloseIcon from '@mui/icons-material/Close';
 import CreateDeal from '../Milestone/Milestone';
 import { useNavigate } from 'react-router-dom';
+import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
+import { useDispatch, useSelector } from 'react-redux';
+import DealForm from '../Milestone/Milestone';
+import { createNewDeal, updateDealDetails } from '../Redux/slice/dealSlice';
+import { AppDispatch } from '../Redux/store/index';
+import { RootState } from '../Redux/reducers';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { useSelector } from 'react-redux';
 import Profile from '../Profile/profile';
@@ -23,6 +29,9 @@ interface RootState {
 
 const Navbar: React.FC = () => {
     const user = useSelector((state: RootState) => state.auth.user);
+    const dispatch = useDispatch<AppDispatch>();
+    const auth: any = localStorage.getItem('auth');
+    const userdetails = JSON.parse(auth);
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
     const [openStepper, setOpenStepper] = useState(false);
@@ -52,6 +61,10 @@ const Navbar: React.FC = () => {
     // }
 
     const navigate = useNavigate();
+
+    const dealDetails = useSelector((state: RootState) => state.deal.dealDetails);
+    // const dealsData = useSelector((state: RootState) => state.deal.dealDetails as unknown as DealsData);
+
 
     const handleOpenPopup = (componentName: string) => {
         setSelectedComponent(componentName);
@@ -93,18 +106,17 @@ const Navbar: React.FC = () => {
     const saveFormData = async () => {
 
         try {
-            const deal: any = localStorage.getItem('dealdetails')
-            const dealtemp: any = JSON.parse(deal)
+
+            const dealtemp = dealDetails[0];
             if (dealtemp.isNew && isFirstSave) {
-                const response = await axiosInstance.post('/deals/deal', dealtemp);
-                console.log('Form data saved:', response.data);
-                localStorage.removeItem('dealdetails');
+                await dispatch(createNewDeal(dealtemp));
+                console.log('Form data saved:', dealtemp);
                 setIsFirstSave(false);
                 return
             }
-            const response = await axiosInstance.put(`/deals/deal/${dealtemp.id}`, dealtemp);
-            console.log('Form data saved for put:', response.data);
-            localStorage.removeItem('dealdetails');
+
+            await dispatch(updateDealDetails(dealtemp));
+            console.log('Form data saved for put:', dealtemp);
             setIsFirstSave(true);
 
         } catch (error) {
