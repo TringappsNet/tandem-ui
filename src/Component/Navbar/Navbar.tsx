@@ -116,8 +116,8 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
                     <p onClick={() => handleRoute('landlord')} style={{ cursor: 'pointer' }}>LANDLORD</p>
                 </div>
                 <div className={styles.rightheadersection}>
-                    <div className={styles.createdeal}>
-                        <p onClick={() => createDealForm()}>CREATE</p>
+                    <div className={styles.createdeal} onClick={() => createDealForm()}>
+                        <p >CREATE</p>
                     </div>
                     <div className={styles.userdropdown} onClick={toggleDropdown} ref={dropdownRef}>
                     <p>{userdetails ? `${userdetails.user.firstName} ${userdetails.user.lastName}` : 'Guest'}</p>
