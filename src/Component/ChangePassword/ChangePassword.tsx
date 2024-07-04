@@ -87,11 +87,9 @@ const ChangePassword: React.FC = () => {
         }
 
         try {
-            const response = await axiosInstance.post('auth/change-password', {
+            await axiosInstance.post('auth/change-password', {
                 newPassword: password,
             });
-
-            console.log('Password changed successfully:', response.data);
             setShowSuccessMessage(true);
             setShowFailureMessage(false);
             setPassword('');
