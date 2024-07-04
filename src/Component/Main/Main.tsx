@@ -56,11 +56,11 @@ const Main: React.FC = () => {
                     </React.Fragment>
                 )}
             </div>
-            <br></br>
+            {/* <br></br> */}
             <h1 className={styles.b_title}>
                 Brokers
             </h1>
-            <br></br>
+            {/* <br></br> */}
             <div>
                 <BrokerGrid />
             </div>

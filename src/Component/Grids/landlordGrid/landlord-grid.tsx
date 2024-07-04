@@ -12,6 +12,7 @@ import styles from "./landlord-grid.module.css";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import FullGrid from "../parentGrid/parent-grid";
 import { MdEdit, MdDelete } from 'react-icons/md';
+import ConfirmationModal from "../../AlertDialog/AlertDialog";
 
 interface Landlord {
   id: number;
@@ -34,6 +35,9 @@ const config = {
 const LandlordGrid: React.FC = () => {
   const [rows, setRows] = useState<Landlord[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [deleteId, setDeleteId] = useState(0);
+ 
   const [formData, setFormData] = useState<Landlord>({
     id: 0,
     name: "",
@@ -67,10 +71,20 @@ const LandlordGrid: React.FC = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      if (name === "address") {
+        const [address1, address2] = value.split(", ");
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          address1: address1 || "",
+          address2: address2 || "",
+        }));
+      } else {
+        setFormData({ ...formData, [name]: value });
+      }
+    };
+    
 
   const handleAdd = async () => {
     try {
@@ -89,6 +103,11 @@ const LandlordGrid: React.FC = () => {
       handleOpen();
     }
   };
+  const cancelDelete = () => {
+    setDeleteConfirmation(false);
+  };
+
+
 
   const handleEditNew = ( data :Boolean) => {
       if (data) {
@@ -123,9 +142,19 @@ const LandlordGrid: React.FC = () => {
   };
 
   const handleDelete = async (id: number) => {
+
+    setDeleteConfirmation(true);
+    setDeleteId(id);
+  }
+
+  
+  const handleConfirmDelete = async () => {
     try {
-      await axiosInstance.delete(`landlords/landlord/${id}`);
-      setRows(rows.filter((row) => row.id !== id));
+
+      await axiosInstance.delete(`landlords/landlord/${deleteId}`);
+      setRows(rows.filter((row) => row.id !== deleteId));
+      setDeleteConfirmation(false);
+
     } catch (error) {
       console.error("Error deleting landlord:", error);
     }
@@ -135,8 +164,18 @@ const LandlordGrid: React.FC = () => {
     { field: "name", headerName: "Name", width: 150, align: "center",headerAlign: 'center' },
     { field: "phoneNumber", headerName: "Phone Number", width: 150, align: "center",headerAlign: 'center' },
     { field: "email", headerName: "Email", width: 200, align: "center",headerAlign: 'center'},
-    { field: "address1", headerName: "Address 1", width: 150, align: "center",headerAlign: 'center' },
-    { field: "address2", headerName: "Address 2", width: 150, align: "center",headerAlign: 'center' },
+    {
+      field: "address",
+      headerName: "Address",
+      width: 300,
+      align: "center",
+      headerAlign: "center",
+      renderCell: (params) => (
+        <>
+          {params.row.address1} {params.row.address2}
+        </>
+      ),
+    },
     { field: "city", headerName: "City", width: 100, align: "center",headerAlign: 'center' },
     { field: "state", headerName: "State", width: 100, align: "center",headerAlign: 'center' },
     { field: "country", headerName: "Country", width: 100, align: "center",headerAlign: 'center' },
@@ -144,7 +183,7 @@ const LandlordGrid: React.FC = () => {
     {
       field: "actions",
       headerName: "Actions",
-      width: 200,
+      width: 270,
       align: "center",
       headerAlign: 'center',
       renderCell: (params) => (
@@ -168,9 +207,11 @@ const LandlordGrid: React.FC = () => {
             variant="contained"
             color="primary"
 
-            style={{ marginRight: 8 , width:'30px',margin:10,position:'relative',float:'right'}}
+            style={{ marginRight: 8 , width:'150px',
+              marginBottom:'10px',
+              position:'relative',float:'right'}}
             onClick={() => handleEditNew(true)}
-          >Add  </Button>
+          >Add landlord </Button>
       <FullGrid
       
         rows={rows}
@@ -182,7 +223,17 @@ const LandlordGrid: React.FC = () => {
         // handleAdd={handleAdd}
       />
   
-        
+  <ConfirmationModal
+        show={deleteConfirmation}
+        onHide={cancelDelete}
+        onConfirm={handleConfirmDelete}
+        title="Delete Row"
+        message="Are you sure you want to delete this row?"
+        cancelText="Cancel"
+        confirmText="Delete"
+        cancelVariant="secondary"
+        confirmVariant="danger"
+      />
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{formData.id ? "Edit Landlord" : "Add Landlord"}</DialogTitle>
@@ -284,6 +335,9 @@ const LandlordGrid: React.FC = () => {
         
         </DialogActions>
       </Dialog>
+
+     
+
     </div>
   );
 };
