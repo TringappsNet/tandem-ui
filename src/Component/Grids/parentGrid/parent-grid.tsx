@@ -1,6 +1,7 @@
 import React from "react";
 import { DataGrid, GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import styles from "./parent-grid.module.css";
+import Box from '@mui/material/Box';
 
 
 interface FullGridProps {
@@ -33,9 +34,63 @@ const FullGrid: React.FC<FullGridProps> = ({
 
 }) => {
   return (
-    <div className={`${styles.gridContainer } ${className}`} style={{ height: 520, width: '100%',
-      fontSize: 'small',
-    }}>
+    <div className={`${styles.gridContainer } ${className}`} >
+      <Box
+        sx={{
+                
+                height: 485,
+                marginTop:2,
+                background:'none',
+                border: 0,
+
+                lineHeight:2,
+               '.css-yrdy0g-MuiDataGrid-columnHeaderRow ':{
+                background: '#d6deec !important'
+
+               },
+               '& .css-15n4jlm-MuiDataGrid-root .MuiDataGrid-columnHeaders': {
+                
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  textTransform:'uppercase  '
+              },
+
+                '& .super-app-theme--header': {
+                  backgroundColor: 'rgba(255, 7, 0, 0.55)',
+                  color: 'white',
+                  fontSize: 'small',
+
+                },
+
+
+                '.css-1kwdphh-MuiDataGrid-virtualScrollerContent ': {
+                  fontSize:'13px',
+                  border:'none !important',
+
+                }
+                ,
+                          "& .MuiDataGrid-row": {
+          "&:nth-of-type(2n)": {
+          backgroundColor: " #EBF0F4 ",//even tealcolor
+          '&:hover': {
+          background: " #EBF0F4 !important",
+          border: 'none ' ,
+
+                  
+        ".css-yrdy0g-MuiDataGrid-columnHeaderRow": {
+          backgroundColor: "#0078d4 !important",
+        }
+
+
+          },
+          }
+          },
+
+              
+            }}
+      >
+
+        
       <DataGrid
         className={styles.dataGrid}
         rows={rows}
@@ -45,25 +100,15 @@ const FullGrid: React.FC<FullGridProps> = ({
         rowHeight={34}
         columnHeaderHeight={39}
         
-          sx={{
-                boxShadow: 2,
-              
-                
-                height: 800,
-                marginTop:2,
-                background:'none',
-              
-                  
-                lineHeight:2,
-               
-               
-              
-            }}
+        
+        
         
        
         
 
       />
+      </Box>
+  
     </div>
   );
 };

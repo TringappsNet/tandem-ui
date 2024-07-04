@@ -12,6 +12,9 @@ import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
 import FullGrid from "../parentGrid/parent-grid";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 
+
+import styles from "./broker-grid.module.css";
+
 interface User {
   id: number;
   email: string;
@@ -122,6 +125,8 @@ const BrokerGrid: React.FC = () => {
     }
   };
 
+  
+
   // const handleDelete = async (id: number) => {
   //   try {
   //     await axios.delete(`${config.apiUrl}/${id}`);
@@ -132,27 +137,32 @@ const BrokerGrid: React.FC = () => {
   // };
 
   const columns: GridColDef[] = [
-    { field: "fullName", headerName: "Name", width: 150, align: "center", headerAlign: "center" },
-    { field: "mobile", headerName: "Mobile", width: 150, align: "center", headerAlign: "center" },
-    { field: "totalDeals", headerName: "Total Deals", width: 150, align: "center", headerAlign: "center" },
-    { field: "dealsOpened", headerName: "Deals Opened", width: 150, align: "center", headerAlign: "center" },
-    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 150, align: "center", headerAlign: "center" },
-    { field: "dealsClosed", headerName: "Deals Closed", width: 150, align: "center", headerAlign: "center" },
-    { field: "totalCommission", headerName: "Total Commission", width: 150, align: "center", headerAlign: "center" },
-    { field: "isActive", headerName: "Active", width: 150, align: "center", headerAlign: "center" },
+    { field: "fullName", headerName: "Name", width: 200, align: "center", headerAlign: "center" },
+    { field: "mobile", headerName: "Mobile", width: 200, align: "center", headerAlign: "center" },
+    { field: "totalDeals", headerName: "Total Deals", width: 200, align: "center", headerAlign: "center" },
+    { field: "dealsOpened", headerName: "Deals Opened", width: 200, align: "center", headerAlign: "center" },
+    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 200, align: "center", headerAlign: "center" },
+    { field: "dealsClosed", headerName: "Deals Closed", width: 200, align: "center", headerAlign: "center" },
+    { field: "totalCommission", headerName: "Total Commission", width: 200, align: "center", headerAlign: "center" },
+    // { field: "isActive", headerName: "Active", width: 200, align: "center", headerAlign: "center" },
   ];
 
   return (
-    <div>
+    <div className={styles.gridContainer}>
+
+
       <FullGrid
+       className={styles.FullGrid}
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}
         setPaginationModel={setPaginationModel}
+        
         // handleEdit={handleEdit}
         // handleAdd={handleAdd}
         // handleDelete={handleDelete}
       />
+
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{formData.id ? "Edit User" : "Add User"}</DialogTitle>
         <DialogContent>
@@ -248,7 +258,9 @@ const BrokerGrid: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
     </div>
+    
   );
 };
 
