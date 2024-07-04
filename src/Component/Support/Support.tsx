@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-// import background from './mailbox.jpg'
 import styles from './Support.module.css';
+import mailImage from './mail.png';  // Ensure this path is correct
 
 interface RootState {
     auth: {
@@ -23,7 +23,7 @@ const Support: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user) {
-            setErrorMessage('User not logged in. Please log in to raise a ticket.');
+            setErrorMessage('Please log in to raise a ticket.');
             return;
         }
         setIsLoading(true);
@@ -44,18 +44,19 @@ const Support: React.FC = () => {
             }
         } catch (error) {
             console.error('Error raising ticket:', error);
-            setErrorMessage('An error occurred while raising the ticket. Please try again.');
-        }
-        finally {
+            setErrorMessage('An error occurred. Please try again.');
+        } finally {
             setIsLoading(false);
         }
     };
 
-
     return (
         <div className={styles.contactsContainer}>
+            <div className={styles.imageContainer}>
+                <img src={mailImage} alt="Mail" className={styles.mailImage} />
+            </div>
             <form className={styles.contactForm} onSubmit={handleSubmit}>
-                <h2 className={styles.supportName}>Support</h2>
+                <h2 className={styles.support}>Contact Us!</h2>
                 {successMessage && (
                     <div className={styles.messageBox + ' ' + styles.successBox}>
                         {successMessage}
@@ -66,14 +67,12 @@ const Support: React.FC = () => {
                         {errorMessage}
                     </div>
                 )}
-
                 <div className={styles.formGroup}>
                     <label htmlFor="subject">Subject:</label>
                     <input
                         type="text"
-                        placeholder='Enter the subject of concern'
+                        placeholder="Subject"
                         id="subject"
-                        autoFocus
                         name="subject"
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
@@ -85,7 +84,7 @@ const Support: React.FC = () => {
                     <textarea
                         id="description"
                         name="description"
-                        placeholder='Enter the description'
+                        placeholder="Description"
                         rows={7}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
