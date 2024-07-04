@@ -12,6 +12,7 @@ import styles from './site-grid.module.css';
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import FullGrid from "../parentGrid/parent-grid";
 import { MdEdit, MdDelete } from 'react-icons/md';
+import ConfirmationModal from "../../AlertDialog/AlertDialog";
 
 interface Site {
   id: number;
@@ -33,6 +34,9 @@ const config = {
 const SiteGrid: React.FC = () => {
   const [rows, setRows] = useState<Site[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [deleteId, setDeleteId] = useState(0);
+ 
   const [formData, setFormData] = useState<Site>({
     id: 0,
     addressline1: "",
@@ -67,7 +71,19 @@ const SiteGrid: React.FC = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (name === "address") {
+      const [addressline1, addressline2] = value.split(", ");
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        addressline1: addressline1 || "",
+        addressline2: addressline2 || "",
+      }));
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+  const cancelDelete = () => {
+    setDeleteConfirmation(false);
   };
 
   const handleAdd = async () => {
@@ -96,8 +112,6 @@ const SiteGrid: React.FC = () => {
        
         const updateBy:any = localStorage.getItem('auth');
     const user_id = JSON.parse(updateBy);
-
-    console.log("User Id", user_id.user.id);
 
         if (updateBy) { 
             
@@ -128,38 +142,52 @@ const SiteGrid: React.FC = () => {
     }
 };
 
+const handleDelete = async (id: number) => {
+  setDeleteConfirmation(true);
+  setDeleteId(id);
+};
 
-  const handleDelete = async (id: number) => {
+  const handleConfirmDelete = async (id: number) => {
     try {
-      await axiosInstance.delete(`sites/site/${id}`);
-      setRows(rows.filter((row) => row.id !== id));
+      await axiosInstance.delete(`sites/site/${deleteId}`);
+      setRows(rows.filter((row) => row.id !== deleteId));
+      setDeleteConfirmation(false);
+
     } catch (error) {
       console.error("Error deleting Site:", error);
     }
   };
 
   const columns: GridColDef[] = [
-    { field: "addressline1", headerName: "   Addressline1", width: 200, align: "center",    headerAlign: 'center',
-      
+    {
+      field: "address",
+      headerName: "Address",
+      width: 400,
+      align: "center",
+      headerAlign: "center",
+      renderCell: (params) => (
+        <>
+          {params.row.addressline1}{params.row.addressline2}
+        </>
+      ),
     },
-    { field: "addressline2", headerName: "Addressline2", width: 200, align: "center",    headerAlign: 'center',
-    },
+    
     { field: "state", headerName: "State", width: 200, align: "center",    headerAlign: 'center',
     },
     { field: "city", headerName: "City", width: 200, align: "center",    headerAlign: 'center',
     },
     { field: "zipcode", headerName: "Zipcode", width: 200, align: "center",    headerAlign: 'center',
     },
-    { field: "country", headerName: "Country", width: 100, align: "center",    headerAlign: 'center',
+    { field: "country", headerName: "Country", width: 200, align: "center",    headerAlign: 'center',
       
     },
-    { field: "isNew", headerName: "isNew", width: 100, align: "center",    headerAlign: 'center',
-    },
+    // { field: "isNew", headerName: "isNew", width: 100, align: "center",    headerAlign: 'center',
+    // },
    
     {
       field: "actions",
       headerName: "Actions",
-      width: 200,
+      width: 250,
       align: "center",
       headerAlign: 'center',
 
@@ -200,9 +228,9 @@ const SiteGrid: React.FC = () => {
           <Button
   variant="contained"
   color="primary"
-  style={{ marginRight: 8 , width:'30px',margin:10,position:'relative',float:'right'}}
+  style={{ marginRight: 8 , width:'200px',position:'relative',float:'right',backgroundColor:'#262280'}}
   onClick={() => handleEditNew(true)}
->Add</Button>
+>Add Property</Button>
 
       <FullGrid
         rows={rows}
@@ -212,6 +240,18 @@ const SiteGrid: React.FC = () => {
         // handleEdit={handleEdit}
         // handleDelete={handleDelete}
         // handleAdd={handleAdd}
+      />
+
+<ConfirmationModal
+        show={deleteConfirmation}
+        onHide={cancelDelete}
+        onConfirm={handleConfirmDelete}
+        title="Delete Row"
+        message="Are you sure you want to delete this row?"
+        cancelText="Cancel"
+        confirmText="Delete"
+        cancelVariant="secondary"
+        confirmVariant="danger"
       />
 
       <Dialog open={open} onClose={handleClose}>
@@ -298,3 +338,4 @@ const SiteGrid: React.FC = () => {
 };
 
 export default SiteGrid;
+

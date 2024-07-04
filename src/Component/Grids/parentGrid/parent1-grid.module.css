@@ -1,7 +1,7 @@
 .gridContainer {
     display: flex;
     flex-direction: column;
-    height: 570px !important;
+    height: 480px !important;
     width: 100%;
     /* font-family: 'Public Sans' !important; */
     border: none !important;

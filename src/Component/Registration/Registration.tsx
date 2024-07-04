@@ -335,7 +335,7 @@ const Registration: React.FC = () => {
         }
 
         try {
-            const response = await axiosInstance.post('/auth/register', {
+            await axiosInstance.post('/auth/register', {
                 firstName,
                 lastName,
                 mobileNo,
@@ -347,7 +347,6 @@ const Registration: React.FC = () => {
                 password,
                 inviteToken,
             });
-            console.log('Registration successful:', response.data);
             setValidationSucessMessage('Registration successful!');
             setInviteTokenError('');
 

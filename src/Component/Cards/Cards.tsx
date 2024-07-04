@@ -11,7 +11,7 @@ import { AppDispatch } from "../Redux/store";
 import { Deal as DealFormObjectDeal } from "../Interface/DealFormObject";
 
 interface Deal extends DealFormObjectDeal {
-    updatedAt: string;
+    // updatedAt: string;
     activeStep: number;
     status: string;
     propertyName: string;
@@ -30,20 +30,12 @@ interface Deal extends DealFormObjectDeal {
     id: number | null;
 }
 
-interface DealsData {
-    totalDeals: number;
-    dealsOpened: number;
-    dealsInProgress: number;
-    dealsClosed: number;
-    totalCommission: number;
-    deals: Deal[];
-}
 
 const Cards: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState('');
     const dispatch = useDispatch<AppDispatch>();
-    const dealsData = useSelector((state: RootState) => state.deal.dealDetails as unknown as DealsData);
+    const dealsData = useSelector((state: RootState) => state.deal.dealDetails);
     const [openStepper, setOpenStepper] = useState(false);
     const [dealFormData, setDealFormData] = useState<Deal | null>(null);
 
@@ -60,7 +52,6 @@ const Cards: React.FC = () => {
             ...deal,
             activeStep: deal.activeStep || 0,
         });
-        console.log("card Deal respected value ", deal);
     };
 
     const deleteDealHandler = (dealId: number | null) => {
@@ -95,7 +86,7 @@ const Cards: React.FC = () => {
         setFilterStatus(event.target.value);
     };
 
-    const filteredDeals = dealsData?.deals?.filter((deal: Deal) => {
+    const filteredDeals = dealsData?.filter((deal: Deal) => {
         const matchesSearch = deal.brokerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             deal.propertyName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             deal.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -107,6 +98,8 @@ const Cards: React.FC = () => {
     return (
         <>
             <div className={styles.filterContainer}>
+
+                {/* <div className="bar"> */}
                 <input
                     type="text"
                     placeholder="Search by broker, property name, status, or deal ID"
@@ -120,7 +113,9 @@ const Cards: React.FC = () => {
                     <option value="In-Progress">In-Progress</option>
                     <option value="Completed">Completed</option>
                 </select>
-            </div>
+                </div>
+              
+            {/* </div> */}
             <div className={styles.cardList}>
                 {filteredDeals.map((deal: Deal, index: number) => (
                     <div key={index} className={styles.card}>
@@ -157,7 +152,7 @@ const Cards: React.FC = () => {
                             </div>
                         </div>
                         <div className={styles.timestamp}>
-                            Last updated on: {deal.updatedAt.split('T')[0]}
+                            {/* Last updated on: {deal.updatedAt.split('T')[0]} */}
                         </div>
                         <hr className={`${styles.statuslinecolor} ${getStatusButtonClass(deal.status)}`} />
                     </div>

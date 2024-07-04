@@ -16,8 +16,7 @@ const Main: React.FC = () => {
 
     const fetchDeals = async () => {
         try {
-          const response = await axiosInstance.get("/deals");
-          console.log(response.data);
+          const response = await axiosInstance.get("/deals/dealsData");
           const deal: Deal = {
             totalDeals: response.data.totalDeals,
             dealsOpened: response.data.dealsOpened,
@@ -56,11 +55,11 @@ const Main: React.FC = () => {
                     </React.Fragment>
                 )}
             </div>
-            <br></br>
+            {/* <br></br> */}
             <h1 className={styles.b_title}>
                 Brokers
             </h1>
-            <br></br>
+            {/* <br></br> */}
             <div>
                 <BrokerGrid />
             </div>
