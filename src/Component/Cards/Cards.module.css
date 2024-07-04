@@ -7,14 +7,14 @@
 
 .card {
     background-color: #fff;
-    border-radius: 15px;
+    border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 180px;
-    width: 180px;
+    height: 160px;
+    width: 280px;
     transition: transform 0.3s;
 }
 
@@ -27,9 +27,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
 }
 
+.card .line {
+    border: .01rem solid #e5e7eb;
+    opacity: .5;
+    border-radius: .2rem;
+
+}
 .icons {
     display: flex;
     gap: 0.5rem; /* Add some space between the icons */

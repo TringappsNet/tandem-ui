@@ -130,6 +130,7 @@ const Cards: React.FC = () => {
                                     <FiTrash onClick={() => deleteDealHandler(deal.id)} />
                                 </div>
                             </div>
+                            <hr className={styles.line} />
                             <p className={styles.brokerName}>
                                 <span>Broker Name:</span> {deal.brokerName}
                             </p>
