@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import styles from './Support.module.css';
-import mailImage from './mail.png';  // Ensure this path is correct
+import mailImage from './mail.png';
 
 interface RootState {
     auth: {
@@ -20,8 +20,39 @@ const Support: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const user = useSelector((state: RootState) => state.auth.user);
 
+    useEffect(() => {
+        if (subject.trim() && errorMessage === 'Please fill in the subject') {
+            setErrorMessage('');
+        }
+    }, [subject]);
+
+    useEffect(() => {
+        if (description.trim() && errorMessage === 'Please fill in the description') {
+            setErrorMessage('');
+        }
+    }, [description]);
+
+    const validateForm = (): boolean => {
+        if (!subject.trim()) {
+            setErrorMessage('Please fill in the subject');
+            return false;
+        }
+
+        if (!description.trim()) {
+            setErrorMessage('Please fill in the description');
+            return false;
+        }
+
+        return true;
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
+
         if (!user) {
             setErrorMessage('Please log in to raise a ticket.');
             return;
@@ -55,7 +86,7 @@ const Support: React.FC = () => {
             <div className={styles.imageContainer}>
                 <img src={mailImage} alt="Mail" className={styles.mailImage} />
             </div>
-            <form className={styles.contactForm} onSubmit={handleSubmit}>
+            <form className={styles.contactForm} onSubmit={handleSubmit} noValidate>
                 <h2 className={styles.support}>Contact Us!</h2>
                 {successMessage && (
                     <div className={styles.messageBox + ' ' + styles.successBox}>
@@ -76,7 +107,6 @@ const Support: React.FC = () => {
                         name="subject"
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
-                        required
                     />
                 </div>
                 <div className={styles.formGroup}>
@@ -88,7 +118,6 @@ const Support: React.FC = () => {
                         rows={7}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        required
                     />
                 </div>
                 <button type="submit" disabled={isLoading} className={styles.sendButton}>
