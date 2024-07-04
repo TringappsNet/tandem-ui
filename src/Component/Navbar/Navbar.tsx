@@ -24,10 +24,10 @@ import Support from '../Support/Support';
 // }
 interface NavbarProps {
     links: {
-      disabled: boolean | undefined; name: string; href: string; onClick?: () => void
-  }[];
-  }
-const Navbar: React.FC<NavbarProps> = ({links}) => {
+        disabled: boolean | undefined; name: string; href: string; onClick?: () => void
+    }[];
+}
+const Navbar: React.FC<NavbarProps> = ({ links }) => {
     // const user = useSelector((state: RegisterState) => state.auth.user);
     const dispatch = useDispatch<AppDispatch>();
     const auth: any = localStorage.getItem('auth');
@@ -59,14 +59,14 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
-    const handleRoute= (route:string)=>{
-        if(route==="site"){
+    const handleRoute = (route: string) => {
+        if (route === "site") {
             navigate('/site');
         }
-        else if(route==="landlord"){
+        else if (route === "landlord") {
             navigate('/landlord');
+        }
     }
-}
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -102,7 +102,7 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
     const handlelogoclick = () => {
         navigate('/dashboard');
     };
-    
+
     return (
         <>
             <nav className={styles.navbarcontainer}>
@@ -120,7 +120,7 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
                         <p >CREATE</p>
                     </div>
                     <div className={styles.userdropdown} onClick={toggleDropdown} ref={dropdownRef}>
-                    <p>{userdetails ? `${userdetails.user.firstName} ${userdetails.user.lastName}` : 'Guest'}</p>
+                        <p>{userdetails ? `${userdetails.user.firstName} ${userdetails.user.lastName}` : 'Guest'}</p>
                         <div className={styles.circle}>
                             <p>{userdetails ? userdetails.user.firstName[0] : 'G'}</p>
                         </div>
@@ -129,7 +129,7 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
                                 <button onClick={() => handleOpenPopup('Profile')}>Profile</button>
                                 <button onClick={() => handleOpenPopup('SendInvite')}>Send Invite</button>
                                 <button onClick={() => handleOpenPopup('Reset')}>Reset</button>
-                                <button onClick={() => handleOpenPopup('Support')}>Support</button>
+                                <button onClick={() => handleOpenPopup('Support')}>Contact us</button>
                                 {/* <button onClick={() => handleOpenPopup('Site')}>Site</button> */}
                                 {/* <button onClick={() => handleOpenPopup('Landlord')}>Landlord</button> */}
                                 <button onClick={handleLogout}>Logout</button>
@@ -138,7 +138,9 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
                     </div>
                 </div>
             </nav>
-            <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }}>
+            <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }}
+                maxWidth="lg"
+            >
                 <DialogTitle sx={{ padding: 0 }}>
                     <Icon
                         aria-label="close"
@@ -169,13 +171,13 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
                             <LandlordGrid />
                         </Box>
                     )}
-{selectedComponent === 'Site' && (
-                    <Box sx={{ padding: 1, borderRadius: 1, height: '100%', width: '100%', maxHeight: 'calc(100vh - 64px)', overflow: 'auto' }}>
-                        <br></br>
-                        <h1>Site Details</h1>
-                        <br></br>
-                        < SiteGrid/>
-                    </Box>
+                    {selectedComponent === 'Site' && (
+                        <Box sx={{ padding: 1, borderRadius: 1, height: '100%', width: '100%', maxHeight: 'calc(100vh - 64px)', overflow: 'auto' }}>
+                            <br></br>
+                            <h1>Site Details</h1>
+                            <br></br>
+                            < SiteGrid />
+                        </Box>
                     )}
                 </DialogContent>
             </Dialog>
