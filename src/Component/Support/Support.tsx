@@ -24,13 +24,13 @@ const Support: React.FC = () => {
         if (subject.trim() && errorMessage === 'Please fill in the subject') {
             setErrorMessage('');
         }
-    }, [subject]);
+    }, [subject, errorMessage]);
 
     useEffect(() => {
         if (description.trim() && errorMessage === 'Please fill in the description') {
             setErrorMessage('');
         }
-    }, [description]);
+    }, [description, errorMessage]);
 
     const validateForm = (): boolean => {
         if (!subject.trim()) {
