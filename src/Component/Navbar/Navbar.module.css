@@ -23,11 +23,24 @@
     cursor: pointer;
 }
 
+.headersection p {
+    padding: 5px;
+    font-size: .9rem;   
+    letter-spacing: .15rem;
+}
+
+.headersection p:hover {
+    /* background-color: #333366 ; */
+    border-radius: 3px;
+    color: #AA9AE8;
+}
+
 .header {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     align-content: center;
+    margin-right: 3rem;
 }
 
 .header img {
@@ -37,6 +50,7 @@
 
 .header h3 {
     font-weight: 600;
+    letter-spacing: .1rem;
 }
 
 .header p {
