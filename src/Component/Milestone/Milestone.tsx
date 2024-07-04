@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from '../Redux/store/index';
-import { setDealDetails, updateDealDetails } from '../Redux/slice/dealSlice';
+import { setDealDetails } from '../Redux/slice/dealSlice';
 import { Deal } from '../Interface/DealFormObject';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { Stepper, Step, StepLabel, Button, Typography, MenuItem, TextField, Box, StepConnector } from '@mui/material';
@@ -51,7 +51,6 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
             const response = await axiosInstance.get('/sites');
             const sitename = response.data.map((sites: any) => `${sites.addressline1}, ${sites.addressline2}`);
             setPropertyOptions(sitename);
-            console.log("Site Names", sitename);
         } catch (error) {
             console.error('Error fetching broker names:', error);
         }
@@ -114,11 +113,7 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
         };
     
         try {
-            if (formData.id) {
-                dispatch(updateDealDetails(payload));
-            } else {
-                dispatch(setDealDetails(payload));
-            }
+            dispatch(setDealDetails(payload));
             setSaveSuccess(true);
         } catch (error) {
             console.error('Error saving form data:', error);

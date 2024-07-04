@@ -83,12 +83,10 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
             const dealtemp = dealDetails[0];
             if (dealtemp.isNew && isFirstSave) {
                 await dispatch(createNewDeal(dealtemp));
-                console.log('Form data saved:', dealtemp);
                 setIsFirstSave(false);
                 return
             }
             await dispatch(updateDealDetails(dealtemp));
-            console.log('Form data saved for put:', dealtemp);
             setIsFirstSave(true);
         } catch (error) {
             console.error('Error saving form data:', error);
@@ -169,7 +167,7 @@ const Navbar: React.FC<NavbarProps> = ({links}) => {
                             <LandlordGrid />
                         </Box>
                     )}
-{selectedComponent === 'Site' && (
+            {selectedComponent === 'Site' && (
                     <Box sx={{ padding: 1, borderRadius: 1, height: '100%', width: '100%', maxHeight: 'calc(100vh - 64px)', overflow: 'auto' }}>
                         <br></br>
                         <h1>Site Details</h1>

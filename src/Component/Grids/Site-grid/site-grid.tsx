@@ -113,8 +113,6 @@ const SiteGrid: React.FC = () => {
         const updateBy:any = localStorage.getItem('auth');
     const user_id = JSON.parse(updateBy);
 
-    console.log("User Id", user_id.user.id);
-
         if (updateBy) { 
             
 

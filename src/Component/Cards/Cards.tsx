@@ -29,20 +29,12 @@ interface Deal extends DealFormObjectDeal {
     id: number | null;
 }
 
-interface DealsData {
-    totalDeals: number;
-    dealsOpened: number;
-    dealsInProgress: number;
-    dealsClosed: number;
-    totalCommission: number;
-    deals: Deal[];
-}
 
 const Cards: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState('');
     const dispatch = useDispatch<AppDispatch>();
-    const dealsData = useSelector((state: RootState) => state.deal.dealDetails as unknown as DealsData);
+    const dealsData = useSelector((state: RootState) => state.deal.dealDetails);
     const [openStepper, setOpenStepper] = useState(false);
     const [dealFormData, setDealFormData] = useState<Deal | null>(null);
 
@@ -59,7 +51,6 @@ const Cards: React.FC = () => {
             ...deal,
             activeStep: deal.activeStep || 0,
         });
-        console.log("card Deal respected value ", deal);
     };
 
     const   deleteDealHandler = (dealId: number | null) => {
@@ -94,7 +85,7 @@ const Cards: React.FC = () => {
         setFilterStatus(event.target.value);
     };
 
-    const filteredDeals = dealsData?.deals?.filter((deal: Deal) => {
+    const filteredDeals = dealsData?.filter((deal: Deal) => {
         const matchesSearch = deal.brokerName?.toLowerCase().includes(searchTerm.toLowerCase()) || deal.propertyName?.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesStatus = filterStatus ? deal.status === filterStatus : true;
         return matchesSearch && matchesStatus;
