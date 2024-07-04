@@ -94,6 +94,8 @@ const Cards: React.FC = () => {
     return (
         <>
             <div className={styles.filterContainer}>
+
+                {/* <div className="bar"> */}
                 <input
                     type="text"
                     placeholder="Search by broker or property name"
@@ -107,7 +109,9 @@ const Cards: React.FC = () => {
                     <option value="In-Progress">In-Progress</option>
                     <option value="Completed">Completed</option>
                 </select>
-            </div>
+                </div>
+              
+            {/* </div> */}
             <div className={styles.cardList}>
                 {filteredDeals.map((deal: Deal, index: number) => (
                     <div key={index} className={styles.card}>

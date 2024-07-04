@@ -228,7 +228,7 @@ const handleDelete = async (id: number) => {
           <Button
   variant="contained"
   color="primary"
-  style={{ marginRight: 8 , width:'150px',margin:10,position:'relative',float:'right'}}
+  style={{ marginRight: 8 , width:'200px',position:'relative',float:'right',backgroundColor:'#262280'}}
   onClick={() => handleEditNew(true)}
 >Add Property</Button>
 
@@ -338,3 +338,4 @@ const handleDelete = async (id: number) => {
 };
 
 export default SiteGrid;
+
