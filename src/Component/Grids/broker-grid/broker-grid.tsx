@@ -9,11 +9,11 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
-import FullGrid from "../parentGrid/parent-grid";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 
 
-import styles from "./broker-grid.module.css";
+// import styles from "./broker-grid.module.css";
+import FullGrid1 from "../parentGrid/parent-grid1";
 
 interface User {
   id: number;
@@ -148,11 +148,11 @@ const BrokerGrid: React.FC = () => {
   ];
 
   return (
-    <div className={styles.gridContainer}>
+    <div >
 
 
-      <FullGrid
-       className={styles.FullGrid}
+      <FullGrid1
+      //  className={styles.FullGrid1}
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}
@@ -265,3 +265,5 @@ const BrokerGrid: React.FC = () => {
 };
 
 export default BrokerGrid;
+
+

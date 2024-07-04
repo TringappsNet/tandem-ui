@@ -83,11 +83,16 @@
 
 .filterContainer {
     box-sizing: border-box;
-    height: 35px;
+    height: 70px;
     display: flex;
-    margin: 10px;
+    margin: 1px;
     gap: 2rem;
+    padding: 15px;
+    background-color: #f8f7ff;
+    border-radius: 5px;
 }
+
+
 
 .filterContainer input,
 .filterContainer select {

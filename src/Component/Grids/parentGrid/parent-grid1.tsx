@@ -1,10 +1,10 @@
 import React from "react";
 import { DataGrid, GridColDef, GridPaginationModel } from "@mui/x-data-grid";
-import styles from "./parent-grid.module.css";
+import styles from "./parent1-grid.module.css";
 import Box from '@mui/material/Box';
 
 
-interface FullGridProps {
+interface FullGrid1Props {
   rows: any[];
   columns: GridColDef[];
   paginationModel: GridPaginationModel;
@@ -22,7 +22,7 @@ interface FullGridProps {
 
 
 
-const FullGrid: React.FC<FullGridProps> = ({
+const FullGrid1: React.FC<FullGrid1Props> = ({
   rows,
   columns,
   paginationModel,
@@ -38,7 +38,7 @@ const FullGrid: React.FC<FullGridProps> = ({
       <Box
         sx={{
                 
-                height: 800,
+                height: 470,
                 marginTop:2,
                 background:'none',
                 border: 0,
@@ -119,4 +119,4 @@ const FullGrid: React.FC<FullGridProps> = ({
   );
 };
 
-export default FullGrid;
+export default FullGrid1;

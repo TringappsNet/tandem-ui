@@ -163,7 +163,7 @@ const LandlordGrid: React.FC = () => {
   const columns: GridColDef[] = [
     { field: "name", headerName: "Name", width: 150, align: "center",headerAlign: 'center' },
     { field: "phoneNumber", headerName: "Phone Number", width: 150, align: "center",headerAlign: 'center' },
-    { field: "email", headerName: "Email", width: 200, align: "center",headerAlign: 'center'},
+    { field: "email", headerName: "Email", width: 180, align: "center",headerAlign: 'center'},
     {
       field: "address",
       headerName: "Address",
@@ -176,20 +176,20 @@ const LandlordGrid: React.FC = () => {
         </>
       ),
     },
-    { field: "city", headerName: "City", width: 100, align: "center",headerAlign: 'center' },
+    { field: "city", headerName: "City", width: 160, align: "center",headerAlign: 'center' },
     { field: "state", headerName: "State", width: 100, align: "center",headerAlign: 'center' },
-    { field: "country", headerName: "Country", width: 100, align: "center",headerAlign: 'center' },
-    { field: "zipcode", headerName: "Zipcode", width: 100, align: "center",headerAlign: 'center' },
+    { field: "country", headerName: "Country", width: 130, align: "center",headerAlign: 'center' },
+    { field: "zipcode", headerName: "Zipcode", width: 130, align: "center",headerAlign: 'center' },
     {
       field: "actions",
       headerName: "Actions",
-      width: 270,
+      width: 200,
       align: "center",
       headerAlign: 'center',
       renderCell: (params) => (
         <>
         <MdEdit
-          style={{ color: 'blue', marginRight: 8, cursor: 'pointer' }}
+          style={{ color: 'blue', marginRight: 28, cursor: 'pointer' }}
           onClick={() => handleEdit(params.row.id)}
         />
         <MdDelete
@@ -207,13 +207,13 @@ const LandlordGrid: React.FC = () => {
             variant="contained"
             color="primary"
 
-            style={{ marginRight: 8 , width:'150px',
-              marginBottom:'10px',
-              position:'relative',float:'right'}}
+            style={{ marginRight: 8 , width:'200px',
+             
+              position:'relative',float:'right',backgroundColor:'#262280'}}
             onClick={() => handleEditNew(true)}
           >Add landlord </Button>
       <FullGrid
-      
+        
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}
