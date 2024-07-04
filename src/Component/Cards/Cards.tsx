@@ -11,6 +11,7 @@ import { AppDispatch } from "../Redux/store";
 import { Deal as DealFormObjectDeal } from "../Interface/DealFormObject";
 
 interface Deal extends DealFormObjectDeal {
+    updatedAt: string;
     activeStep: number;
     status: string;
     propertyName: string;
@@ -62,12 +63,12 @@ const Cards: React.FC = () => {
         console.log("card Deal respected value ", deal);
     };
 
-    const   deleteDealHandler = (dealId: number | null) => {
+    const deleteDealHandler = (dealId: number | null) => {
         if (dealId !== null) {
-          dispatch(deleteDeal(dealId));
+            dispatch(deleteDeal(dealId));
         }
-      };
-      
+    };
+
     const getStatusButtonClass = (status: string | null) => {
         switch (status) {
             case "Completed":
@@ -95,7 +96,10 @@ const Cards: React.FC = () => {
     };
 
     const filteredDeals = dealsData?.deals?.filter((deal: Deal) => {
-        const matchesSearch = deal.brokerName?.toLowerCase().includes(searchTerm.toLowerCase()) || deal.propertyName?.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesSearch = deal.brokerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            deal.propertyName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            deal.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            deal.id?.toString().includes(searchTerm);
         const matchesStatus = filterStatus ? deal.status === filterStatus : true;
         return matchesSearch && matchesStatus;
     }) || [];
@@ -105,7 +109,7 @@ const Cards: React.FC = () => {
             <div className={styles.filterContainer}>
                 <input
                     type="text"
-                    placeholder="Search by broker or property name"
+                    placeholder="Search by broker, property name, status, or deal ID"
                     value={searchTerm}
                     onChange={handleSearchChange}
                     className={styles.searchInput}
@@ -121,7 +125,7 @@ const Cards: React.FC = () => {
                 {filteredDeals.map((deal: Deal, index: number) => (
                     <div key={index} className={styles.card}>
                         <div>
-                        <div className={styles.cardTitle}>
+                            <div className={styles.cardTitle}>
                                 Deal #{deal.id}
                                 <div className={styles.icons}>
                                     <div className={styles.hide}>
@@ -131,19 +135,33 @@ const Cards: React.FC = () => {
                                 </div>
                             </div>
                             <hr className={styles.line} />
-                            <p className={styles.brokerName}>
-                                <span>Broker Name:</span> {deal.brokerName}
-                            </p>
-                        </div>
-                        <div className={styles.statusLine}>
-                            <div className={styles.statusLabel}>Status:</div>
-                            <div className={`${styles.statusButton} ${getStatusButtonClass(deal.status)}`}>
-                                {deal.status}
+                            <div className={styles.nameHeader}>
+                                <div className={styles.name}>
+                                    <span>Broker &nbsp; &nbsp; &nbsp; </span>:&nbsp;  {deal.brokerName}
+                                </div>
+                                <div className={styles.name}>
+                                    <span>Property &nbsp; </span>:&nbsp;  {deal.propertyName}
+                                </div>
                             </div>
                         </div>
+                        <div className={styles.statusLine}>
+                            <div className={styles.statuscontainer}>
+                                <div className={styles.statusLabel}>Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</div>
+                                <div className={`${styles.statusButton} ${getStatusButtonClass(deal.status)}`}>
+                                    {deal.status}
+                                </div>
+                            </div>
+
+                            <div className={styles.circle}>
+                                <p>{deal.brokerName[0]}{deal.brokerName[1]}</p>
+                            </div>
+                        </div>
+                        <div className={styles.timestamp}>
+                            Last updated on: {deal.updatedAt.split('T')[0]}
+                        </div>
+                        <hr className={`${styles.statuslinecolor} ${getStatusButtonClass(deal.status)}`} />
                     </div>
                 ))}
-
             </div>
 
             <Dialog

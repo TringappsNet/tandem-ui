@@ -13,9 +13,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 160px;
-    width: 280px;
+    /* height: 180px; */
+    width: 260px;
     transition: transform 0.3s;
+    gap: 14px 0;
 }
 
 .card:hover {
@@ -31,60 +32,94 @@
 }
 
 .card .line {
-    border: .01rem solid #e5e7eb;
-    opacity: .5;
-    border-radius: .2rem;
-
+    border: 1px solid #c0c1c5;
+    opacity: .3;
+    border-radius: .02rem;
+    margin-bottom: .7rem;
 }
+
 .icons {
     display: flex;
-    gap: 0.5rem; /* Add some space between the icons */
+    gap: 0.5rem;
+    /* Add some space between the icons */
 }
 
 .hide {
     display: none;
 }
 
-.card:hover .hide {
+.card:hover .hide{
+    display: block;
+}
+.card:hover .statuslinecolor{
     display: block;
 }
 
 .statusLine {
     display: flex;
-    gap: 1rem;
+    gap: .5rem;
     height: 1.2rem;
     width: 100%;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 
-.brokerName {
-    display: inline !important;
-    font-size: 13px;
-    height: 100%;
+.statusLine .statuscontainer{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    gap: .3rem;
+    font-size: 12px;
+}
+
+.nameHeader {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    gap: .5rem 0;
+    letter-spacing: .001rem;
+}
+
+.statusLine .circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 2rem;
+    border: 1px solid #b1b1b1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    color: #000;
+    font-size: 10px;
 }
 
 .statusButton {
     height: 100%;
-    width: 5rem;
+    width: 5.5rem;
     border-radius: 3px;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 500;
     color: #fff;
     text-align: center;
     align-content: center;
+    line-height: .95rem;
 }
 
 .statusButtonFinished {
     background-color: #00b206;
+    border-color: #00b206 !important;
 }
 
 .statusButtonInProgress {
     background-color: #fbc103;
+    border-color: #fbc103 !important;
+
 }
 
 .statusButtonStarted {
     background-color: #262262;
+    border-color: #262262 !important;
+
 }
 
 .filterContainer {
@@ -105,7 +140,7 @@
 }
 
 .filterContainer input {
-    width: 25%;
+    width: 28%;
 }
 
 .filterContainer select {
@@ -122,4 +157,17 @@
     outline: 2px solid #0000;
     outline-offset: 2px;
     border-color: #262262;
+}
+
+
+.timestamp {
+    font-size: 8px;
+    display: flex;
+    justify-content: flex-end;
+    letter-spacing: .04rem;
+}
+
+.statuslinecolor {
+    display: none;
+    border: 2px solid;
 }
