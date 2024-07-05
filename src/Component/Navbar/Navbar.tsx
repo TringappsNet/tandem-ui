@@ -102,7 +102,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             DEALS
           </p>
           <p onClick={() => handleRoute("site")} style={{ cursor: "pointer" }}>
-            SITE
+            PROPERTY
           </p>
           <p
             onClick={() => handleRoute("landlord")}
