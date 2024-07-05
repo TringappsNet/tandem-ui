@@ -12,7 +12,7 @@ import { AppDispatch } from "../Redux/store/index";
 import { RootState } from "../Redux/reducers";
 import Profile from "../Profile/profile";
 import Support from "../Support/Support";
-import DealForm from "../Milestone/dealForm";
+import DealForm from "../DealForm/dealForm";
 import { openDealForm } from "../Redux/slice/deal/dealFormSlice";
 
 interface NavbarProps {
