@@ -92,7 +92,7 @@ const Cards: React.FC = () => {
             deal.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             deal.id?.toString().includes(searchTerm);
         const matchesStatus = filterStatus ? deal.status === filterStatus : true;
-        return matchesSearch && matchesStatus;
+        return matchesSearch && matchesStatus && deal.id !== null;
     }) || [];
 
     return (
