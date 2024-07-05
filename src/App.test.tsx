@@ -10,6 +10,8 @@ import Milestone from './Component/Milestone/Milestone';
 import Dashboard from './Component/NewDashboard/Dashboard';
 import Support from './Component/Support/Support';
 import store from './Component/Redux/store';
+import '@testing-library/jest-dom';
+
 
 jest.mock('axios', () => {
   return {

@@ -6,6 +6,7 @@ import store from '../Redux/store';
 import Cards from '../Cards/Cards';
 import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
 import SiteGrid from '../Grids/Site-grid/site-grid';
+import '@testing-library/jest-dom';
 
 jest.mock('../AxiosInterceptor/AxiosInterceptor', () => ({
 }));
