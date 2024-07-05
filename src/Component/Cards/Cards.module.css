@@ -12,17 +12,15 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    height: 190px;
+    height: 180px;
     width: 269px;
     transition: transform 0.3s;
     gap: 14px 0;
     color: #000000;
-    justify-content: center;
 }
 
 .card:hover {
-    transform: translateY(-8px);
-    
+    transform: translateY(-10px);
 }
 
 .cardTitle {
@@ -54,6 +52,7 @@
 }
 .card:hover .statuslinecolor{
     display: block;
+    gap: 0 !important;
 }
 
 .statusLine {
