@@ -27,6 +27,7 @@ import styles from "./dealForm.module.css";
 import { RootState } from "../Redux/reducers";
 import { closeDealForm } from "../Redux/slice/deal/dealFormSlice";
 import { AppDispatch } from "../Redux/store/index";
+import { clearCurrentDeal, setCurrentDeal } from "../Redux/slice/deal/currentDeal";
 
 const steps = [
   {
@@ -91,8 +92,9 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
   const [userId, setUserId] = useState<number | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [isFirstSave, setIsFirstSave] = useState(true);
-  const [savedDeal, setSavedDeal] = useState<Deal | null>(null); // New state to store the saved deal
+  const [savedDeal, setSavedDeal] = useState<Deal | null>(null); 
   const dealDetails = useSelector((state: RootState) => state.deal.dealDetails);
+  const currentDeal = useSelector((state: RootState) => state.currentDeal.currentDeal);
 
   const fetchSite = async () => {
     try {
@@ -165,8 +167,8 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
     };
 
     try {
-      dispatch(setDealDetails(payload));
-      setSavedDeal(payload); // Save the deal in the local state
+      dispatch(setCurrentDeal(payload));
+      setSavedDeal(payload);
       setSaveSuccess(true);
     } catch (error) {
       console.error("Error saving form data:", error);
@@ -176,22 +178,19 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
 
   const dispatchFormDataOnClose = async () => {
     try {
-      if (savedDeal) { // Use the saved deal from the local state
-        if (savedDeal.isNew && isFirstSave) {
-          await dispatch(createNewDeal(savedDeal));
+      if (currentDeal) {
+        if (currentDeal.isNew && isFirstSave) {
+          await dispatch(createNewDeal(currentDeal));
           setIsFirstSave(false);
         } else {
-          const dealToUpdate = dealDetails.find(
-            (deal) => deal.id === savedDeal.id
-          );
-          if (dealToUpdate) {
-            await dispatch(updateDealDetails(dealToUpdate));
-          }
+
+            await dispatch(updateDealDetails(currentDeal));
+            dispatch(clearCurrentDeal());
           setIsFirstSave(true);
         }
       }
     } catch (error) {
-      console.error("Error saving form data:", error);
+      console.error('Error saving form data:', error);
     }
   };
 
