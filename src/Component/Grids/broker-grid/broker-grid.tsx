@@ -137,14 +137,14 @@ const BrokerGrid: React.FC = () => {
   // };
 
   const columns: GridColDef[] = [
-    { field: "fullName", headerName: "Name", width: 170, align: "center", headerAlign: "center" },
-    { field: "mobile", headerName: "Mobile", width: 170, align: "center", headerAlign: "center" },
-    { field: "totalDeals", headerName: "Total Deals", width: 170, align: "center", headerAlign: "center" },
-    { field: "dealsOpened", headerName: "Deals Opened", width: 170, align: "center", headerAlign: "center" },
-    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 170, align: "center", headerAlign: "center" },
-    { field: "dealsClosed", headerName: "Deals Closed", width: 170, align: "center", headerAlign: "center" },
-    { field: "totalCommission", headerName: "Total Commission", width: 170, align: "center", headerAlign: "center" },
-    // { field: "isActive", headerName: "Active", width: 170, align: "center", headerAlign: "center" },
+    { field: "fullName", headerName: "Name", width: 200, align: "center", headerAlign: "center" },
+    { field: "mobile", headerName: "Mobile", width: 200, align: "center", headerAlign: "center" },
+    { field: "totalDeals", headerName: "Total Deals", width: 200, align: "center", headerAlign: "center" },
+    { field: "dealsOpened", headerName: "Deals Opened", width: 200, align: "center", headerAlign: "center" },
+    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 200, align: "center", headerAlign: "center" },
+    { field: "dealsClosed", headerName: "Deals Closed", width: 200, align: "center", headerAlign: "center" },
+    { field: "totalCommission", headerName: "Total Commission", width: 200, align: "center", headerAlign: "center" },
+    // { field: "isActive", headerName: "Active", width: 200, align: "center", headerAlign: "center" },
   ];
 
   return (

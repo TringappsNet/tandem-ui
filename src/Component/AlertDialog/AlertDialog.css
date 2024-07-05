@@ -93,12 +93,12 @@
   }
   
   .cancel{
-    background-color: rgb(139, 139, 141);
+    background-color: red;
     color: white;
     border: none;
   }
   .confirm{
-    background-color: rgb(118, 122, 220);
+    background-color: rgb(33, 140, 33);
     color: white;
     border: none;
   }

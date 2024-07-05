@@ -190,7 +190,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                 }}
                 className={styles.popupmain}
             >
-                <DialogTitle sx={{ backgroundColor: '#262262', color: 'white',height:'40px',padding:'6px 24px' }}>
+                <DialogTitle sx={{ backgroundColor: '#262262', color: 'white' }}>
                     Deal Form
                     <IconButton
                         aria-label="close"
@@ -203,17 +203,12 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                             right: 25,
                             top: 8,
                             width: 40,
-                            margin: '-7px',
-                            // paddingBottom:'16px ',
                             color: (theme) => theme.palette.grey[500],
                         }}
                     >
-                        <CloseIcon sx={{ color: '#999',  }} />
+                        <CloseIcon sx={{ color: '#999' }} />
                     </IconButton>
                 </DialogTitle>
-
-
-
                 <DialogContent>
                     <CreateDeal />
                 </DialogContent>

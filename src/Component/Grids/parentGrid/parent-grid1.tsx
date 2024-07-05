@@ -38,7 +38,7 @@ const FullGrid1: React.FC<FullGrid1Props> = ({
       <Box
         sx={{
                 
-                height: 700,
+                height: 470,
                 marginTop:2,
                 background:'none',
                 border: 0,

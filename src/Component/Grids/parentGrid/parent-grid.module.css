@@ -1,7 +1,7 @@
 .gridContainer {
     display: flex;
     flex-direction: column;
-    height: 470px !important;
+    height: 570px !important;
     width: 100%;
     /* font-family: 'Public Sans' !important; */
     border: none !important;
@@ -11,7 +11,7 @@
     /* flex-grow: 1; */
     background-color: #f8f9fa;
     /* height: 100%;  */
-
+   
 }
 
 .dataGrid .MuiDataGrid-footerContainer {
