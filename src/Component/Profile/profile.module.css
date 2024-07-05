@@ -75,10 +75,12 @@ html {
 
 .profileBlock:hover {
     background-color: #e7e5e5;
+    outline: none;
+    box-shadow: 0 0 5px rgba(45, 12, 150, 0.5);
 }
 
 .profileItem {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     display: flex;
     padding: 8px;
     font-family: 'Public Sans', sans-serif;
