@@ -10,3 +10,7 @@
     border-top: 1px solid grey !important;
     
 }
+
+.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root{
+    height: 50px !important;
+}

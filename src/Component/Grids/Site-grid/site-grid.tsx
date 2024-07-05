@@ -4,6 +4,7 @@ import {
   TextField,
   Dialog,
   DialogActions,
+  DialogTitle,
   DialogContent,
   
 } from "@mui/material";
@@ -224,25 +225,23 @@ const SiteGrid: React.FC = () => {
     {
       field: "address",
       headerName: "Address",
-      width: 400,
-      align: "center",
-      headerAlign: "center",
+      width: 300,
+      
       renderCell: (params) => (
         <>
           {params.row.addressline1} {params.row.addressline2}
         </>
       ),
     },
-    { field: "state", headerName: "State", width: 150, align: "center", headerAlign: 'center' },
-    { field: "city", headerName: "City", width: 150, align: "center", headerAlign: 'center' },
-    { field: "zipcode", headerName: "Zipcode", width: 150, align: "center", headerAlign: 'center' },
-    { field: "country", headerName: "Country", width: 150, align: "center", headerAlign: 'center' },
+    { field: "state", headerName: "State", width: 150 },
+    { field: "city", headerName: "City", width: 150 },
+    { field: "zipcode", headerName: "Zipcode", width: 150 },
+    { field: "country", headerName: "Country", width: 150 },
     {
       field: "actions",
       headerName: "Actions",
       width: 150,
-      align: "center",
-      headerAlign: 'center',
+
       renderCell: (params) => (
         <>
           <MdEdit
@@ -321,7 +320,7 @@ const SiteGrid: React.FC = () => {
       //   }
       // }}
       >
-        {/* <DialogTitle className="dialogtitle">{formData.id ? "Edit Site" : "Add Site"}</DialogTitle> */}
+        <DialogTitle className="dialogtitle">{formData.id ? "Edit Site" : "Add Site"}</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -383,7 +382,7 @@ const SiteGrid: React.FC = () => {
             margin="dense"
             name="zipcode"
             label="Zipcode"
-            type="text"
+            type="number"
             fullWidth
             value={formData.zipcode}
             onChange={handleChange}
