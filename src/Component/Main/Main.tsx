@@ -61,7 +61,8 @@ const Main: React.FC = () => {
             </h1>
             {/* <br></br> */}
             <div>
-                <BrokerGrid />
+                
+                <BrokerGrid  />
             </div>
         </>
     );
