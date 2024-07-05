@@ -84,6 +84,12 @@ const Login: React.FC = () => {
       setShowSuccessMessage(false);
       setShowFailureMessage(true);
       }
+      if (error.response && error.response.status === 500) {
+        // let message = 'Incorrect Email or Password. Please try again.';
+      setValidationErrorMessage(error.response.data.message);
+      setShowSuccessMessage(false);
+      setShowFailureMessage(true);
+      }
     } finally {
       setIsLoading(false);
     }
