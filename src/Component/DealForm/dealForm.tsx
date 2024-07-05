@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setDealDetails,
   createNewDeal,
   updateDealDetails,
 } from "../Redux/slice/deal/dealSlice";
@@ -92,8 +91,6 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
   const [userId, setUserId] = useState<number | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [isFirstSave, setIsFirstSave] = useState(true);
-  const [savedDeal, setSavedDeal] = useState<Deal | null>(null); 
-  const dealDetails = useSelector((state: RootState) => state.deal.dealDetails);
   const currentDeal = useSelector((state: RootState) => state.currentDeal.currentDeal);
 
   const fetchSite = async () => {
@@ -168,7 +165,6 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
 
     try {
       dispatch(setCurrentDeal(payload));
-      setSavedDeal(payload);
       setSaveSuccess(true);
     } catch (error) {
       console.error("Error saving form data:", error);
