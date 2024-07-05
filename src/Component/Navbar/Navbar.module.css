@@ -165,3 +165,8 @@
     margin: 0 3px;
     width: 96%;
 }
+
+.saveclose{
+    padding: 10px;
+    height: 24px !important;
+}

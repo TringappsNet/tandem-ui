@@ -1,4 +1,4 @@
-import { DataGrid, GridColDef, GridPaginationModel } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridPaginationModel,GridToolbar  } from "@mui/x-data-grid";
 import styles from "./parent-grid.module.css";
 import Box from '@mui/material/Box';
 
@@ -52,6 +52,12 @@ const FullGrid: React.FC<FullGridProps> = ({
                 border: 0,
                 ...sx,
                 lineHeight:2,
+                '.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root':{
+                     color:'white',
+                     '&:hover':{
+                      color:'white',
+                      }
+                  },
                '.css-yrdy0g-MuiDataGrid-columnHeaderRow ':{
                 background: '#444189 !important',
                 color:'white'
@@ -73,6 +79,7 @@ const FullGrid: React.FC<FullGridProps> = ({
   background: '#f5f7fb !important'
 
  },
+ 
 
                 '& .super-app-theme--header': {
                   backgroundColor: 'rgba(255, 7, 0, 0.55)',
@@ -87,6 +94,12 @@ const FullGrid: React.FC<FullGridProps> = ({
 
                 }
                 ,
+
+                '.css-1knaqv7-MuiButtonBase-root-MuiButton-root':{
+                  visibility:'hidden',
+                  marginBottom:2,
+                  
+                },
                           "& .MuiDataGrid-row": {
           "&:nth-of-type(2n)": {
           backgroundColor: " #EBF0F4 ",
@@ -96,7 +109,7 @@ const FullGrid: React.FC<FullGridProps> = ({
 
         ".css-yrdy0g-MuiDataGrid-columnHeaderRow": {
           backgroundColor: "#0078d4 !important",
-        }
+        } 
 
           },
           }
@@ -113,6 +126,17 @@ const FullGrid: React.FC<FullGridProps> = ({
         onPaginationModelChange={setPaginationModel}
         rowHeight={34}
         columnHeaderHeight={39}
+        disableColumnFilter
+        disableColumnMenu
+        slots={{ toolbar: GridToolbar }}
+        slotProps={{
+          toolbar: {
+            
+            showQuickFilter: true,
+          
+          },
+        }}
+
       />
 
       </Box>

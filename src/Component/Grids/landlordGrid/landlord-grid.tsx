@@ -5,6 +5,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogTitle
 } from "@mui/material";
 import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
 import styles from "./landlord-grid.module.css";
@@ -154,31 +155,31 @@ const LandlordGrid: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Name", width: 120, align: "center", headerAlign: 'center' },
-    { field: "phoneNumber", headerName: "Phone Number", width: 120, align: "center", headerAlign: 'center' },
-    { field: "email", headerName: "Email", width: 180, align: "center", headerAlign: 'center' },
+    { field: "name", headerName: "Name", width: 120 },
+    { field: "phoneNumber", headerName: "Phone Number", width: 150 },
+    { field: "email", headerName: "Email", width: 180 },
     {
       field: "address",
       headerName: "Address",
       width: 200,
-      align: "center",
-      headerAlign: "center",
+      // align: "center",
+      // headerAlign: "center",
       renderCell: (params) => (
         <>
           {params.row.address1} {params.row.address2}
         </>
       ),
     },
-    { field: "city", headerName: "City", width: 100, align: "center", headerAlign: 'center' },
-    { field: "state", headerName: "State", width: 100, align: "center", headerAlign: 'center' },
-    { field: "country", headerName: "Country", width: 100, align: "center", headerAlign: 'center' },
-    { field: "zipcode", headerName: "Zipcode", width: 100, align: "center", headerAlign: 'center' },
+    { field: "city", headerName: "City", width: 100 },
+    { field: "state", headerName: "State", width: 100 },
+    { field: "country", headerName: "Country", width: 80 },
+    { field: "zipcode", headerName: "Zipcode", width: 100 },
     {
       field: "actions",
       headerName: "Actions",
       width: 200,
-      align: "center",
-      headerAlign: 'center',
+      // align: "center",
+      // headerAlign: 'center',
       renderCell: (params) => (
         <>
           <MdEdit
@@ -294,7 +295,7 @@ const LandlordGrid: React.FC = () => {
       />
 
       <Dialog open={open} onClose={handleClose}>
-        {/* <DialogTitle>{formData.id ? "Edit Landlord" : "Add Landlord"}</DialogTitle> */}
+        <DialogTitle>{formData.id ? "Edit Landlord" : "Add Landlord"}</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -312,7 +313,7 @@ const LandlordGrid: React.FC = () => {
             margin="dense"
             name="phoneNumber"
             label="Phone Number"
-            type="text"
+            type="number"
             fullWidth
             value={formData.phoneNumber}
             onChange={handleChange}
@@ -387,7 +388,7 @@ const LandlordGrid: React.FC = () => {
             margin="dense"
             name="zipcode"
             label="Zipcode"
-            type="text"
+            type="number"
             fullWidth
             value={formData.zipcode}
             onChange={handleChange}
