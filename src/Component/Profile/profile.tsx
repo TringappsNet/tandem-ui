@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import styles from './profile.module.css';
-
+import { RootState } from "../Redux/reducers";
 interface ProfileItem {
     label: string;
     value: string | number;
@@ -14,12 +15,12 @@ interface Role {
 
 const Profile: React.FC = () => {
     const [profileData, setProfileData] = useState<ProfileItem[] | null>(null);
+    const user = useSelector((state: RootState) => state.auth.user);
+    console.log(user);
 
     useEffect(() => {
         const fetchProfileData = async () => {
-            const storedUserData = localStorage.getItem('auth');
-            if (storedUserData) {
-                const { user } = JSON.parse(storedUserData);
+            if (user) {
                 try {
                     const response = await axios.get('http://192.168.1.223:3008/api/roles');
                     const roles: Role[] = response.data.map((role: any) => ({
@@ -45,7 +46,7 @@ const Profile: React.FC = () => {
             }
         };
         fetchProfileData();
-    }, []);
+    }, [user]);
 
     if (!profileData) {
         return <div>No User found</div>;

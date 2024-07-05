@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route ,Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Cards from "../Cards/Cards";
 import styles from "./Dashboard.module.css";
@@ -24,24 +24,24 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <div className={styles.dashboardContainer}>
-        <Navbar 
-                links={links}
+        <Navbar
+          links={links}
 
-/>
+        />
         <div className={styles.mainContent}>
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/cards" element={<Cards />} />
-            <Route path="/site" element={<SiteGrid /> } />
-            <Route path="/landlord" element={<LandlordGrid /> }/>
-            <Route path="*" element={<Navigate to="/dashboard" />} 
-           />
+            <Route path="/site" element={<SiteGrid />} />
+            <Route path="/landlord" element={<LandlordGrid />} />
+            <Route path="*" element={<Navigate to="/dashboard" />}
+            />
           </Routes>
         </div>
-        </div>
-      </>
+      </div>
+    </>
 
-      );
+  );
 
 };
 
