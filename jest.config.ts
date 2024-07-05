@@ -5,7 +5,7 @@ const config: Config.InitialOptions = {
   testEnvironment: 'node',
   coverageReporters: ['text', 'lcov', 'clover'],
   collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.tsx'],
+  collectCoverageFrom: ["src/**/*.{ts,tsx}"],
 };
 
 export default config;
