@@ -1,62 +1,43 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Cards.module.css";
 import { FiEdit, FiTrash } from "react-icons/fi";
-import DealForm from "../Milestone/Milestone";
+import DealForm from "../Milestone/dealForm";
 import { Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/reducers";
-import { deleteDeal, fetchDealDetails } from "../Redux/slice/dealSlice";
+import { deleteDeal, fetchDealDetails } from "../Redux/slice/deal/dealSlice";
+import { openDealForm, closeDealForm } from "../Redux/slice/deal/dealFormSlice";
 import { AppDispatch } from "../Redux/store";
-import { Deal as DealFormObjectDeal } from "../Interface/DealFormObject";
-
-interface Deal extends DealFormObjectDeal {
-    // updatedAt: string;
-    activeStep: number;
-    status: string;
-    propertyName: string;
-    brokerName: string;
-    dealStartDate: string;
-    proposalDate: string;
-    loiExecuteDate: string;
-    leaseSignedDate: string;
-    noticeToProceedDate: string;
-    commercialOperationDate: string;
-    potentialcommissiondate: string;
-    potentialCommission: number | null;
-    createdBy: number;
-    updatedBy: number;  
-    isNew: boolean;
-    id: number | null;
-}
+import { Deal } from "../Interface/DealFormObject";
+import ConfirmationModal from "../AlertDialog/AlertDialog";
 
 const Cards: React.FC = () => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [filterStatus, setFilterStatus] = useState('');
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filterStatus, setFilterStatus] = useState("");
     const dispatch = useDispatch<AppDispatch>();
     const dealsData = useSelector((state: RootState) => state.deal.dealDetails);
-    const [openStepper, setOpenStepper] = useState(false);
+    const dealFormOpen = useSelector((state: RootState) => state.dealForm.open);
     const [dealFormData, setDealFormData] = useState<Deal | null>(null);
+    const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+    const [dealId, setDealId] = useState<number | null>(null);
 
     useEffect(() => {
         dispatch(fetchDealDetails());
     }, [dispatch]);
 
-    useEffect(() => {
-    }, [dealsData]);
-
     const editDealForm = (deal: Deal) => {
-        console.log(deal)
-        setOpenStepper(true);
         setDealFormData({
             ...deal,
             activeStep: deal.activeStep || 0,
         });
+        dispatch(openDealForm());
     };
 
     const deleteDealHandler = (dealId: number | null) => {
         if (dealId !== null) {
             dispatch(deleteDeal(dealId));
+            setDeleteConfirmation(false);
         }
     };
 
@@ -74,7 +55,7 @@ const Cards: React.FC = () => {
     };
 
     const handleCloseStepper = () => {
-        setOpenStepper(false);
+        dispatch(closeDealForm());
         setDealFormData(null);
     };
 
@@ -85,6 +66,15 @@ const Cards: React.FC = () => {
     const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setFilterStatus(event.target.value);
     };
+    const cancelDelete = () => {
+        setDeleteConfirmation(false);
+    };
+
+    const handleDelete = (id: number) => {
+        setDealId(id);
+        setDeleteConfirmation(true);
+    };
+
 
     const filteredDeals = dealsData?.filter((deal: Deal) => {
         const matchesSearch = deal.brokerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -154,36 +144,21 @@ const Cards: React.FC = () => {
                     </div>
                 ))}
             </div>
+          {dealFormData && <DealForm deal={dealFormData} />}
 
-            <Dialog
-                fullScreen
-                sx={{ margin: '30px 190px' }}
-                open={openStepper}
-                onClose={handleCloseStepper}
-                className={styles.popupmain}
-            >
-                <DialogTitle sx={{ backgroundColor: "#262262", color: "white" }}>
-                    Deal Form
-                    <IconButton
-                        aria-label="close"
-                        onClick={handleCloseStepper}
-                        sx={{
-                            position: "absolute",
-                            right: 25,
-                            top: 8,
-                            width: 40,
-                            color: (theme) => theme.palette.grey[500],
-                        }}
-                    >
-                        <CloseIcon sx={{ color: "#999" }} />
-                    </IconButton>
-                </DialogTitle>
-                <DialogContent>
-                    {dealFormData && <DealForm deal={dealFormData} />}
-                </DialogContent>
-            </Dialog>
-        </>
-    );
+      <ConfirmationModal
+        show={deleteConfirmation}
+        onHide={cancelDelete}
+        onConfirm={() => deleteDealHandler(dealId)}
+        title="Deal Delete"
+        message="Are you sure you want to delete this deal?"
+        cancelText="Cancel"
+        confirmText="Delete"
+        cancelVariant="secondary"
+        confirmVariant="danger"
+      />
+    </>
+  );
 };
 
 export default Cards;
