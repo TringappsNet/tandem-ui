@@ -12,15 +12,17 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    /* height: 180px; */
-    width: 260px;
+    height: 190px;
+    width: 270px;
     transition: transform 0.3s;
     gap: 14px 0;
+    /* background: linear-gradient(-45deg, #9c9ca0, #241c95); */
+    color: #000000;
 }
 
 .card:hover {
     transform: translateY(-10px);
+    
 }
 
 .cardTitle {
@@ -41,7 +43,6 @@
 .icons {
     display: flex;
     gap: 0.5rem;
-    /* Add some space between the icons */
 }
 
 .hide {
@@ -94,15 +95,16 @@
 }
 
 .statusButton {
-    height: 100%;
-    width: 5.5rem;
-    border-radius: 3px;
-    font-size: 12px;
-    font-weight: 500;
-    color: #fff;
+    display: flex;
+    width: 4.7rem;
+    border-radius: 2.5px;
+    font-size: 9px;
+    font-weight: bolder;
+    color: #ffffff;
     text-align: center;
-    align-content: center;
-    line-height: .95rem;
+    justify-content: center;
+    line-height: .85rem;
+    letter-spacing: .7px;
 }
 
 .statusButtonFinished {
@@ -170,9 +172,12 @@
     display: flex;
     justify-content: flex-end;
     letter-spacing: .04rem;
+    font-weight: bold;
 }
 
 .statuslinecolor {
     display: none;
-    border: 2px solid;
+    border: .01rem solid;
+    position:relative;
+
 }

@@ -51,6 +51,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         setSelectedComponent(null);
     };
     const handleLogout = () => {
+        localStorage.clear();
         navigate('/login');
     };
     const handleCards = () => {

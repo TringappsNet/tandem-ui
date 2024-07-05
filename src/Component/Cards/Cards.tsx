@@ -25,11 +25,10 @@ interface Deal extends DealFormObjectDeal {
     potentialcommissiondate: string;
     potentialCommission: number | null;
     createdBy: number;
-    updatedBy: number;
+    updatedBy: number;  
     isNew: boolean;
     id: number | null;
 }
-
 
 const Cards: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -47,6 +46,7 @@ const Cards: React.FC = () => {
     }, [dealsData]);
 
     const editDealForm = (deal: Deal) => {
+        console.log(deal)
         setOpenStepper(true);
         setDealFormData({
             ...deal,
@@ -98,8 +98,6 @@ const Cards: React.FC = () => {
     return (
         <>
             <div className={styles.filterContainer}>
-
-                {/* <div className="bar"> */}
                 <input
                     type="text"
                     placeholder="Search by broker, property name, status, or deal ID"
@@ -113,9 +111,7 @@ const Cards: React.FC = () => {
                     <option value="In-Progress">In-Progress</option>
                     <option value="Completed">Completed</option>
                 </select>
-                </div>
-              
-            {/* </div> */}
+            </div>
             <div className={styles.cardList}>
                 {filteredDeals.map((deal: Deal, index: number) => (
                     <div key={index} className={styles.card}>
@@ -148,7 +144,7 @@ const Cards: React.FC = () => {
                             </div>
 
                             <div className={styles.circle}>
-                                <p>{deal.brokerName[0]}{deal.brokerName[1]}</p>
+                                <p>{deal.brokerName.split(" ")[0][0]}{deal.brokerName.split(" ")[1][0]}</p>
                             </div>
                         </div>
                         <div className={styles.timestamp}>

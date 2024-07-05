@@ -111,7 +111,7 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
             updatedBy: userId || 0,
             isNew: true,
         };
-    
+
         try {
             dispatch(setDealDetails(payload));
             setSaveSuccess(true);
