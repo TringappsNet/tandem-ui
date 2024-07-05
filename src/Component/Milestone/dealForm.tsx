@@ -23,7 +23,7 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import styles from "./Milestone.module.css";
+import styles from "./dealForm.module.css";
 import { RootState } from "../Redux/reducers";
 import { closeDealForm } from "../Redux/slice/deal/dealFormSlice";
 import { AppDispatch } from "../Redux/store/index";

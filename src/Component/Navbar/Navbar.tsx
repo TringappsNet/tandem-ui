@@ -13,7 +13,7 @@ import { RootState } from "../Redux/reducers";
 import Profile from "../Profile/profile";
 import Support from "../Support/Support";
 import DealForm from "../Milestone/dealForm";
-import { openDealForm, closeDealForm } from "../Redux/slice/deal/dealFormSlice";
+import { openDealForm } from "../Redux/slice/deal/dealFormSlice";
 
 interface NavbarProps {
   links: {
@@ -36,7 +36,6 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
-  const dealDetails = useSelector((state: RootState) => state.deal.dealDetails);
   const dealFormOpen = useSelector((state: RootState) => state.dealForm.open);
 
   const handleOpenPopup = (componentName: string) => {
