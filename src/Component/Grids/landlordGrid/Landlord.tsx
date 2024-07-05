@@ -6,13 +6,16 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle
+  ,
+  IconButton
 } from "@mui/material";
 import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
 import styles from "./landlord-grid.module.css";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
-import FullGrid from "../parentGrid/parent-grid";
+import FullGrid from "../MainGrid/MainGrid";
 import { MdEdit, MdDelete } from 'react-icons/md';
 import ConfirmationModal from "../../AlertDialog/AlertDialog";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface Landlord {
   id: number;
@@ -295,7 +298,28 @@ const LandlordGrid: React.FC = () => {
       />
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{formData.id ? "Edit Landlord" : "Add Landlord"}</DialogTitle>
+        <DialogTitle>{formData.id ? "Edit Landlord" : "Add Landlord"}        
+        <IconButton
+          aria-label="close"
+          onClick={() => {
+            handleClose();
+
+          }}
+          sx={{
+            position: 'absolute',
+            right: 20,
+            top: 10,
+        
+            color: (theme) => theme.palette.grey[500],
+        }}
+
+        >
+           
+
+          <CloseIcon sx={{ color: "#999" }} />
+        </IconButton>
+
+ </DialogTitle>
         <DialogContent>
           <TextField
             autoFocus

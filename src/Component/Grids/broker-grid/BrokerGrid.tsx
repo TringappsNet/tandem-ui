@@ -11,7 +11,7 @@ import axios from "axios";
 import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 
-import FullGrid from "../parentGrid/parent-grid";
+import FullGrid from "../MainGrid/MainGrid";
 
 interface User {
   id: number;

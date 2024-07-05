@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Main.module.css";
 import axiosInstance from "../AxiosInterceptor/AxiosInterceptor";
-import BrokerGrid from "../Grids/broker-grid/broker-grid";
+import BrokerGrid from "../Grids/broker-grid/BrokerGrid";
 
 type Deal = {
     totalDeals: number;

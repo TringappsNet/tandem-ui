@@ -4,8 +4,8 @@ import { BrowserRouter as Router} from 'react-router-dom';
 import Dashboard from './Dashboard';
 import store from '../Redux/store';
 import Cards from '../Cards/Cards';
-import LandlordGrid from '../Grids/landlordGrid/landlord-grid';
-import SiteGrid from '../Grids/Site-grid/site-grid';
+import LandlordGrid from '../Grids/landlordGrid/Landlord';
+import SiteGrid from '../Grids/SiteGrid/SiteGrid';
 
 jest.mock('../AxiosInterceptor/AxiosInterceptor', () => ({
 }));

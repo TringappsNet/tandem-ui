@@ -6,15 +6,18 @@ import {
   DialogActions,
   DialogTitle,
   DialogContent,
+  IconButton
   
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+
 import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
-import FullGrid from "../parentGrid/parent-grid";
+import FullGrid from "../MainGrid/MainGrid";
 import { MdEdit, MdDelete } from 'react-icons/md';
 import ConfirmationModal from "../../AlertDialog/AlertDialog";
 
-import '../Site-grid/site-grid.module.css';
+import './site-grid.module.css';
 
 interface Site {
   id: number;
@@ -320,7 +323,29 @@ const SiteGrid: React.FC = () => {
       //   }
       // }}
       >
-        <DialogTitle className="dialogtitle">{formData.id ? "Edit Site" : "Add Site"}</DialogTitle>
+        <DialogTitle className="dialogtitle">{formData.id ? "Edit Site" : "Add Site"}
+
+        <IconButton
+          aria-label="close"
+          onClick={() => {
+            handleClose();
+     
+          }}
+          sx={{
+            position: 'absolute',
+            right: 20,
+            top: 10,
+        
+            color: (theme) => theme.palette.grey[500],
+        }}
+
+        >
+           
+
+          <CloseIcon sx={{ color: "#999" }} />
+        </IconButton>
+
+        </DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
