@@ -22,7 +22,7 @@ import {
   DialogContent,
   IconButton,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+// import CloseIcon from "@mui/icons-material/Close";
 import styles from "./dealForm.module.css";
 import { RootState } from "../Redux/reducers";
 import { closeDealForm } from "../Redux/slice/deal/dealFormSlice";
@@ -300,7 +300,7 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
       }}
       className={styles.popupmain}
     >
-      <DialogTitle sx={{ backgroundColor: "#262262", color: "white" }}>
+      <DialogTitle sx={{ backgroundColor: '#262262', color: 'white',height:'44px',padding:'6px 24px' }}>
         Deal Form
         <IconButton
           aria-label="close"
@@ -309,14 +309,27 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
             dispatchFormDataOnClose();
           }}
           sx={{
-            position: "absolute",
+            position: 'absolute',
             right: 25,
-            top: 8,
-            width: 40,
+            top: 2,
+        
             color: (theme) => theme.palette.grey[500],
-          }}
+        }}
+
         >
-          <CloseIcon sx={{ color: "#999" }} />
+             <button className='saveclose' style={{
+                            height:'24px',
+                            width:'100px',
+                            border:'1px solid grey',
+                            borderRadius:'3px',
+                            // boxShadow:' rgba(99, 99, 99, 0.2) 0px 2px 2px 0px' ,
+                            color: 'white',
+                            backgroundColor: '#262262',                    }}>
+                        Save/Close
+
+                        </button>
+
+          {/* <CloseIcon sx={{ color: "#999" }} /> */}
         </IconButton>
       </DialogTitle>
       <DialogContent>

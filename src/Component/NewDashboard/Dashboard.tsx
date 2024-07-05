@@ -4,8 +4,8 @@ import Navbar from "../Navbar/Navbar";
 import Cards from "../Cards/Cards";
 import styles from "./Dashboard.module.css";
 import Main from '../Main/Main';
-import SiteGrid from "../Grids/Site-grid/site-grid";
-import LandlordGrid from "../Grids/landlordGrid/landlord-grid";
+import SiteGrid from "../Grids/SiteGrid/SiteGrid";
+import LandlordGrid from "../Grids/landlordGrid/Landlord";
 
 
 const Dashboard: React.FC = () => {
