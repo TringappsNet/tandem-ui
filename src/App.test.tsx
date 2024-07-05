@@ -1,30 +1,30 @@
-import { render, screen } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import App from './App';
-import Login from './Component/Login/Login';
-import Registration from './Component/Registration/Registration';
-import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
-import ChangePassword from './Component/ChangePassword/ChangePassword';
-import Milestone from './Component/Milestone/Milestone'; 
-import Dashboard from './Component/NewDashboard/Dashboard';
-import Support from './Component/Support/Support';
-import store from './Component/Redux/store';
+import { render, screen } from "@testing-library/react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Provider } from "react-redux";
+import App from "./App";
+import Login from "./Component/Login/Login";
+import Registration from "./Component/Registration/Registration";
+import ForgotPassword from "./Component/ForgotPassword/ForgotPassword";
+import ChangePassword from "./Component/ChangePassword/ChangePassword";
+import Milestone from "./Component/Milestone/dealForm";
+import Dashboard from "./Component/NewDashboard/Dashboard";
+import Support from "./Component/Support/Support";
+import store from "./Component/Redux/store";
 
-jest.mock('axios', () => {
+jest.mock("axios", () => {
   return {
     create: jest.fn(() => ({
       interceptors: {
         request: {
-          use: jest.fn()
-        }
-      }
-    }))
+          use: jest.fn(),
+        },
+      },
+    })),
   };
 });
 
-describe('App component', () => {
-  test('renders login page when not authenticated', () => {
+describe("App component", () => {
+  test("renders login page when not authenticated", () => {
     render(
       <Provider store={store}>
         <App />
@@ -32,7 +32,7 @@ describe('App component', () => {
     );
   });
 
-  test('renders registration page', () => {
+  test("renders registration page", () => {
     render(
       <Router>
         <Registration />
@@ -41,7 +41,7 @@ describe('App component', () => {
     expect(screen.getByText(/REGISTER HERE/i)).toBeInTheDocument();
   });
 
-  test('renders forgot password page', () => {
+  test("renders forgot password page", () => {
     render(
       <Router>
         <ForgotPassword />
@@ -50,7 +50,7 @@ describe('App component', () => {
     expect(screen.getByText(/Forgot Password?/i)).toBeInTheDocument();
   });
 
-  test('renders change password page', () => {
+  test("renders change password page", () => {
     render(
       <Router>
         <ChangePassword />
@@ -59,41 +59,49 @@ describe('App component', () => {
     expect(screen.getByText(/Set a New Password/i)).toBeInTheDocument();
   });
 
-  test('renders dashboard when authenticated', () => {
-    const mockToken = 'mockAccessToken';
-    localStorage.setItem('accessToken', mockToken);
+  test("renders dashboard when authenticated", () => {
+    const mockToken = "mockAccessToken";
+    localStorage.setItem("accessToken", mockToken);
 
     render(
       <Provider store={store}>
-        <Router><Dashboard /></Router>
+        <Router>
+          <Dashboard />
+        </Router>
       </Provider>
     );
-    const navbarElement = screen.getByRole('navigation');
+    const navbarElement = screen.getByRole("navigation");
     expect(navbarElement).toBeInTheDocument();
   });
 
-  test('renders milestone page', () => {
+  test("renders milestone page", () => {
     render(
       <Provider store={store}>
-        <Router><Milestone/></Router>
+        <Router>
+          <Milestone />
+        </Router>
       </Provider>
     );
     expect(screen.getByText(/Proposal/i)).toBeInTheDocument();
   });
 
-  test('renders support page', () => {
+  test("renders support page", () => {
     render(
       <Provider store={store}>
-      <Router><Support/></Router>
-    </Provider>
+        <Router>
+          <Support />
+        </Router>
+      </Provider>
     );
     expect(screen.getByLabelText(/Subject:/i)).toBeInTheDocument();
   });
 
-  test('renders login page when route does not match', () => {
+  test("renders login page when route does not match", () => {
     render(
       <Provider store={store}>
-        <Router><Login/></Router>
+        <Router>
+          <Login />
+        </Router>
       </Provider>
     );
     expect(screen.getByText(/TANDEM INFRASTRUCTURE/i)).toBeInTheDocument();

@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction, Action } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
-import axiosInstance from '../../AxiosInterceptor/AxiosInterceptor';
-import { RootState } from '../reducers';
+import axiosInstance from '../../../AxiosInterceptor/AxiosInterceptor';
+import { RootState } from '../../reducers';
 import { ThunkAction } from 'redux-thunk';
-import { Deal } from '../../Interface/DealFormObject';
+import { Deal } from '../../../Interface/DealFormObject';
 
 type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
 

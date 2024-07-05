@@ -1,29 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Dialog,
-  DialogContent,
-  Icon,
-  DialogTitle,
-  IconButton,
-  Box,
-} from "@mui/material";
+import { Dialog, DialogContent, Icon, DialogTitle, Box } from "@mui/material";
 import styles from "./Navbar.module.css";
 import SendInvite from "../SendInvite/SendInvite";
 import Reset from "../ResetPassword/ResetPassword";
 import CloseIcon from "@mui/icons-material/Close";
-import CreateDeal from "../Milestone/Milestone";
 import { useNavigate } from "react-router-dom";
 import LandlordGrid from "../Grids/landlordGrid/landlord-grid";
 import SiteGrid from "../Grids/Site-grid/site-grid";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createNewDeal,
-  updateDealDetails,
-} from "../Redux/slice/dealSlice";
 import { AppDispatch } from "../Redux/store/index";
 import { RootState } from "../Redux/reducers";
 import Profile from "../Profile/profile";
 import Support from "../Support/Support";
+import DealForm from "../Milestone/dealForm";
+import { openDealForm, closeDealForm } from "../Redux/slice/deal/dealFormSlice";
 
 interface NavbarProps {
   links: {
@@ -42,13 +32,12 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const [selectedComponent, setSelectedComponent] = useState<string | null>(
     null
   );
-  const [openStepper, setOpenStepper] = useState(false);
-  const [isFirstSave, setIsFirstSave] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
   const dealDetails = useSelector((state: RootState) => state.deal.dealDetails);
+  const dealFormOpen = useSelector((state: RootState) => state.dealForm.open);
 
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
@@ -95,30 +84,6 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     };
   }, []);
 
-  const saveFormData = async () => {
-    try {
-      const dealtemp = dealDetails[dealDetails.length - 1];
-      if (dealtemp.isNew && isFirstSave) {
-        dispatch(createNewDeal(dealtemp));
-        setIsFirstSave(false);
-      } else {
-        const dealToUpdate = dealDetails.find(
-          (deal) => deal.id === dealtemp.id
-        );
-        if (dealToUpdate) {
-          dispatch(updateDealDetails(dealToUpdate));
-        }
-        setIsFirstSave(true);
-      }
-    } catch (error) {
-      console.error("Error saving form data:", error);
-    }
-  };
-
-  const createDealForm = () => {
-    setOpenStepper(true);
-  };
-
   const handlelogoclick = () => {
     navigate("/dashboard");
   };
@@ -148,7 +113,10 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           </p>
         </div>
         <div className={styles.rightheadersection}>
-          <div className={styles.createdeal} onClick={() => createDealForm()}>
+          <div
+            className={styles.createdeal}
+            onClick={() => dispatch(openDealForm())}
+          >
             <p>CREATE</p>
           </div>
           <div
@@ -182,98 +150,68 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           </div>
         </div>
       </nav>
-      <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg">
-        <DialogTitle sx={{ padding: 0 }}>
-          <Icon
-            aria-label="close"
-            onClick={handleClosePopup}
-            sx={{
-              position: "absolute",
-              right: 18,
-              top: 8,
-              zIndex: 999,
-              fontSize: 30,
-              cursor: "pointer",
-            }}
-          >
-            <CloseIcon />
-          </Icon>
-        </DialogTitle>
-        <DialogContent sx={{ padding: 0 }}>
-          {selectedComponent === "SendInvite" && <SendInvite />}
-          {selectedComponent === "Reset" && <Reset />}
-          {selectedComponent === "Profile" && <Profile />}
-          {selectedComponent === "Support" && <Support />}
-          {selectedComponent === "Landlord" && (
-            <Box
+      {openPopup && selectedComponent && (
+        <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg">
+          <DialogTitle sx={{ padding: 0 }}>
+            <Icon
+              aria-label="close"
+              onClick={handleClosePopup}
               sx={{
-                padding: 1,
-                borderRadius: 1,
-                height: "100%",
-                width: "100%",
-                maxHeight: "calc(100vh - 64px)",
-                overflow: "auto",
+                position: "absolute",
+                right: 18,
+                top: 8,
+                zIndex: 999,
+                fontSize: 30,
+                cursor: "pointer",
               }}
             >
-              <br></br>
-              <h1>Landlord Details</h1>
-              <br></br>
-              <LandlordGrid />
-            </Box>
-          )}
+              <CloseIcon />
+            </Icon>
+          </DialogTitle>
+          <DialogContent sx={{ padding: 0 }}>
+            {selectedComponent === "SendInvite" && <SendInvite />}
+            {selectedComponent === "Reset" && <Reset />}
+            {selectedComponent === "Profile" && <Profile />}
+            {selectedComponent === "Support" && <Support />}
+            {selectedComponent === "Landlord" && (
+              <Box
+                sx={{
+                  padding: 1,
+                  borderRadius: 1,
+                  height: "100%",
+                  width: "100%",
+                  maxHeight: "calc(100vh - 64px)",
+                  overflow: "auto",
+                }}
+              >
+                <br></br>
+                <h1>Landlord Details</h1>
+                <br></br>
+                <LandlordGrid />
+              </Box>
+            )}
 
-          {selectedComponent === "Site" && (
-            <Box
-              sx={{
-                padding: 1,
-                borderRadius: 1,
-                height: "100%",
-                width: "100%",
-                maxHeight: "calc(100vh - 64px)",
-                overflow: "auto",
-              }}
-            >
-              <br></br>
-              <h1>Site Details</h1>
-              <br></br>
-              <SiteGrid />
-            </Box>
-          )}
-        </DialogContent>
-      </Dialog>
-      <Dialog
-        fullScreen
-        sx={{ margin: "30px 190px" }}
-        open={openStepper}
-        onClose={() => {
-          setOpenStepper(false);
-          saveFormData();
-        }}
-        className={styles.popupmain}
-      >
-        <DialogTitle sx={{ backgroundColor: "#262262", color: "white" }}>
-          Deal Form
-          <IconButton
-            aria-label="close"
-            onClick={() => {
-              setOpenStepper(false);
-              saveFormData();
-            }}
-            sx={{
-              position: "absolute",
-              right: 25,
-              top: 8,
-              width: 40,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon sx={{ color: "#999" }} />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <CreateDeal />
-        </DialogContent>
-      </Dialog>
+            {selectedComponent === "Site" && (
+              <Box
+                sx={{
+                  padding: 1,
+                  borderRadius: 1,
+                  height: "100%",
+                  width: "100%",
+                  maxHeight: "calc(100vh - 64px)",
+                  overflow: "auto",
+                }}
+              >
+                <br></br>
+                <h1>Site Details</h1>
+                <br></br>
+                <SiteGrid />
+              </Box>
+            )}
+          </DialogContent>
+        </Dialog>
+      )}
+      {dealFormOpen && <DealForm />}
     </>
   );
 };
