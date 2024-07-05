@@ -1,7 +1,6 @@
 @import url("@fontsource/public-sans");
 @import url("@fontsource/oswald");
 
-
 body,
 html {
     margin: 0;
@@ -35,16 +34,6 @@ html {
     max-height: 100%;
     object-fit: contain;
 }
-
-/* .contactForm {
-    flex: 1.25 0.5;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 620px;
-} */
 
 .formGroup {
     display: flex;
@@ -83,6 +72,13 @@ html {
     width: 344px;
     font-size: 1rem;
     font-family: 'Public Sans', sans-serif;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+    border-color: #3e18be;
+    outline: none;
+    box-shadow: 0 0 5px rgba(45, 12, 150, 0.5);
 }
 
 .formGroup textarea {

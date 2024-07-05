@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+// import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './Support.module.css';
 import mailImage from './mail.png';
 
@@ -27,7 +28,7 @@ const Support: React.FC = () => {
     }, [subject, errorMessage]);
 
     useEffect(() => {
-        if (description.trim() && errorMessage === 'Please fill in the description') {
+        if (description.trim() && errorMessage === 'Please fill out the description') {
             setErrorMessage('');
         }
     }, [description, errorMessage]);
@@ -49,12 +50,13 @@ const Support: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+
         if (!validateForm()) {
             return;
         }
 
         if (!user) {
-            setErrorMessage('Please log in to raise a ticket.');
+            setErrorMessage('Please log in to raise the ticket.');
             return;
         }
         setIsLoading(true);
@@ -75,7 +77,7 @@ const Support: React.FC = () => {
             }
         } catch (error) {
             console.error('Error raising ticket:', error);
-            setErrorMessage('An error occurred. Please try again.');
+            setErrorMessage('An error occurred. Please try again later.');
         } finally {
             setIsLoading(false);
         }
@@ -102,7 +104,7 @@ const Support: React.FC = () => {
                     <label htmlFor="subject">Subject:</label>
                     <input
                         type="text"
-                        placeholder="Subject"
+                        placeholder=" Enter your subject"
                         id="subject"
                         name="subject"
                         value={subject}
@@ -114,8 +116,8 @@ const Support: React.FC = () => {
                     <textarea
                         id="description"
                         name="description"
-                        placeholder="Description"
-                        rows={7}
+                        placeholder="Add your concern"
+                        rows={8}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
@@ -126,7 +128,8 @@ const Support: React.FC = () => {
             </form>
             {isLoading && (
                 <div className={styles.loaderContainer}>
-                    <div className={styles.loader}></div>
+                    <div className={styles.loader}>
+                    </div>
                 </div>
             )}
         </div>
