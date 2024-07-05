@@ -19,7 +19,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createNewDeal,
   updateDealDetails,
-  setDealDetails,
 } from "../Redux/slice/dealSlice";
 import { AppDispatch } from "../Redux/store/index";
 import { RootState } from "../Redux/reducers";
