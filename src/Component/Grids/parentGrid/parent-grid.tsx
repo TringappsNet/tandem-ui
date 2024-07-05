@@ -1,48 +1,56 @@
-import React from "react";
 import { DataGrid, GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import styles from "./parent-grid.module.css";
 import Box from '@mui/material/Box';
 
+import React, { useState, useEffect } from "react";
 
 interface FullGridProps {
   rows: any[];
   columns: GridColDef[];
   paginationModel: GridPaginationModel;
   setPaginationModel: (model: GridPaginationModel) => void;
-  // handleEdit: (id: number) => void;
-  // handleDelete: (id: number) => void;
   className?: string;
   disablePagination?: boolean;
-  // handleAdd: (id: number) => void;
+  sx:any;
 
 
 }
-
-
-
-
 
 const FullGrid: React.FC<FullGridProps> = ({
   rows,
   columns,
   paginationModel,
   setPaginationModel,
-  // handleEdit,
-  // handleDelete,
-  // handleAdd,
+  sx={},
+
   className,
 
 }) => {
+
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className={`${styles.gridContainer } ${className}`} >
-      <Box
+      {isLoading ? (
+      <div className={styles.loaderContainer}>
+            <div className={styles.loader}></div>
+          </div>
+                ) : ( <Box
+
         sx={{
-                
-                height: 800,
+
+                height: 800 ,
                 marginTop:2,
                 background:'none',
                 border: 0,
-
+                ...sx,
                 lineHeight:2,
                '.css-yrdy0g-MuiDataGrid-columnHeaderRow ':{
                 background: '#444189 !important',
@@ -50,22 +58,21 @@ const FullGrid: React.FC<FullGridProps> = ({
 
                },
          '.css-3eek4p-MuiDataGrid-main ':{
-          background: '#e8e8ee !important'
+          background: '#f5f7fb !important'
 
          },
 
                '& .css-15n4jlm-MuiDataGrid-root .MuiDataGrid-columnHeaders': {
-                
+
                   fontSize: '14px',
                   fontWeight: 'bold',
                   textTransform:'uppercase  '
               },
 
  '.css-wop1k0-MuiDataGrid-footerContainer':{
-  background: '#e8e8ee !important'
+  background: '#f5f7fb !important'
 
  },
-
 
                 '& .super-app-theme--header': {
                   backgroundColor: 'rgba(255, 7, 0, 0.55)',
@@ -73,7 +80,6 @@ const FullGrid: React.FC<FullGridProps> = ({
                   fontSize: 'small',
 
                 },
-
 
                 '.css-1kwdphh-MuiDataGrid-virtualScrollerContent ': {
                   fontSize:'13px',
@@ -83,26 +89,22 @@ const FullGrid: React.FC<FullGridProps> = ({
                 ,
                           "& .MuiDataGrid-row": {
           "&:nth-of-type(2n)": {
-          backgroundColor: " #EBF0F4 ",//even tealcolor
+          backgroundColor: " #EBF0F4 ",
           '&:hover': {
           background: " #EBF0F4 !important",
           border: 'none ' ,
 
-                  
         ".css-yrdy0g-MuiDataGrid-columnHeaderRow": {
           backgroundColor: "#0078d4 !important",
         }
-
 
           },
           }
           },
 
-              
             }}
       >
 
-        
       <DataGrid
         className={styles.dataGrid}
         rows={rows}
@@ -112,9 +114,10 @@ const FullGrid: React.FC<FullGridProps> = ({
         rowHeight={34}
         columnHeaderHeight={39}
       />
-      
+
       </Box>
-  
+          )}
+
     </div>
   );
 };
