@@ -13,12 +13,9 @@ type Deal = {
 
 const Main: React.FC = () => {
     const [deal, setDeal] = useState<Deal | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
 
     const fetchDeals = async () => {
         try {
-            setIsLoading(true);
-
           const response = await axiosInstance.get("/deals/dealsData");
           const deal: Deal = {
             totalDeals: response.data.totalDeals,
@@ -31,8 +28,6 @@ const Main: React.FC = () => {
         } catch (error) {
           console.error("Error fetching deals:", error);
         }
-        setIsLoading(false);
-
       };
     
       useEffect(() => {
