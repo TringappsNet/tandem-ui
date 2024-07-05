@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Cards.module.css";
 import { FiEdit, FiTrash } from "react-icons/fi";
-import DealForm from "../Milestone/dealForm";
+import DealForm from "../DealForm/dealForm";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/reducers";
 import { deleteDeal, fetchDealDetails } from "../Redux/slice/deal/dealSlice";
@@ -81,6 +81,10 @@ const Cards: React.FC = () => {
     const cancelDelete = () => {
         setDeleteConfirmation(false);
     };
+    const handleDelete = (id: number) => {
+        setDealId(id);
+        setDeleteConfirmation(true);
+    };
 
     const filteredDeals = dealsData?.filter((deal: any) => {
         const matchesSearch = deal.brokerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -118,7 +122,9 @@ const Cards: React.FC = () => {
                                     <div className={styles.hide}>
                                         <FiEdit onClick={() => editDealForm(deal)} />
                                     </div>
-                                    <FiTrash onClick={() => deleteDealHandler(deal.id)} />
+                                    <FiTrash
+                                        onClick={() => deal.id !== null && handleDelete(deal.id)}
+                                    />
                                 </div>
                             </div>
                             <hr className={styles.line} />

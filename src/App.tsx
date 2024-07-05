@@ -10,7 +10,7 @@ import Registration from "./Component/Registration/Registration";
 import "./App.css";
 import ForgotPassword from "./Component/ForgotPassword/ForgotPassword";
 import ChangePassword from "./Component/ChangePassword/ChangePassword";
-import Milestone from "./Component/Milestone/dealForm";
+import Milestone from "./Component/DealForm/dealForm";
 import Dashboard from "../src/Component/NewDashboard/Dashboard";
 import Support from "./Component/Support/Support";
 

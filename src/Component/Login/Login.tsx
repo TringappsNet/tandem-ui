@@ -46,12 +46,12 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if(email === "" || password===""){
+    if (email === "" || password === "") {
       setValidationErrorMessage('Please Enter all the field.');
       setShowFailureMessage(true);
       return
     }
-    
+
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
 
@@ -80,9 +80,9 @@ const Login: React.FC = () => {
       // let message = 'Something went wrong. Please try again later.';
       if (error.response && error.response.status === 401) {
         // let message = 'Incorrect Email or Password. Please try again.';
-      setValidationErrorMessage(error.response.data.message);
-      setShowSuccessMessage(false);
-      setShowFailureMessage(true);
+        setValidationErrorMessage(error.response.data.message);
+        setShowSuccessMessage(false);
+        setShowFailureMessage(true);
       }
       if (error.response && error.response.status === 500) {
         // let message = 'Incorrect Email or Password. Please try again.';

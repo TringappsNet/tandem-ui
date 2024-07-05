@@ -6,7 +6,7 @@ import Login from "./Component/Login/Login";
 import Registration from "./Component/Registration/Registration";
 import ForgotPassword from "./Component/ForgotPassword/ForgotPassword";
 import ChangePassword from "./Component/ChangePassword/ChangePassword";
-import Milestone from "./Component/Milestone/dealForm";
+import Milestone from "./Component/DealForm/dealForm";
 import Dashboard from "./Component/NewDashboard/Dashboard";
 import Support from "./Component/Support/Support";
 import store from "./Component/Redux/store";
