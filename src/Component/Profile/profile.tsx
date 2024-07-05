@@ -14,7 +14,6 @@ interface Role {
 
 const Profile: React.FC = () => {
     const [profileData, setProfileData] = useState<ProfileItem[] | null>(null);
-    const [rolesDetails, setRolesDetails] = useState<Role[]>([]);
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -27,9 +26,7 @@ const Profile: React.FC = () => {
                         id: role.id,
                         roleName: role.roleName
                     }));
-                    setRolesDetails(roles);
                     const userRole = roles.find(role => role.id === user.roleId);
-
                     const userProfileData = [
                         { label: "Id", value: user.id },
                         { label: "Name", value: `${user.firstName} ${user.lastName}` },
@@ -41,7 +38,6 @@ const Profile: React.FC = () => {
                         { label: "State", value: user.state },
                         { label: "Zipcode", value: user.zipcode }
                     ];
-
                     setProfileData(userProfileData);
                 } catch (error) {
                     console.error('Error fetching roles:', error);
