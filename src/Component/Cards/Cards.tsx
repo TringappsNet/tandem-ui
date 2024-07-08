@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Cards.module.css";
 import { FiEdit, FiTrash } from "react-icons/fi";
-import DealForm from "../DealForm/dealForm";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/reducers";
 import { deleteDeal, fetchDealDetails } from "../Redux/slice/deal/dealSlice";
