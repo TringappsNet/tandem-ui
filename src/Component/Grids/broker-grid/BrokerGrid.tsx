@@ -146,7 +146,7 @@ const BrokerGrid: React.FC = () => {
       <FullGrid
         className=""
         sx={{
-          height: 530,
+          height: 480,
         }}
         rows={rows}
         columns={columns}

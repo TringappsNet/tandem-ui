@@ -21,7 +21,6 @@ import {
   DialogContent,
   IconButton,
 } from "@mui/material";
-// import CloseIcon from "@mui/icons-material/Close";
 import styles from "./dealForm.module.css";
 import { RootState } from "../Redux/reducers";
 import { closeDealForm } from "../Redux/slice/deal/dealFormSlice";
@@ -91,7 +90,7 @@ const DealForm: React.FC<DealFormProps> = () => {
     createdBy: currentDeal?.createdBy || 0,
     updatedBy: currentDeal?.updatedBy || 0,
     isNew: currentDeal?.isNew || true,
-});
+  });
   const [brokerOptions, setBrokerOptions] = useState<string[]>([]);
   const [propertyOptions, setPropertyOptions] = useState<string[]>([]);
   const [userId, setUserId] = useState<number | null>(null);
@@ -222,17 +221,17 @@ const DealForm: React.FC<DealFormProps> = () => {
           >
             {label === "brokerName"
               ? brokerOptions.map((option, idx) => (
-                  <MenuItem key={idx} value={option}>
-                    {option}
-                  </MenuItem>
-                ))
+                <MenuItem key={idx} value={option}>
+                  {option}
+                </MenuItem>
+              ))
               : label === "propertyName"
-              ? propertyOptions.map((option, idx) => (
+                ? propertyOptions.map((option, idx) => (
                   <MenuItem key={idx} value={option}>
                     {option}
                   </MenuItem>
                 ))
-              : options?.map((option: string, idx: number) => (
+                : options?.map((option: string, idx: number) => (
                   <MenuItem key={idx} value={option}>
                     {option}
                   </MenuItem>

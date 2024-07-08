@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import './AlertDialog.css';
 
 const ConfirmationModal = ({ show, onHide, onConfirm, title, cancelText, confirmText, cancelVariant, confirmVariant, message }) => {
@@ -12,7 +12,7 @@ const ConfirmationModal = ({ show, onHide, onConfirm, title, cancelText, confirm
           </div>
           <div className="modal-body">{message}</div>
           <div className="modal-footer">
-            <button className={`btn ${cancelVariant} cancel` } onClick={onHide}>{cancelText}</button>
+            <button className={`btn ${cancelVariant} cancel`} onClick={onHide}>{cancelText}</button>
             <button className={`btn ${confirmVariant} confirm`} onClick={onConfirm}>{confirmText}</button>
           </div>
         </div>
