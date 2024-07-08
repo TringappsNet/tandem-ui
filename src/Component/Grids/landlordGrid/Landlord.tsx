@@ -158,19 +158,19 @@ const LandlordGrid: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Name", width: 120 },
+    { field: "name", headerName: "Name", width: 100 },
     { field: "phoneNumber", headerName: "Phone Number", width: 150 },
-    { field: "email", headerName: "Email", width: 180 },
-    { field: "address1", headerName: "AddressLine1", width: 180 },
-    { field: "address2", headerName: "AddressLine2", width: 180 },
+    { field: "email", headerName: "Email", width: 150 },
+    { field: "address1", headerName: "AddressLine1", width: 140 },
+    { field: "address2", headerName: "AddressLine2", width: 140 },
     { field: "city", headerName: "City", width: 100 },
     { field: "state", headerName: "State", width: 100 },
-    { field: "country", headerName: "Country", width: 80 },
-    { field: "zipcode", headerName: "Zipcode", width: 100 },
+    { field: "country", headerName: "Country", width:100 },
+    { field: "zipcode", headerName: "Zipcode", width: 120 },
     {
       field: "actions",
       headerName: "Actions",
-      width: 200,
+      width: 100,
      
       renderCell: (params) => (
         <>
@@ -266,7 +266,7 @@ const LandlordGrid: React.FC = () => {
 
       <FullGrid
         sx={{
-          height:470
+          height:450
         }}
         rows={rows}
         columns={columns}
