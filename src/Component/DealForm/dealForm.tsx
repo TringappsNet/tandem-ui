@@ -26,7 +26,10 @@ import styles from "./dealForm.module.css";
 import { RootState } from "../Redux/reducers";
 import { closeDealForm } from "../Redux/slice/deal/dealFormSlice";
 import { AppDispatch } from "../Redux/store/index";
-import { clearCurrentDeal, setCurrentDeal } from "../Redux/slice/deal/currentDeal";
+import {
+  clearCurrentDeal,
+  setCurrentDeal,
+} from "../Redux/slice/deal/currentDeal";
 
 const steps = [
   {
@@ -64,34 +67,36 @@ interface DealFormProps {
   deal?: Deal;
 }
 
-const DealForm: React.FC<DealFormProps> = ({ deal }) => {
+const DealForm: React.FC<DealFormProps> = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const currentDeal = useSelector(
+    (state: RootState) => state.currentDeal.currentDeal
+  );
   const open = useSelector((state: RootState) => state.dealForm.open);
-  const [activeStep, setActiveStep] = useState(deal?.activeStep || 0);
+  const [activeStep, setActiveStep] = useState(currentDeal?.activeStep || 0);
   const [formData, setFormData] = useState<Deal>({
-    id: deal?.id || null,
-    brokerName: deal?.brokerName || "",
-    propertyName: deal?.propertyName || "",
-    dealStartDate: deal?.dealStartDate || "",
-    proposalDate: deal?.proposalDate || "",
-    loiExecuteDate: deal?.loiExecuteDate || "",
-    leaseSignedDate: deal?.leaseSignedDate || "",
-    noticeToProceedDate: deal?.noticeToProceedDate || "",
-    commercialOperationDate: deal?.commercialOperationDate || "",
-    potentialcommissiondate: deal?.potentialcommissiondate || "",
-    potentialCommission: deal?.potentialCommission || null,
-    status: deal?.status || "",
-    activeStep: deal?.activeStep ?? 0,
-    createdBy: deal?.createdBy || 0,
-    updatedBy: deal?.updatedBy || 0,
-    isNew: deal?.isNew || true,
-  });
+    id: currentDeal?.id || null,
+    brokerName: currentDeal?.brokerName || "",
+    propertyName: currentDeal?.propertyName || "",
+    dealStartDate: currentDeal?.dealStartDate || "",
+    proposalDate: currentDeal?.proposalDate || "",
+    loiExecuteDate: currentDeal?.loiExecuteDate || "",
+    leaseSignedDate: currentDeal?.leaseSignedDate || "",
+    noticeToProceedDate: currentDeal?.noticeToProceedDate || "",
+    commercialOperationDate: currentDeal?.commercialOperationDate || "",
+    potentialcommissiondate: currentDeal?.potentialcommissiondate || "",
+    potentialCommission: currentDeal?.potentialCommission || null,
+    status: currentDeal?.status || "",
+    activeStep: currentDeal?.activeStep ?? 0,
+    createdBy: currentDeal?.createdBy || 0,
+    updatedBy: currentDeal?.updatedBy || 0,
+    isNew: currentDeal?.isNew || true,
+});
   const [brokerOptions, setBrokerOptions] = useState<string[]>([]);
   const [propertyOptions, setPropertyOptions] = useState<string[]>([]);
   const [userId, setUserId] = useState<number | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [isFirstSave, setIsFirstSave] = useState(true);
-  const currentDeal = useSelector((state: RootState) => state.currentDeal.currentDeal);
 
   const fetchSite = async () => {
     try {
@@ -179,14 +184,13 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
           await dispatch(createNewDeal(currentDeal));
           setIsFirstSave(false);
         } else {
-
-            await dispatch(updateDealDetails(currentDeal));
-            dispatch(clearCurrentDeal());
+          await dispatch(updateDealDetails(currentDeal));
+          dispatch(clearCurrentDeal());
           setIsFirstSave(true);
         }
       }
     } catch (error) {
-      console.error('Error saving form data:', error);
+      console.error("Error saving form data:", error);
     }
   };
 
@@ -292,25 +296,33 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
       onClose={() => {
         dispatch(closeDealForm());
         dispatchFormDataOnClose();
+        dispatch(clearCurrentDeal());
       }}
       className={styles.popupmain}
     >
-      <DialogTitle sx={{ backgroundColor: '#262262', color: 'white',height:'44px',padding:'6px 24px' }}>
+      <DialogTitle
+        sx={{
+          backgroundColor: "#262262",
+          color: "white",
+          height: "44px",
+          padding: "6px 24px",
+        }}
+      >
         Deal Form
         <IconButton
           aria-label="close"
           onClick={() => {
             dispatch(closeDealForm());
             dispatchFormDataOnClose();
+            dispatch(clearCurrentDeal());
           }}
           sx={{
-            position: 'absolute',
+            position: "absolute",
             right: 25,
             top: 2,
-        
-            color: (theme) => theme.palette.grey[500],
-        }}
 
+            color: (theme) => theme.palette.grey[500],
+          }}
         >
           <button
             className="saveclose"

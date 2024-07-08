@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Cards.module.css";
 import { FiEdit, FiTrash } from "react-icons/fi";
-import DealForm from "../DealForm/dealForm";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/reducers";
 import { deleteDeal, fetchDealDetails } from "../Redux/slice/deal/dealSlice";
 import { openDealForm } from "../Redux/slice/deal/dealFormSlice";
 import { AppDispatch } from "../Redux/store";
 import ConfirmationModal from "../AlertDialog/AlertDialog";
+import { setCurrentDeal } from "../Redux/slice/deal/currentDeal";
 
 interface Deal {
     id: number | null;
@@ -34,7 +34,6 @@ const Cards: React.FC = () => {
     const [filterStatus, setFilterStatus] = useState("");
     const dispatch = useDispatch<AppDispatch>();
     const dealsData = useSelector((state: RootState) => state.deal.dealDetails);
-    const [dealFormData, setDealFormData] = useState<Deal | null>(null);
     const [deleteConfirmation, setDeleteConfirmation] = useState(false);
     const [dealId, setDealId] = useState<number | null>(null);
 
@@ -43,10 +42,7 @@ const Cards: React.FC = () => {
     }, [dispatch]);
 
     const editDealForm = (deal: Deal) => {
-        setDealFormData({
-            ...deal,
-            activeStep: deal.activeStep || 0,
-        });
+        dispatch(setCurrentDeal(deal)); 
         dispatch(openDealForm());
     };
 
@@ -159,7 +155,6 @@ const Cards: React.FC = () => {
                     </div>
                 ))}
             </div>
-            {dealFormData && <DealForm deal={dealFormData} />}
             <ConfirmationModal
                 show={deleteConfirmation}
                 onHide={cancelDelete}

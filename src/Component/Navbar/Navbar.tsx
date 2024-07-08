@@ -1,3 +1,4 @@
+// Navbar.tsx
 import React, { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent, Icon, DialogTitle, Box } from "@mui/material";
 import styles from "./Navbar.module.css";
@@ -14,6 +15,7 @@ import Profile from "../Profile/profile";
 import Support from "../Support/Support";
 import DealForm from "../DealForm/dealForm";
 import { openDealForm } from "../Redux/slice/deal/dealFormSlice";
+import { openProfile, closeProfile, openSendInvite, closeSendInvite, openReset, closeReset, openSupport, closeSupport } from "../Redux/slice/deal/dealFormSlice";
 
 interface NavbarProps {
   links: {
@@ -37,15 +39,39 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
 
   const navigate = useNavigate();
   const dealFormOpen = useSelector((state: RootState) => state.dealForm.open);
+  const profileOpen = useSelector((state: RootState) => state.profileReducer.open);
+  const inviteOpen = useSelector((state: RootState) => state.sendInviteReducer.open);
+  const resetOpen = useSelector((state: RootState) => state.resetReducer.open);
+  const supportOpen = useSelector((state: RootState) => state.supportReducer.open);
 
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
     setOpenPopup(true);
+
+    if (componentName === "SendInvite") {
+      dispatch(openSendInvite());
+    } else if (componentName === "Profile") {
+      dispatch(openProfile());
+    } else if (componentName === "Reset") {
+      dispatch(openReset());
+    } else if (componentName === "Support") {
+      dispatch(openSupport());
+    }
   };
 
   const handleClosePopup = () => {
     setOpenPopup(false);
     setSelectedComponent(null);
+
+    if (selectedComponent === "SendInvite") {
+      dispatch(closeSendInvite());
+    } else if (selectedComponent === "Profile") {
+      dispatch(closeProfile());
+    } else if (selectedComponent === "Reset") {
+      dispatch(closeReset());
+    } else if (selectedComponent === "Support") {
+      dispatch(closeSupport());
+    }
   };
 
   const handleLogout = () => {
@@ -103,7 +129,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             DEALS
           </p>
           <p onClick={() => handleRoute("site")} style={{ cursor: "pointer" }}>
-            SITE
+            PROPERTY
           </p>
           <p
             onClick={() => handleRoute("landlord")}
@@ -169,10 +195,18 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             </Icon>
           </DialogTitle>
           <DialogContent sx={{ padding: 0 }}>
-            {selectedComponent === "SendInvite" && <SendInvite />}
-            {selectedComponent === "Reset" && <Reset />}
-            {selectedComponent === "Profile" && <Profile />}
-            {selectedComponent === "Support" && <Support />}
+            {inviteOpen && selectedComponent === "SendInvite" && (
+              <SendInvite onCloseDialog={handleClosePopup} />
+            )}
+            {profileOpen && selectedComponent === "Profile" && (
+              <Profile onCloseDialog={handleClosePopup} />
+            )}
+            {resetOpen && selectedComponent === "Reset" && (
+              <Reset onCloseDialog={handleClosePopup} />
+            )}
+            {supportOpen && selectedComponent === "Support" && (
+              <Support onCloseDialog={handleClosePopup} />
+            )}
             {selectedComponent === "Landlord" && (
               <Box
                 sx={{

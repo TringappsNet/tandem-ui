@@ -52,6 +52,25 @@ const FullGrid: React.FC<FullGridProps> = ({
                 border: 0,
                 ...sx,
                 lineHeight:2,
+'.css-15n4jlm-MuiDataGrid-root':
+{
+ border:'none',
+},
+  '.css-ptiqhd-MuiSvgIcon-root ':{
+  marginLeft:'10px',
+
+},
+                '.css-1eed5fa-MuiInputBase-root-MuiInput-root': {
+
+                  border: '1px solid #d4d4d4',
+                  borderRadius: '4px',
+                  width:'700px',
+                  marginRight:'970px',
+                  padding:'2px',
+                  marginLeft:'10px',
+                  marginTop:'6px',
+                  marginBottom:'6px'
+              },
                 '.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root':{
                      color:'white',
                      '&:hover':{
@@ -97,6 +116,7 @@ const FullGrid: React.FC<FullGridProps> = ({
 
                 '.css-1knaqv7-MuiButtonBase-root-MuiButton-root':{
                   visibility:'hidden',
+                  position:'absolute',
                   marginBottom:2,
                   
                 },
