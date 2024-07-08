@@ -2,7 +2,6 @@ import { render, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import axiosInstance from '../../AxiosInterceptor/AxiosInterceptor';
 import SiteGrid from './site-grid';
-import userEvent from '@testing-library/user-event';
 
 jest.mock('../../AxiosInterceptor/AxiosInterceptor', () => ({
     post: jest.fn(),
