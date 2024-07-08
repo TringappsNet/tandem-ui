@@ -86,10 +86,12 @@ describe("App component", () => {
   });
 
   test("renders support page", () => {
+    const mockOnCloseDialog = jest.fn();
+
     render(
       <Provider store={store}>
         <Router>
-          <Support />
+          <Support onCloseDialog={mockOnCloseDialog} />
         </Router>
       </Provider>
     );
