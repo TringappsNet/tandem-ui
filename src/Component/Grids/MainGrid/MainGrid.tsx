@@ -45,19 +45,53 @@ const FullGrid: React.FC<FullGridProps> = ({
       ) : (<Box
 
         sx={{
+                height: 700 ,
+                marginTop:2,
+                background:'none',
+                border: 0,
+                ...sx,
+                lineHeight:2,
+'.css-15n4jlm-MuiDataGrid-root':
+{
+ border:'none',
+},
+  '.css-ptiqhd-MuiSvgIcon-root ':{
+  marginLeft:'10px',
 
-          height: 800,
-          marginTop: 2,
-          background: 'none',
-          border: 0,
-          ...sx,
-          lineHeight: 2,
-          '.css-15n4jlm-MuiDataGrid-root':
-          {
-            border: 'none',
-          },
-          '.css-ptiqhd-MuiSvgIcon-root ': {
-            marginLeft: '10px',
+},
+                '.css-1eed5fa-MuiInputBase-root-MuiInput-root': {
+
+                  border: '1px solid #d4d4d4',
+                  borderRadius: '4px',
+                  width:'700px',
+                  marginRight:'970px',
+                  padding:'2px',
+                  marginLeft:'10px',
+                  // marginTop:'6px',
+                  marginBottom:'6px'
+              },
+                '.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root':{
+                     color:'white',
+                     '&:hover':{
+                      color:'white',
+                      }
+                  },
+               '.css-yrdy0g-MuiDataGrid-columnHeaderRow ':{
+                background: '#444189 !important',
+                color:'white'
+
+               },
+         '.css-3eek4p-MuiDataGrid-main ':{
+          background: '#f5f7fb !important'
+
+         },
+
+               '& .css-15n4jlm-MuiDataGrid-root .MuiDataGrid-columnHeaders': {
+
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  textTransform:'uppercase  '
+              },
 
           },
           '.css-1eed5fa-MuiInputBase-root-MuiInput-root': {

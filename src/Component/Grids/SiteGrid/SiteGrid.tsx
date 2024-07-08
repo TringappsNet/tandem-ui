@@ -226,18 +226,18 @@ const SiteGrid: React.FC = () => {
 
   const columns: GridColDef[] = [
 
-    { field: "addressline1", headerName: "AddressLine1", width: 150 },
+ 
+    { field: "addressline1", headerName: "AddressLine1", width: 190 },
+    { field: "addressline2", headerName: "AddressLine2", width: 190 },
 
-    { field: "addressline2", headerName: "AddressLine2", width: 150 },
-
-    { field: "state", headerName: "State", width: 150 },
-    { field: "city", headerName: "City", width: 150 },
-    { field: "zipcode", headerName: "Zipcode", width: 150 },
-    { field: "country", headerName: "Country", width: 150 },
+    { field: "state", headerName: "State", width: 190 },
+    { field: "city", headerName: "City", width: 190 },
+    { field: "zipcode", headerName: "Zipcode", width: 170 },
+    { field: "country", headerName: "Country", width: 170 },
     {
       field: "actions",
       headerName: "Actions",
-      width: 150,
+      width: 130,
 
       renderCell: (params) => (
         <>
@@ -273,9 +273,11 @@ const SiteGrid: React.FC = () => {
       </Button>
 
       <FullGrid
-        sx={{
-          height: 470
-        }}
+
+       sx={{
+        height:450
+      }}
+
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}

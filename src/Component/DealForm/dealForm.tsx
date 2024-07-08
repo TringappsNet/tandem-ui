@@ -333,6 +333,7 @@ const DealForm: React.FC<DealFormProps> = () => {
               // boxShadow:' rgba(99, 99, 99, 0.2) 0px 2px 2px 0px' ,
               color: "white",
               backgroundColor: "#262262",
+              cursor:'pointer'
             }}
           >
             Save/Close
