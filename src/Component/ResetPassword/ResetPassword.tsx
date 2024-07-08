@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './ResetPassword.module.css';
 
-const Reset: React.FC = () => {
+interface ResetProps {
+    onCloseDialog: () => void;
+}
+
+const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
     const [showResetForm, setShowResetForm] = useState(true);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -49,6 +53,7 @@ const Reset: React.FC = () => {
                     setNewPassword('');
                     setConfirmPassword('');
                     setResponseType('');
+                    onCloseDialog(); // Close the dialog in Navbar
                 }, 1000);
             } else {
                 setResponseMessage(response.data.message || 'Password reset failed.');

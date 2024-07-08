@@ -14,12 +14,7 @@ import Milestone from "./Component/DealForm/dealForm";
 import Dashboard from "../src/Component/NewDashboard/Dashboard";
 import Support from "./Component/Support/Support";
 
-const App: React.FC = () => {
-  const [accessToken, setAccessToken] = useState<string | null>(
-    localStorage.getItem("accessToken")
-  );
-
-  // const handleLoginSuccess = (token: string) => {
+ // const handleLoginSuccess = (token: string) => {
   //   setAccessToken(token);2
   //   localStorage.setItem('accessToken', token);
   // };
@@ -29,6 +24,11 @@ const App: React.FC = () => {
   //   localStorage.removeItem('accessToken');
   // };
 
+const App: React.FC = () => {
+  const [accessToken, setAccessToken] = useState<string | null>(
+    localStorage.getItem("accessToken")
+  );
+
   useEffect(() => {
     // const storedToken = "aces"
     const storedToken = localStorage.getItem("accessToken");
@@ -36,6 +36,10 @@ const App: React.FC = () => {
       setAccessToken(storedToken);
     }
   }, []);
+
+  const handleCloseDialog = () => {
+    console.log("Dialog closed");
+  };
 
   return (
     <Router>
@@ -51,8 +55,7 @@ const App: React.FC = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/mile" element={<Milestone />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/support" element={<Support />} />
-
+        <Route path="/support" element={<Support onCloseDialog={handleCloseDialog} />} />
         <Route path="/*" element={<Dashboard />} />
       </Routes>
     </Router>
