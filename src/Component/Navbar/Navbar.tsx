@@ -1,4 +1,3 @@
-// Navbar.tsx
 import React, { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent, Icon, DialogTitle, Box } from "@mui/material";
 import styles from "./Navbar.module.css";
@@ -14,6 +13,7 @@ import { RootState } from "../Redux/reducers";
 import Profile from "../Profile/profile";
 import Support from "../Support/Support";
 import DealForm from "../DealForm/dealForm";
+import ConfirmationModal from "../AlertDialog/AlertDialog";
 import { openDealForm } from "../Redux/slice/deal/dealFormSlice";
 import { openProfile, closeProfile, openSendInvite, closeSendInvite, openReset, closeReset, openSupport, closeSupport } from "../Redux/slice/deal/dealFormSlice";
 
@@ -31,10 +31,9 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const auth: any = localStorage.getItem("auth");
   const userdetails = JSON.parse(auth);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
-  const [selectedComponent, setSelectedComponent] = useState<string | null>(
-    null
-  );
+  const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
@@ -74,9 +73,18 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => {
+    setShowLogoutConfirmation(true);
+  };
+
+  const handleLogoutConfirm = () => {
     navigate("/login");
     localStorage.clear();
+    setShowLogoutConfirmation(false);
+  };
+
+  const handleLogoutCancel = () => {
+    setShowLogoutConfirmation(false);
   };
 
   const handleCards = () => {
@@ -170,7 +178,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                 <button onClick={() => handleOpenPopup("Support")}>
                   Contact us
                 </button>
-                <button onClick={handleLogout}>Logout</button>
+                <button onClick={handleLogoutClick}>Logout</button>
               </div>
             )}
           </div>
@@ -246,6 +254,18 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         </Dialog>
       )}
       {dealFormOpen && <DealForm />}
+
+      <ConfirmationModal
+        show={showLogoutConfirmation}
+        onHide={handleLogoutCancel}
+        onConfirm={handleLogoutConfirm}
+        title="Confirm Logout"
+        message="Are you sure you want to logout!"
+        cancelText="Cancel"
+        confirmText="Logout"
+        cancelVariant="secondary"
+        confirmVariant="primary"
+      />
     </>
   );
 };

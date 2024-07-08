@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import styles from './profile.module.css';
 import { RootState } from "../Redux/reducers";
+
 interface ProfileItem {
     label: string;
     value: string | number;
@@ -19,8 +20,8 @@ interface ProfileProps {
 
 const Profile: React.FC<ProfileProps> = () => {
     const [profileData, setProfileData] = useState<ProfileItem[] | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
     const user = useSelector((state: RootState) => state.auth.user);
-    console.log(user);
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -46,14 +47,26 @@ const Profile: React.FC<ProfileProps> = () => {
                     setProfileData(userProfileData);
                 } catch (error) {
                     console.error('Error fetching roles:', error);
+                } finally {
+                    setIsLoading(false);
                 }
+            } else {
+                setIsLoading(false);
             }
         };
         fetchProfileData();
     }, [user]);
 
+    if (isLoading) {
+        return (
+            <div className={styles.loaderContainer}>
+                <div className={styles.loader}></div>
+            </div>
+        );
+    }
+
     if (!profileData) {
-        return <div>No User found</div>;
+        return null;
     }
 
     return (

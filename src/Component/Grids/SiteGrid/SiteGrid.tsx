@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogContent,
   IconButton
-  
+
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -109,7 +109,7 @@ const SiteGrid: React.FC = () => {
   };
 
   const validateForm = () => {
-    
+
     let valid = true;
 
     const errors: Partial<Site> = {};
@@ -133,7 +133,7 @@ const SiteGrid: React.FC = () => {
       valid = false;
 
     }
-    
+
     if (!formData.zipcode) {
       errors.zipcode = "Zipcode is required";
       valid = false;
@@ -143,7 +143,7 @@ const SiteGrid: React.FC = () => {
       errors.zipcode = 'Zipcode must be 5 digits';
       valid = false;
 
-  }
+    }
     setFormErrors(errors);
     return valid;
   };
@@ -171,43 +171,43 @@ const SiteGrid: React.FC = () => {
       handleOpen();
     }
   };
-  
+
   const handleUpdate = async () => {
     try {
-       
-        const updateBy:any = localStorage.getItem('auth');
-    const user_id = JSON.parse(updateBy);
 
-    console.log("User Id", user_id.user.id);
+      const updateBy: any = localStorage.getItem('auth');
+      const user_id = JSON.parse(updateBy);
 
-        if (updateBy) { 
-            
+      console.log("User Id", user_id.user.id);
 
-
-            const updatedFormData = {
-                ...formData,
-                updatedBy: user_id.user.id
-
-            };
-            
-
-            const response = await axiosInstance.put(
-                `sites/site/${updatedFormData.id}`,
-                updatedFormData
-            );
-
-            setRows(rows.map((row) => (row.id === updatedFormData.id ? response.data : row)));
+      if (updateBy) {
 
 
-            handleClose();
 
-        } 
+        const updatedFormData = {
+          ...formData,
+          updatedBy: user_id.user.id
+
+        };
+
+
+        const response = await axiosInstance.put(
+          `sites/site/${updatedFormData.id}`,
+          updatedFormData
+        );
+
+        setRows(rows.map((row) => (row.id === updatedFormData.id ? response.data : row)));
+
+
+        handleClose();
+
+      }
 
 
     } catch (error) {
-        console.error("Error updating Site:", error);
+      console.error("Error updating Site:", error);
     }
-};
+  };
 
   const handleDelete = async (id: number) => {
     setDeleteConfirmation(true);
@@ -225,9 +225,9 @@ const SiteGrid: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
+
  
     { field: "addressline1", headerName: "AddressLine1", width: 190 },
-
     { field: "addressline2", headerName: "AddressLine2", width: 190 },
 
     { field: "state", headerName: "State", width: 190 },
@@ -273,9 +273,11 @@ const SiteGrid: React.FC = () => {
       </Button>
 
       <FullGrid
+
        sx={{
         height:450
       }}
+
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}
@@ -319,25 +321,25 @@ const SiteGrid: React.FC = () => {
       >
         <DialogTitle className="dialogtitle">{formData.id ? "Edit Property" : "Add Property"}
 
-        <IconButton
-          aria-label="close"
-          onClick={() => {
-            handleClose();
-     
-          }}
-          sx={{
-            position: 'absolute',
-            right: 20,
-            top: 10,
-        
-            color: (theme) => theme.palette.grey[500],
-        }}
+          <IconButton
+            aria-label="close"
+            onClick={() => {
+              handleClose();
 
-        >
-           
+            }}
+            sx={{
+              position: 'absolute',
+              right: 20,
+              top: 10,
 
-          <CloseIcon sx={{ color: "#999" }} />
-        </IconButton>
+              color: (theme) => theme.palette.grey[500],
+            }}
+
+          >
+
+
+            <CloseIcon sx={{ color: "#999" }} />
+          </IconButton>
 
         </DialogTitle>
         <DialogContent>
