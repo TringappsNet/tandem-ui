@@ -28,11 +28,6 @@ interface User {
   roleId: number;
 }
 
-interface Role {
-  id: number;
-  roleName: string;
-}
-
 interface BrokerData extends Omit<User, 'roleId'> {
   fullName: string;
   totalDeals: number;
@@ -45,12 +40,10 @@ interface BrokerData extends Omit<User, 'roleId'> {
 
 const config = {
   apiUrl: "/brokers",
-  rolesUrl: "http://192.168.1.77:3008/api/roles",
 };
 
 const BrokerGrid: React.FC = () => {
   const [rows, setRows] = useState<BrokerData[]>([]);
-  const [roles, setRoles] = useState<Role[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<User>({
     id: 0,
@@ -72,32 +65,16 @@ const BrokerGrid: React.FC = () => {
   });
 
   useEffect(() => {
-    fetchRoles();
+    fetchBrokers();
   }, []);
-
-  useEffect(() => {
-    if (roles.length > 0) {
-      fetchBrokers();
-    }
-  });
-
-  const fetchRoles = async () => {
-    try {
-      const response = await axios.get(config.rolesUrl);
-      setRoles(response.data);
-    } catch (error) {
-      console.error("Error fetching roles:", error);
-    }
-  };
 
   const fetchBrokers = async () => {
     try {
       const response = await axiosInstance.get(config.apiUrl);
       const brokers = response.data.map((broker: any) => {
         const fullName = `${broker.user.firstName} ${broker.user.lastName}`;
-        const role = roles.find(r => r.id === broker.user.id);
-        console.log(role);
-        const roleName = role ? role.roleName : 'Admin';
+        const roleName = broker.roleId === 1 ? 'Admin' : 'Broker';
+
         return {
           id: broker.user.id,
           email: broker.user.email,
