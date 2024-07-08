@@ -1,6 +1,6 @@
-// Support.tsx
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from './Support.module.css';
 import mailImage from './mail.png';
@@ -13,17 +13,19 @@ interface RootState {
     };
 }
 
+
 interface SupportProps {
     onCloseDialog: () => void;
 }
-
 const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
     const [subject, setSubject] = useState('');
     const [description, setDescription] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [isVisible, setIsVisible] = useState(true);
     const user = useSelector((state: RootState) => state.auth.user);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (subject.trim() && errorMessage === 'Please fill in the subject') {
@@ -75,9 +77,14 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
                 setSuccessMessage('Ticket raised successfully!');
                 setSubject('');
                 setDescription('');
+
                 setTimeout(() => {
-                    onCloseDialog(); // Close the dialog in Navbar
-                }, 1000);
+                    setIsVisible(false);
+                }, 2000);
+
+                setTimeout(() => {
+                    navigate('/dashboard');
+                }, 2500);
             } else {
                 setErrorMessage('Failed to raise ticket. Please try again.');
             }
@@ -88,6 +95,10 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
             setIsLoading(false);
         }
     };
+
+    if (!isVisible) {
+        return null;
+    }
 
     return (
         <div className={styles.contactsContainer}>

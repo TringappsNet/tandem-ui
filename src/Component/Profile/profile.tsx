@@ -1,10 +1,8 @@
-// Profile.tsx
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import styles from './profile.module.css';
 import { RootState } from "../Redux/reducers";
-
 interface ProfileItem {
     label: string;
     value: string | number;
@@ -19,7 +17,7 @@ interface ProfileProps {
     onCloseDialog: () => void;
 }
 
-const Profile: React.FC<ProfileProps> = ({ onCloseDialog }) => {
+const Profile: React.FC<ProfileProps> = () => {
     const [profileData, setProfileData] = useState<ProfileItem[] | null>(null);
     const user = useSelector((state: RootState) => state.auth.user);
     console.log(user);
@@ -28,7 +26,7 @@ const Profile: React.FC<ProfileProps> = ({ onCloseDialog }) => {
         const fetchProfileData = async () => {
             if (user) {
                 try {
-                    const response = await axios.get('http://192.168.1.223:3008/api/roles');
+                    const response = await axios.get('http://192.168.1.77:3008/api/roles');
                     const roles: Role[] = response.data.map((role: any) => ({
                         id: role.id,
                         roleName: role.roleName
@@ -46,14 +44,13 @@ const Profile: React.FC<ProfileProps> = ({ onCloseDialog }) => {
                         { label: "Zipcode", value: user.zipcode }
                     ];
                     setProfileData(userProfileData);
-                    onCloseDialog();
                 } catch (error) {
                     console.error('Error fetching roles:', error);
                 }
             }
         };
         fetchProfileData();
-    }, [user, onCloseDialog]);
+    }, [user]);
 
     if (!profileData) {
         return <div>No User found</div>;
