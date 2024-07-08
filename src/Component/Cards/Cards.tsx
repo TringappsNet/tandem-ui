@@ -137,6 +137,11 @@ const Cards: React.FC = () => {
                                 </div>
                             </div>
 
+                        </div>
+                        <div className={styles.statusLine}>
+                            <div className={styles.timestamp}>
+                                Last updated on: {deal.updatedAt?.split('T')[0] || "Unknown"}
+                            </div>
                             <div className={styles.circle} title={deal.brokerName}>
                                 {deal.brokerName && deal.brokerName.split(" ").length >= 2 ? (
                                     <p>{deal.brokerName.split(" ")[0][0]}{deal.brokerName.split(" ")[1][0]}</p>
@@ -145,9 +150,7 @@ const Cards: React.FC = () => {
                                 )}
                             </div>
                         </div>
-                        <div className={styles.timestamp}>
-                            Last updated on: {deal.updatedAt?.split('T')[0] || "Unknown"}
-                        </div>
+
                         <hr className={`${styles.statuslinecolor} ${getStatusButtonClass(deal.status)}`} />
                     </div>
                 ))}
