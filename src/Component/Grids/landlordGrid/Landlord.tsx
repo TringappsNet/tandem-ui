@@ -368,15 +368,7 @@ const LandlordGrid: React.FC = () => {
             helperText={formErrors.address2}
           />
 
-          <TextField
-            margin="dense"
-            name="address2"
-            label="Address 2"
-            type="text"
-            fullWidth
-            value={formData.address2}
-            onChange={handleChange}
-          />
+        
           <TextField
             margin="dense"
             name="city"
