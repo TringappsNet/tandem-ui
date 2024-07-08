@@ -1,8 +1,10 @@
+// Profile.tsx
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import styles from './profile.module.css';
 import { RootState } from "../Redux/reducers";
+
 interface ProfileItem {
     label: string;
     value: string | number;
@@ -13,7 +15,11 @@ interface Role {
     roleName: string;
 }
 
-const Profile: React.FC = () => {
+interface ProfileProps {
+    onCloseDialog: () => void;
+}
+
+const Profile: React.FC<ProfileProps> = ({ onCloseDialog }) => {
     const [profileData, setProfileData] = useState<ProfileItem[] | null>(null);
     const user = useSelector((state: RootState) => state.auth.user);
     console.log(user);
@@ -40,13 +46,14 @@ const Profile: React.FC = () => {
                         { label: "Zipcode", value: user.zipcode }
                     ];
                     setProfileData(userProfileData);
+                    onCloseDialog();
                 } catch (error) {
                     console.error('Error fetching roles:', error);
                 }
             }
         };
         fetchProfileData();
-    }, [user]);
+    }, [user, onCloseDialog]);
 
     if (!profileData) {
         return <div>No User found</div>;
