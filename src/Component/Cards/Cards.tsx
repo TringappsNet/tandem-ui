@@ -35,14 +35,12 @@ const Cards: React.FC = () => {
     const [filterStatus, setFilterStatus] = useState("");
     const dispatch = useDispatch<AppDispatch>();
     const dealsData = useSelector((state: RootState) => state.deal.dealDetails);
-    const [dealFormData, setDealFormData] = useState<Deal | null>(null);
     const [deleteConfirmation, setDeleteConfirmation] = useState(false);
     const [dealId, setDealId] = useState<number | null>(null);
 
     useEffect(() => {
         dispatch(fetchDealDetails());
     }, [dispatch]);
-
 
     const editDealForm = (deal: Deal) => {
         dispatch(setCurrentDeal(deal)); 
@@ -155,7 +153,6 @@ const Cards: React.FC = () => {
                     </div>
                 ))}
             </div>
-            {dealFormData && <DealForm deal={dealFormData} />}
             <ConfirmationModal
                 show={deleteConfirmation}
                 onHide={cancelDelete}
