@@ -64,11 +64,12 @@ const FullGrid: React.FC<FullGridProps> = ({
 
                   border: '1px solid #d4d4d4',
                   borderRadius: '4px',
-                  width:'500px',
-                  marginRight:'840px',
+                  width:'700px',
+                  marginRight:'970px',
                   padding:'2px',
-                  marginTop:'10px',
-                  marginBottom:'10px'
+                  marginLeft:'10px',
+                  marginTop:'6px',
+                  marginBottom:'6px'
               },
                 '.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root':{
                      color:'white',
