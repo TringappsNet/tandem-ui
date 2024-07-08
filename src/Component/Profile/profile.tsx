@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
         const fetchProfileData = async () => {
             if (user) {
                 try {
-                    const response = await axios.get('http://192.168.1.223:3008/api/roles');
+                    const response = await axios.get('http://192.168.1.77:3008/api/roles');
                     const roles: Role[] = response.data.map((role: any) => ({
                         id: role.id,
                         roleName: role.roleName

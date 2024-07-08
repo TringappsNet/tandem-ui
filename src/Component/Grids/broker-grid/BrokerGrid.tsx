@@ -33,13 +33,23 @@ interface Role {
   roleName: string;
 }
 
+interface BrokerData extends Omit<User, 'roleId'> {
+  fullName: string;
+  totalDeals: number;
+  dealsOpened: number;
+  dealsInProgress: number;
+  dealsClosed: number;
+  totalCommission: number;
+  roleName: string;
+}
+
 const config = {
   apiUrl: "/brokers",
   rolesUrl: "http://192.168.1.77:3008/api/roles",
 };
 
 const BrokerGrid: React.FC = () => {
-  const [rows, setRows] = useState<User[]>([]);
+  const [rows, setRows] = useState<BrokerData[]>([]);
   const [roles, setRoles] = useState<Role[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<User>({
@@ -63,8 +73,13 @@ const BrokerGrid: React.FC = () => {
 
   useEffect(() => {
     fetchRoles();
-    fetchBrokers();
   }, []);
+
+  useEffect(() => {
+    if (roles.length > 0) {
+      fetchBrokers();
+    }
+  });
 
   const fetchRoles = async () => {
     try {
@@ -80,14 +95,15 @@ const BrokerGrid: React.FC = () => {
       const response = await axiosInstance.get(config.apiUrl);
       const brokers = response.data.map((broker: any) => {
         const fullName = `${broker.user.firstName} ${broker.user.lastName}`;
-        const roleId = broker.user.roleId;
-        console.log(broker);
-        console.log("id:", roleId);
-        const roleName = roleId === 1 ? "Admin" : "Broker";
+        const role = roles.find(r => r.id === broker.user.id);
+        console.log(role);
+        const roleName = role ? role.roleName : 'Admin';
         return {
           id: broker.user.id,
           email: broker.user.email,
           fullName: fullName,
+          firstName: broker.user.firstName,
+          lastName: broker.user.lastName,
           mobile: broker.user.mobile,
           address: broker.user.address,
           city: broker.user.city,
@@ -100,7 +116,6 @@ const BrokerGrid: React.FC = () => {
           dealsInProgress: broker.dealsInProgress,
           dealsClosed: broker.dealsClosed,
           totalCommission: broker.totalCommission,
-          roleId: broker.user.roleId,
           roleName: roleName,
         };
       });
@@ -120,8 +135,8 @@ const BrokerGrid: React.FC = () => {
 
   const handleAdd = async () => {
     try {
-      const response = await axios.post(config.apiUrl, formData);
-      setRows([...rows, response.data]);
+      await axios.post(config.apiUrl, formData);
+      await fetchBrokers();
       handleClose();
     } catch (error) {
       console.error("Error adding user:", error);
@@ -130,8 +145,8 @@ const BrokerGrid: React.FC = () => {
 
   const handleUpdate = async () => {
     try {
-      const response = await axios.put(`${config.apiUrl}/${formData.id}`, formData);
-      setRows(rows.map((row) => (row.id === formData.id ? response.data : row)));
+      await axios.put(`${config.apiUrl}/${formData.id}`, formData);
+      await fetchBrokers();
       handleClose();
     } catch (error) {
       console.error("Error updating user:", error);
