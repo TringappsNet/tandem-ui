@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-// import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './Support.module.css';
 import mailImage from './mail.png';
 
@@ -19,7 +19,9 @@ const Support: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [isVisible, setIsVisible] = useState(true);
     const user = useSelector((state: RootState) => state.auth.user);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (subject.trim() && errorMessage === 'Please fill in the subject') {
@@ -50,7 +52,6 @@ const Support: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-
         if (!validateForm()) {
             return;
         }
@@ -72,6 +73,14 @@ const Support: React.FC = () => {
                 setSuccessMessage('Ticket raised successfully!');
                 setSubject('');
                 setDescription('');
+
+                setTimeout(() => {
+                    setIsVisible(false);
+                }, 2000);
+
+                setTimeout(() => {
+                    navigate('/dashboard');
+                }, 2500);
             } else {
                 setErrorMessage('Failed to raise ticket. Please try again.');
             }
@@ -82,6 +91,10 @@ const Support: React.FC = () => {
             setIsLoading(false);
         }
     };
+
+    if (!isVisible) {
+        return null;
+    }
 
     return (
         <div className={styles.contactsContainer}>

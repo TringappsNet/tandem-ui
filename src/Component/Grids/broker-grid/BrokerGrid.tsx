@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import {
   Button,
   TextField,
@@ -25,14 +25,22 @@ interface User {
   country: string;
   zipcode: string;
   isActive: boolean;
+  roleId: number;
+}
+
+interface Role {
+  id: number;
+  roleName: string;
 }
 
 const config = {
   apiUrl: "/brokers",
+  rolesUrl: "http://192.168.1.77:3008/api/roles",
 };
 
 const BrokerGrid: React.FC = () => {
   const [rows, setRows] = useState<User[]>([]);
+  const [roles, setRoles] = useState<Role[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<User>({
     id: 0,
@@ -46,6 +54,7 @@ const BrokerGrid: React.FC = () => {
     country: "",
     zipcode: "",
     isActive: true,
+    roleId: 1,
   });
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     pageSize: 5,
@@ -53,14 +62,28 @@ const BrokerGrid: React.FC = () => {
   });
 
   useEffect(() => {
+    fetchRoles();
     fetchBrokers();
   }, []);
+
+  const fetchRoles = async () => {
+    try {
+      const response = await axios.get(config.rolesUrl);
+      setRoles(response.data);
+    } catch (error) {
+      console.error("Error fetching roles:", error);
+    }
+  };
 
   const fetchBrokers = async () => {
     try {
       const response = await axiosInstance.get(config.apiUrl);
       const brokers = response.data.map((broker: any) => {
         const fullName = `${broker.user.firstName} ${broker.user.lastName}`;
+        const roleId = broker.user.roleId;
+        console.log(broker);
+        console.log("id:", roleId);
+        const roleName = roleId === 1 ? "Admin" : "Broker";
         return {
           id: broker.user.id,
           email: broker.user.email,
@@ -77,6 +100,8 @@ const BrokerGrid: React.FC = () => {
           dealsInProgress: broker.dealsInProgress,
           dealsClosed: broker.dealsClosed,
           totalCommission: broker.totalCommission,
+          roleId: broker.user.roleId,
+          roleName: roleName,
         };
       });
 
@@ -114,29 +139,27 @@ const BrokerGrid: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: "fullName", headerName: "Name", width: 170, },
-    { field: "mobile", headerName: "Mobile", width: 170 },
-    { field: "totalDeals", headerName: "Total Deals", width: 170 },
-    { field: "dealsOpened", headerName: "Deals Opened", width: 170 },
-    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 170 },
-    { field: "dealsClosed", headerName: "Deals Closed", width: 170 },
-    { field: "totalCommission", headerName: "Total Commission", width: 170 },
-
+    { field: "fullName", headerName: "Name", width: 170 },
+    { field: "roleName", headerName: "Role", width: 120 },
+    { field: "mobile", headerName: "Mobile", width: 150 },
+    { field: "totalDeals", headerName: "Total Deals", width: 130 },
+    { field: "dealsOpened", headerName: "Deals Opened", width: 130 },
+    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 150 },
+    { field: "dealsClosed", headerName: "Deals Closed", width: 130 },
+    { field: "totalCommission", headerName: "Total Commission", width: 150 },
   ];
 
   return (
-    <div >
-
+    <div>
       <FullGrid
-       className=""
+        className=""
         sx={{
-          height:400
+          height: 530,
         }}
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}
         setPaginationModel={setPaginationModel}
-
       />
 
       <Dialog open={open} onClose={handleClose}>
@@ -234,9 +257,7 @@ const BrokerGrid: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
-
     </div>
-
   );
 };
 
