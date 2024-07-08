@@ -312,17 +312,21 @@ const DealForm: React.FC<DealFormProps> = ({ deal }) => {
         }}
 
         >
-             <button className='saveclose' style={{
-                            height:'24px',
-                            width:'100px',
-                            border:'1px solid grey',
-                            borderRadius:'3px',
-                            // boxShadow:' rgba(99, 99, 99, 0.2) 0px 2px 2px 0px' ,
-                            color: 'white',
-                            backgroundColor: '#262262',                    }}>
-                        Save/Close
-
-                        </button>
+          <button
+            className="saveclose"
+            style={{
+              height: "24px",
+              width: "100px",
+              border: "1px solid grey",
+              borderRadius: "3px",
+              // boxShadow:' rgba(99, 99, 99, 0.2) 0px 2px 2px 0px' ,
+              color: "white",
+              backgroundColor: "#262262",
+              cursor:'pointer'
+            }}
+          >
+            Save/Close
+          </button>
 
           {/* <CloseIcon sx={{ color: "#999" }} /> */}
         </IconButton>
