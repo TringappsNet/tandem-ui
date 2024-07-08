@@ -13,7 +13,11 @@ interface RootState {
     };
 }
 
-const Support: React.FC = () => {
+
+interface SupportProps {
+    onCloseDialog: () => void;
+}
+const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
     const [subject, setSubject] = useState('');
     const [description, setDescription] = useState('');
     const [isLoading, setIsLoading] = useState(false);

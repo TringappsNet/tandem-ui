@@ -14,15 +14,15 @@ import Milestone from "./Component/DealForm/dealForm";
 import Dashboard from "../src/Component/NewDashboard/Dashboard";
 import Support from "./Component/Support/Support";
 
- // const handleLoginSuccess = (token: string) => {
-  //   setAccessToken(token);2
-  //   localStorage.setItem('accessToken', token);
-  // };
+// const handleLoginSuccess = (token: string) => {
+//   setAccessToken(token);2
+//   localStorage.setItem('accessToken', token);
+// };
 
-  // const handleLogout = () => {
-  //   setAccessToken(null);
-  //   localStorage.removeItem('accessToken');
-  // };
+// const handleLogout = () => {
+//   setAccessToken(null);
+//   localStorage.removeItem('accessToken');
+// };
 
 const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(
