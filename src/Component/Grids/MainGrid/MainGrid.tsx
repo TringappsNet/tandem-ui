@@ -46,7 +46,7 @@ const FullGrid: React.FC<FullGridProps> = ({
 
         sx={{
 
-                height: 800 ,
+                height: 700 ,
                 marginTop:2,
                 background:'none',
                 border: 0,
@@ -68,7 +68,7 @@ const FullGrid: React.FC<FullGridProps> = ({
                   marginRight:'970px',
                   padding:'2px',
                   marginLeft:'10px',
-                  marginTop:'6px',
+                  // marginTop:'6px',
                   marginBottom:'6px'
               },
                 '.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root':{
