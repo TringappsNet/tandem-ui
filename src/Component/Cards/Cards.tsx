@@ -8,6 +8,7 @@ import { deleteDeal, fetchDealDetails } from "../Redux/slice/deal/dealSlice";
 import { openDealForm } from "../Redux/slice/deal/dealFormSlice";
 import { AppDispatch } from "../Redux/store";
 import ConfirmationModal from "../AlertDialog/AlertDialog";
+import { setCurrentDeal } from "../Redux/slice/deal/currentDeal";
 
 interface Deal {
     id: number | null;
@@ -42,11 +43,9 @@ const Cards: React.FC = () => {
         dispatch(fetchDealDetails());
     }, [dispatch]);
 
+
     const editDealForm = (deal: Deal) => {
-        setDealFormData({
-            ...deal,
-            activeStep: deal.activeStep || 0,
-        });
+        dispatch(setCurrentDeal(deal)); 
         dispatch(openDealForm());
     };
 
