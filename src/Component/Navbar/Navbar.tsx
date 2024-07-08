@@ -50,6 +50,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
 
   const handleLogout = () => {
     navigate("/login");
+    localStorage.clear();
   };
 
   const handleCards = () => {

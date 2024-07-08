@@ -130,22 +130,18 @@ const Cards: React.FC = () => {
                             <hr className={styles.line} />
                             <div className={styles.nameHeader}>
                                 <div className={styles.name}>
-                                    <span>Broker &nbsp; &nbsp; &nbsp; </span>:&nbsp;  {deal.brokerName}
-                                </div>
-                                <div className={styles.name}>
-                                    <span>Property &nbsp; </span>:&nbsp;  {deal.propertyName}
+                                    {deal.propertyName}
                                 </div>
                             </div>
                         </div>
                         <div className={styles.statusLine}>
                             <div className={styles.statuscontainer}>
-                                <div className={styles.statusLabel}>Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</div>
                                 <div className={`${styles.statusButton} ${getStatusButtonClass(deal.status)}`}>
                                     {deal.status}
                                 </div>
                             </div>
 
-                            <div className={styles.circle}>
+                            <div className={styles.circle} title={deal.brokerName}>
                                 {deal.brokerName && deal.brokerName.split(" ").length >= 2 ? (
                                     <p>{deal.brokerName.split(" ")[0][0]}{deal.brokerName.split(" ")[1][0]}</p>
                                 ) : (
