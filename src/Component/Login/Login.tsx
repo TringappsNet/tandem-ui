@@ -120,7 +120,6 @@ const Login: React.FC = () => {
               <label className={styles.label} htmlFor="username">Email ID</label>
               <input
                 id="username"
-                type="email"
                 placeholder="Enter email"
                 value={email}
                 onChange={handleEmailChange}

@@ -22,6 +22,9 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
         return hasSpecialChar && hasNumber && hasUpperCase;
     };
 
+    const user_id: any = localStorage.getItem('user');
+    const user = JSON.parse(user_id)
+
     const handleResetPassword = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -41,7 +44,7 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
             const response = await axiosInstance.post('/auth/reset-password', {
                 oldPassword,
                 newPassword,
-                userId: 1,
+                userId: user.id,
             });
 
             if (response.status === 200) {
