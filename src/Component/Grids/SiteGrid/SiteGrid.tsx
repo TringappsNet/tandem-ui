@@ -225,17 +225,11 @@ const SiteGrid: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
-    {
-      field: "address",
-      headerName: "Address",
-      width: 300,
-      
-      renderCell: (params) => (
-        <>
-          {params.row.addressline1} {params.row.addressline2}
-        </>
-      ),
-    },
+ 
+    { field: "addressline1", headerName: "AddressLine1", width: 150 },
+
+    { field: "addressline2", headerName: "AddressLine2", width: 150 },
+
     { field: "state", headerName: "State", width: 150 },
     { field: "city", headerName: "City", width: 150 },
     { field: "zipcode", headerName: "Zipcode", width: 150 },
@@ -323,7 +317,7 @@ const SiteGrid: React.FC = () => {
       //   }
       // }}
       >
-        <DialogTitle className="dialogtitle">{formData.id ? "Edit Site" : "Add Site"}
+        <DialogTitle className="dialogtitle">{formData.id ? "Edit Property" : "Add Property"}
 
         <IconButton
           aria-label="close"

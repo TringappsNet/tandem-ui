@@ -161,18 +161,8 @@ const LandlordGrid: React.FC = () => {
     { field: "name", headerName: "Name", width: 120 },
     { field: "phoneNumber", headerName: "Phone Number", width: 150 },
     { field: "email", headerName: "Email", width: 180 },
-    {
-      field: "address",
-      headerName: "Address",
-      width: 200,
-      // align: "center",
-      // headerAlign: "center",
-      renderCell: (params) => (
-        <>
-          {params.row.address1} {params.row.address2}
-        </>
-      ),
-    },
+    { field: "address1", headerName: "AddressLine1", width: 180 },
+    { field: "address2", headerName: "AddressLine2", width: 180 },
     { field: "city", headerName: "City", width: 100 },
     { field: "state", headerName: "State", width: 100 },
     { field: "country", headerName: "Country", width: 80 },
@@ -181,8 +171,7 @@ const LandlordGrid: React.FC = () => {
       field: "actions",
       headerName: "Actions",
       width: 200,
-      // align: "center",
-      // headerAlign: 'center',
+     
       renderCell: (params) => (
         <>
           <MdEdit
@@ -366,6 +355,19 @@ const LandlordGrid: React.FC = () => {
             error={!!formErrors.address1}
             helperText={formErrors.address1}
           />
+
+                  <TextField
+            margin="dense"
+            name="address2"
+            label="Address2"
+            type="text"
+            fullWidth
+            value={formData.address2}
+            onChange={handleChange}
+            error={!!formErrors.address2}
+            helperText={formErrors.address2}
+          />
+
           <TextField
             margin="dense"
             name="address2"
