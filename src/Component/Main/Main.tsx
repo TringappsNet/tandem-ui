@@ -49,7 +49,7 @@ const Main: React.FC = () => {
                 <span className={styles.tag}>Deals Closed: {deal.dealsClosed}</span>
                 <span className={styles.tag}>Total Commission: {deal.totalCommission}</span>
             </div>
-            <h1 className={styles.b_title}>Brokers</h1>
+            <h1 className={styles.b_title}>Users</h1>
             <div>
                 <BrokerGrid />
             </div>
