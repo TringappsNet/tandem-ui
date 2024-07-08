@@ -46,6 +46,7 @@ const Cards: React.FC = () => {
 
     const editDealForm = (deal: Deal) => {
         dispatch(setCurrentDeal(deal)); 
+        setDealFormData(deal);
         dispatch(openDealForm());
     };
 
