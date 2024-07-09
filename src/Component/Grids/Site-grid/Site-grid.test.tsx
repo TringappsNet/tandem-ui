@@ -27,13 +27,6 @@ describe('SiteGrid Component', () => {
         {
           id: 1,
           addressline1: '123 Main St',
-          addressline2: 'Apt 4',
-          city: 'Springfield',
-          state: 'IL',
-          country: 'USA',
-          zipcode: '62704',
-          isNew: false,
-          createdBy: 1,
         },
       ],
     });

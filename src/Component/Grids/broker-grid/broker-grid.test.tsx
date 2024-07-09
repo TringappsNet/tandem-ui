@@ -21,17 +21,8 @@ describe('BrokerGrid Component', () => {
     const mockedResponse = {
       data: [
         {
-          id: 1,
-          email: 'test@example.com',
-          firstName: 'John',
-          lastName: 'Doe',
-          mobile: '1234567890',
-          address: '123 Elm St',
-          city: 'Springfield',
-          state: 'IL',
-          country: 'USA',
-          zipcode: '62704',
-          isActive: true,
+          firstName: 'fname',
+          lastName: 'lname',
         },
       ],
     };
@@ -41,7 +32,7 @@ describe('BrokerGrid Component', () => {
     const { getByText } = render(<BrokerGrid />);
 
     await (() => {
-      expect(getByText('John Doe')).toBeInTheDocument();
+      expect(getByText('fname lname')).toBeInTheDocument();
     });
   });
 });

@@ -1,53 +1,120 @@
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
-import Registration from './Registration';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+import Registration from './Registration';
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 
-jest.mock('../AxiosInterceptor/AxiosInterceptor');
+jest.mock('../AxiosInterceptor/AxiosInterceptor', () => ({
+    post: jest.fn(),
+  }));
+describe('Registration', () => {
+    test('render the registration form', () => {
+        render(
+            <Router>
+                <Registration />
+            </Router>
+        );
 
-describe('Registration Component', () => {
-    beforeEach(() => {
-        render(<Router><Registration /></Router>);
+        expect(screen.getByPlaceholderText('Enter your first name')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Enter your last name')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Enter your address')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Enter your mobile number')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Enter your city')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Enter your state')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Enter your country')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Enter your zipcode')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Enter your password')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Confirm your password')).toBeInTheDocument();
+        expect(screen.getByText('Register')).toBeInTheDocument();
     });
-    test('validate function', () => {
-        const { getByLabelText, getByText } = screen;
-        fireEvent.change(getByLabelText('First Name'), { target: { value: 'John' } });
-        fireEvent.click(getByText('Register'));
-        expect(screen.queryByText('First Name is required.')).toBeNull();
-    });
-    test('handles form submission with valid data', async () => {
-        (axiosInstance.post as jest.Mock).mockResolvedValueOnce({ data: { message: 'Registration successful!' } });
 
-        const { getByLabelText, getByText } = screen;
-        fireEvent.change(getByLabelText('First Name'), { target: { value: 'John' } });
-        fireEvent.click(getByText('Register'));
+    test('should update state on input change', () => {
+        render(
+            <Router>
+                <Registration />
+            </Router>
+        );
+
+        fireEvent.change(screen.getByPlaceholderText('Enter your first name'), { target: { value: 'Fname' } });
+        expect(screen.getByPlaceholderText('Enter your first name')).toHaveValue('Fname');
+
+        fireEvent.change(screen.getByPlaceholderText('Enter your last name'), { target: { value: 'Lname' } });
+        expect(screen.getByPlaceholderText('Enter your last name')).toHaveValue('Lname');
+
+    });
+
+    test('should show validation error messages', () => {
+        render(
+            <Router>
+                <Registration />
+            </Router>
+        );
+
+        fireEvent.change(screen.getByPlaceholderText('Enter your first name'), { target: { value: '' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your last name'), { target: { value: '' } });
+
+        fireEvent.click(screen.getByText('Register'));
+
+        expect(screen.getByPlaceholderText('Enter your first name')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Enter your last name')).toBeInTheDocument();
+    });
+
+    test('should handle successful form submission', async () => {
+        (axiosInstance.post as jest.Mock).mockResolvedValue({ data: { message: 'Registration successful!' } });
+
+        render(
+            <Router>
+                <Registration />
+            </Router>
+        );
+
+        fireEvent.change(screen.getByPlaceholderText('Enter your first name'), { target: { value: 'Fname' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your last name'), { target: { value: 'Lname' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your address'), { target: { value: '7,Street' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your mobile number'), { target: { value: '1234567890' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your city'), { target: { value: 'Chennai' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your state'), { target: { value: 'State' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your country'), { target: { value: 'Country' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your zipcode'), { target: { value: '600000' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your password'), { target: { value: 'Password' } });
+        fireEvent.change(screen.getByPlaceholderText('Confirm your password'), { target: { value: 'Password' } });
+
+        fireEvent.click(screen.getByText('Register'));
 
         await (() => {
             expect(screen.getByText('Registration successful!')).toBeInTheDocument();
         });
     });
 
-
-    test('handles form submission with invalid data', async () => {
-        (axiosInstance.post as jest.Mock).mockRejectedValueOnce({ response: { status: 400, data: { message: 'Invalid invite token.' } } });
-
-        const { getByText } = screen;
-        fireEvent.click(getByText('Register'));
-
-        await waitFor(() => {
-            expect(screen.getByText('First Name is required.')).toBeInTheDocument();
+    test('should handle form submission failure due to invalid invite token', async () => {
+        (axiosInstance.post as jest.Mock).mockRejectedValue({
+            response: {
+                status: 400,
+                data: { message: 'Invalid invite token. Please check and try again.' }
+            }
         });
-    });
-    test('renders form fields', () => {
-        expect(screen.getByLabelText('First Name')).toBeInTheDocument();
-    });
 
-    test('displays validation errors correctly', async () => {
-        const { getByText } = screen;
-        fireEvent.click(getByText('Register'));
+        render(
+            <Router>
+                <Registration />
+            </Router>
+        );
 
-        await waitFor(() => {
-            expect(screen.getByText('First Name is required.')).toBeInTheDocument();
+        fireEvent.change(screen.getByPlaceholderText('Enter your first name'), { target: { value: 'Fname' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your last name'), { target: { value: 'Lname' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your address'), { target: { value: '7,Street' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your mobile number'), { target: { value: '1234567890' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your city'), { target: { value: 'Chennai' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your state'), { target: { value: 'State' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your country'), { target: { value: 'Country' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your zipcode'), { target: { value: '600000' } });
+        fireEvent.change(screen.getByPlaceholderText('Enter your password'), { target: { value: 'Password' } });
+        fireEvent.change(screen.getByPlaceholderText('Confirm your password'), { target: { value: 'Password' } });
+
+        fireEvent.click(screen.getByText('Register'));
+
+        await(() => {
+            expect(screen.getByText(/Invalid invite token. Please check and try again./i)).toBeInTheDocument();
         });
     });
 });

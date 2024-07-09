@@ -38,7 +38,7 @@ describe('DealForm', () => {
 
   test('fetches broker and site options correctly', async () => {
     (axiosInstance.get as jest.Mock).mockResolvedValueOnce({
-      data: [{ user: { firstName: 'John', lastName: 'Doe' } }],
+      data: [{ user: { firstName: 'fname', lastName: 'lname' } }],
     });
 
     (axiosInstance.get as jest.Mock).mockResolvedValueOnce({

@@ -13,7 +13,7 @@ jest.mock('../../AxiosInterceptor/AxiosInterceptor', () => ({
 describe('LandlordGrid ', () => {
   test('renders LandlordGrid and fetches landlord', async () => {
     const landlords = [
-      { id: 1, name: 'John Doe', phoneNumber: '1234567890', email: 'john@example.com', address1: '123 Main St', address2: '', city: 'City', state: 'State', country: 'Country', zipcode: '12345' },
+      { id: 1, name: 'name', phoneNumber: '1234567890', email: 'name@gmail.com', address1: '123 Main St', address2: '', city: 'City', state: 'State', country: 'Country', zipcode: '12345' },
     ];
 
    (axiosInstance.get as jest.Mock).mockResolvedValueOnce({ data: landlords });
@@ -23,9 +23,9 @@ describe('LandlordGrid ', () => {
     expect(screen.getByText('Add')).toBeInTheDocument();
 
     await(() => {
-      expect(screen.getByText('John Doe')).toBeInTheDocument();
+      expect(screen.getByText('name')).toBeInTheDocument();
       expect(screen.getByText('1234567890')).toBeInTheDocument();
-      expect(screen.getByText('john@example.com')).toBeInTheDocument();
+      expect(screen.getByText('name@gmail.com')).toBeInTheDocument();
     });
   });
 
@@ -48,7 +48,7 @@ describe('LandlordGrid ', () => {
 
   test('deletes a landlord when delete button is clicked', async () => {
     const landlords = [
-      { id: 1, name: 'John Doe', phoneNumber: '1234567890', email: 'john@example.com', address1: '123 Main St', address2: '', city: 'City', state: 'State', country: 'Country', zipcode: '12345' },
+      { id: 1, name: 'name', phoneNumber: '1234567890', email: 'name@example.com', address1: '123 Main St', address2: '', city: 'City', state: 'State', country: 'Country', zipcode: '12345' },
     ];
 
     (axiosInstance.get as jest.Mock).mockResolvedValueOnce({ data: landlords });
@@ -57,7 +57,7 @@ describe('LandlordGrid ', () => {
     render(<LandlordGrid />);
 
     await(() => {
-      expect(screen.getByText('John Doe')).toBeInTheDocument();
+      expect(screen.getByText('name')).toBeInTheDocument();
 
       fireEvent.click(screen.getByTestId('delete-landlord-1'));
 
@@ -65,7 +65,7 @@ describe('LandlordGrid ', () => {
 
       fireEvent.click(screen.getByText('Confirm'));
 
-      expect(screen.queryByText('John Doe')).not.toBeInTheDocument();
+      expect(screen.queryByText('name')).not.toBeInTheDocument();
     });
   });
 
