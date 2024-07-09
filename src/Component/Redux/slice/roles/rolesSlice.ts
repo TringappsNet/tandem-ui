@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosInstance from '../../../AxiosInterceptor/AxiosInterceptor';
 import { RootState } from '../../reducers';
 
 interface Role {
     id: number;
-    name: string;
+    roleName: string;
 }
 
 interface RolesState {
@@ -20,7 +20,7 @@ const initialState: RolesState = {
 };
 
 export const fetchRoles = createAsyncThunk('roles/fetchRoles', async () => {
-    const response = await axios.get('/api/roles');
+    const response = await axiosInstance.get('/roles');
     return response.data;
 });
 
@@ -37,6 +37,8 @@ const rolesSlice = createSlice({
             .addCase(fetchRoles.fulfilled, (state, action) => {
                 state.loading = false;
                 state.roles = action.payload;
+                console.log('Fetched roles:', action.payload);
+
             })
             .addCase(fetchRoles.rejected, (state, action) => {
                 state.loading = false;
@@ -49,4 +51,4 @@ export const selectRoles = (state: RootState) => state.roles.roles;
 export const selectRolesLoading = (state: RootState) => state.roles.loading;
 export const selectRolesError = (state: RootState) => state.roles.error;
 
-export default rolesSlice.reducer; 
+export default rolesSlice.reducer;
