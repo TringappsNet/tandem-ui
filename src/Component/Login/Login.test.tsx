@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import {axiosInstance} from '../AxiosInterceptor/AxiosInterceptor';
 import Login from './Login';
 import { Provider } from 'react-redux';
 import store from '../Redux/store';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import {axiosInstance} from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './Login.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';

@@ -5,7 +5,7 @@ import {
   updateDealDetails,
 } from "../Redux/slice/deal/dealSlice";
 import { Deal } from "../Interface/DealFormObject";
-import axiosInstance from "../AxiosInterceptor/AxiosInterceptor";
+import {axiosInstance} from "../AxiosInterceptor/AxiosInterceptor";
 import {
   Stepper,
   Step,
