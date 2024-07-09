@@ -6,11 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../Redux/reducers';
 import { closeSendInvite } from '../Redux/slice/deal/dealFormSlice';
-
-interface Role {
-    id: number;
-    roleName: string;
-}
+import { AppDispatch } from "../Redux/store";
+import { fetchRoles, selectRoles, selectRolesLoading, selectRolesError } from '../Redux/slice/roles/rolesSlice';
 
 interface SendInviteProps {
     onCloseDialog: () => void;
@@ -18,16 +15,27 @@ interface SendInviteProps {
 
 const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const open = useSelector((state: RootState) => state.sendInviteReducer.open);
+    // const roles = useSelector(selectRoles);
+    const roles = useSelector((state: RootState) => state.roles.roles);
+    const rolesLoading = useSelector(selectRolesLoading);
+    const rolesError = useSelector(selectRolesError);
     const [showInviteForm, setShowInviteForm] = useState(true);
     const [responseMessage, setResponseMessage] = useState('');
     const [responseType, setResponseType] = useState('');
     const [email, setEmail] = useState('');
-    const [rolesDetails, setRolesDetails] = useState<Role[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [roleId, setRoleId] = useState<number | null>(null);
     const selectRef = useRef<HTMLSelectElement>(null);
+
+    useEffect(() => {
+        dispatch(fetchRoles());
+    }, [dispatch]);
+
+    useEffect(() => {
+        console.log('Roles in send invite:', roles);
+    }, [roles]);
 
     const handleSendInvite = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -52,8 +60,8 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
                     setEmail('');
                     setResponseType('');
                     navigate('/dashboard');
-                    onCloseDialog(); 
-                }, 3000); 
+                    onCloseDialog();
+                }, 3000);
             } else {
                 setResponseMessage(data.message || 'Failed to send invite.');
                 setResponseType('error');
@@ -65,24 +73,6 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
             setIsLoading(false);
         }
     };
-
-    const getRoles = async () => {
-        try {
-            const response = await axiosInstance.get('/roles');
-            const roles: Role[] = response.data.map((role: any) => ({
-                id: role.id,
-                roleName: role.roleName
-            }));
-            setRolesDetails(roles);
-        } catch (error) {
-            console.error('Error fetching roles:', error);
-        }
-    };
-
-    useEffect(() => {
-        getRoles();
-    }, []);
-
 
     return (
         <>
@@ -125,19 +115,24 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
                                     required
                                 >
                                     <option value="" disabled>Select a role</option>
-                                    {rolesDetails.map((role) => (
+                                    {roles.map((role) => (
                                         <option key={role.id} value={role.id}>{role.roleName}</option>
                                     ))}
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" disabled={isLoading}>
+                        <button type="submit" disabled={isLoading || rolesLoading}>
                             {isLoading ? 'Sending Invite' : 'Send Invite'}
                         </button>
                     </form>
-                    {isLoading && (
+                    {(isLoading || rolesLoading) && (
                         <div className={styles.loaderContainer}>
                             <div className={styles.loader}></div>
+                        </div>
+                    )}
+                    {rolesError && (
+                        <div className={styles.error}>
+                            Error loading roles: {rolesError}
                         </div>
                     )}
                 </div>

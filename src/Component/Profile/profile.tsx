@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
+import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './profile.module.css';
 import { RootState } from "../Redux/reducers";
 
@@ -27,7 +27,7 @@ const Profile: React.FC<ProfileProps> = () => {
         const fetchProfileData = async () => {
             if (user) {
                 try {
-                    const response = await axios.get('http://192.168.1.223:3008/api/roles');
+                    const response = await axiosInstance.get('http://192.168.1.223:3008/api/roles');
                     const roles: Role[] = response.data.map((role: any) => ({
                         id: role.id,
                         roleName: role.roleName
