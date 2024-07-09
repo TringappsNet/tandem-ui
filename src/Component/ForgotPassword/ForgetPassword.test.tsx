@@ -1,7 +1,7 @@
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ForgotPassword from './ForgotPassword';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import {axiosInstance} from '../AxiosInterceptor/AxiosInterceptor';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 jest.mock('../AxiosInterceptor/AxiosInterceptor', () => ({

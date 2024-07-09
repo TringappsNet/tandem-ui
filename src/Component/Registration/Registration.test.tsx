@@ -2,7 +2,7 @@ import { render, screen, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Registration from './Registration';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import {axiosInstance} from '../AxiosInterceptor/AxiosInterceptor';
 
 jest.mock('../AxiosInterceptor/AxiosInterceptor', () => ({
     post: jest.fn(),
