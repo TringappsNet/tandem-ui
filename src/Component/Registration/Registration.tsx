@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Registration.module.css';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import {axiosInstance} from '../AxiosInterceptor/AxiosInterceptor';
 import logo from './logo.jpeg';
 import { useNavigate } from 'react-router-dom';
 

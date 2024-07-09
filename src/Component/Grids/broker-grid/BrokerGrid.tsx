@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import axios from "axios";
-import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
+import {axiosInstance} from "../../AxiosInterceptor/AxiosInterceptor";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 
 import FullGrid from "../MainGrid/MainGrid";

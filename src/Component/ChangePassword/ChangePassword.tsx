@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import {axiosInstance} from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './ChangePassword.module.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -158,7 +158,7 @@ const ChangePassword: React.FC = () => {
                             />
                         </div>
                         <button className={styles.loginbtn} type="submit">
-                            Send Reset Link
+                            Reset Password
                         </button>
                     </form>
                 </div>

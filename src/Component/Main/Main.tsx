@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Main.module.css";
-import axiosInstance from "../AxiosInterceptor/AxiosInterceptor";
-// import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
+import {axiosInstance} from "../AxiosInterceptor/AxiosInterceptor";
 import BrokerGrid from "../Grids/broker-grid/BrokerGrid";
 
 type Deal = {

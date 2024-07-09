@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./SendInvite.module.css";
 import classNames from "classnames";
-import axiosInstance from "../AxiosInterceptor/AxiosInterceptor";
+import {axiosInstance} from "../AxiosInterceptor/AxiosInterceptor";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/reducers";

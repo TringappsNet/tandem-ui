@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import {axiosInstance} from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './ResetPassword.module.css';
 
 interface ResetProps {

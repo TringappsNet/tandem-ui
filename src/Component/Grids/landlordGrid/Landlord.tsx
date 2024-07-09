@@ -9,7 +9,7 @@ import {
   ,
   IconButton
 } from "@mui/material";
-import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
+import {axiosInstance} from "../../AxiosInterceptor/AxiosInterceptor";
 import styles from "./landlord-grid.module.css";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import FullGrid from "../MainGrid/MainGrid";

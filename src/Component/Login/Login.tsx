@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import styles from './Login.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../Redux/slice/auth/authSlice';
-import styles from './Login.module.css';
 import { RootState } from '../Redux/reducers';
 import { AppDispatch } from '../Redux/store';
 

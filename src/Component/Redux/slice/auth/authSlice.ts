@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '../../../AxiosInterceptor/AxiosInterceptor';
+import {axiosInstance} from '../../../AxiosInterceptor/AxiosInterceptor';
 
 interface User {
   roleId: number;
@@ -62,6 +62,7 @@ export const login = createAsyncThunk(
         const { session, user } = data;
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('session', JSON.stringify(session));
+        localStorage.setItem('accessToken', JSON.stringify(data.session.token))
         return { user, session };
       } else {
         return rejectWithValue(data.message);
