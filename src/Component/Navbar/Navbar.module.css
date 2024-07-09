@@ -1,4 +1,5 @@
 @import url('http://getbootstrap.com/dist/css/bootstrap.css');
+@import url("@fontsource/public-sans");
 
 .navbarcontainer {
     width: 100%;
@@ -25,7 +26,7 @@
 
 .headersection p {
     padding: 5px;
-    font-size: .77rem;   
+    font-size: .77rem;
     letter-spacing: .15rem;
 }
 
@@ -77,6 +78,20 @@
     border-radius: 5px;
     font-size: 0.69rem;
     align-items: center;
+    margin-right: 15px;
+
+}
+
+.username {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.username p {
+    margin: 0;
+    font-weight: 500 !important;
+    font-family: 'Public Sans', sans-serif !important;
 }
 
 .rightheadersection .createdeal:hover {
@@ -169,7 +184,7 @@
     width: 96%;
 }
 
-.saveclose{
+.saveclose {
     padding: 10px;
     height: 24px !important;
 }

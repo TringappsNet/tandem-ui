@@ -3,10 +3,12 @@ import axios from 'axios';
 const axiosInstance = axios.create({
   baseURL: 'http://192.168.1.77:3008/api',
   // baseURL: 'http://localhost:3008/api',
+  // baseURL: 'http://192.168.1.223:3008/api',
+//   baseURL: 'http://localhost:3008/api',
 });
 
 // Function to get query parameters from the URL
-const getQueryParam = (param :string) => {
+const getQueryParam = (param: string) => {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);
 };
@@ -21,8 +23,8 @@ axiosInstance.interceptors.request.use(
     const resetToken = getQueryParam('resetToken');
 
     if (userId && token) {
-      config.headers['userId'] = userId;
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers['user-id'] = userId;
+      config.headers['access-token'] = token;
     }
 
     if (resetToken) {

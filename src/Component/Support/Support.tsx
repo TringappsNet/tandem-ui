@@ -68,7 +68,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
         setSuccessMessage('');
         setErrorMessage('');
         try {
-            const response = await axios.post('http://192.168.1.77:3008/api/support/raise-ticket', {
+            const response = await axios.post('http://192.168.1.223:3008/api/support/raise-ticket', {
                 ticketSubject: subject,
                 ticketDescription: description,
                 senderId: user.id
@@ -133,7 +133,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
                     <textarea
                         id="description"
                         name="description"
-                        placeholder="Add your concern"
+                        placeholder="Add your Comments"
                         rows={8}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
