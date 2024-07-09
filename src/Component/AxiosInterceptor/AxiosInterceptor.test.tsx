@@ -1,4 +1,4 @@
-    import axiosInstance from './AxiosInterceptor';
+    import {axiosInstance} from './AxiosInterceptor';
     import MockAdapter from 'axios-mock-adapter';
 
     const mock = new MockAdapter(axiosInstance);
