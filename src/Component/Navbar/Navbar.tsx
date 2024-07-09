@@ -7,6 +7,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import LandlordGrid from "../Grids/landlordGrid/Landlord";
 import SiteGrid from "../Grids/SiteGrid/SiteGrid";
+import InviteBroker from "../Grids/inviteBroker-grid/InviteBroker-grid";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../Redux/store/index";
 import { RootState } from "../Redux/reducers";
@@ -31,7 +32,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const auth: any = localStorage.getItem("auth");
   const userdetails = JSON.parse(auth);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
-  const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
+  const [              selectedComponent, setSelectedComponent] = useState<string | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -62,13 +63,13 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     setOpenPopup(false);
     setSelectedComponent(null);
 
-    if (selectedComponent === "SendInvite") {
+    if (              selectedComponent === "SendInvite") {
       dispatch(closeSendInvite());
-    } else if (selectedComponent === "Profile") {
+    } else if (              selectedComponent === "Profile") {
       dispatch(closeProfile());
-    } else if (selectedComponent === "Reset") {
+    } else if (              selectedComponent === "Reset") {
       dispatch(closeReset());
-    } else if (selectedComponent === "Support") {
+    } else if (              selectedComponent === "Support") {
       dispatch(closeSupport());
     }
   };
@@ -100,6 +101,9 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       navigate("/site");
     } else if (route === "landlord") {
       navigate("/landlord");
+    }
+    else if (route === "invitebroker") {
+      navigate("/invitebroker");
     }
   };
 
@@ -145,6 +149,12 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           >
             LANDLORD
           </p>
+          <p
+            onClick={() => handleRoute("invitebroker")}
+            style={{ cursor: "pointer" }}
+          >
+            INVITEBROKER
+          </p>
         </div>
         <div className={styles.rightheadersection}>
           <div
@@ -184,8 +194,9 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           </div>
         </div>
       </nav>
-      {openPopup && selectedComponent && (
+      {openPopup &&               selectedComponent && (
         <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg">
+          
           <DialogTitle sx={{ padding: 0 }}>
             <Icon
               aria-label="close"
@@ -203,19 +214,19 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             </Icon>
           </DialogTitle>
           <DialogContent sx={{ padding: 0 }}>
-            {inviteOpen && selectedComponent === "SendInvite" && (
+            {inviteOpen &&               selectedComponent === "SendInvite" && (
               <SendInvite onCloseDialog={handleClosePopup} />
             )}
-            {profileOpen && selectedComponent === "Profile" && (
+            {profileOpen &&               selectedComponent === "Profile" && (
               <Profile onCloseDialog={handleClosePopup} />
             )}
-            {resetOpen && selectedComponent === "Reset" && (
+            {resetOpen &&               selectedComponent === "Reset" && (
               <Reset onCloseDialog={handleClosePopup} />
             )}
-            {supportOpen && selectedComponent === "Support" && (
+            {supportOpen &&               selectedComponent === "Support" && (
               <Support onCloseDialog={handleClosePopup} />
             )}
-            {selectedComponent === "Landlord" && (
+            {              selectedComponent === "Landlord" && (
               <Box
                 sx={{
                   padding: 1,
@@ -233,7 +244,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               </Box>
             )}
 
-            {selectedComponent === "Site" && (
+            {              selectedComponent === "Site" && (
               <Box
                 sx={{
                   padding: 1,
@@ -248,6 +259,24 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                 <h1>Site Details</h1>
                 <br></br>
                 <SiteGrid />
+              </Box>
+            )}
+
+              {selectedComponent === "Invitebroker" && (
+              <Box
+                sx={{
+                  padding: 1,
+                  borderRadius: 1,
+                  height: "100%",
+                  width: "100%",
+                  maxHeight: "calc(100vh - 64px)",
+                  overflow: "auto",
+                }}
+              >
+                <br></br>
+                <h1>InviteBroker</h1>
+                <br></br>
+                <InviteBroker />
               </Box>
             )}
           </DialogContent>
