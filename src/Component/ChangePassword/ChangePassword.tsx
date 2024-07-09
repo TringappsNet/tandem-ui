@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './ChangePassword.module.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const ChangePassword: React.FC = () => {
+    const Navigate = useNavigate();
     const [password, setPassword] = useState('');
     const [confirmpassword, setConfirmpassword] = useState('');
     const [disableState, setDisableState] = useState(false);
@@ -87,15 +90,15 @@ const ChangePassword: React.FC = () => {
         }
 
         try {
-            const response = await axiosInstance.post('auth/change-password', {
+            await axiosInstance.post('auth/change-password', {
                 newPassword: password,
             });
-
-            console.log('Password changed successfully:', response.data);
             setShowSuccessMessage(true);
             setShowFailureMessage(false);
             setPassword('');
             setConfirmpassword('');
+            Navigate('/login');
+            
         } catch (error) {
             console.error('Password change failed:', error);
             setShowSuccessMessage(false);

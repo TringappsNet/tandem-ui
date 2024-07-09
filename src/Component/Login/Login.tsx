@@ -46,12 +46,12 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if(email === "" || password===""){
+    if (email === "" || password === "") {
       setValidationErrorMessage('Please Enter all the field.');
       setShowFailureMessage(true);
       return
     }
-    
+
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
 
@@ -66,7 +66,6 @@ const Login: React.FC = () => {
       const data = response.data;
       if (data.message === 'Login successful' && response.status === 200) {
         const { session, user } = data;
-        console.log("data", data);
         localStorage.setItem('auth', JSON.stringify(data))
         localStorage.setItem('accessToken', JSON.stringify(data.session.token))
         dispatch(setCredentials({ user, session }));
@@ -80,6 +79,12 @@ const Login: React.FC = () => {
     } catch (error: any) {
       // let message = 'Something went wrong. Please try again later.';
       if (error.response && error.response.status === 401) {
+        // let message = 'Incorrect Email or Password. Please try again.';
+        setValidationErrorMessage(error.response.data.message);
+        setShowSuccessMessage(false);
+        setShowFailureMessage(true);
+      }
+      if (error.response && error.response.status === 500) {
         // let message = 'Incorrect Email or Password. Please try again.';
       setValidationErrorMessage(error.response.data.message);
       setShowSuccessMessage(false);
@@ -115,7 +120,6 @@ const Login: React.FC = () => {
               <label className={styles.label} htmlFor="username">Email ID</label>
               <input
                 id="username"
-                type="email"
                 placeholder="Enter email"
                 value={email}
                 onChange={handleEmailChange}

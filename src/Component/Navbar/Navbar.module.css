@@ -1,8 +1,9 @@
 @import url('http://getbootstrap.com/dist/css/bootstrap.css');
+@import url("@fontsource/public-sans");
 
 .navbarcontainer {
     width: 100%;
-    height: 50px;
+    height: 40px;
     background-color: #262262;
     display: flex;
     color: #fff;
@@ -17,10 +18,22 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: .4rem;
     margin-left: 20px;
     align-content: center;
     cursor: pointer;
+}
+
+.headersection p {
+    padding: 5px;
+    font-size: .77rem;
+    letter-spacing: .15rem;
+}
+
+.headersection p:hover {
+    /* background-color: #333366 ; */
+    border-radius: 3px;
+    color: #AA9AE8;
 }
 
 .header {
@@ -28,15 +41,19 @@
     align-items: center;
     justify-content: center;
     align-content: center;
+    margin-right: 3rem;
 }
 
 .header img {
-    width: 2.2rem;
+    width: 1.834rem;
     object-fit: contain;
 }
 
 .header h3 {
     font-weight: 600;
+    letter-spacing: .1rem;
+    font-size: .95rem;
+    margin-left: 7px;
 }
 
 .header p {
@@ -59,9 +76,22 @@
     background-color: #262262;
     padding: 6px 12px;
     border-radius: 5px;
-    font-size: 0.8rem;
-    /* margin-right: 10px; */
+    font-size: 0.69rem;
     align-items: center;
+    margin-right: 15px;
+
+}
+
+.username {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.username p {
+    margin: 0;
+    font-weight: 500 !important;
+    font-family: 'Public Sans', sans-serif !important;
 }
 
 .rightheadersection .createdeal:hover {
@@ -80,6 +110,8 @@
 
 .userdropdown p {
     text-transform: capitalize;
+    font-size: .87rem;
+    letter-spacing: .05rem;
 }
 
 .userdropdown .circle {
@@ -97,7 +129,7 @@
 .dropdownMenu {
     display: block;
     position: absolute;
-    top: 60px;
+    top: 50px;
     right: 0;
     width: 170px;
     background-color: #fff;
@@ -150,4 +182,9 @@
     padding: 5px 20px;
     margin: 0 3px;
     width: 96%;
+}
+
+.saveclose {
+    padding: 10px;
+    height: 24px !important;
 }

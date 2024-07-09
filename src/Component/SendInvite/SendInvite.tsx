@@ -3,14 +3,23 @@ import styles from './SendInvite.module.css';
 import classNames from 'classnames';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../Redux/reducers';
+import { closeSendInvite } from '../Redux/slice/deal/dealFormSlice';
 
 interface Role {
     id: number;
     roleName: string;
 }
 
-const SendInvite: React.FC = () => {
+interface SendInviteProps {
+    onCloseDialog: () => void;
+}
+
+const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const open = useSelector((state: RootState) => state.sendInviteReducer.open);
     const [showInviteForm, setShowInviteForm] = useState(true);
     const [responseMessage, setResponseMessage] = useState('');
     const [responseType, setResponseType] = useState('');
@@ -19,7 +28,6 @@ const SendInvite: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [roleId, setRoleId] = useState<number | null>(null);
     const selectRef = useRef<HTMLSelectElement>(null);
-
 
     const handleSendInvite = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -30,7 +38,6 @@ const SendInvite: React.FC = () => {
             return;
         }
 
-
         setIsLoading(true);
 
         try {
@@ -40,11 +47,13 @@ const SendInvite: React.FC = () => {
                 setResponseMessage(data.message);
                 setResponseType('success');
                 setTimeout(() => {
+                    dispatch(closeSendInvite());
                     setShowInviteForm(false);
                     setEmail('');
                     setResponseType('');
                     navigate('/dashboard');
-                }, 1000);
+                    onCloseDialog(); 
+                }, 3000); 
             } else {
                 setResponseMessage(data.message || 'Failed to send invite.');
                 setResponseType('error');
@@ -52,8 +61,7 @@ const SendInvite: React.FC = () => {
         } catch (error: any) {
             setResponseMessage(error.response.data.message || 'An error occurred. Please try again.');
             setResponseType('error');
-        }
-        finally {
+        } finally {
             setIsLoading(false);
         }
     };
@@ -71,14 +79,14 @@ const SendInvite: React.FC = () => {
         }
     };
 
-
     useEffect(() => {
         getRoles();
     }, []);
 
+
     return (
         <>
-            {showInviteForm && (
+            {open && showInviteForm && (
                 <div className={styles.formContainer}>
                     <h2>Send Invite</h2>
                     {responseMessage && (

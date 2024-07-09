@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction, Action } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
-import axiosInstance from '../../AxiosInterceptor/AxiosInterceptor';
-import { RootState } from '../reducers';
+import axiosInstance from '../../../AxiosInterceptor/AxiosInterceptor';
+import { RootState } from '../../reducers';
 import { ThunkAction } from 'redux-thunk';
-import { Deal } from '../../Interface/DealFormObject';
+import { Deal } from '../../../Interface/DealFormObject';
+import { clearCurrentDeal, setCurrentDeal } from './currentDeal';
 
 type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
 
@@ -114,24 +115,26 @@ export const deleteDeal = (dealId: number): AppThunk<void> => async (dispatch: D
   }
 };
 
-export const updateDealDetails = (dealData: Deal): AppThunk<void> => async (dispatch: Dispatch) => {
+export const createNewDeal = (dealData: Deal): AppThunk<void> => async (dispatch) => {
   try {
-    dispatch(fetchDealDetailsStart());
-    const response = await axiosInstance.put(`/deals/deal/${dealData.id}`, dealData);
+    dispatch(setCurrentDeal(dealData));
+    const response = await axiosInstance.post('/deals/deal', dealData);
     dispatch(setDealDetails(response.data));
+    dispatch(clearCurrentDeal());
   } catch (error) {
-    console.error('Error updating deal details:', error);
+    console.error('Error creating new deal:', error);
     dispatch(fetchDealDetailsFailure((error as Error).message));
   }
 };
 
-export const createNewDeal = (dealData: Deal): AppThunk<void> => async (dispatch: Dispatch) => {
+export const updateDealDetails = (dealData: Deal): AppThunk<void> => async (dispatch) => {
   try {
-    dispatch(fetchDealDetailsStart());
-    const response = await axiosInstance.post('/deals/deal', dealData);
+    dispatch(setCurrentDeal(dealData));
+    const response = await axiosInstance.put(`/deals/deal/${dealData.id}`, dealData);
     dispatch(setDealDetails(response.data));
+    dispatch(clearCurrentDeal());
   } catch (error) {
-    console.error('Error creating new deal:', error);
+    console.error('Error updating deal details:', error);
     dispatch(fetchDealDetailsFailure((error as Error).message));
   }
 };

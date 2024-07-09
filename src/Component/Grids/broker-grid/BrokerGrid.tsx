@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import {
   Button,
   TextField,
@@ -9,8 +9,9 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
-import FullGrid from "../parentGrid/parent-grid";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
+
+import FullGrid from "../MainGrid/MainGrid";
 
 interface User {
   id: number;
@@ -24,15 +25,25 @@ interface User {
   country: string;
   zipcode: string;
   isActive: boolean;
+  roleId: number;
 }
 
+interface BrokerData extends Omit<User, 'roleId'> {
+  fullName: string;
+  totalDeals: number;
+  dealsOpened: number;
+  dealsInProgress: number;
+  dealsClosed: number;
+  totalCommission: number;
+  roleName: string;
+}
 
 const config = {
   apiUrl: "/brokers",
 };
 
 const BrokerGrid: React.FC = () => {
-  const [rows, setRows] = useState<User[]>([]);
+  const [rows, setRows] = useState<BrokerData[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<User>({
     id: 0,
@@ -46,6 +57,7 @@ const BrokerGrid: React.FC = () => {
     country: "",
     zipcode: "",
     isActive: true,
+    roleId: 1,
   });
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     pageSize: 5,
@@ -61,10 +73,14 @@ const BrokerGrid: React.FC = () => {
       const response = await axiosInstance.get(config.apiUrl);
       const brokers = response.data.map((broker: any) => {
         const fullName = `${broker.user.firstName} ${broker.user.lastName}`;
+        const roleName = broker.roleId === 1 ? 'Admin' : 'Broker';
+
         return {
           id: broker.user.id,
           email: broker.user.email,
           fullName: fullName,
+          firstName: broker.user.firstName,
+          lastName: broker.user.lastName,
           mobile: broker.user.mobile,
           address: broker.user.address,
           city: broker.user.city,
@@ -77,6 +93,7 @@ const BrokerGrid: React.FC = () => {
           dealsInProgress: broker.dealsInProgress,
           dealsClosed: broker.dealsClosed,
           totalCommission: broker.totalCommission,
+          roleName: roleName,
         };
       });
 
@@ -86,7 +103,6 @@ const BrokerGrid: React.FC = () => {
     }
   };
 
-  // const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -96,63 +112,49 @@ const BrokerGrid: React.FC = () => {
 
   const handleAdd = async () => {
     try {
-      const response = await axios.post(config.apiUrl, formData);
-      setRows([...rows, response.data]);
+      await axios.post(config.apiUrl, formData);
+      await fetchBrokers();
       handleClose();
     } catch (error) {
       console.error("Error adding user:", error);
     }
   };
 
-  // const handleEdit = (id: number) => {
-  //   const row = rows.find((row) => row.id === id);
-  //   if (row) {
-  //     setFormData(row);
-  //     handleOpen();
-  //   }
-  // };
-
   const handleUpdate = async () => {
     try {
-      const response = await axios.put(`${config.apiUrl}/${formData.id}`, formData);
-      setRows(rows.map((row) => (row.id === formData.id ? response.data : row)));
+      await axios.put(`${config.apiUrl}/${formData.id}`, formData);
+      await fetchBrokers();
       handleClose();
     } catch (error) {
       console.error("Error updating user:", error);
     }
   };
 
-  // const handleDelete = async (id: number) => {
-  //   try {
-  //     await axios.delete(`${config.apiUrl}/${id}`);
-  //     setRows(rows.filter((row) => row.id !== id));
-  //   } catch (error) {
-  //     console.error("Error deleting user:", error);
-  //   }
-  // };
-
   const columns: GridColDef[] = [
-    { field: "fullName", headerName: "Name", width: 150, align: "center", headerAlign: "center" },
-    { field: "mobile", headerName: "Mobile", width: 150, align: "center", headerAlign: "center" },
-    { field: "totalDeals", headerName: "Total Deals", width: 150, align: "center", headerAlign: "center" },
-    { field: "dealsOpened", headerName: "Deals Opened", width: 150, align: "center", headerAlign: "center" },
-    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 150, align: "center", headerAlign: "center" },
-    { field: "dealsClosed", headerName: "Deals Closed", width: 150, align: "center", headerAlign: "center" },
-    { field: "totalCommission", headerName: "Total Commission", width: 150, align: "center", headerAlign: "center" },
-    { field: "isActive", headerName: "Active", width: 150, align: "center", headerAlign: "center" },
+    { field: "fullName", headerName: "Name", width: 170 },
+    { field: "roleName", headerName: "Role", width: 120 },
+    { field: "mobile", headerName: "Mobile", width: 150 },
+    { field: "totalDeals", headerName: "Total Deals", width: 130 },
+    { field: "dealsOpened", headerName: "Deals Opened", width: 130 },
+    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 150 },
+    { field: "dealsClosed", headerName: "Deals Closed", width: 130 },
+    { field: "totalCommission", headerName: "Total Commission", width: 150 },
   ];
 
   return (
     <div>
       <FullGrid
+        className=""
+        sx={{
+          height: 480,
+
+        }}
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}
         setPaginationModel={setPaginationModel}
-        // handleEdit={handleEdit}
-        // handleAdd={handleAdd}
-        // handleDelete={handleDelete}
       />
+
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{formData.id ? "Edit User" : "Add User"}</DialogTitle>
         <DialogContent>

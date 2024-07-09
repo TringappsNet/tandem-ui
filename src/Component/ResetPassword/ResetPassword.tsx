@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './ResetPassword.module.css';
 
-const Reset: React.FC = () => {
+interface ResetProps {
+    onCloseDialog: () => void;
+}
+
+const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
     const [showResetForm, setShowResetForm] = useState(true);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -17,6 +21,9 @@ const Reset: React.FC = () => {
 
         return hasSpecialChar && hasNumber && hasUpperCase;
     };
+
+    const user_id: any = localStorage.getItem('user');
+    const user = JSON.parse(user_id)
 
     const handleResetPassword = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -37,7 +44,7 @@ const Reset: React.FC = () => {
             const response = await axiosInstance.post('/auth/reset-password', {
                 oldPassword,
                 newPassword,
-                userId: 1,
+                userId: user.id,
             });
 
             if (response.status === 200) {
@@ -49,6 +56,7 @@ const Reset: React.FC = () => {
                     setNewPassword('');
                     setConfirmPassword('');
                     setResponseType('');
+                    onCloseDialog(); // Close the dialog in Navbar
                 }, 1000);
             } else {
                 setResponseMessage(response.data.message || 'Password reset failed.');

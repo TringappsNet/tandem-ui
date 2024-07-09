@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Cards.module.css";
 import { FiEdit, FiTrash } from "react-icons/fi";
-import DealForm from "../Milestone/Milestone";
-import { Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/reducers";
-import { deleteDeal, fetchDealDetails } from "../Redux/slice/dealSlice";
+import { deleteDeal, fetchDealDetails } from "../Redux/slice/deal/dealSlice";
+import { openDealForm } from "../Redux/slice/deal/dealFormSlice";
 import { AppDispatch } from "../Redux/store";
-import { Deal as DealFormObjectDeal } from "../Interface/DealFormObject";
+import ConfirmationModal from "../AlertDialog/AlertDialog";
+import { setCurrentDeal } from "../Redux/slice/deal/currentDeal";
 
-interface Deal extends DealFormObjectDeal {
-    activeStep: number;
-    status: string;
-    propertyName: string;
+interface Deal {
+    id: number | null;
     brokerName: string;
+    propertyName: string;
     dealStartDate: string;
     proposalDate: string;
     loiExecuteDate: string;
@@ -23,51 +21,38 @@ interface Deal extends DealFormObjectDeal {
     commercialOperationDate: string;
     potentialcommissiondate: string;
     potentialCommission: number | null;
+    status: string;
+    activeStep: number;
     createdBy: number;
     updatedBy: number;
     isNew: boolean;
-    id: number | null;
-}
-
-interface DealsData {
-    totalDeals: number;
-    dealsOpened: number;
-    dealsInProgress: number;
-    dealsClosed: number;
-    totalCommission: number;
-    deals: Deal[];
+    updatedAt?: string;
 }
 
 const Cards: React.FC = () => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [filterStatus, setFilterStatus] = useState('');
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filterStatus, setFilterStatus] = useState("");
     const dispatch = useDispatch<AppDispatch>();
-    const dealsData = useSelector((state: RootState) => state.deal.dealDetails as unknown as DealsData);
-    const [openStepper, setOpenStepper] = useState(false);
-    const [dealFormData, setDealFormData] = useState<Deal | null>(null);
+    const dealsData = useSelector((state: RootState) => state.deal.dealDetails);
+    const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+    const [dealId, setDealId] = useState<number | null>(null);
 
     useEffect(() => {
         dispatch(fetchDealDetails());
     }, [dispatch]);
 
-    useEffect(() => {
-    }, [dealsData]);
-
     const editDealForm = (deal: Deal) => {
-        setOpenStepper(true);
-        setDealFormData({
-            ...deal,
-            activeStep: deal.activeStep || 0,
-        });
-        console.log("card Deal respected value ", deal);
+        dispatch(setCurrentDeal(deal)); 
+        dispatch(openDealForm());
     };
 
-    const   deleteDealHandler = (dealId: number | null) => {
+    const deleteDealHandler = (dealId: number | null) => {
         if (dealId !== null) {
-          dispatch(deleteDeal(dealId));
+            dispatch(deleteDeal(dealId));
+            setDeleteConfirmation(false);
         }
-      };
-      
+    };
+
     const getStatusButtonClass = (status: string | null) => {
         switch (status) {
             case "Completed":
@@ -81,11 +66,6 @@ const Cards: React.FC = () => {
         }
     };
 
-    const handleCloseStepper = () => {
-        setOpenStepper(false);
-        setDealFormData(null);
-    };
-
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
     };
@@ -94,10 +74,21 @@ const Cards: React.FC = () => {
         setFilterStatus(event.target.value);
     };
 
-    const filteredDeals = dealsData?.deals?.filter((deal: Deal) => {
-        const matchesSearch = deal.brokerName?.toLowerCase().includes(searchTerm.toLowerCase()) || deal.propertyName?.toLowerCase().includes(searchTerm.toLowerCase());
+    const cancelDelete = () => {
+        setDeleteConfirmation(false);
+    };
+    const handleDelete = (id: number) => {
+        setDealId(id);
+        setDeleteConfirmation(true);
+    };
+
+    const filteredDeals = dealsData?.filter((deal: any) => {
+        const matchesSearch = deal.brokerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            deal.propertyName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            deal.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            deal.id?.toString().includes(searchTerm);
         const matchesStatus = filterStatus ? deal.status === filterStatus : true;
-        return matchesSearch && matchesStatus;
+        return matchesSearch && matchesStatus && deal.id !== null;
     }) || [];
 
     return (
@@ -105,7 +96,7 @@ const Cards: React.FC = () => {
             <div className={styles.filterContainer}>
                 <input
                     type="text"
-                    placeholder="Search by broker or property name"
+                    placeholder="Search by broker, property name, status, or deal ID"
                     value={searchTerm}
                     onChange={handleSearchChange}
                     className={styles.searchInput}
@@ -118,60 +109,63 @@ const Cards: React.FC = () => {
                 </select>
             </div>
             <div className={styles.cardList}>
-                {filteredDeals.map((deal: Deal, index: number) => (
+                {filteredDeals.map((deal: any, index: number) => (
                     <div key={index} className={styles.card}>
                         <div>
-                        <div className={styles.cardTitle}>
+                            <div className={styles.cardTitle}>
                                 Deal #{deal.id}
                                 <div className={styles.icons}>
                                     <div className={styles.hide}>
                                         <FiEdit onClick={() => editDealForm(deal)} />
                                     </div>
-                                    <FiTrash onClick={() => deleteDealHandler(deal.id)} />
+                                    <FiTrash
+                                        onClick={() => deal.id !== null && handleDelete(deal.id)}
+                                    />
                                 </div>
                             </div>
-                            <p className={styles.brokerName}>
-                                <span>Broker Name:</span> {deal.brokerName}
-                            </p>
-                        </div>
-                        <div className={styles.statusLine}>
-                            <div className={styles.statusLabel}>Status:</div>
-                            <div className={`${styles.statusButton} ${getStatusButtonClass(deal.status)}`}>
-                                {deal.status}
+                            <hr className={styles.line} />
+                            <div className={styles.nameHeader}>
+                                <div className={styles.name}>
+                                    {deal.propertyName}
+                                </div>
                             </div>
                         </div>
+                        <div className={styles.statusLine}>
+                            <div className={styles.statuscontainer}>
+                                <div className={`${styles.statusButton} ${getStatusButtonClass(deal.status)}`}>
+                                    {deal.status}
+                                </div>
+                            </div>
+
+                        </div>
+                        <div className={styles.statusLine}>
+                            <div className={styles.timestamp}>
+                                Last updated on: {deal.updatedAt?.split('T')[0] || "Unknown"}
+                            </div>
+                            <div className={styles.circle} title={deal.brokerName}>
+                                {deal.brokerName && deal.brokerName.split(" ").length >= 2 ? (
+                                    <p>{deal.brokerName.split(" ")[0][0]}{deal.brokerName.split(" ")[1][0]}</p>
+                                ) : (
+                                    <p>NA</p>
+                                )}
+                            </div>
+                        </div>
+
+                        <hr className={`${styles.statuslinecolor} ${getStatusButtonClass(deal.status)}`} />
                     </div>
                 ))}
-
             </div>
-
-            <Dialog
-                fullScreen
-                sx={{ margin: '30px 190px' }}
-                open={openStepper}
-                onClose={handleCloseStepper}
-                className={styles.popupmain}
-            >
-                <DialogTitle sx={{ backgroundColor: "#262262", color: "white" }}>
-                    Deal Form
-                    <IconButton
-                        aria-label="close"
-                        onClick={handleCloseStepper}
-                        sx={{
-                            position: "absolute",
-                            right: 25,
-                            top: 8,
-                            width: 40,
-                            color: (theme) => theme.palette.grey[500],
-                        }}
-                    >
-                        <CloseIcon sx={{ color: "#999" }} />
-                    </IconButton>
-                </DialogTitle>
-                <DialogContent>
-                    {dealFormData && <DealForm deal={dealFormData} />}
-                </DialogContent>
-            </Dialog>
+            <ConfirmationModal
+                show={deleteConfirmation}
+                onHide={cancelDelete}
+                onConfirm={() => deleteDealHandler(dealId)}
+                title="Deal Delete"
+                message="Are you sure you want to delete this deal?"
+                cancelText="Cancel"
+                confirmText="Delete"
+                cancelVariant="secondary"
+                confirmVariant="danger"
+            />
         </>
     );
 };
