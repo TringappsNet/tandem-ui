@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import { useSelector, useDispatch } from 'react-redux';
+// import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
+import { AppDispatch } from "../Redux/store";
+import { fetchRoles, selectRolesLoading, selectRolesError } from '../Redux/slice/roles/rolesSlice';
 import styles from './profile.module.css';
 import { RootState } from "../Redux/reducers";
 
@@ -9,10 +11,10 @@ interface ProfileItem {
     value: string | number;
 }
 
-interface Role {
-    id: number;
-    roleName: string;
-}
+// interface Role {
+//     id: number;
+//     roleName: string;
+// }
 
 interface ProfileProps {
     onCloseDialog: () => void;
@@ -21,48 +23,47 @@ interface ProfileProps {
 const Profile: React.FC<ProfileProps> = () => {
     const [profileData, setProfileData] = useState<ProfileItem[] | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const roles = useSelector((state: RootState) => state.roles.roles);
+    const dispatch = useDispatch<AppDispatch>();
+    const rolesLoading = useSelector(selectRolesLoading);
+    const rolesError = useSelector(selectRolesError);
     const user = useSelector((state: RootState) => state.auth.user);
 
     useEffect(() => {
-        const fetchProfileData = async () => {
-            if (user) {
-                try {
-                    const response = await axiosInstance.get('http://192.168.1.223:3008/api/roles');
-                    const roles: Role[] = response.data.map((role: any) => ({
-                        id: role.id,
-                        roleName: role.roleName
-                    }));
-                    const userRole = roles.find(role => role.id === user.roleId);
-                    const userProfileData = [
-                        { label: "Id", value: user.id },
-                        { label: "Name", value: `${user.firstName} ${user.lastName}` },
-                        { label: "Role", value: userRole ? userRole.roleName : 'N/A' },
-                        { label: "Email", value: user.email },
-                        { label: "Mobile", value: user.mobile },
-                        { label: "Address", value: user.address },
-                        { label: "Country", value: user.country },
-                        { label: "State", value: user.state },
-                        { label: "Zipcode", value: user.zipcode }
-                    ];
-                    setProfileData(userProfileData);
-                } catch (error) {
-                    console.error('Error fetching roles:', error);
-                } finally {
-                    setIsLoading(false);
-                }
-            } else {
-                setIsLoading(false);
-            }
-        };
-        fetchProfileData();
-    }, [user]);
+        if (user) {
+            dispatch(fetchRoles());
+        }
+    }, [dispatch, user]);
 
-    if (isLoading) {
+    useEffect(() => {
+        if (!rolesLoading && !rolesError && user) {
+            const userRole = roles.find(role => role.id === user.roleId);
+            const userProfileData = [
+                { label: "Id", value: user.id },
+                { label: "Name", value: `${user.firstName} ${user.lastName}` },
+                { label: "Role", value: userRole ? userRole.roleName : 'N/A' },
+                { label: "Email", value: user.email },
+                { label: "Mobile", value: user.mobile },
+                { label: "Address", value: user.address },
+                { label: "Country", value: user.country },
+                { label: "State", value: user.state },
+                { label: "Zipcode", value: user.zipcode }
+            ];
+            setProfileData(userProfileData);
+            setIsLoading(false);
+        }
+    }, [roles, rolesLoading, rolesError, user]);
+
+    if (rolesLoading || isLoading) {
         return (
             <div className={styles.loaderContainer}>
                 <div className={styles.loader}></div>
             </div>
         );
+    }
+
+    if (rolesError) {
+        return <div className={styles.error}>Error fetching roles: {rolesError}</div>;
     }
 
     if (!profileData) {
