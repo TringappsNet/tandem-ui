@@ -1,9 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import authReducer from '../slice/authSlice';
+import authReducer from '../slice/auth/authSlice';
 import registerReducer from '../slice/registerSlice';
 import dealReducer from '../slice/deal/dealSlice';
 import currentDeal from '../slice/deal/currentDeal';
-import rolesReducer from '../slice/roles/rolesSlice';
+import rolesReducer from '../slice/role/rolesSlice';
 import { dealFormReducer, profileReducer, sendInviteReducer, resetReducer, supportReducer, landlordReducer, siteReducer } from '../slice/deal/dealFormSlice';
 
 const rootReducer = combineReducers({
