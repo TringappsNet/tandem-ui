@@ -29,8 +29,9 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const auth: any = localStorage.getItem("auth");
-  const userdetails = JSON.parse(auth);
+  const userdetails = useSelector(
+    (state: RootState) => state.auth.user
+  );
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [              selectedComponent, setSelectedComponent] = useState<string | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -172,12 +173,12 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               <p>
                 Welcome,{" "}
                 {userdetails
-                  ? `${userdetails.user.firstName} ${userdetails.user.lastName}`
+                  ? `${userdetails.firstName} ${userdetails.lastName}`
                   : "Guest"}
               </p>
             </div>
             <div className={styles.circle}>
-              <p>{userdetails ? userdetails.user.firstName[0] : "G"}</p>
+              <p>{userdetails ? userdetails.firstName[0] : "G"}</p>
             </div>
             {isDropdownOpen && (
               <div className={styles.dropdownMenu}>

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '../../../AxiosInterceptor/AxiosInterceptor';
+import {axiosInstance} from '../../../AxiosInterceptor/AxiosInterceptor';
 import { RootState } from '../../reducers';
 
 interface Role {

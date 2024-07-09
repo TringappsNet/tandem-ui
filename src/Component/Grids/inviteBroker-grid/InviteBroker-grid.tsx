@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
+import {axiosInstance} from "../../AxiosInterceptor/AxiosInterceptor";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import FullGrid from "../MainGrid/MainGrid";
 import { MdEdit, MdDelete } from 'react-icons/md';
