@@ -6,6 +6,7 @@ import styles from "./Dashboard.module.css";
 import Main from '../Main/Main';
 import SiteGrid from "../Grids/SiteGrid/SiteGrid";
 import LandlordGrid from "../Grids/landlordGrid/Landlord";
+import InviteBrokerGrid from "../Grids/inviteBroker-grid/InviteBroker-grid";
 
 
 const Dashboard: React.FC = () => {
@@ -17,7 +18,7 @@ const Dashboard: React.FC = () => {
     { name: 'Site', href: '/dashboard/site', disabled: true },
     { name: 'Landlord', href: '/dashboard/landlord', disabled: true },
     { name: 'Cards', href: '/dashboard/cards', disabled: true },
-    // { name: 'FAQ', href: '/faq', disabled: false }, 
+    { name: 'InviteBroker', href: '/dashboard/Invitebroker', disabled: true },
   ];
 
 
@@ -34,6 +35,7 @@ const Dashboard: React.FC = () => {
             <Route path="/cards" element={<Cards />} />
             <Route path="/site" element={<SiteGrid />} />
             <Route path="/landlord" element={<LandlordGrid />} />
+            <Route path="/invitebroker" element={<InviteBrokerGrid />} />
             <Route path="*" element={<Navigate to="/dashboard" />}
             />
           </Routes>
