@@ -158,19 +158,20 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             onClick={toggleDropdown}
             ref={dropdownRef}
           >
-            <p>
-              {userdetails
-                ? `${userdetails.user.firstName} ${userdetails.user.lastName}`
-                : "Guest"}
-            </p>
+            <div className={styles.username}>
+              <p>
+                Welcome,{" "}
+                {userdetails
+                  ? `${userdetails.user.firstName} ${userdetails.user.lastName}`
+                  : "Guest"}
+              </p>
+            </div>
             <div className={styles.circle}>
               <p>{userdetails ? userdetails.user.firstName[0] : "G"}</p>
             </div>
             {isDropdownOpen && (
               <div className={styles.dropdownMenu}>
-                <button onClick={() => handleOpenPopup("Profile")}>
-                  Profile
-                </button>
+                <button onClick={() => handleOpenPopup("Profile")}>Profile</button>
                 <button onClick={() => handleOpenPopup("SendInvite")}>
                   Send Invite
                 </button>
@@ -268,6 +269,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       />
     </>
   );
+
+
 };
 
 export default Navbar;

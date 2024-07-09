@@ -133,7 +133,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
                     <textarea
                         id="description"
                         name="description"
-                        placeholder="Add your concern"
+                        placeholder="Add your Comments"
                         rows={8}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
