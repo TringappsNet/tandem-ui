@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../Redux/reducers';
 import { closeSendInvite } from '../Redux/slice/deal/dealFormSlice';
 import { AppDispatch } from "../Redux/store";
-import { fetchRoles, selectRoles, selectRolesLoading, selectRolesError } from '../Redux/slice/roles/rolesSlice';
+import { fetchRoles, selectRolesLoading, selectRolesError } from '../Redux/slice/roles/rolesSlice';
 
 interface SendInviteProps {
     onCloseDialog: () => void;
