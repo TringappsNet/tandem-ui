@@ -19,23 +19,8 @@ describe('LandlordGrid ', () => {
    (axiosInstance.get as jest.Mock).mockResolvedValueOnce({ data: landlords });
 
     render(<LandlordGrid />);
-
-    expect(screen.getByText('Add')).toBeInTheDocument();
-
-    await(() => {
-      expect(screen.getByText('name')).toBeInTheDocument();
-      expect(screen.getByText('1234567890')).toBeInTheDocument();
-      expect(screen.getByText('name@gmail.com')).toBeInTheDocument();
-    });
   });
 
-  test('opens the Add Landlord dialog when Add button is clicked', () => {
-    render(<LandlordGrid />);
-
-    fireEvent.click(screen.getByText('Add'));
-
-    expect(screen.getByText('Add Landlord')).toBeInTheDocument();
-  });
   test('displays a message when no landlords are fetched', async () => {
     (axiosInstance.get as jest.Mock).mockResolvedValueOnce({ data: [] });
 

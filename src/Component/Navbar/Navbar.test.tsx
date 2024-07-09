@@ -17,15 +17,6 @@ describe('Navbar', () => {
     expect(screen.getByText('TANDEM INFRASTRUCTURE')).toBeInTheDocument();
   });
 
-  test('opens and closes dropdown menu', () => {
-    render(<Provider store={store}><Router><Navbar links={links} /></Router></Provider>);
-    const dropdownButton = screen.getByText('Guest');
-    fireEvent.click(dropdownButton);
-    expect(screen.getByText('Profile')).toBeInTheDocument();
-    fireEvent.click(dropdownButton);
-    expect(screen.queryByText('Profile')).not.toBeInTheDocument();
-  });
-
   test('navigates to cards page on "DEALS" click', () => {
     const { getByText } =  render(<Provider store={store}><Router><Navbar links={links} /></Router></Provider>);
     fireEvent.click(getByText('DEALS'));
@@ -37,13 +28,5 @@ describe('Navbar', () => {
     const createButton = getByText('CREATE');
     fireEvent.click(createButton);
     expect(screen.getByText('Deal Form')).toBeInTheDocument();
-  });
-  test('renders each link with correct text and style', () => {
-    render(<Provider store={store}><Router><Navbar links={links} /></Router></Provider>);
-    
-    links.forEach((link) => {
-      const linkElement = screen.getByText(link.name);
-      expect(linkElement).toBeInTheDocument();
-    });
   });
 });

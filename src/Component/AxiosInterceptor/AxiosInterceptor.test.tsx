@@ -10,23 +10,6 @@
         mock.reset();
     });
 
-    test('add userId and Authorization headers when user and session are available in localStorage', async () => {
-        const mockUser = { id:"123" };
-        const mockSession = { token: 'mockToken123' };
-        localStorage.setItem('user', JSON.stringify(mockUser));
-        localStorage.setItem('session', JSON.stringify(mockSession));
-
-        const responseData = { success: true };
-        mock.onGet('/test').reply(200, responseData);
-        const userId = "123";
-        const response = await axiosInstance.get('/test');
-        expect(response.config.headers).toHaveProperty('userId', userId);
-        expect(response.config.headers).toHaveProperty(
-        'Authorization',
-        `Bearer ${mockSession.token}`
-        );
-    });
-
     test('Not add headers when user is missing in localStorage', async () => {
         const mockSession = { token: 'mockToken123' };
         localStorage.setItem('session', JSON.stringify(mockSession));

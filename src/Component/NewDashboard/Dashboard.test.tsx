@@ -13,8 +13,8 @@ jest.mock('../AxiosInterceptor/AxiosInterceptor', () => ({
 jest.mock('../Navbar/Navbar', () => () => <div>Navbar</div>);
 jest.mock('../Cards/Cards', () => () => <div>Cards</div>);
 jest.mock('../Main/Main', () => () => <div>Main</div>);
-jest.mock('../Grids/Site-grid/site-grid', () => () => <div>SiteGrid</div>);
-jest.mock('../Grids/landlordGrid/landlord-grid', () => () => <div>LandlordGrid</div>);
+jest.mock('../Grids/SiteGrid/SiteGrid', () => () => <div>SiteGrid</div>);
+jest.mock('../Grids/landlordGrid/Landlord', () => () => <div>LandlordGrid</div>);
 
 describe('Dashboard Component', () => {
   it('Render the Navbar and Main components', () => {
