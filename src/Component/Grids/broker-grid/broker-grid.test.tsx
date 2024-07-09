@@ -1,7 +1,7 @@
 import { render} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import axiosInstance from '../../AxiosInterceptor/AxiosInterceptor';
-import BrokerGrid from './broker-grid';
+import BrokerGrid from './BrokerGrid';
 
 jest.mock('../../AxiosInterceptor/AxiosInterceptor', () => ({
     post: jest.fn(),
