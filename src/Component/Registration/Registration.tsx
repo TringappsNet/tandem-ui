@@ -308,28 +308,6 @@ const Registration: React.FC = () => {
         e.preventDefault();
 
 
-
-        // if (firstName === '' && lastName === '' && mobileNo === '' &&
-        //     address === '' && city === '' && state === '' && country === '' &&
-        //     zipcode === '' && password === '' && confirmpassword === '') {
-        //     setValidationErrorMessage("Fill out all the fields and register.");
-        //     return;
-        // }
-
-        // if (firstName !== '' && lastName !== '' && mobileNo !== '' &&
-        //     address !== '' && city !== '' && state !== '' && country !== '' &&
-        //     zipcode !== '' && (password === '' || confirmpassword === '')) {
-        //     setValidationErrorMessage("Fill the password and confirm it.");
-        //     return;
-        // }
-
-        // if (firstName === '' || lastName === '' || mobileNo === '' ||
-        //     address === '' || city === '' || state === '' || country === '' ||
-        //     zipcode === '' || password === '' || confirmpassword === '') {
-        //     setValidationErrorMessage("Please enter values in all required fields.");
-        //     return;
-        // }
-
         if (!handleValidation()) {
             return;
         }
@@ -376,92 +354,6 @@ const Registration: React.FC = () => {
             }
         }
     };
-
-    // const handleBlur = (field: string) => {
-    //     let error = '';
-    //     switch (field) {
-    //         case 'firstName':
-    //             error = validatefirstName(firstName);
-    //             if (error === '') {
-    //                 lastNameRef.current?.focus();
-    //             } else {
-    //                 setValidationErrorMessage(error);
-    //             }
-    //             break;
-    //         case 'lastName':
-    //             error = validatelastName(lastName);
-    //             if (error === '') {
-    //                 addressRef.current?.focus();
-    //             } else {
-    //                 setValidationErrorMessage(error);
-    //             }
-    //             break;
-    //         case 'address':
-    //             error = validateAddress(address);
-    //             if (error === '') {
-    //                 mobileNoRef.current?.focus();
-    //             } else {
-    //                 setValidationErrorMessage(error);
-    //             }
-    //             break;
-    //         case 'mobileNo':
-    //             error = validateMobileNo(mobileNo);
-    //             if (error === '') {
-    //                 cityRef.current?.focus();
-    //             } else {
-    //                 setValidationErrorMessage(error);
-    //             }
-    //             break;
-    //         case 'city':
-    //             if (city.trim() === '') {
-    //                 setValidationErrorMessage('City is required.');
-    //             } else {
-    //                 stateRef.current?.focus();
-    //             }
-    //             break;
-    //         case 'state':
-    //             if (state.trim() === '') {
-    //                 setValidationErrorMessage('State is required.');
-    //             } else {
-    //                 countryRef.current?.focus();
-    //             }
-    //             break;
-    //         case 'country':
-    //             if (country.trim() === '') {
-    //                 setValidationErrorMessage('Country is required.');
-    //             } else {
-    //                 zipcodeRef.current?.focus();
-    //             }
-    //             break;
-    //         case 'zipcode':
-    //             error = validateZipcode(zipcode);
-    //             if (error === '') {
-    //                 passwordRef.current?.focus();
-    //             } else {
-    //                 setValidationErrorMessage(error);
-    //             }
-    //             break;
-    //         case 'password':
-    //             error = validatePassword(password);
-    //             if (error === '') {
-    //                 confirmPasswordRef.current?.focus();
-    //             } else {
-    //                 setValidationErrorMessage(error);
-    //             }
-    //             break;
-    //         case 'confirmpassword':
-    //             error = validateConfirmpassword(password, confirmpassword);
-    //             if (error === '') {
-    //                 setValidationErrorMessage('');
-    //             } else {
-    //                 setValidationErrorMessage(error);
-    //             }
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // };
-
 
     return (
         <div className='app'>
