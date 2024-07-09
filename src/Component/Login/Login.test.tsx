@@ -4,6 +4,7 @@ import Login from './Login';
 import { Provider } from 'react-redux';
 import store from '../Redux/store';
 import { BrowserRouter as Router } from 'react-router-dom';
+import '@testing-library/jest-dom';
 
 jest.mock('../AxiosInterceptor/AxiosInterceptor', () => ({
   post: jest.fn(),
