@@ -93,17 +93,6 @@ export const fetchDealDetails = (): AppThunk<void> => async (dispatch: Dispatch)
   }
 };
 
-export const fetchDealDetailsById = (dealId: number): AppThunk<void> => async (dispatch: Dispatch) => {
-  try {
-    dispatch(fetchDealDetailsStart());
-    const response = await axiosInstance.get(`/deals/deal/${dealId}`);
-    dispatch(fetchDealDetailsSuccess([response.data]));
-  } catch (error) {
-    console.error('Error fetching deal details:', error);
-    dispatch(fetchDealDetailsFailure((error as Error).message));
-  }
-};
-
 export const deleteDeal = (dealId: number): AppThunk<void> => async (dispatch: Dispatch) => {
   try {
     dispatch(fetchDealDetailsStart());
