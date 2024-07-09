@@ -1,11 +1,9 @@
-// registerSlice.ts
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface RegisterState {
   token: string | null;
   userId: string | null;
-  email: string | null; 
+  email: string | null;
   registering: boolean;
   error: string | null;
   resettingPassword: boolean;
