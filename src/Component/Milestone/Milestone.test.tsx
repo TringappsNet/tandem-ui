@@ -1,4 +1,4 @@
-import { render, fireEvent, waitFor, getAllByDisplayValue } from '@testing-library/react';
+import { render, fireEvent, waitFor} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import DealForm from './Milestone';
