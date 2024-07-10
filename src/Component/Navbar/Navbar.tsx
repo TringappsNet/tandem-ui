@@ -15,7 +15,7 @@ import Profile from "../Profile/profile";
 import Support from "../Support/Support";
 import DealForm from "../DealForm/dealForm";
 import ConfirmationModal from "../AlertDialog/AlertDialog";
-import { openDealForm } from "../Redux/slice/deal/componentsSlice";
+import { openDealForm } from "../Redux/slice/componentsState/componentsSlice";
 import {
   openProfile,
   closeProfile,
@@ -25,7 +25,7 @@ import {
   closeReset,
   openSupport,
   closeSupport,
-} from "../Redux/slice/deal/componentsSlice";
+} from "../Redux/slice/componentsState/componentsSlice";
 
 interface NavbarProps {
   links: {
@@ -49,16 +49,10 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
 
   const navigate = useNavigate();
   const dealFormOpen = useSelector((state: RootState) => state.dealForm.open);
-  const profileOpen = useSelector(
-    (state: RootState) => state.profile.open
-  );
-  const inviteOpen = useSelector(
-    (state: RootState) => state.sendInvite.open
-  );
+  const profileOpen = useSelector((state: RootState) => state.profile.open);
+  const inviteOpen = useSelector((state: RootState) => state.sendInvite.open);
   const resetOpen = useSelector((state: RootState) => state.resetPassword.open);
-  const supportOpen = useSelector(
-    (state: RootState) => state.support.open
-  );
+  const supportOpen = useSelector((state: RootState) => state.support.open);
 
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
