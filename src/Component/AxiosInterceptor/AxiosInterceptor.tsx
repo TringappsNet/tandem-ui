@@ -8,7 +8,6 @@ const axiosInstance = axios.create({
   baseURL: "http://localhost:3008/api",
 });
 
-// Function to get query parameters from the URL
 const getQueryParam = (param: string): string | null => {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);
