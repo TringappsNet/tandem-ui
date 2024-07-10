@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { axiosInstance } from '../../../AxiosInterceptor/AxiosInterceptor';
 
 interface RegisterState {
   token: string | null;
@@ -21,6 +22,22 @@ const initialState: RegisterState = {
   resetPasswordSuccess: false,
   resetPasswordError: null,
 };
+
+// Thunk for registration
+export const registerUser = createAsyncThunk(
+  'register/registerUser',
+  async (userData: any, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post('/auth/register', userData);
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(error.response.data.message);
+      }
+      return rejectWithValue('Registration failed. Please try again.');
+    }
+  }
+);
 
 const registerSlice = createSlice({
   name: 'register',
@@ -56,6 +73,23 @@ const registerSlice = createSlice({
       state.resetPasswordError = action.payload;
       state.resettingPassword = false; // Resetting password encountered an error
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.registering = true;
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.registering = false;
+        state.token = action.payload.token;
+        state.userId = action.payload.userId;
+        state.email = action.payload.email;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.registering = false;
+        state.error = action.payload as string;
+      });
   },
 });
 
