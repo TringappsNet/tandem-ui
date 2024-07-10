@@ -43,11 +43,11 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
   const handleSendInvite = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (roleId === null) {
-      setResponseMessage("Please select a role.");
-      setResponseType("error");
-      return;
-    }
+        if (roleId === null) {
+            setResponseMessage('Please select the role.');
+            setResponseType('error');
+            return;
+        }
 
     setIsLoading(true);
 
