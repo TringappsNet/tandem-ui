@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../Redux/slice/auth/registerSlice";
 import styles from "./Registration.module.css";
-import { axiosInstance } from "../AxiosInterceptor/AxiosInterceptor";
 import logo from "./logo.jpeg";
 import { useNavigate } from "react-router-dom";
+import { AppDispatch } from "../Redux/store";
+import { RootState } from "../Redux/reducers";
 
 const Registration: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const { registering } = useSelector((state: RootState) => state.register);
+
   const [firstName, setFirstname] = useState("");
   const [lastName, setLastname] = useState("");
   const [mobileNo, setMobileno] = useState("");
@@ -237,6 +243,7 @@ const Registration: React.FC = () => {
       return "";
     }
   };
+
   const handleValidation = () => {
     const firstNameError = validatefirstName(firstName);
     const lastNameError = validatelastName(lastName);
@@ -271,8 +278,8 @@ const Registration: React.FC = () => {
       return;
     }
 
-    try {
-      await axiosInstance.post("/auth/register", {
+    const resultAction = await dispatch(
+      registerUser({
         firstName,
         lastName,
         mobileNo,
@@ -283,7 +290,10 @@ const Registration: React.FC = () => {
         zipcode,
         password,
         inviteToken,
-      });
+      })
+    );
+
+    if (registerUser.fulfilled.match(resultAction)) {
       setValidationSucessMessage("Registration successful!");
       setInviteTokenError("");
 
@@ -300,16 +310,12 @@ const Registration: React.FC = () => {
       setDisableState(false);
       setInviteToken("");
       setInviteTokenError("");
-      navigate("/login");
-    } catch (error: any) {
-      if (error.response && error.response.status === 400) {
-        if (error.response.data && error.response.data.message) {
-          setInviteTokenError(error.response.data.message);
-        } else {
-          setInviteTokenError(
-            "Invalid invite token. Please check and try again."
-          );
-        }
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } else {
+      if (resultAction.payload) {
+        setValidationErrorMessage(resultAction.payload as string);
       } else {
         setValidationErrorMessage("Registration failed. Please try again.");
       }
@@ -513,8 +519,12 @@ const Registration: React.FC = () => {
                   </div>
                 </div>
                 <div className={styles.buttonContainer}>
-                  <button type="submit" className={styles.buttoncls}>
-                    Register
+                  <button
+                    type="submit"
+                    className={styles.buttoncls}
+                    disabled={registering}
+                  >
+                    {registering ? "Registering..." : "Register"}
                   </button>
                 </div>
               </form>

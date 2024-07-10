@@ -4,7 +4,7 @@ import { FiEdit, FiTrash } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/reducers";
 import { deleteDeal, fetchDealDetails } from "../Redux/slice/deal/dealSlice";
-import { openDealForm } from "../Redux/slice/deal/dealFormSlice";
+import { openDealForm } from "../Redux/slice/deal/componentsSlice";
 import { AppDispatch } from "../Redux/store";
 import ConfirmationModal from "../AlertDialog/AlertDialog";
 import { setCurrentDeal } from "../Redux/slice/deal/currentDeal";

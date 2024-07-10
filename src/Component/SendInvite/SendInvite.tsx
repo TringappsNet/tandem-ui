@@ -5,7 +5,7 @@ import { axiosInstance } from "../AxiosInterceptor/AxiosInterceptor";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/reducers";
-import { closeSendInvite } from "../Redux/slice/deal/dealFormSlice";
+import { closeSendInvite } from "../Redux/slice/deal/componentsSlice";
 import { AppDispatch } from "../Redux/store";
 import {
   fetchRoles,
@@ -43,11 +43,11 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
   const handleSendInvite = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (roleId === null) {
-      setResponseMessage("Please select a role.");
-      setResponseType("error");
-      return;
-    }
+        if (roleId === null) {
+            setResponseMessage('Please select the role.');
+            setResponseType('error');
+            return;
+        }
 
     setIsLoading(true);
 
