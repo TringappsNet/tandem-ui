@@ -5,7 +5,10 @@ import SnackbarComponent from "../Snackbar/Snackbar";
 import styles from "./AxiosInterceptor.module.css";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3008/api",
+  // baseURL: "http://localhost:3008/api",
+  baseURL: "http://192.168.1.77:3008/api",
+
+
 });
 
 // Function to get query parameters from the URL
