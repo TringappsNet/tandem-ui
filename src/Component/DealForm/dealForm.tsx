@@ -91,7 +91,7 @@ const DealForm: React.FC<DealFormProps> = () => {
     updatedBy: currentDeal?.updatedBy || 0,
     isNew: currentDeal?.isNew || true,
   });
-  const [brokerOptions, setBrokerOptions] = useState<string[]>([]);
+  const [brokerOptions, setBrokerOptions] = useState<{ name: string, id: number }[]>([]);
   const [propertyOptions, setPropertyOptions] = useState<string[]>([]);
   const [userId, setUserId] = useState<number | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
@@ -113,7 +113,7 @@ const DealForm: React.FC<DealFormProps> = () => {
     try {
       const response = await axiosInstance.get("/brokers");
       const brokers = response.data.map(
-        (broker: any) => `${broker.user.firstName} ${broker.user.lastName}`
+        (broker: any) => ({ name: `${broker.user.firstName} ${broker.user.lastName}`, id: broker.user.id })
       );
       setBrokerOptions(brokers);
       if (response.data.length > 0) {
@@ -158,10 +158,12 @@ const DealForm: React.FC<DealFormProps> = () => {
 
   const saveFormData = () => {
     const status = getStatus(activeStep);
+    const brokerId = brokerOptions.find(broker => broker.name === formData.brokerName)?.id || null;
     const payload = {
       ...formData,
       activeStep: activeStep + 1,
       status,
+      brokerId,
       createdBy: userId || 0,
       updatedBy: userId || 0,
       isNew: true,
@@ -221,8 +223,8 @@ const DealForm: React.FC<DealFormProps> = () => {
           >
             {label === "brokerName"
               ? brokerOptions.map((option, idx) => (
-                  <MenuItem key={idx} value={option}>
-                    {option}
+                  <MenuItem key={idx} value={option.name}>
+                    {option.name}
                   </MenuItem>
                 ))
               : label === "propertyName"
@@ -353,18 +355,18 @@ const DealForm: React.FC<DealFormProps> = () => {
               alignItems: "flex-start",
             }}
           >
-            <Stepper
-              activeStep={activeStep}
-              alternativeLabel
+        <Stepper
+          activeStep={activeStep}
+          alternativeLabel
               connector={<StepConnector />}
               sx={{ width: 1 }}
-            >
+        >
               {steps.map((step, index) => (
                 <Step key={index}>
-                  <StepLabel>{step.label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
+              <StepLabel>{step.label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
             <Box
               sx={{
                 width: "100%",
@@ -399,23 +401,23 @@ const DealForm: React.FC<DealFormProps> = () => {
                         width: "100%",
                       }}
                     >
-                      <Button
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
+            <Button
+              disabled={activeStep === 0}
+              onClick={handleBack}
                         sx={{ width: 100 }}
-                      >
-                        Back
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="primary"
+            >
+              Back
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
                         onClick={handleNext}
                         sx={{ width: 100 }}
                         disabled={!saveSuccess || !isFormValid()}
-                      >
-                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                      </Button>
-                    </Box>
+            >
+              {activeStep === steps.length - 1 ? "Finish" : "Next"}
+            </Button>
+          </Box>
                   </Box>
                   <Box
                     sx={{
