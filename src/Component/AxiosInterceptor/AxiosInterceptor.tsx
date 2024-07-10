@@ -1,14 +1,13 @@
-import React, { useEffect, ReactNode, useState } from "react";
+import React, { useLayoutEffect, ReactNode, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SnackbarComponent from "../Snackbar/Snackbar";
 import styles from "./AxiosInterceptor.module.css";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3008/api",
-  // baseURL: "http://192.168.1.223:3009/api",
 
-
+  // baseURL: "http://localhost:3008/api",
+  baseURL: "http://192.168.1.223:3008/api",
 });
 
 const getQueryParam = (param: string): string | null => {
@@ -26,63 +25,71 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Request interceptor to add userId, token, and resetToken to headers
-    const requestInterceptor = axiosInstance.interceptors.request.use(
-      (config) => {
-        setIsLoading(true);
-        const user = JSON.parse(localStorage.getItem("user") || "{}");
-        const session = JSON.parse(localStorage.getItem("session") || "{}");
-        const userId = user.id;
-        const token = session.token;
-        const resetToken = getQueryParam("resetToken");
-        config.headers["Content-Type"] = "application/json"
+  useLayoutEffect(() => {
+    let requestInterceptor: number;
+    let responseInterceptor: number;
 
-        if (userId && token) {
-          config.headers["user-id"] = userId;
-          config.headers["access-token"] = token;
+    const addInterceptors = () => {
+      requestInterceptor = axiosInstance.interceptors.request.use(
+        (config) => {
+          setIsLoading(true);
+          const user = JSON.parse(localStorage.getItem("user") || "{}");
+          const session = JSON.parse(localStorage.getItem("session") || "{}");
+          const userId = user.id;
+          const token = session.token;
+          const resetToken = getQueryParam("resetToken");
+
+          if (userId && token) {
+            config.headers["user-id"] = userId;
+            config.headers["access-token"] = token;
+          }
+
+          if (resetToken) {
+            config.headers["resetToken"] = resetToken;
+          }
+
+          return config;
+        },
+        (error) => {
+          setIsLoading(false);
+          return Promise.reject(error);
         }
+      );
 
-        if (resetToken) {
-          config.headers["resetToken"] = resetToken;
+      responseInterceptor = axiosInstance.interceptors.response.use(
+        (response) => {
+          setIsLoading(false);
+          return response;
+        },
+        (error) => {
+          setIsLoading(false);
+
+          if (
+            error.response &&
+            (error.response.status === 401 || error.response.status === 403)
+          ) {
+            setSnackbarMessage("Your session is invalid or expired");
+            localStorage.clear();
+            setSnackbarOpen(true);
+            setTimeout(() => {
+              navigate("/login");
+            }, 3000);
+          }
+          return Promise.reject(error);
         }
+      );
+    };
 
-        return config;
-      },
-      (error) => {
-        setIsLoading(false);
-        return Promise.reject(error);
-      }
-    );
-
-    // Response interceptor to handle session validation
-    const responseInterceptor = axiosInstance.interceptors.response.use(
-      (response) => {
-        setIsLoading(false);
-        return response;
-      },
-      (error) => {
-        setIsLoading(false);
-
-        if (
-          error.response &&
-          (error.response.status === 401 || error.response.status === 403)
-        ) {
-          setSnackbarMessage("Your session is invalid or expired");
-          localStorage.clear();
-          setSnackbarOpen(true);
-          setTimeout(() => {
-            navigate("/login");
-          }, 3000);
-        }
-        return Promise.reject(error);
-      }
-    );
+    addInterceptors();
 
     // Cleanup interceptors on component unmount
     return () => {
-      axiosInstance.interceptors.request.eject(requestInterceptor);
-      axiosInstance.interceptors.response.eject(responseInterceptor);
+      if (requestInterceptor) {
+        axiosInstance.interceptors.request.eject(requestInterceptor);
+      }
+      if (responseInterceptor) {
+        axiosInstance.interceptors.response.eject(responseInterceptor);
+      }
     };
   }, [navigate]);
 
