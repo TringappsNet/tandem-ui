@@ -19,11 +19,8 @@ import ConfirmationModal from "../../AlertDialog/AlertDialog";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../Redux/store/index";
 import { RootState } from "../../Redux/reducers";
-import {
-  openSendInvite,
-  closeSendInvite,
-} from "../../Redux/slice/componentsState/componentsSlice";
 import SendInvite from "../../SendInvite/SendInvite";
+import { closeSendInvite, openSendInvite } from "../../Redux/slice/auth/sendInviteSlice";
 // import './site-grid.module.css';
 
 interface Site {

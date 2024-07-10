@@ -5,12 +5,14 @@ interface ResetState {
   responseMessage: string;
   responseType: string;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  open: boolean;
 }
 
 const initialState: ResetState = {
   responseMessage: '',
   responseType: '',
   status: 'idle',
+  open: false,
 };
 
 export const resetPassword = createAsyncThunk(
@@ -33,7 +35,13 @@ const resetSlice = createSlice({
       state.responseMessage = '';
       state.responseType = '';
     },
-    resetState: () => initialState, 
+    resetState: () => initialState,
+    openReset: (state) => {
+      state.open = true;
+    },
+    closeReset: (state) => {
+      state.open = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -53,6 +61,6 @@ const resetSlice = createSlice({
   },
 });
 
-export const { clearResponse, resetState } = resetSlice.actions;
+export const { clearResponse, resetState, openReset, closeReset } = resetSlice.actions;
 
 export default resetSlice.reducer;
