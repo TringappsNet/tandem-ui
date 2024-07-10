@@ -162,7 +162,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             onClick={() => handleRoute("invitebroker")}
             style={{ cursor: "pointer" }}
           >
-            INVITEBROKER
+            BROKERDETAILS
           </p>
         </div>
         <div className={styles.rightheadersection}>
