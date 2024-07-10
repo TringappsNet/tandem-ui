@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import { AppDispatch } from "../Redux/store";
 import { fetchRoles, selectRolesLoading, selectRolesError } from '../Redux/slice/roles/rolesSlice';
 import styles from './profile.module.css';

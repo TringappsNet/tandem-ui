@@ -40,7 +40,7 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
         e.preventDefault();
 
         if (roleId === null) {
-            setResponseMessage('Please select a role.');
+            setResponseMessage('Please select the role.');
             setResponseType('error');
             return;
         }

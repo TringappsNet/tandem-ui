@@ -22,16 +22,23 @@ interface Session {
 interface AuthState {
   user: User | null;
   session: Session | null;
+  isAdmin: boolean;
 }
 
 const loadStateFromLocalStorage = (): AuthState => {
   try {
     const user = localStorage.getItem('user');
     const session = localStorage.getItem('session');
+    // const roleId = localStorage.getItem('roleID');
+
     if (user && session) {
+      const parsedUser = JSON.parse(user) as User;
+      const isAdmin = parsedUser.roleId === 1;
+
       return {
-        user: JSON.parse(user),
+        user: parsedUser,
         session: JSON.parse(session),
+        isAdmin,
       };
     }
   } catch (e) {
@@ -40,6 +47,7 @@ const loadStateFromLocalStorage = (): AuthState => {
   return {
     user: null,
     session: null,
+    isAdmin: false,
   };
 };
 
@@ -52,6 +60,7 @@ const authSlice = createSlice({
     setCredentials: (state: AuthState, action: PayloadAction<{ user: User; session: Session }>) => {
       state.user = action.payload.user;
       state.session = action.payload.session;
+      state.isAdmin = action.payload.user.roleId === 1;
 
       localStorage.setItem('user', JSON.stringify(action.payload.user));
       localStorage.setItem('session', JSON.stringify(action.payload.session));
@@ -59,9 +68,14 @@ const authSlice = createSlice({
     logout: (state: AuthState) => {
       state.user = null;
       state.session = null;
+      state.isAdmin = false;
+
+      localStorage.removeItem('user');
+      localStorage.removeItem('session');
     },
   },
 });
 
 export const { setCredentials, logout } = authSlice.actions;
 export default authSlice.reducer;
+
