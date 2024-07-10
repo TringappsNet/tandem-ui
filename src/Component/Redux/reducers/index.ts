@@ -4,6 +4,7 @@ import registerReducer from '../slice/auth/registerSlice';
 import dealReducer from '../slice/deal/dealSlice';
 import currentDeal from '../slice/deal/currentDeal';
 import rolesReducer from '../slice/role/rolesSlice';
+import contactReducer from '../slice/support/supportSlice';
 import { dealFormReducer, profileReducer, sendInviteReducer, supportReducer, landlordReducer, siteReducer, resetPasswordReducer } from '../slice/deal/componentsSlice';
 import resetReducer from '../slice/auth/resetSlice';
 
@@ -15,12 +16,13 @@ const rootReducer = combineReducers({
   currentDeal: currentDeal,
   profileReducer: profileReducer,
   sendInviteReducer: sendInviteReducer,
-  reset: resetReducer, 
+  reset: resetReducer,
   resetPassword: resetPasswordReducer,
   supportReducer: supportReducer,
   siteReducer: siteReducer,
   landlordReducer: landlordReducer,
   roles: rolesReducer,
+  support: contactReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
