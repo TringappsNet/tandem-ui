@@ -15,7 +15,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
     const [subject, setSubject] = useState('');
     const [description, setDescription] = useState('');
     const [isVisible, setIsVisible] = useState(true);
-    const { isLoading, error, successMessage } = useSelector((state: RootState) => state.support);
+    const { isLoading, error, successMessage } = useSelector((state: RootState) => state.contact);
     const user = useSelector((state: RootState) => state.auth.user);
 
     const navigate = useNavigate();
