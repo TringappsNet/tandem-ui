@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import axios from "axios";
-import axiosInstance from "../../AxiosInterceptor/AxiosInterceptor";
+import { axiosInstance } from "../../AxiosInterceptor/AxiosInterceptor";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 
 import FullGrid from "../MainGrid/MainGrid";
@@ -28,7 +28,7 @@ interface User {
   roleId: number;
 }
 
-interface BrokerData extends Omit<User, 'roleId'> {
+interface BrokerData extends Omit<User, "roleId"> {
   fullName: string;
   totalDeals: number;
   dealsOpened: number;
@@ -73,7 +73,7 @@ const BrokerGrid: React.FC = () => {
       const response = await axiosInstance.get(config.apiUrl);
       const brokers = response.data.map((broker: any) => {
         const fullName = `${broker.user.firstName} ${broker.user.lastName}`;
-        const roleName = broker.roleId === 1 ? 'Admin' : 'Broker';
+        const roleName = broker.roleId === 1 ? "Admin" : "Broker";
 
         return {
           id: broker.user.id,
@@ -147,7 +147,6 @@ const BrokerGrid: React.FC = () => {
         className=""
         sx={{
           height: 480,
-
         }}
         rows={rows}
         columns={columns}
@@ -245,7 +244,10 @@ const BrokerGrid: React.FC = () => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={formData.id ? handleUpdate : handleAdd} color="primary">
+          <Button
+            onClick={formData.id ? handleUpdate : handleAdd}
+            color="primary"
+          >
             {formData.id ? "Update" : "Add"}
           </Button>
         </DialogActions>

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, Action } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
-import axiosInstance from '../../../AxiosInterceptor/AxiosInterceptor';
+import {axiosInstance} from '../../../AxiosInterceptor/AxiosInterceptor';
 import { RootState } from '../../reducers';
 import { ThunkAction } from 'redux-thunk';
 import { Deal } from '../../../Interface/DealFormObject';
@@ -87,17 +87,6 @@ export const fetchDealDetails = (): AppThunk<void> => async (dispatch: Dispatch)
     dispatch(fetchDealDetailsStart());
     const response = await axiosInstance.get(`/deals`);
     dispatch(fetchDealDetailsSuccess(response.data));
-  } catch (error) {
-    console.error('Error fetching deal details:', error);
-    dispatch(fetchDealDetailsFailure((error as Error).message));
-  }
-};
-
-export const fetchDealDetailsById = (dealId: number): AppThunk<void> => async (dispatch: Dispatch) => {
-  try {
-    dispatch(fetchDealDetailsStart());
-    const response = await axiosInstance.get(`/deals/deal/${dealId}`);
-    dispatch(fetchDealDetailsSuccess([response.data]));
   } catch (error) {
     console.error('Error fetching deal details:', error);
     dispatch(fetchDealDetailsFailure((error as Error).message));

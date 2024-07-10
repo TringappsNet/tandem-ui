@@ -11,7 +11,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@mui/icons-material": "^5.15.20",
-    "@mui/material": "^5.15.21",
+    "@mui/material": "^5.16.0",
     "@mui/x-charts": "^7.9.0",
     "@mui/x-data-grid": "^7.8.0",
     "@reduxjs/toolkit": "^2.2.6",
@@ -20,6 +20,7 @@
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.98",
     "axios": "^1.7.2",
+    "axios-mock-adapter": "^1.22.0",
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
     "jest": "^27.5.1",
@@ -70,5 +71,10 @@
     "@types/react-dom": "^18.3.0",
     "@types/react-modal": "^3.16.3",
     "@types/redux-mock-store": "^1.0.6"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^axios$": "axios/dist/node/axios.cjs"
+    }
   }
 }

@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch } from "../Redux/store";
-import { fetchRoles, selectRolesLoading, selectRolesError } from '../Redux/slice/roles/rolesSlice';
-import styles from './profile.module.css';
+import {
+    fetchRoles,
+    selectRolesLoading,
+    selectRolesError,
+} from "../Redux/slice/role/rolesSlice";
+import styles from "./profile.module.css";
 import { RootState } from "../Redux/reducers";
 
 interface ProfileItem {
@@ -36,17 +40,17 @@ const Profile: React.FC<ProfileProps> = () => {
 
     useEffect(() => {
         if (!rolesLoading && !rolesError && user) {
-            const userRole = roles.find(role => role.id === user.roleId);
+            const userRole = roles.find((role) => role.id === user.roleId);
             const userProfileData = [
                 { label: "Id", value: user.id },
                 { label: "Name", value: `${user.firstName} ${user.lastName}` },
-                { label: "Role", value: userRole ? userRole.roleName : 'N/A' },
+                { label: "Role", value: userRole ? userRole.roleName : "N/A" },
                 { label: "Email", value: user.email },
                 { label: "Mobile", value: user.mobile },
                 { label: "Address", value: user.address },
                 { label: "Country", value: user.country },
                 { label: "State", value: user.state },
-                { label: "Zipcode", value: user.zipcode }
+                { label: "Zipcode", value: user.zipcode },
             ];
             setProfileData(userProfileData);
             setIsLoading(false);
@@ -62,7 +66,9 @@ const Profile: React.FC<ProfileProps> = () => {
     }
 
     if (rolesError) {
-        return <div className={styles.error}>Error fetching roles: {rolesError}</div>;
+        return (
+            <div className={styles.error}>Error fetching roles: {rolesError}</div>
+        );
     }
 
     if (!profileData) {

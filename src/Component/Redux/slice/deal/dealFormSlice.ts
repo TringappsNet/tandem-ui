@@ -104,6 +104,7 @@ export const { openReset, closeReset } = resetSlice.actions;
 export const { openSupport, closeSupport } = supportSlice.actions;
 export const { openLandlord, closeLandlord } = landlordSlice.actions;
 export const { openSite, closeSite } = siteSlice.actions;
+export const { openDealForm, closeDealForm } = dealFormSlice.actions;
 
 export const dealFormReducer = dealFormSlice.reducer;
 export const profileReducer = profileSlice.reducer;
@@ -112,5 +113,4 @@ export const resetReducer = resetSlice.reducer;
 export const supportReducer = supportSlice.reducer;
 export const landlordReducer = landlordSlice.reducer;
 export const siteReducer = siteSlice.reducer;
-export const { openDealForm, closeDealForm } = dealFormSlice.actions;
 

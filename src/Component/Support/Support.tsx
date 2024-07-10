@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../AxiosInterceptor/AxiosInterceptor';
 import styles from './Support.module.css';
 import mailImage from './mail.png';
-
+import { axiosInstance } from '../AxiosInterceptor/AxiosInterceptor';
 interface RootState {
     auth: {
         user: {
@@ -68,7 +67,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
         setSuccessMessage('');
         setErrorMessage('');
         try {
-            const response = await axiosInstance.post('/support/raise-ticket', {
+            const response = await axiosInstance.post('http://192.168.1.223:3008/api/support/raise-ticket', {
                 ticketSubject: subject,
                 ticketDescription: description,
                 senderId: user.id
