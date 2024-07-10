@@ -5,7 +5,7 @@ import dealReducer from '../slice/deal/dealSlice';
 import currentDeal from '../slice/deal/currentDeal';
 import rolesReducer from '../slice/role/rolesSlice';
 import contactReducer from '../slice/support/supportSlice';
-import { dealFormReducer, profileReducer, supportReducer, landlordReducer, siteReducer } from '../slice/componentsState/componentsSlice';
+import { dealFormReducer, profileReducer, supportReducer } from '../slice/componentsState/componentsSlice';
 import resetReducer from '../slice/auth/resetSlice';
 import { sendInviteReducer } from '../slice/auth/sendInviteSlice';
 
@@ -19,8 +19,6 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   sendInvite: sendInviteReducer,
   support: supportReducer,
-  site: siteReducer,
-  landlord: landlordReducer,
   roles: rolesReducer,
   contact: contactReducer
 

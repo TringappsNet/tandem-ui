@@ -164,7 +164,7 @@ const DealForm: React.FC<DealFormProps> = () => {
       status,
       createdBy: userId || 0,
       updatedBy: userId || 0,
-      isNew: true,
+      brokerId: 6,
     };
 
     try {
@@ -179,13 +179,14 @@ const DealForm: React.FC<DealFormProps> = () => {
   const dispatchFormDataOnClose = async () => {
     try {
       if (currentDeal) {
-        if (currentDeal.isNew && isFirstSave) {
-          await dispatch(createNewDeal(currentDeal));
-          setIsFirstSave(false);
-        } else {
-          await dispatch(updateDealDetails(currentDeal));
+        if (currentDeal.id) {
+          dispatch(updateDealDetails(currentDeal));
           dispatch(clearCurrentDeal());
           setIsFirstSave(true);
+        } else {
+          dispatch(createNewDeal(currentDeal));
+          dispatch(clearCurrentDeal());
+          setIsFirstSave(false);
         }
       }
     } catch (error) {
