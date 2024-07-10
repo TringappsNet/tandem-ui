@@ -95,7 +95,6 @@ const DealForm: React.FC<DealFormProps> = () => {
   const [propertyOptions, setPropertyOptions] = useState<string[]>([]);
   const [userId, setUserId] = useState<number | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
-  const [isFirstSave, setIsFirstSave] = useState(true);
 
   const fetchSite = async () => {
     try {
@@ -166,7 +165,6 @@ const DealForm: React.FC<DealFormProps> = () => {
       brokerId,
       createdBy: userId || 0,
       updatedBy: userId || 0,
-      isNew: true,
     };
 
     try {
@@ -181,13 +179,12 @@ const DealForm: React.FC<DealFormProps> = () => {
   const dispatchFormDataOnClose = async () => {
     try {
       if (currentDeal) {
-        if (currentDeal.isNew && isFirstSave) {
-          await dispatch(createNewDeal(currentDeal));
-          setIsFirstSave(false);
-        } else {
-          await dispatch(updateDealDetails(currentDeal));
+        if (currentDeal.id) {
+          dispatch(updateDealDetails(currentDeal));
           dispatch(clearCurrentDeal());
-          setIsFirstSave(true);
+        } else {
+          dispatch(createNewDeal(currentDeal));
+          dispatch(clearCurrentDeal());
         }
       }
     } catch (error) {
