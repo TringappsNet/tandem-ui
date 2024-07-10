@@ -52,6 +52,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const profileOpen = useSelector(
     (state: RootState) => state.profile.open
   );
+  // const openSendInvite = useSelector((state: RootState) => state.sendInvite.open);
   const inviteOpen = useSelector(
     (state: RootState) => state.sendInvite.open
   );
