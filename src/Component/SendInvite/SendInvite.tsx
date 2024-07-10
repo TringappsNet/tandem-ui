@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./SendInvite.module.css";
 import classNames from "classnames";
-import { axiosInstance } from "../AxiosInterceptor/AxiosInterceptor";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/reducers";
-import { closeSendInvite } from "../Redux/slice/auth/sendInviteSlice";
+import { closeSendInvite, sendInvite, resetResponse, clearResponse } from "../Redux/slice/auth/sendInviteSlice";
 import { AppDispatch } from "../Redux/store";
 import {
   fetchRoles,
@@ -24,11 +23,11 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
   const roles = useSelector((state: RootState) => state.roles.roles);
   const rolesLoading = useSelector(selectRolesLoading);
   const rolesError = useSelector(selectRolesError);
+  const isLoading = useSelector((state: RootState) => state.sendInvite.isLoading);
+  const responseMessage = useSelector((state: RootState) => state.sendInvite.responseMessage);
+  const responseType = useSelector((state: RootState) => state.sendInvite.responseType);
   const [showInviteForm, setShowInviteForm] = useState(true);
-  const [responseMessage, setResponseMessage] = useState("");
-  const [responseType, setResponseType] = useState("");
   const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [roleId, setRoleId] = useState<number | null>(null);
   const selectRef = useRef<HTMLSelectElement>(null);
 
@@ -44,42 +43,26 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
     e.preventDefault();
 
     if (roleId === null) {
-      setResponseMessage("Please select the role.");
-      setResponseType("error");
+      dispatch(resetResponse());
+      dispatch({
+        type: 'sendInvite/sendInvite/rejected',
+        payload: 'Please select the role.',
+      });
       return;
     }
 
-    setIsLoading(true);
-
-    try {
-      const response = await axiosInstance.post("/auth/invite", {
-        email,
-        roleId,
-      });
-      const data = response.data;
-      if (data) {
-        setResponseMessage(data.message);
-        setResponseType("success");
+    dispatch(sendInvite({ email, roleId })).then((action) => {
+      if (action.type === 'sendInvite/sendInvite/fulfilled') {
         setTimeout(() => {
           dispatch(closeSendInvite());
           setShowInviteForm(false);
           setEmail("");
-          setResponseType("");
+          dispatch(clearResponse());
           navigate("/dashboard");
           onCloseDialog();
         }, 3000);
-      } else {
-        setResponseMessage(data.message || "Failed to send invite.");
-        setResponseType("error");
       }
-    } catch (error: any) {
-      setResponseMessage(
-        error.response.data.message || "An error occurred. Please try again."
-      );
-      setResponseType("error");
-    } finally {
-      setIsLoading(false);
-    }
+    });
   };
 
   return (

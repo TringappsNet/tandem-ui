@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosInstance } from '../../../AxiosInterceptor/AxiosInterceptor';
 
-
 interface TicketData {
     ticketSubject: string;
     ticketDescription: string;
@@ -12,12 +11,14 @@ interface SupportState {
     isLoading: boolean;
     error: string | null;
     successMessage: string | null;
+    open: boolean;
 }
 
 const initialState: SupportState = {
     isLoading: false,
     error: null,
     successMessage: null,
+    open: false,
 };
 
 export const raiseTicket = createAsyncThunk(
@@ -36,7 +37,13 @@ const supportSlice = createSlice({
     name: 'support',
     initialState,
     reducers: {
-        clearMessages: (state) => {
+        openSupport(state) {
+            state.open = true;
+        },
+        closeSupport(state) {
+            state.open = false;
+        },
+        clearMessages(state) {
             state.error = null;
             state.successMessage = null;
         },
@@ -59,5 +66,5 @@ const supportSlice = createSlice({
     },
 });
 
-export const { clearMessages } = supportSlice.actions;
+export const { openSupport, closeSupport, clearMessages } = supportSlice.actions;
 export default supportSlice.reducer;

@@ -15,15 +15,14 @@ import Profile from "../Profile/profile";
 import Support from "../Support/Support";
 import DealForm from "../DealForm/dealForm";
 import ConfirmationModal from "../AlertDialog/AlertDialog";
-import { openDealForm } from "../Redux/slice/componentsState/componentsSlice";
+import { openDealForm } from "../Redux/slice/deal/dealCompSlice";
 import {
-  openProfile,
-  closeProfile,
-  openSupport,
-  closeSupport,
-} from "../Redux/slice/componentsState/componentsSlice";
-import { closeSendInvite, openSendInvite } from "../Redux/slice/auth/sendInviteSlice";
+  closeSendInvite,
+  openSendInvite,
+} from "../Redux/slice/auth/sendInviteSlice";
 import { closeReset, openReset } from "../Redux/slice/auth/resetSlice";
+import { closeSupport, openSupport } from "../Redux/slice/support/supportSlice";
+import { closeProfile, openProfile } from "../Redux/slice/profile/profileSlice";
 
 interface NavbarProps {
   links: {
@@ -50,7 +49,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const profileOpen = useSelector((state: RootState) => state.profile.open);
   const inviteOpen = useSelector((state: RootState) => state.sendInvite.open);
   const resetOpen = useSelector((state: RootState) => state.reset.open);
-  const supportOpen = useSelector((state: RootState) => state.support.open);
+  const supportOpen = useSelector((state: RootState) => state.contact.open);
 
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);

@@ -5,9 +5,10 @@ import dealReducer from '../slice/deal/dealSlice';
 import currentDeal from '../slice/deal/currentDeal';
 import rolesReducer from '../slice/role/rolesSlice';
 import contactReducer from '../slice/support/supportSlice';
-import { dealFormReducer, profileReducer, supportReducer } from '../slice/componentsState/componentsSlice';
+import { dealFormReducer } from '../slice/deal/dealCompSlice';
 import resetReducer from '../slice/auth/resetSlice';
 import { sendInviteReducer } from '../slice/auth/sendInviteSlice';
+import { profileReducer } from '../slice/profile/profileSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -18,7 +19,6 @@ const rootReducer = combineReducers({
   currentDeal: currentDeal,
   profile: profileReducer,
   sendInvite: sendInviteReducer,
-  support: supportReducer,
   roles: rolesReducer,
   contact: contactReducer
 
