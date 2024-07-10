@@ -1,14 +1,16 @@
-import { render, screen, fireEvent} from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import LandlordGrid from './Landlord';
-import {axiosInstance} from '../../AxiosInterceptor/AxiosInterceptor';
+import { axiosInstance } from '../../AxiosInterceptor/AxiosInterceptor';
 
 
 jest.mock('../../AxiosInterceptor/AxiosInterceptor', () => ({
+  axiosInstance: {
     post: jest.fn(),
-    get:jest.fn(),
-    delete:jest.fn(),
-  }));
+    get: jest.fn(),
+    delete: jest.fn(),
+  },
+}));
 
 describe('LandlordGrid ', () => {
   test('renders LandlordGrid and fetches landlord', async () => {
@@ -16,7 +18,7 @@ describe('LandlordGrid ', () => {
       { id: 1, name: 'name', phoneNumber: '1234567890', email: 'name@gmail.com', address1: '123 Main St', address2: '', city: 'City', state: 'State', country: 'Country', zipcode: '12345' },
     ];
 
-   (axiosInstance.get as jest.Mock).mockResolvedValueOnce({ data: landlords });
+    (axiosInstance.get as jest.Mock).mockResolvedValueOnce({ data: landlords });
 
     render(<LandlordGrid />);
   });
@@ -41,7 +43,7 @@ describe('LandlordGrid ', () => {
 
     render(<LandlordGrid />);
 
-    await(() => {
+    await (() => {
       expect(screen.getByText('name')).toBeInTheDocument();
 
       fireEvent.click(screen.getByTestId('delete-landlord-1'));

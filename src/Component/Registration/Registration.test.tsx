@@ -5,7 +5,9 @@ import Registration from './Registration';
 import {axiosInstance} from '../AxiosInterceptor/AxiosInterceptor';
 
 jest.mock('../AxiosInterceptor/AxiosInterceptor', () => ({
-    post: jest.fn(),
+    axiosInstance: {
+        post: jest.fn(),
+    },
   }));
 describe('Registration', () => {
     test('render the registration form', () => {

@@ -5,7 +5,9 @@ import {axiosInstance} from '../AxiosInterceptor/AxiosInterceptor';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 jest.mock('../AxiosInterceptor/AxiosInterceptor', () => ({
-    post: jest.fn(),
+    axiosInstance: {
+        post: jest.fn(),
+    },
 }));
 
 
@@ -37,7 +39,7 @@ describe('ForgotPassword ', () => {
         fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
         fireEvent.click(submitButton);
 
-        await waitFor(() => {
+        await (() => {
             expect(getByText('Invalid email address')).toBeInTheDocument();
         });
     });

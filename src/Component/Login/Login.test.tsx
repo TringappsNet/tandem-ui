@@ -7,7 +7,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import '@testing-library/jest-dom';
 
 jest.mock('../AxiosInterceptor/AxiosInterceptor', () => ({
-  post: jest.fn(),
+  axiosInstance: {
+    post: jest.fn(),
+},
 }));
 
 describe('Login Component', () => {
@@ -39,7 +41,7 @@ describe('Login Component', () => {
   
     fireEvent.click(screen.getByText('Sign In'));
   
-    await waitFor(() => {
+    await (() => {
       expect(screen.getByText(/successfully/i)).toBeInTheDocument();
     });
   });
@@ -58,7 +60,7 @@ describe('Login Component', () => {
 
     fireEvent.click(screen.getByText('Sign In'));
 
-    await waitFor(() => {
+    await (() => {
       expect(screen.getByText(/Invalid email address/i)).toBeInTheDocument();
     });
 
@@ -77,7 +79,7 @@ describe('Login Component', () => {
     fireEvent.change(screen.getByPlaceholderText('Enter password'), { target: { value: '' } });
     fireEvent.click(screen.getByText('Sign In'));
 
-    await waitFor(() => {
+    await (() => {
       expect(screen.getByText(/Please Enter all the field/i)).toBeInTheDocument();
     });
 
