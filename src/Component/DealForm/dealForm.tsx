@@ -164,7 +164,6 @@ const DealForm: React.FC<DealFormProps> = () => {
       status,
       createdBy: userId || 0,
       updatedBy: userId || 0,
-      brokerId: 6,
     };
 
     try {
