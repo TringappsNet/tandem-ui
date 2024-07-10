@@ -284,7 +284,7 @@ const InviteBroker: React.FC = () => {
         }}
         onClick={() => handleOpenPopup("SendInvite")}
       >
-        sent invite
+        send invite
       </Button>
 
       <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg">
