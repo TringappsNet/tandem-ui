@@ -95,8 +95,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   };
 
   const handleLogoutConfirm = () => {
-    navigate("/login");
     localStorage.clear();
+    navigate("/login");
     setShowLogoutConfirmation(false);
   };
 

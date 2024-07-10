@@ -6,7 +6,7 @@ import { RootState } from '../Redux/reducers';
 import { AppDispatch } from '../Redux/store';
 
 interface ResetProps {
-  onCloseDialog: () => void;
+    onCloseDialog: () => void;
 }
 
 const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
@@ -18,19 +18,19 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { responseMessage, responseType, status } = useSelector((state: RootState) => state.reset);
 
-  const validatePassword = (password: string) => {
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    const hasNumber = /\d/.test(password);
-    const hasUpperCase = /[A-Z]/.test(password);
+    const validatePassword = (password: string) => {
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        const hasNumber = /\d/.test(password);
+        const hasUpperCase = /[A-Z]/.test(password);
 
-    return hasSpecialChar && hasNumber && hasUpperCase;
-  };
+        return hasSpecialChar && hasNumber && hasUpperCase;
+    };
 
   const user_id: any = localStorage.getItem('user');
   const user = JSON.parse(user_id);
 
-  const handleResetPassword = async (e: React.FormEvent) => {
-    e.preventDefault();
+    const handleResetPassword = async (e: React.FormEvent) => {
+        e.preventDefault();
 
     if (newPassword !== confirmPassword) {
       dispatch(clearResponse());
