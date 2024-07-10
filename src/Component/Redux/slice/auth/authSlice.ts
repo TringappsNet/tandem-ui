@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import {axiosInstance} from '../../../AxiosInterceptor/AxiosInterceptor';
+import { axiosInstance } from '../../../AxiosInterceptor/AxiosInterceptor';
 
 interface User {
   roleId: number;
@@ -25,6 +25,7 @@ interface AuthState {
   session: Session | null;
   loading: boolean;
   error: string | null;
+  isAdmin: boolean;
 }
 
 const loadStateFromLocalStorage = (): AuthState => {
@@ -32,11 +33,14 @@ const loadStateFromLocalStorage = (): AuthState => {
     const user = localStorage.getItem('user');
     const session = localStorage.getItem('session');
     if (user && session) {
+      const parsedUser = JSON.parse(user);
+      const isAdmin = parsedUser.roleId === 1;
       return {
-        user: JSON.parse(user),
+        user: parsedUser,
         session: JSON.parse(session),
         loading: false,
         error: null,
+        isAdmin,
       };
     }
   } catch (e) {
@@ -47,6 +51,7 @@ const loadStateFromLocalStorage = (): AuthState => {
     session: null,
     loading: false,
     error: null,
+    isAdmin: false,
   };
 };
 
@@ -62,7 +67,7 @@ export const login = createAsyncThunk(
         const { session, user } = data;
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('session', JSON.stringify(session));
-        localStorage.setItem('accessToken', JSON.stringify(data.session.token))
+        localStorage.setItem('accessToken', JSON.stringify(data.session.token));
         return { user, session };
       } else {
         return rejectWithValue(data.message);
@@ -83,12 +88,14 @@ const authSlice = createSlice({
     setCredentials: (state: AuthState, action: PayloadAction<{ user: User; session: Session }>) => {
       state.user = action.payload.user;
       state.session = action.payload.session;
+      state.isAdmin = action.payload.user.roleId === 1;
       localStorage.setItem('user', JSON.stringify(action.payload.user));
       localStorage.setItem('session', JSON.stringify(action.payload.session));
     },
     logout: (state: AuthState) => {
       state.user = null;
       state.session = null;
+      state.isAdmin = false;
       localStorage.removeItem('user');
       localStorage.removeItem('session');
       localStorage.clear();
@@ -103,6 +110,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action: PayloadAction<{ user: User; session: Session }>) => {
         state.user = action.payload.user;
         state.session = action.payload.session;
+        state.isAdmin = action.payload.user.roleId === 1;
         state.loading = false;
         state.error = null;
       })

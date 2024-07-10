@@ -1,51 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styles from './Support.module.css';
+import { AppDispatch } from "../Redux/store";
 import mailImage from './mail.png';
-import { axiosInstance } from '../AxiosInterceptor/AxiosInterceptor';
-interface RootState {
-    auth: {
-        user: {
-            id: number;
-        } | null;
-    };
-}
-
+import { RootState } from '../Redux/reducers';
+import { raiseTicket, clearMessages } from '../Redux/slice/support/supportSlice';
 
 interface SupportProps {
     onCloseDialog: () => void;
 }
+
 const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
     const [subject, setSubject] = useState('');
     const [description, setDescription] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [successMessage, setSuccessMessage] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
     const [isVisible, setIsVisible] = useState(true);
+    const { isLoading, error, successMessage } = useSelector((state: RootState) => state.contact);
     const user = useSelector((state: RootState) => state.auth.user);
+
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        if (subject.trim() && errorMessage === 'Please fill in the subject') {
-            setErrorMessage('');
+        if (subject.trim() && error === 'Please fill in the subject') {
+            dispatch(clearMessages());
         }
-    }, [subject, errorMessage]);
+    }, [subject, error, dispatch]);
 
     useEffect(() => {
-        if (description.trim() && errorMessage === 'Please fill out the description') {
-            setErrorMessage('');
+        if (description.trim() && error === 'Please fill in the description') {
+            dispatch(clearMessages());
         }
-    }, [description, errorMessage]);
+    }, [description, error, dispatch]);
 
     const validateForm = (): boolean => {
         if (!subject.trim()) {
-            setErrorMessage('Please fill in the subject');
+            dispatch(clearMessages());
             return false;
         }
 
         if (!description.trim()) {
-            setErrorMessage('Please fill in the description');
+            dispatch(clearMessages());
             return false;
         }
 
@@ -60,40 +55,32 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
         }
 
         if (!user) {
-            setErrorMessage('Please log in to raise the ticket.');
+            dispatch(clearMessages());
             return;
         }
-        setIsLoading(true);
-        setSuccessMessage('');
-        setErrorMessage('');
-        try {
-            const response = await axiosInstance.post('http://192.168.1.223:3008/api/support/raise-ticket', {
-                ticketSubject: subject,
-                ticketDescription: description,
-                senderId: user.id
-            });
-            if (response.status === 200) {
-                setSuccessMessage('Ticket raised successfully!');
-                setSubject('');
-                setDescription('');
 
-                setTimeout(() => {
-                    setIsVisible(false);
-                }, 2000);
+        const ticketData = {
+            ticketSubject: subject,
+            ticketDescription: description,
+            senderId: user.id,
+        };
 
-                setTimeout(() => {
-                    navigate('/dashboard');
-                }, 2500);
-            } else {
-                setErrorMessage('Failed to raise ticket. Please try again.');
-            }
-        } catch (error) {
-            console.error('Error raising ticket:', error);
-            setErrorMessage('An error occurred. Please try again later.');
-        } finally {
-            setIsLoading(false);
-        }
+        dispatch(raiseTicket(ticketData));
     };
+
+    useEffect(() => {
+        if (successMessage) {
+            setSubject('');
+            setDescription('');
+            setTimeout(() => {
+                setIsVisible(false);
+            }, 2000);
+
+            setTimeout(() => {
+                navigate('/dashboard');
+            }, 2500);
+        }
+    }, [successMessage, navigate]);
 
     if (!isVisible) {
         return null;
@@ -107,20 +94,20 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
             <form className={styles.contactForm} onSubmit={handleSubmit} noValidate>
                 <h2 className={styles.support}>Contact Us!</h2>
                 {successMessage && (
-                    <div className={styles.messageBox + ' ' + styles.successBox}>
+                    <div className={`${styles.messageBox} ${styles.successBox}`}>
                         {successMessage}
                     </div>
                 )}
-                {errorMessage && (
-                    <div className={styles.messageBox + ' ' + styles.errorBox}>
-                        {errorMessage}
+                {error && (
+                    <div className={`${styles.messageBox} ${styles.errorBox}`}>
+                        {error}
                     </div>
                 )}
                 <div className={styles.formGroup}>
                     <label htmlFor="subject">Subject:</label>
                     <input
                         type="text"
-                        placeholder=" Enter your subject"
+                        placeholder="Enter your subject"
                         id="subject"
                         name="subject"
                         value={subject}
@@ -144,8 +131,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
             </form>
             {isLoading && (
                 <div className={styles.loaderContainer}>
-                    <div className={styles.loader}>
-                    </div>
+                    <div className={styles.loader}></div>
                 </div>
             )}
         </div>
