@@ -22,7 +22,7 @@ import { RootState } from "../../Redux/reducers";
 import {
   openSendInvite,
   closeSendInvite,
-} from "../../Redux/slice/deal/componentsSlice";
+} from "../../Redux/slice/deal/dealFormSlice";
 import SendInvite from "../../SendInvite/SendInvite";
 // import './site-grid.module.css';
 

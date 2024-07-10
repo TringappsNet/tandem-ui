@@ -1,11 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import authReducer from '../slice/auth/authSlice';
-import registerReducer from '../slice/auth/registerSlice';
+import registerReducer from '../slice/registerSlice';
 import dealReducer from '../slice/deal/dealSlice';
 import currentDeal from '../slice/deal/currentDeal';
 import rolesReducer from '../slice/role/rolesSlice';
-import { dealFormReducer, profileReducer, sendInviteReducer, supportReducer, landlordReducer, siteReducer, resetPasswordReducer } from '../slice/deal/componentsSlice';
-import resetReducer from '../slice/auth/resetSlice';
+import { dealFormReducer, profileReducer, sendInviteReducer, resetReducer, supportReducer, landlordReducer, siteReducer } from '../slice/deal/dealFormSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -15,12 +14,13 @@ const rootReducer = combineReducers({
   currentDeal: currentDeal,
   profileReducer: profileReducer,
   sendInviteReducer: sendInviteReducer,
-  reset: resetReducer, 
-  resetPassword: resetPasswordReducer,
+  resetReducer: resetReducer,
   supportReducer: supportReducer,
   siteReducer: siteReducer,
   landlordReducer: landlordReducer,
   roles: rolesReducer,
+
+
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -46,7 +46,7 @@ const sendInviteSlice = createSlice({
 });
 
 
-const resetPasswordSlice = createSlice({
+const resetSlice = createSlice({
   name: 'reset',
   initialState,
   reducers: {
@@ -100,7 +100,7 @@ const siteSlice = createSlice({
 
 export const { openProfile, closeProfile } = profileSlice.actions;
 export const { openSendInvite, closeSendInvite } = sendInviteSlice.actions;
-export const { openReset, closeReset } = resetPasswordSlice.actions;
+export const { openReset, closeReset } = resetSlice.actions;
 export const { openSupport, closeSupport } = supportSlice.actions;
 export const { openLandlord, closeLandlord } = landlordSlice.actions;
 export const { openSite, closeSite } = siteSlice.actions;
@@ -109,7 +109,7 @@ export const { openDealForm, closeDealForm } = dealFormSlice.actions;
 export const dealFormReducer = dealFormSlice.reducer;
 export const profileReducer = profileSlice.reducer;
 export const sendInviteReducer = sendInviteSlice.reducer;
-export const resetPasswordReducer = resetPasswordSlice.reducer;
+export const resetReducer = resetSlice.reducer;
 export const supportReducer = supportSlice.reducer;
 export const landlordReducer = landlordSlice.reducer;
 export const siteReducer = siteSlice.reducer;
