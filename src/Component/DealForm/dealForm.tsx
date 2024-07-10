@@ -5,7 +5,7 @@ import {
   updateDealDetails,
 } from "../Redux/slice/deal/dealSlice";
 import { Deal } from "../Interface/DealFormObject";
-import {axiosInstance} from "../AxiosInterceptor/AxiosInterceptor";
+import { axiosInstance } from "../AxiosInterceptor/AxiosInterceptor";
 import {
   Stepper,
   Step,
@@ -221,17 +221,17 @@ const DealForm: React.FC<DealFormProps> = () => {
           >
             {label === "brokerName"
               ? brokerOptions.map((option, idx) => (
-                <MenuItem key={idx} value={option}>
-                  {option}
-                </MenuItem>
-              ))
-              : label === "propertyName"
-                ? propertyOptions.map((option, idx) => (
                   <MenuItem key={idx} value={option}>
                     {option}
                   </MenuItem>
                 ))
-                : options?.map((option: string, idx: number) => (
+              : label === "propertyName"
+              ? propertyOptions.map((option, idx) => (
+                  <MenuItem key={idx} value={option}>
+                    {option}
+                  </MenuItem>
+                ))
+              : options?.map((option: string, idx: number) => (
                   <MenuItem key={idx} value={option}>
                     {option}
                   </MenuItem>
@@ -333,7 +333,7 @@ const DealForm: React.FC<DealFormProps> = () => {
               // boxShadow:' rgba(99, 99, 99, 0.2) 0px 2px 2px 0px' ,
               color: "white",
               backgroundColor: "#262262",
-              cursor:'pointer'
+              cursor: "pointer",
             }}
           >
             Save/Close

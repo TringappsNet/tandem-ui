@@ -5,15 +5,14 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle
-  ,
-  IconButton
+  DialogTitle,
+  IconButton,
 } from "@mui/material";
-import {axiosInstance} from "../../AxiosInterceptor/AxiosInterceptor";
+import { axiosInstance } from "../../AxiosInterceptor/AxiosInterceptor";
 import styles from "./landlord-grid.module.css";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import FullGrid from "../MainGrid/MainGrid";
-import { MdEdit, MdDelete } from 'react-icons/md';
+import { MdEdit, MdDelete } from "react-icons/md";
 import ConfirmationModal from "../../AlertDialog/AlertDialog";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -29,7 +28,6 @@ interface Landlord {
   country: string;
   zipcode: string;
   isNew: boolean;
-
 }
 
 const config = {
@@ -84,14 +82,17 @@ const LandlordGrid: React.FC = () => {
     }));
     setFormErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: '',
+      [name]: "",
     }));
   };
 
   const handleAdd = async () => {
     if (validateForm()) {
       try {
-        const response = await axiosInstance.post('landlords/landlord/', formData);
+        const response = await axiosInstance.post(
+          "landlords/landlord/",
+          formData
+        );
         setRows([...rows, response.data]);
         handleClose();
       } catch (error) {
@@ -122,7 +123,7 @@ const LandlordGrid: React.FC = () => {
         state: "",
         country: "",
         zipcode: "",
-        isNew:true
+        isNew: true,
       });
     }
   };
@@ -134,7 +135,9 @@ const LandlordGrid: React.FC = () => {
           `landlords/landlord/${formData.id}`,
           formData
         );
-        setRows(rows.map((row) => (row.id === formData.id ? response.data : row)));
+        setRows(
+          rows.map((row) => (row.id === formData.id ? response.data : row))
+        );
         handleClose();
       } catch (error) {
         console.error("Error updating landlord:", error);
@@ -145,7 +148,7 @@ const LandlordGrid: React.FC = () => {
   const handleDelete = async (id: number) => {
     setDeleteConfirmation(true);
     setDeleteId(id);
-  }
+  };
 
   const handleConfirmDelete = async () => {
     try {
@@ -165,21 +168,21 @@ const LandlordGrid: React.FC = () => {
     { field: "address2", headerName: "AddressLine2", width: 140 },
     { field: "city", headerName: "City", width: 100 },
     { field: "state", headerName: "State", width: 100 },
-    { field: "country", headerName: "Country", width:100 },
+    { field: "country", headerName: "Country", width: 100 },
     { field: "zipcode", headerName: "Zipcode", width: 120 },
     {
       field: "actions",
       headerName: "Actions",
       width: 100,
-     
+
       renderCell: (params) => (
         <>
           <MdEdit
-            style={{ color: 'blue', marginRight: 28, cursor: 'pointer' }}
+            style={{ color: "blue", marginRight: 28, cursor: "pointer" }}
             onClick={() => handleEdit(params.row.id)}
           />
           <MdDelete
-            style={{ color: 'red', cursor: 'pointer' }}
+            style={{ color: "red", cursor: "pointer" }}
             onClick={() => handleDelete(params.row.id)}
           />
         </>
@@ -191,59 +194,55 @@ const LandlordGrid: React.FC = () => {
     let valid = true;
     const errors: Partial<Landlord> = {};
 
-    if (!formData.name ) {
-      errors.name = 'Name is required';
+    if (!formData.name) {
+      errors.name = "Name is required";
 
       valid = false;
     }
-
 
     if (!formData.phoneNumber) {
-      errors.phoneNumber = 'Phone Number is required';
+      errors.phoneNumber = "Phone Number is required";
+      valid = false;
+    } else if (!/^\d{10}$/.test(formData.phoneNumber)) {
+      errors.phoneNumber = "Phone Number must be 10 digits";
       valid = false;
     }
-    else if (!/^\d{10}$/.test(formData.phoneNumber)) {
-      errors.phoneNumber = 'Phone Number must be 10 digits';
-      valid = false;
-  }
 
-    if (!formData.email ) {
-      errors.email = 'Email is required';
+    if (!formData.email) {
+      errors.email = "Email is required";
+      valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = "Invalid email format";
       valid = false;
     }
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = 'Invalid email format';
-      valid = false;
-  }
 
     if (!formData.address1) {
-      errors.address1 = 'Address is required';
+      errors.address1 = "Address is required";
       valid = false;
     }
 
     if (!formData.city) {
-      errors.city = 'City is required';
+      errors.city = "City is required";
       valid = false;
     }
 
     if (!formData.state) {
-      errors.state = 'State is required';
+      errors.state = "State is required";
       valid = false;
     }
 
     if (!formData.country) {
-      errors.country = 'Country is required';
+      errors.country = "Country is required";
       valid = false;
     }
 
     if (!formData.zipcode) {
-      errors.zipcode = 'Zipcode is required';
+      errors.zipcode = "Zipcode is required";
+      valid = false;
+    } else if (!/^\d{5}$/.test(formData.zipcode)) {
+      errors.zipcode = "Zipcode must be 5 digits";
       valid = false;
     }
-    else if (!/^\d{5}$/.test(formData.zipcode)) {
-      errors.zipcode = 'Zipcode must be 5 digits';
-      valid = false;
-  }
 
     setFormErrors(errors);
     return valid;
@@ -258,7 +257,13 @@ const LandlordGrid: React.FC = () => {
       <Button
         variant="contained"
         color="primary"
-        style={{ marginRight: 8, width: '200px', position: 'relative', float: 'right', backgroundColor: '#262280' }}
+        style={{
+          marginRight: 8,
+          width: "200px",
+          position: "relative",
+          float: "right",
+          backgroundColor: "#262280",
+        }}
         onClick={() => handleEditNew(true)}
       >
         Add Landlord
@@ -266,7 +271,7 @@ const LandlordGrid: React.FC = () => {
 
       <FullGrid
         sx={{
-          height:450
+          height: 450,
         }}
         rows={rows}
         columns={columns}
@@ -287,28 +292,24 @@ const LandlordGrid: React.FC = () => {
       />
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{formData.id ? "Edit Landlord" : "Add Landlord"}        
-        <IconButton
-          aria-label="close"
-          onClick={() => {
-            handleClose();
+        <DialogTitle>
+          {formData.id ? "Edit Landlord" : "Add Landlord"}
+          <IconButton
+            aria-label="close"
+            onClick={() => {
+              handleClose();
+            }}
+            sx={{
+              position: "absolute",
+              right: 20,
+              top: 10,
 
-          }}
-          sx={{
-            position: 'absolute',
-            right: 20,
-            top: 10,
-        
-            color: (theme) => theme.palette.grey[500],
-        }}
-
-        >
-           
-
-          <CloseIcon sx={{ color: "#999" }} />
-        </IconButton>
-
- </DialogTitle>
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon sx={{ color: "#999" }} />
+          </IconButton>
+        </DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -356,7 +357,7 @@ const LandlordGrid: React.FC = () => {
             helperText={formErrors.address1}
           />
 
-                  <TextField
+          <TextField
             margin="dense"
             name="address2"
             label="Address2"
@@ -368,7 +369,6 @@ const LandlordGrid: React.FC = () => {
             helperText={formErrors.address2}
           />
 
-        
           <TextField
             margin="dense"
             name="city"

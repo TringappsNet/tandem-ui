@@ -23,7 +23,6 @@ jest.mock("axios", () => {
 });
 
 describe("App component", () => {
-
   test("renders registration page", () => {
     render(
       <Router>

@@ -1,33 +1,33 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import {axiosInstance} from '../AxiosInterceptor/AxiosInterceptor';
-import Login from './Login';
-import { Provider } from 'react-redux';
-import store from '../Redux/store';
-import { BrowserRouter as Router } from 'react-router-dom';
-import '@testing-library/jest-dom';
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { axiosInstance } from "../AxiosInterceptor/AxiosInterceptor";
+import Login from "./Login";
+import { Provider } from "react-redux";
+import store from "../Redux/store";
+import { BrowserRouter as Router } from "react-router-dom";
+import "@testing-library/jest-dom";
 
-jest.mock('../AxiosInterceptor/AxiosInterceptor', () => ({
+jest.mock("../AxiosInterceptor/AxiosInterceptor", () => ({
   axiosInstance: {
     post: jest.fn(),
-},
+  },
 }));
 
-describe('Login Component', () => {
+describe("Login Component", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('successful login', async () => {
+  it("successful login", async () => {
     const mockData = {
       data: {
-        message: 'Login successful',
-        session: { token: 'mockAccessToken' },
-        user: { username: 'testuser' },
+        message: "Login successful",
+        session: { token: "mockAccessToken" },
+        user: { username: "testuser" },
       },
       status: 200,
     };
     (axiosInstance.post as jest.Mock).mockResolvedValue(mockData);
-  
+
     render(
       <Provider store={store}>
         <Router>
@@ -35,18 +35,22 @@ describe('Login Component', () => {
         </Router>
       </Provider>
     );
-  
-    fireEvent.change(screen.getByPlaceholderText('Enter email'), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByPlaceholderText('Enter password'), { target: { value: 'password123' } });
-  
-    fireEvent.click(screen.getByText('Sign In'));
-  
+
+    fireEvent.change(screen.getByPlaceholderText("Enter email"), {
+      target: { value: "test@example.com" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Enter password"), {
+      target: { value: "password123" },
+    });
+
+    fireEvent.click(screen.getByText("Sign In"));
+
     await (() => {
       expect(screen.getByText(/successfully/i)).toBeInTheDocument();
     });
   });
-  
-  it('unsuccessful login - invalid email', async () => {
+
+  it("unsuccessful login - invalid email", async () => {
     render(
       <Provider store={store}>
         <Router>
@@ -55,10 +59,14 @@ describe('Login Component', () => {
       </Provider>
     );
 
-    fireEvent.change(screen.getByPlaceholderText('Enter email'), { target: { value: 'email' } });
-    fireEvent.change(screen.getByPlaceholderText('Enter password'), { target: { value: 'password123' } });
+    fireEvent.change(screen.getByPlaceholderText("Enter email"), {
+      target: { value: "email" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Enter password"), {
+      target: { value: "password123" },
+    });
 
-    fireEvent.click(screen.getByText('Sign In'));
+    fireEvent.click(screen.getByText("Sign In"));
 
     await (() => {
       expect(screen.getByText(/Invalid email address/i)).toBeInTheDocument();
@@ -67,7 +75,7 @@ describe('Login Component', () => {
     expect(screen.queryByText(/successfully/i)).toBeNull();
   });
 
-  it('unsuccessful login - both email and password empty', async () => {
+  it("unsuccessful login - both email and password empty", async () => {
     render(
       <Provider store={store}>
         <Router>
@@ -75,18 +83,24 @@ describe('Login Component', () => {
         </Router>
       </Provider>
     );
-    fireEvent.change(screen.getByPlaceholderText('Enter email'), { target: { value: '' } });
-    fireEvent.change(screen.getByPlaceholderText('Enter password'), { target: { value: '' } });
-    fireEvent.click(screen.getByText('Sign In'));
+    fireEvent.change(screen.getByPlaceholderText("Enter email"), {
+      target: { value: "" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Enter password"), {
+      target: { value: "" },
+    });
+    fireEvent.click(screen.getByText("Sign In"));
 
     await (() => {
-      expect(screen.getByText(/Please Enter all the field/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/Please Enter all the field/i)
+      ).toBeInTheDocument();
     });
 
     expect(screen.queryByText(/successfully/i)).toBeNull();
   });
 
-  it('unsuccessful login - empty password', async () => {
+  it("unsuccessful login - empty password", async () => {
     render(
       <Provider store={store}>
         <Router>
@@ -95,8 +109,12 @@ describe('Login Component', () => {
       </Provider>
     );
 
-    fireEvent.change(screen.getByPlaceholderText('Enter email'), { target: { value: 'test@email.com' } });
-    fireEvent.change(screen.getByPlaceholderText('Enter password'), { target: { value: '' } });
+    fireEvent.change(screen.getByPlaceholderText("Enter email"), {
+      target: { value: "test@email.com" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Enter password"), {
+      target: { value: "" },
+    });
 
     await (() => {
       expect(screen.getByText(/Password cannot be empty/i)).toBeInTheDocument();
@@ -104,7 +122,7 @@ describe('Login Component', () => {
 
     expect(screen.queryByText(/successfully/i)).toBeNull();
   });
-  it('unsuccessful login - empty password', async () => {
+  it("unsuccessful login - empty password", async () => {
     render(
       <Provider store={store}>
         <Router>
@@ -113,8 +131,12 @@ describe('Login Component', () => {
       </Provider>
     );
 
-    fireEvent.change(screen.getByPlaceholderText('Enter email'), { target: { value: 'test@email.com' } });
-    fireEvent.change(screen.getByPlaceholderText('Enter password'), { target: { value: '' } });
+    fireEvent.change(screen.getByPlaceholderText("Enter email"), {
+      target: { value: "test@email.com" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Enter password"), {
+      target: { value: "" },
+    });
 
     await (() => {
       expect(screen.getByText(/Email cannot be empty/i)).toBeInTheDocument();
