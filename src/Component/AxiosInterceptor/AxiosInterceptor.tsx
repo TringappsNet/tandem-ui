@@ -65,8 +65,8 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
           (error.response.status === 401 || error.response.status === 403)
         ) {
           setSnackbarMessage("Your session is invalid or expired");
+          localStorage.clear();
           setSnackbarOpen(true);
-          // Delay the navigation to login page
           setTimeout(() => {
             navigate("/login");
           }, 3000);
