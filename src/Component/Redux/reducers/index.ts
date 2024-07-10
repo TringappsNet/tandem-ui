@@ -4,8 +4,9 @@ import registerReducer from '../slice/auth/registerSlice';
 import dealReducer from '../slice/deal/dealSlice';
 import currentDeal from '../slice/deal/currentDeal';
 import rolesReducer from '../slice/role/rolesSlice';
-import { dealFormReducer, profileReducer, sendInviteReducer, supportReducer, landlordReducer, siteReducer, resetPasswordReducer } from '../slice/componentsState/componentsSlice';
+import { dealFormReducer, profileReducer, supportReducer, landlordReducer, siteReducer } from '../slice/componentsState/componentsSlice';
 import resetReducer from '../slice/auth/resetSlice';
+import { sendInviteReducer } from '../slice/auth/sendInviteSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -16,7 +17,6 @@ const rootReducer = combineReducers({
   currentDeal: currentDeal,
   profile: profileReducer,
   sendInvite: sendInviteReducer,
-  resetPassword: resetPasswordReducer,
   support: supportReducer,
   site: siteReducer,
   landlord: landlordReducer,

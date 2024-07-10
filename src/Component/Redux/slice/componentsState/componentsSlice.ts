@@ -38,37 +38,7 @@ export const profileReducer = profileSlice.reducer;
 export const { openProfile, closeProfile } = profileSlice.actions;
 
 
-const sendInviteSlice = createSlice({
-  name: 'sendInvite',
-  initialState,
-  reducers: {
-    openSendInvite(state) {
-      state.open = true;
-    },
-    closeSendInvite(state) {
-      state.open = false;
-    },
-  },
-});
-export const sendInviteReducer = sendInviteSlice.reducer;
-export const { openSendInvite, closeSendInvite } = sendInviteSlice.actions;
 
-
-
-const resetPasswordSlice = createSlice({
-  name: 'reset',
-  initialState,
-  reducers: {
-    openReset(state) {
-      state.open = true;
-    },
-    closeReset(state) {
-      state.open = true;
-    },
-  },
-});
-export const resetPasswordReducer = resetPasswordSlice.reducer;
-export const { openReset, closeReset } = resetPasswordSlice.actions;
 
 const supportSlice = createSlice({
   name: 'support',

@@ -5,7 +5,7 @@ import { axiosInstance } from "../AxiosInterceptor/AxiosInterceptor";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/reducers";
-import { closeSendInvite } from "../Redux/slice/componentsState/componentsSlice";
+import { closeSendInvite } from "../Redux/slice/auth/sendInviteSlice";
 import { AppDispatch } from "../Redux/store";
 import {
   fetchRoles,
