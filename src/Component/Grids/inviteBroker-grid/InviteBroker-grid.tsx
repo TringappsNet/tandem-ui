@@ -20,7 +20,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../Redux/store/index";
 import { RootState } from "../../Redux/reducers";
 import SendInvite from "../../SendInvite/SendInvite";
-import { closeSendInvite, openSendInvite } from "../../Redux/slice/auth/sendInviteSlice";
+import {
+  closeSendInvite,
+  openSendInvite,
+} from "../../Redux/slice/auth/sendInviteSlice";
 // import './site-grid.module.css';
 
 interface Site {
