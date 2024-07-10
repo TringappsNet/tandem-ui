@@ -6,8 +6,7 @@ import styles from "./AxiosInterceptor.module.css";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3008/api",
-  // baseURL: "http://192.168.1.223:3008/api",
-
+  // baseURL: "http://192.168.1.223:3009/api",
 
 
 });
@@ -37,6 +36,7 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
         const userId = user.id;
         const token = session.token;
         const resetToken = getQueryParam("resetToken");
+        config.headers["Content-Type"] = "application/json"
 
         if (userId && token) {
           config.headers["user-id"] = userId;
