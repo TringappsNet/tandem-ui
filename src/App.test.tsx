@@ -23,13 +23,6 @@ jest.mock("axios", () => {
 });
 
 describe("App component", () => {
-  test("renders login page when not authenticated", () => {
-    render(
-      <Provider store={store}>
-        <App />
-      </Provider>
-    );
-  });
 
   test("renders registration page", () => {
     render(

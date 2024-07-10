@@ -1,13 +1,15 @@
-import { render} from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import {axiosInstance} from '../../AxiosInterceptor/AxiosInterceptor';
+import { axiosInstance } from '../../AxiosInterceptor/AxiosInterceptor';
 import BrokerGrid from './BrokerGrid';
 
 jest.mock('../../AxiosInterceptor/AxiosInterceptor', () => ({
+  axiosInstance: {
     post: jest.fn(),
-    get:jest.fn(),
-    put:jest.fn(),
-  }));
+    get: jest.fn(),
+    put: jest.fn(),
+  },
+}));
 
 describe('BrokerGrid Component', () => {
   afterEach(() => {
