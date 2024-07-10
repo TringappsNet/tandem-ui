@@ -33,7 +33,7 @@ const resetSlice = createSlice({
       state.responseMessage = '';
       state.responseType = '';
     },
-    resetState: () => initialState, // Add this reducer to reset the state
+    resetState: () => initialState, 
   },
   extraReducers: (builder) => {
     builder

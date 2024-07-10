@@ -50,14 +50,14 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const navigate = useNavigate();
   const dealFormOpen = useSelector((state: RootState) => state.dealForm.open);
   const profileOpen = useSelector(
-    (state: RootState) => state.profileReducer.open
+    (state: RootState) => state.profile.open
   );
   const inviteOpen = useSelector(
-    (state: RootState) => state.sendInviteReducer.open
+    (state: RootState) => state.sendInvite.open
   );
   const resetOpen = useSelector((state: RootState) => state.resetPassword.open);
   const supportOpen = useSelector(
-    (state: RootState) => state.supportReducer.open
+    (state: RootState) => state.support.open
   );
 
   const handleOpenPopup = (componentName: string) => {
@@ -95,8 +95,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   };
 
   const handleLogoutConfirm = () => {
-    navigate("/login");
     localStorage.clear();
+    navigate("/login");
     setShowLogoutConfirmation(false);
   };
 

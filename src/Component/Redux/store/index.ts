@@ -1,7 +1,6 @@
-// src/store/index.ts
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { useDispatch as useReduxDispatch } from 'react-redux';
-import rootReducer, { RootState } from '../reducers/index';
+import rootReducer, { RootState } from '../reducers';
 
 const store = configureStore({
   reducer: rootReducer,

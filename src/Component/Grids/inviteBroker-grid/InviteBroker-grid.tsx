@@ -53,7 +53,7 @@ const InviteBroker: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const inviteOpen = useSelector(
-    (state: RootState) => state.sendInviteReducer.open
+    (state: RootState) => state.sendInvite.open
   );
   const [selectedComponent, setSelectedComponent] = useState<string | null>(
     null

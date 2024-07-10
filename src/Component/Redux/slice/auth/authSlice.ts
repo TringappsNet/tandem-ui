@@ -98,6 +98,7 @@ const authSlice = createSlice({
       state.isAdmin = false;
       localStorage.removeItem('user');
       localStorage.removeItem('session');
+      localStorage.clear();
     },
   },
   extraReducers: (builder) => {
