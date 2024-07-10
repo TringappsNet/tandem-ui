@@ -10,19 +10,18 @@ import resetReducer from '../slice/auth/resetSlice';
 const rootReducer = combineReducers({
   auth: authReducer,
   register: registerReducer,
+  reset: resetReducer,
   deal: dealReducer,
   dealForm: dealFormReducer,
   currentDeal: currentDeal,
-  profileReducer: profileReducer,
-  sendInviteReducer: sendInviteReducer,
-  reset: resetReducer, 
+  profile: profileReducer,
+  sendInvite: sendInviteReducer,
   resetPassword: resetPasswordReducer,
-  supportReducer: supportReducer,
-  siteReducer: siteReducer,
-  landlordReducer: landlordReducer,
+  support: supportReducer,
+  site: siteReducer,
+  landlord: landlordReducer,
   roles: rolesReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
-
 export default rootReducer;

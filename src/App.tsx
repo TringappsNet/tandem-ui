@@ -14,6 +14,9 @@ import Support from "./Component/Support/Support";
 import { AxiosInterceptor } from "./Component/AxiosInterceptor/AxiosInterceptor";
 import PrivateRoute from "./Component/PrivateRoute/PrivateRoute";
 import "./App.css";
+import { Provider } from "react-redux";
+import store from './Component/Redux/store/index';
+
 
 const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(
@@ -32,6 +35,7 @@ const App: React.FC = () => {
   };
 
   return (
+    <Provider store={store}>
     <Router>
       <AxiosInterceptor>
         <Routes>
@@ -54,6 +58,8 @@ const App: React.FC = () => {
         </Routes>
       </AxiosInterceptor>
     </Router>
+    </Provider>
+
   );
 };
 
