@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
-
 const initialState = {
   open: false,
 };
@@ -19,6 +17,11 @@ const dealFormSlice = createSlice({
   },
 });
 
+
+export const dealFormReducer = dealFormSlice.reducer;
+export const { openDealForm, closeDealForm } = dealFormSlice.actions;
+
+
 const profileSlice = createSlice({
   name: 'profile',
   initialState,
@@ -31,6 +34,9 @@ const profileSlice = createSlice({
     },
   },
 });
+export const profileReducer = profileSlice.reducer;
+export const { openProfile, closeProfile } = profileSlice.actions;
+
 
 const sendInviteSlice = createSlice({
   name: 'sendInvite',
@@ -44,6 +50,9 @@ const sendInviteSlice = createSlice({
     },
   },
 });
+export const sendInviteReducer = sendInviteSlice.reducer;
+export const { openSendInvite, closeSendInvite } = sendInviteSlice.actions;
+
 
 
 const resetPasswordSlice = createSlice({
@@ -58,6 +67,8 @@ const resetPasswordSlice = createSlice({
     },
   },
 });
+export const resetPasswordReducer = resetPasswordSlice.reducer;
+export const { openReset, closeReset } = resetPasswordSlice.actions;
 
 const supportSlice = createSlice({
   name: 'support',
@@ -72,6 +83,9 @@ const supportSlice = createSlice({
   },
 });
 
+export const supportReducer = supportSlice.reducer;
+export const { openSupport, closeSupport } = supportSlice.actions;
+
 const landlordSlice = createSlice({
   name: 'landlord',
   initialState,
@@ -84,6 +98,9 @@ const landlordSlice = createSlice({
     },
   },
 });
+
+export const landlordReducer = landlordSlice.reducer;
+export const { openLandlord, closeLandlord } = landlordSlice.actions;
 
 const siteSlice = createSlice({
   name: 'site',
@@ -98,19 +115,5 @@ const siteSlice = createSlice({
   },
 });
 
-export const { openProfile, closeProfile } = profileSlice.actions;
-export const { openSendInvite, closeSendInvite } = sendInviteSlice.actions;
-export const { openReset, closeReset } = resetPasswordSlice.actions;
-export const { openSupport, closeSupport } = supportSlice.actions;
-export const { openLandlord, closeLandlord } = landlordSlice.actions;
-export const { openSite, closeSite } = siteSlice.actions;
-export const { openDealForm, closeDealForm } = dealFormSlice.actions;
-
-export const dealFormReducer = dealFormSlice.reducer;
-export const profileReducer = profileSlice.reducer;
-export const sendInviteReducer = sendInviteSlice.reducer;
-export const resetPasswordReducer = resetPasswordSlice.reducer;
-export const supportReducer = supportSlice.reducer;
-export const landlordReducer = landlordSlice.reducer;
 export const siteReducer = siteSlice.reducer;
 

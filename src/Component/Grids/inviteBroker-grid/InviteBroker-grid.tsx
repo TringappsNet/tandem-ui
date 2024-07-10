@@ -22,7 +22,7 @@ import { RootState } from "../../Redux/reducers";
 import {
   openSendInvite,
   closeSendInvite,
-} from "../../Redux/slice/deal/componentsSlice";
+} from "../../Redux/slice/componentsState/componentsSlice";
 import SendInvite from "../../SendInvite/SendInvite";
 // import './site-grid.module.css';
 
@@ -52,9 +52,7 @@ const InviteBroker: React.FC = () => {
   const [formErrors, setFormErrors] = useState<Partial<Site>>({});
   const dispatch = useDispatch<AppDispatch>();
   const [openPopup, setOpenPopup] = useState<boolean>(false);
-  const inviteOpen = useSelector(
-    (state: RootState) => state.sendInvite.open
-  );
+  const inviteOpen = useSelector((state: RootState) => state.sendInvite.open);
   const [selectedComponent, setSelectedComponent] = useState<string | null>(
     null
   );
