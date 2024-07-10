@@ -20,7 +20,7 @@ interface SendInviteProps {
 const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const open = useSelector((state: RootState) => state.sendInviteReducer.open);
+  const open = useSelector((state: RootState) => state.sendInvite.open);
   const roles = useSelector((state: RootState) => state.roles.roles);
   const rolesLoading = useSelector(selectRolesLoading);
   const rolesError = useSelector(selectRolesError);
