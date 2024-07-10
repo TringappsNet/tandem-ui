@@ -21,7 +21,7 @@ describe('ChangePassword', () => {
             </BrowserRouter>
         );
     });
-    it('validates password correctly', async () => {
+    test('validates password correctly', async () => {
         render(<ChangePassword />);
         
         const passwordInputs = screen.queryAllByPlaceholderText('Enter your password');
@@ -59,7 +59,7 @@ describe('ChangePassword', () => {
             expect(screen.queryByText(/password should contain at least two numerical digits/i)).not.toBeInTheDocument();
         });
     });
-    it('validates confirm password correctly', async () => {
+    test('validates confirm password correctly', async () => {
         render(<ChangePassword />);
         const confirmPasswordInputs = screen.queryAllByPlaceholderText('Confirm your password');
 
@@ -80,7 +80,7 @@ describe('ChangePassword', () => {
         });
     });
 
-    it('handles validation correctly', () => {
+    test('handles validation correctly', () => {
         fireEvent.submit(screen.getByRole('button', { name: /Reset Password/i }));
 
         expect(screen.getByText('Please enter values in all fields.')).toBeInTheDocument();
@@ -95,7 +95,7 @@ describe('ChangePassword', () => {
         expect(screen.queryByText('Please enter values in all fields.')).not.toBeInTheDocument();
     });
 
-    it('submits form successfully', async () => {
+    test('submits form successfully', async () => {
         const passwordInput = screen.getByPlaceholderText('Enter your password');
         const confirmPasswordInput = screen.getByPlaceholderText('Confirm your password');
 
@@ -110,7 +110,7 @@ describe('ChangePassword', () => {
         expect(screen.getByText('Password changed successfully!')).toBeInTheDocument();
     });
 
-    it('handles submit failure', async () => {
+    test('handles submit failure', async () => {
         render(<ChangePassword />);
 
         const passwordInput = screen.getByLabelText('New Password');
