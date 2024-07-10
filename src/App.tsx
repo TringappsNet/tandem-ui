@@ -12,7 +12,7 @@ import ChangePassword from "./Component/ChangePassword/ChangePassword";
 import Milestone from "./Component/DealForm/dealForm";
 import Dashboard from "./Component/NewDashboard/Dashboard";
 import Support from "./Component/Support/Support";
-import { AxiosInterceptor } from './Component/AxiosInterceptor/AxiosInterceptor';
+import { AxiosInterceptor } from "./Component/AxiosInterceptor/AxiosInterceptor";
 import "./App.css";
 
 const App: React.FC = () => {
@@ -43,11 +43,23 @@ const App: React.FC = () => {
           <Route path="/registerform" element={<Registration />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/change" element={<ChangePassword />} />
-          <Route path="/dashboard" element={localStorage.getItem("accessToken") != null ? <Dashboard /> : <Navigate to='/login' />} />
+          <Route
+            path="/dashboard"
+            element={
+              localStorage.getItem("accessToken") != null ? (
+                <Dashboard />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
           <Route path="/mile" element={<Milestone />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/support" element={<Support onCloseDialog={handleCloseDialog} />} />
-          <Route path="/*" element={<Navigate to='/dashboard' />} />
+          <Route
+            path="/support"
+            element={<Support onCloseDialog={handleCloseDialog} />}
+          />
+          <Route path="/*" element={<Dashboard />} />
         </Routes>
       </AxiosInterceptor>
     </Router>

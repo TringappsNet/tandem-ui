@@ -1,11 +1,11 @@
-import React, { useEffect, ReactNode, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import SnackbarComponent from '../Snackbar/Snackbar'; 
-import styles from './AxiosInterceptor.module.css';
+import React, { useEffect, ReactNode, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import SnackbarComponent from "../Snackbar/Snackbar";
+import styles from "./AxiosInterceptor.module.css";
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3008/api',
+  baseURL: "http://localhost:3008/api",
 });
 
 // Function to get query parameters from the URL
@@ -21,7 +21,7 @@ interface AxiosInterceptorProps {
 const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarMessage, setSnackbarMessage] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,19 +29,19 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
     const requestInterceptor = axiosInstance.interceptors.request.use(
       (config) => {
         setIsLoading(true);
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        const session = JSON.parse(localStorage.getItem('session') || '{}');
+        const user = JSON.parse(localStorage.getItem("user") || "{}");
+        const session = JSON.parse(localStorage.getItem("session") || "{}");
         const userId = user.id;
         const token = session.token;
-        const resetToken = getQueryParam('resetToken');
+        const resetToken = getQueryParam("resetToken");
 
         if (userId && token) {
-          config.headers['user-id'] = userId;
-          config.headers['access-token'] = token;
+          config.headers["user-id"] = userId;
+          config.headers["access-token"] = token;
         }
 
         if (resetToken) {
-          config.headers['resetToken'] = resetToken;
+          config.headers["resetToken"] = resetToken;
         }
 
         return config;
@@ -60,14 +60,17 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
       },
       (error) => {
         setIsLoading(false);
-        
-        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-          setSnackbarMessage('Your session is invalid or expired');
+
+        if (
+          error.response &&
+          (error.response.status === 401 || error.response.status === 403)
+        ) {
+          setSnackbarMessage("Your session is invalid or expired");
           setSnackbarOpen(true);
           // Delay the navigation to login page
           setTimeout(() => {
-            navigate('/login');
-          }, 3000); 
+            navigate("/login");
+          }, 3000);
         }
         return Promise.reject(error);
       }

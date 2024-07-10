@@ -7,29 +7,31 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
-  Icon
-
+  Icon,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-import {axiosInstance} from "../../AxiosInterceptor/AxiosInterceptor";
+import { axiosInstance } from "../../AxiosInterceptor/AxiosInterceptor";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import FullGrid from "../MainGrid/MainGrid";
-import { MdEdit, MdDelete } from 'react-icons/md';
+import { MdEdit, MdDelete } from "react-icons/md";
 import ConfirmationModal from "../../AlertDialog/AlertDialog";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../Redux/store/index";
 import { RootState } from "../../Redux/reducers";
-import {  openSendInvite, closeSendInvite,  } from "../../Redux/slice/deal/dealFormSlice";
+import {
+  openSendInvite,
+  closeSendInvite,
+} from "../../Redux/slice/deal/dealFormSlice";
 import SendInvite from "../../SendInvite/SendInvite";
 // import './site-grid.module.css';
 
 interface Site {
   id: number;
-  email:string,
-  firstName: string,
-  lastName: string,
-  mobile:string,
+  email: string;
+  firstName: string;
+  lastName: string;
+  mobile: string;
   city: string;
   state: string;
   country: string;
@@ -50,15 +52,19 @@ const InviteBroker: React.FC = () => {
   const [formErrors, setFormErrors] = useState<Partial<Site>>({});
   const dispatch = useDispatch<AppDispatch>();
   const [openPopup, setOpenPopup] = useState<boolean>(false);
-  const inviteOpen = useSelector((state: RootState) => state.sendInviteReducer.open);
-  const [              selectedComponent, setSelectedComponent] = useState<string | null>(null);
+  const inviteOpen = useSelector(
+    (state: RootState) => state.sendInviteReducer.open
+  );
+  const [selectedComponent, setSelectedComponent] = useState<string | null>(
+    null
+  );
 
   const [formData, setFormData] = useState<Site>({
     id: 0,
     email: "",
     firstName: "",
     lastName: "",
-    mobile:"",
+    mobile: "",
     city: "",
     state: "",
     country: "",
@@ -71,7 +77,6 @@ const InviteBroker: React.FC = () => {
     pageSize: 12,
     page: 0,
   });
-
 
   useEffect(() => {
     fetchSites();
@@ -112,7 +117,7 @@ const InviteBroker: React.FC = () => {
       email: "",
       firstName: "",
       lastName: "",
-      mobile:"",
+      mobile: "",
       city: "",
       state: "",
       country: "",
@@ -124,40 +129,32 @@ const InviteBroker: React.FC = () => {
   };
 
   const validateForm = () => {
-
     let valid = true;
 
     const errors: Partial<Site> = {};
     if (!formData.email) {
       errors.email = "Email is required";
       valid = false;
-
     }
     if (!formData.city) {
       errors.city = "City is required";
       valid = false;
-
     }
     if (!formData.state) {
       errors.state = "State is required";
       valid = false;
-
     }
     if (!formData.country) {
       errors.country = "Country is required";
       valid = false;
-
     }
 
     if (!formData.zipcode) {
       errors.zipcode = "Zipcode is required";
       valid = false;
-
-    }
-    else if (!/^\d{5}$/.test(formData.zipcode)) {
-      errors.zipcode = 'Zipcode must be 5 digits';
+    } else if (!/^\d{5}$/.test(formData.zipcode)) {
+      errors.zipcode = "Zipcode must be 5 digits";
       valid = false;
-
     }
     setFormErrors(errors);
     return valid;
@@ -170,7 +167,10 @@ const InviteBroker: React.FC = () => {
   const handleAdd = async () => {
     try {
       if (validateForm()) {
-        const response = await axiosInstance.post('brokers/all-users/', formData);
+        const response = await axiosInstance.post(
+          "brokers/all-users/",
+          formData
+        );
         setRows([...rows, response.data]);
         handleClose();
       }
@@ -187,8 +187,6 @@ const InviteBroker: React.FC = () => {
     }
   };
 
-
-  
   const handleUpdate = async () => {
     if (validateForm()) {
       try {
@@ -196,7 +194,9 @@ const InviteBroker: React.FC = () => {
           `brokers/update-broker/${formData.id}`,
           formData
         );
-        setRows(rows.map((row) => (row.id === formData.id ? response.data : row)));
+        setRows(
+          rows.map((row) => (row.id === formData.id ? response.data : row))
+        );
         handleClose();
       } catch (error) {
         console.error("Error updating landlord:", error);
@@ -219,8 +219,6 @@ const InviteBroker: React.FC = () => {
     }
   };
 
-
-  
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
     setOpenPopup(true);
@@ -230,25 +228,21 @@ const InviteBroker: React.FC = () => {
     }
   };
 
-  
   const handleClosePopup = () => {
     setOpenPopup(false);
     setSelectedComponent(null);
 
-    if (              selectedComponent === "SendInvite") {
+    if (selectedComponent === "SendInvite") {
       dispatch(closeSendInvite());
-    } 
+    }
   };
 
-
   const columns: GridColDef[] = [
-
- 
     { field: "email", headerName: "email", width: 140 },
     { field: "firstName", headerName: "firstName", width: 110 },
 
-    { field: "lastName", headerName: "lastName", width: 110 }, 
-       { field: "mobile", headerName: "mobile", width: 110 },
+    { field: "lastName", headerName: "lastName", width: 110 },
+    { field: "mobile", headerName: "mobile", width: 110 },
     { field: "address", headerName: "address", width: 110 },
 
     { field: "city", headerName: "City", width: 110 },
@@ -264,74 +258,64 @@ const InviteBroker: React.FC = () => {
       renderCell: (params) => (
         <>
           <MdEdit
-            style={{ color: 'blue', marginRight: 8, cursor: 'pointer' }}
+            style={{ color: "blue", marginRight: 8, cursor: "pointer" }}
             onClick={() => handleEdit(params.row.id)}
           />
           <MdDelete
-            style={{ color: 'red', cursor: 'pointer' }}
+            style={{ color: "red", cursor: "pointer" }}
             onClick={() => handleDelete(params.row.id)}
           />
         </>
-      )
+      ),
     },
   ];
 
-  
-
   return (
     <div>
-         
-                <Button
+      <Button
         variant="contained"
         color="primary"
-        style={{ marginRight: 8, width: '200px', position: 'relative', float: 'right', backgroundColor: '#262280' }}
-        onClick={() =>  handleOpenPopup("SendInvite")}
+        style={{
+          marginRight: 8,
+          width: "200px",
+          position: "relative",
+          float: "right",
+          backgroundColor: "#262280",
+        }}
+        onClick={() => handleOpenPopup("SendInvite")}
       >
         sent invite
       </Button>
 
+      <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg">
+        <DialogTitle sx={{ padding: 0 }}>
+          <Icon
+            aria-label="close"
+            onClick={handleClosePopup}
+            sx={{
+              position: "absolute",
+              right: 18,
+              top: 8,
+              zIndex: 999,
+              fontSize: 30,
+              cursor: "pointer",
+            }}
+          >
+            <CloseIcon />
+          </Icon>
+        </DialogTitle>
 
-                <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg"
-                
-                >
-
-<DialogTitle sx={{ padding: 0 }}>
-            <Icon
-              aria-label="close"
-              onClick={handleClosePopup}
-              sx={{
-                position: "absolute",
-                right: 18,
-                top: 8,
-                zIndex: 999,
-                fontSize: 30,
-                cursor: "pointer",
-              }}
-            >
-              <CloseIcon />
-            </Icon>
-          </DialogTitle>
-
-          <DialogContent sx={{ padding: 0 }}>
-            {inviteOpen &&               selectedComponent === "SendInvite" && (
-              <SendInvite onCloseDialog={handleClosePopup} />
-            )}
-            
-            </DialogContent>
-
-                </Dialog>
-
-
-
-
-    
+        <DialogContent sx={{ padding: 0 }}>
+          {inviteOpen && selectedComponent === "SendInvite" && (
+            <SendInvite onCloseDialog={handleClosePopup} />
+          )}
+        </DialogContent>
+      </Dialog>
 
       <FullGrid
-
-       sx={{
-        height:450
-      }}
-
+        sx={{
+          height: 450,
+        }}
         rows={rows}
         columns={columns}
         paginationModel={paginationModel}
@@ -350,31 +334,25 @@ const InviteBroker: React.FC = () => {
         confirmVariant="danger"
       />
 
-      <Dialog open={open} onClose={handleClose}
-     
-      >
-        <DialogTitle className="dialogtitle">{formData.id ? "Edit Property" : "Add Property"}
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle className="dialogtitle">
+          {formData.id ? "Edit Property" : "Add Property"}
 
           <IconButton
             aria-label="close"
             onClick={() => {
               handleClose();
-
             }}
             sx={{
-              position: 'absolute',
+              position: "absolute",
               right: 20,
               top: 10,
 
               color: (theme) => theme.palette.grey[500],
             }}
-
           >
-
-
             <CloseIcon sx={{ color: "#999" }} />
           </IconButton>
-
         </DialogTitle>
         <DialogContent>
           <TextField
@@ -400,7 +378,7 @@ const InviteBroker: React.FC = () => {
             error={!!formErrors.firstName}
             helperText={formErrors.firstName}
           />
-             <TextField
+          <TextField
             margin="dense"
             name="lastName"
             label="lastName"
@@ -411,7 +389,7 @@ const InviteBroker: React.FC = () => {
             error={!!formErrors.lastName}
             helperText={formErrors.lastName}
           />
-             <TextField
+          <TextField
             margin="dense"
             name="mobile"
             label="mobile"
@@ -422,7 +400,7 @@ const InviteBroker: React.FC = () => {
             error={!!formErrors.mobile}
             helperText={formErrors.mobile}
           />
-          
+
           <TextField
             margin="dense"
             name="state"
@@ -434,7 +412,7 @@ const InviteBroker: React.FC = () => {
             error={!!formErrors.state}
             helperText={formErrors.state}
           />
-          
+
           <TextField
             margin="dense"
             name="city"
@@ -473,7 +451,10 @@ const InviteBroker: React.FC = () => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={formData.id ? handleUpdate : handleAdd} color="primary">
+          <Button
+            onClick={formData.id ? handleUpdate : handleAdd}
+            color="primary"
+          >
             {formData.id ? "Update" : "Add"}
           </Button>
         </DialogActions>

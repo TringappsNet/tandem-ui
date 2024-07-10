@@ -16,7 +16,16 @@ import Support from "../Support/Support";
 import DealForm from "../DealForm/dealForm";
 import ConfirmationModal from "../AlertDialog/AlertDialog";
 import { openDealForm } from "../Redux/slice/deal/dealFormSlice";
-import { openProfile, closeProfile, openSendInvite, closeSendInvite, openReset, closeReset, openSupport, closeSupport } from "../Redux/slice/deal/dealFormSlice";
+import {
+  openProfile,
+  closeProfile,
+  openSendInvite,
+  closeSendInvite,
+  openReset,
+  closeReset,
+  openSupport,
+  closeSupport,
+} from "../Redux/slice/deal/dealFormSlice";
 
 interface NavbarProps {
   links: {
@@ -29,21 +38,27 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const userdetails = useSelector(
-    (state: RootState) => state.auth.user
-  );
+  const userdetails = useSelector((state: RootState) => state.auth.user);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
-  const [              selectedComponent, setSelectedComponent] = useState<string | null>(null);
+  const [selectedComponent, setSelectedComponent] = useState<string | null>(
+    null
+  );
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
   const dealFormOpen = useSelector((state: RootState) => state.dealForm.open);
-  const profileOpen = useSelector((state: RootState) => state.profileReducer.open);
-  const inviteOpen = useSelector((state: RootState) => state.sendInviteReducer.open);
+  const profileOpen = useSelector(
+    (state: RootState) => state.profileReducer.open
+  );
+  const inviteOpen = useSelector(
+    (state: RootState) => state.sendInviteReducer.open
+  );
   const resetOpen = useSelector((state: RootState) => state.resetReducer.open);
-  const supportOpen = useSelector((state: RootState) => state.supportReducer.open);
+  const supportOpen = useSelector(
+    (state: RootState) => state.supportReducer.open
+  );
 
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
@@ -64,13 +79,13 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     setOpenPopup(false);
     setSelectedComponent(null);
 
-    if (              selectedComponent === "SendInvite") {
+    if (selectedComponent === "SendInvite") {
       dispatch(closeSendInvite());
-    } else if (              selectedComponent === "Profile") {
+    } else if (selectedComponent === "Profile") {
       dispatch(closeProfile());
-    } else if (              selectedComponent === "Reset") {
+    } else if (selectedComponent === "Reset") {
       dispatch(closeReset());
-    } else if (              selectedComponent === "Support") {
+    } else if (selectedComponent === "Support") {
       dispatch(closeSupport());
     }
   };
@@ -102,8 +117,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       navigate("/site");
     } else if (route === "landlord") {
       navigate("/landlord");
-    }
-    else if (route === "invitebroker") {
+    } else if (route === "invitebroker") {
       navigate("/invitebroker");
     }
   };
@@ -182,7 +196,9 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             </div>
             {isDropdownOpen && (
               <div className={styles.dropdownMenu}>
-                <button onClick={() => handleOpenPopup("Profile")}>Profile</button>
+                <button onClick={() => handleOpenPopup("Profile")}>
+                  Profile
+                </button>
                 <button onClick={() => handleOpenPopup("SendInvite")}>
                   Send Invite
                 </button>
@@ -196,9 +212,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           </div>
         </div>
       </nav>
-      {openPopup &&               selectedComponent && (
+      {openPopup && selectedComponent && (
         <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg">
-          
           <DialogTitle sx={{ padding: 0 }}>
             <Icon
               aria-label="close"
@@ -216,19 +231,19 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             </Icon>
           </DialogTitle>
           <DialogContent sx={{ padding: 0 }}>
-            {inviteOpen &&               selectedComponent === "SendInvite" && (
+            {inviteOpen && selectedComponent === "SendInvite" && (
               <SendInvite onCloseDialog={handleClosePopup} />
             )}
-            {profileOpen &&               selectedComponent === "Profile" && (
+            {profileOpen && selectedComponent === "Profile" && (
               <Profile onCloseDialog={handleClosePopup} />
             )}
-            {resetOpen &&               selectedComponent === "Reset" && (
+            {resetOpen && selectedComponent === "Reset" && (
               <Reset onCloseDialog={handleClosePopup} />
             )}
-            {supportOpen &&               selectedComponent === "Support" && (
+            {supportOpen && selectedComponent === "Support" && (
               <Support onCloseDialog={handleClosePopup} />
             )}
-            {              selectedComponent === "Landlord" && (
+            {selectedComponent === "Landlord" && (
               <Box
                 sx={{
                   padding: 1,
@@ -246,7 +261,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               </Box>
             )}
 
-            {              selectedComponent === "Site" && (
+            {selectedComponent === "Site" && (
               <Box
                 sx={{
                   padding: 1,
@@ -264,7 +279,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               </Box>
             )}
 
-              {selectedComponent === "Invitebroker" && (
+            {selectedComponent === "Invitebroker" && (
               <Box
                 sx={{
                   padding: 1,
@@ -299,8 +314,6 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       />
     </>
   );
-
-
 };
 
 export default Navbar;

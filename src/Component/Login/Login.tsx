@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import styles from './Login.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../Redux/slice/auth/authSlice';
-import { RootState } from '../Redux/reducers';
-import { AppDispatch } from '../Redux/store';
+import React, { useState } from "react";
+import styles from "./Login.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../Redux/slice/auth/authSlice";
+import { RootState } from "../Redux/reducers";
+import { AppDispatch } from "../Redux/store";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state: RootState) => state.auth);
@@ -25,29 +25,30 @@ const Login: React.FC = () => {
     e.preventDefault();
     dispatch(login({ email, password })).then((result) => {
       if (login.fulfilled.match(result)) {
-        navigate('/dashboard');
+        navigate("/dashboard");
       }
     });
   };
 
   return (
-    <div className='app'>
+    <div className="app">
       <div className={styles.card}>
         <div className={styles.section}>
           <div className={styles.header}>
-            <img src='https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0' alt="Tandem Logo" />
+            <img
+              src="https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0"
+              alt="Tandem Logo"
+            />
             <h2>TANDEM INFRASTRUCTURE</h2>
           </div>
 
           <p>Sign in to continue to TANDEM</p>
           <form className={styles.loginsection} onSubmit={handleSubmit}>
-            {error && (
-              <div className={styles.failure}>
-                {error}
-              </div>
-            )}
+            {error && <div className={styles.failure}>{error}</div>}
             <div className={styles.inputGroup}>
-              <label className={styles.label} htmlFor="username">Email ID</label>
+              <label className={styles.label} htmlFor="username">
+                Email ID
+              </label>
               <input
                 id="username"
                 placeholder="Enter email"
@@ -57,7 +58,9 @@ const Login: React.FC = () => {
             </div>
 
             <div className={styles.inputGroup}>
-              <label className={styles.label} htmlFor="password">Password</label>
+              <label className={styles.label} htmlFor="password">
+                Password
+              </label>
               <input
                 id="password"
                 type="password"
@@ -69,8 +72,12 @@ const Login: React.FC = () => {
             <Link to="/forgotpassword" className={styles.forgotPassword}>
               Forgot password?
             </Link>
-            <button className={styles.loginbtn} type="submit" disabled={loading}>
-              {loading ? 'Signing In...' : 'Sign In'}
+            <button
+              className={styles.loginbtn}
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? "Signing In..." : "Sign In"}
             </button>
           </form>
           {loading && (
