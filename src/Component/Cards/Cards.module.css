@@ -2,13 +2,28 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px 30px;
-    margin: 30px 10px;
+    margin: 30px 0;
 }
 
+
 .card {
-    background-color: #fff;
-    border-radius: 5px;
+    /* background: linear-gradient(45deg, #FFEBEE 0%, #FFCDD2 100%); */
+    /* background: linear-gradient(45deg, #EDE7F6 0%, #D1C4E9 100%); */
+    /* background: linear-gradient(45deg, #E0F7FA 0%, #80DEEA 100%); */
+    /* background: linear-gradient(45deg, #FFB199 0%, #FF0844 100%); */
+    /* background: linear-gradient(45deg,rgb(230, 230, 235) 60%,#C2C2F2 90%); */
+    /* background: linear-gradient(45deg, #cbc5fe 40%,rgb(230, 230, 235) 60%); */
+    /* background: linear-gradient(180deg, #c3bfe6 40%,rgb(230, 230, 235) 60%); */
+    /* background: linear-gradient(90deg, #d7d4f4 40%,rgb(230, 230, 235) 60%); */
+    /* background: linear-gradient(120deg, #c1bfea 40%,rgb(241, 241, 242) 70%); */
+    /* background: linear-gradient(140deg, rgb(233, 233, 239) 50%, rgb(187, 187, 241) 80%); */
+    /* background: linear-gradient(140deg, rgb(233, 233, 239) 50%, rgb(225, 225, 239) 50%); */
+    /* background: radial-gradient(circle, rgb(255, 255, 255) 0%, #C2C2F2 92%); */
+    /* background: linear-gradient(135deg, #f2ededd1 89%, #7e3737d1 39%); */
+    background: linear-gradient(45deg, rgba(3, 3, 3, 0.8) 60%, rgba(1, 1, 1, 0.8) 90%);
+    filter: brightness(0.9) contrast(0.85); 
     box-shadow: 0 2px 10px rgba(26, 22, 62, 0.2);
+    border-radius: 5px;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -16,7 +31,7 @@
     width: 220px;
     transition: transform 0.3s;
     gap: 8px 0;
-    color: #000000;
+    color: #f5f2f2;
 }
 
 .card:hover {
@@ -139,7 +154,7 @@
     margin: 1px;
     gap: 2rem;
     padding: 15px;
-    background-color: #f8f7ff;
+    background-color: #191c24;
     border-radius: 5px;
 }
 
@@ -189,3 +204,9 @@
     position:relative;
 
 }
+.searchInput{
+    background-color: rgb(201, 200, 212);
+ }
+ .filterSelect{
+     background-color: rgb(201, 200, 212);
+  }
