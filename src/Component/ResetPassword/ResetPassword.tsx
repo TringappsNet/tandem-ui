@@ -60,8 +60,8 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
         setOldPassword('');
         setNewPassword('');
         setConfirmPassword('');
-        onCloseDialog(); // Close the dialog in Navbar
-        dispatch(resetState()); // Reset the state after handling the response
+        onCloseDialog(); 
+        dispatch(resetState());
       }, 1000);
     }
   }, [status, onCloseDialog, dispatch]);

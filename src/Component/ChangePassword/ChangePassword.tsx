@@ -73,6 +73,10 @@ const ChangePassword: React.FC = () => {
     }
 
     dispatch(changePassword({ newPassword: password }));
+
+        setTimeout(() => {
+          navigate('/login')
+        }, 5000);
   };
 
   return (

@@ -1,8 +1,5 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosInstance } from '../../../AxiosInterceptor/AxiosInterceptor';
-import { RootState } from '../../reducers';
-import { ThunkAction } from 'redux-thunk';
-import { Action } from 'redux';
 
 interface ChangePasswordState {
   isLoading: boolean;
