@@ -212,7 +212,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                     {`${site.addressline1}, ${site.addressline2}`}
                   </MenuItem>
                 ))
-              : options?.map((option: string, idx: number) => (
+                : options?.map((option: string, idx: number) => (
                   <MenuItem key={idx} value={option}>
                     {option}
                   </MenuItem>
