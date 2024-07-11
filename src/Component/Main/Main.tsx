@@ -4,6 +4,11 @@ import { axiosInstance } from "../AxiosInterceptor/AxiosInterceptor";
 import BrokerGrid from "../Grids/broker-grid/BrokerGrid";
 import { RootState } from "../Redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  CircularProgressbar,
+  CircularProgressbarWithChildren,
+  buildStyles
+} from "react-circular-progressbar";import 'react-circular-progressbar/dist/styles.css';
 
 type Deal = {
   totalDeals: number;
@@ -56,14 +61,63 @@ const Main: React.FC = () => {
                   : "Guest"}
               </p>
 
-        <span className={styles.tag}>Total Deals: {deal.totalDeals}</span>
-        <span className={styles.tag}>Deals Opened: {deal.dealsOpened}</span>
+        <span className={styles.tag}>Total Deals: {deal.totalDeals}
+        <div style={{ width: 55, height: 55 }}>
+  <CircularProgressbarWithChildren  value={deal.totalDeals} styles={buildStyles({
+          textColor: "red",
+          pathColor: "rose",
+        })} >
+  <div style={{ fontSize: 10, marginTop: -1 }} >
+
+  <strong>{deal.totalDeals}%</strong> 
+  </div>
+
+  </CircularProgressbarWithChildren>
+
+</div>
+        </span>
+        
+        <span className={styles.tag}>Deals Opened: {deal.dealsOpened}
+        <div style={{ width: 55, height: 55 }}>
+        <CircularProgressbarWithChildren  value={deal.dealsOpened} >
+  <div style={{ fontSize: 10, marginTop: -1 }}>
+
+  <strong>{deal.totalDeals}%</strong> 
+  </div>
+
+  </CircularProgressbarWithChildren></div>
+        </span>
         <span className={styles.tag}>
           Deals In Progress: {deal.dealsInProgress}
+          <div style={{ width: 55, height: 55 }}>
+          <CircularProgressbarWithChildren  value={deal.dealsInProgress} >
+  <div style={{ fontSize: 10, marginTop: -1 }}>
+
+  <strong>{deal.dealsInProgress}%</strong> 
+  </div>
+
+  </CircularProgressbarWithChildren></div>
         </span>
-        <span className={styles.tag}>Deals Closed: {deal.dealsClosed}</span>
+        <span className={styles.tag}>Deals Closed: {deal.dealsClosed}
+        <div style={{ width: 55, height: 55 }}>
+        <CircularProgressbarWithChildren  value={deal.dealsClosed} >
+  <div style={{ fontSize: 10, marginTop: -1 }}>
+
+  <strong>{deal.dealsClosed}%</strong> 
+  </div>
+
+  </CircularProgressbarWithChildren></div>
+        </span>
         <span className={styles.tag}>
           Total Commission: {deal.totalCommission}
+          <div style={{ width: 55, height: 55 }}>
+          <CircularProgressbarWithChildren  value={deal.totalCommission} >
+  <div style={{ fontSize: 10, marginTop: -1 }}>
+
+  <strong>{deal.totalCommission}%</strong> 
+  </div>
+
+  </CircularProgressbarWithChildren></div>
         </span>
       </div>
       <h1 className={styles.b_title}>Users</h1>

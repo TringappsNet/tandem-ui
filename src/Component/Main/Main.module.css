@@ -13,21 +13,25 @@
     padding: 10px;
   }
   .tag {
-    display: inline-block;
+    display: flex;
+    justify-content: space-between;
     flex: 1 1 10%;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2rem;
     border-radius: 10px;
     background: linear-gradient(90deg, rgba(0,90,158,1) 0%, rgba(22,106,169,1) 35%, rgba(36,112,169,1) 100%);
     color: #ffffff;
-    font-size: 1rem;
+    font-size: 17px;
     font-weight: bold;
     text-transform: uppercase;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
     text-align: center;
-    width: 200px !important;
-    height: 170px;
+    width: 100% !important;
+    height: 140px;
     padding-top: 10px;
+    align-items: center;
+    /* justify-content: center; */
+    
   }
   
   .tag:nth-child(1) {
@@ -132,3 +136,5 @@
 {
   color: white !important;
 }
+
+
