@@ -50,7 +50,6 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
       return;
     }
 
-  
     dispatch(resetPassword({ oldPassword, newPassword, userId: user.id }));
   };
 

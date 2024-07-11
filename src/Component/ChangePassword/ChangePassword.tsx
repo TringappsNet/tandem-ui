@@ -1,73 +1,55 @@
 import React, { useState } from "react";
-import { axiosInstance } from "../AxiosInterceptor/AxiosInterceptor";
+import { useDispatch, useSelector } from "react-redux";
+import { changePassword } from "../Redux/slice/auth/changePasswordSlice";
 import styles from "./ChangePassword.module.css";
 import { useNavigate } from "react-router-dom";
+import { AppDispatch } from "../Redux/store";
+import { RootState } from "../Redux/reducers";
 
 const ChangePassword: React.FC = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
+  const { isLoading, responseMessage, responseType } = useSelector((state: RootState) => state.changePassword);
+
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmpassword] = useState("");
   const [disableState, setDisableState] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [showFailureMessage, setShowFailureMessage] = useState(false);
   const [validationErrorMessage, setValidationErrorMessage] = useState("");
 
   const validatePassword = (password: string): string => {
     const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
     const numberPattern = /\d/g;
     if (password.trim() === "") {
-      setShowFailureMessage(true);
-      setShowSuccessMessage(false);
       setDisableState(false);
       return "Password is required.";
     } else if (password.length < 8) {
-      setShowFailureMessage(true);
-      setShowSuccessMessage(false);
       setDisableState(false);
       return "Password should be at least 8 characters long.";
     } else if (!specialCharPattern.test(password)) {
-      setShowFailureMessage(true);
-      setShowSuccessMessage(false);
       setDisableState(false);
       return "Password should contain at least one special character.";
     } else if ((password.match(numberPattern) || []).length < 2) {
-      setShowFailureMessage(true);
-      setShowSuccessMessage(false);
       setDisableState(false);
       return "Password should contain at least two numerical digits.";
     } else {
-      setShowFailureMessage(false);
-      setShowSuccessMessage(false);
       setDisableState(true);
       return "";
     }
   };
 
-  const validateConfirmpassword = (
-    password: string,
-    confirmpassword: string
-  ): string => {
+  const validateConfirmpassword = (password: string, confirmpassword: string): string => {
     if (confirmpassword.trim() === "") {
-      setShowFailureMessage(true);
-      setShowSuccessMessage(false);
       return "Password field cannot be empty.";
     } else if (password !== confirmpassword) {
-      setShowFailureMessage(true);
-      setShowSuccessMessage(false);
       return "Passwords do not match.";
     } else {
-      setShowFailureMessage(false);
-      setShowSuccessMessage(false);
       return "";
     }
   };
 
   const handleValidation = (): boolean => {
     const passwordError = validatePassword(password);
-    const confirmpasswordError = validateConfirmpassword(
-      password,
-      confirmpassword
-    );
+    const confirmpasswordError = validateConfirmpassword(password, confirmpassword);
 
     if (passwordError || confirmpasswordError) {
       setValidationErrorMessage(passwordError || confirmpasswordError);
@@ -82,33 +64,15 @@ const ChangePassword: React.FC = () => {
     event.preventDefault();
 
     if (password === "" || confirmpassword === "") {
-      setShowFailureMessage(true);
-      setShowSuccessMessage(false);
       setValidationErrorMessage("Please enter values in all fields.");
       return;
     }
 
     if (!handleValidation()) {
-      setShowSuccessMessage(false);
-      setShowFailureMessage(true);
       return;
     }
 
-    try {
-      await axiosInstance.post("auth/change-password", {
-        newPassword: password,
-      });
-      setShowSuccessMessage(true);
-      setShowFailureMessage(false);
-      setPassword("");
-      setConfirmpassword("");
-      Navigate("/login");
-    } catch (error) {
-      console.error("Password change failed:", error);
-      setShowSuccessMessage(false);
-      setShowFailureMessage(true);
-      setValidationErrorMessage("Failed to change password. Please try again.");
-    }
+    dispatch(changePassword({ newPassword: password }));
   };
 
   return (
@@ -124,18 +88,16 @@ const ChangePassword: React.FC = () => {
           </div>
           <div className={styles.headingsection}>
             <h3>Set a New Password</h3>
-            <p>
-              Your new password should be distinct from any of your prior
-              passwords
-            </p>
+            <p>Your new password should be distinct from any of your prior passwords</p>
           </div>
           <form className={styles.loginsection} onSubmit={handleSubmit}>
-            {showSuccessMessage && (
-              <div className={styles.success}>
-                Password changed successfully!
-              </div>
+            {responseType === 'success' && (
+              <div className={styles.success}>{responseMessage}</div>
             )}
-            {showFailureMessage && (
+            {responseType === 'error' && (
+              <div className={styles.failure}>{responseMessage}</div>
+            )}
+            {validationErrorMessage && (
               <div className={styles.failure}>{validationErrorMessage}</div>
             )}
             <div className={styles.inputGroup}>
@@ -148,8 +110,9 @@ const ChangePassword: React.FC = () => {
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => {
-                  setPassword(e.target.value);
-                  setValidationErrorMessage(validatePassword(e.target.value));
+                  const newPassword = e.target.value;
+                  setPassword(newPassword);
+                  setValidationErrorMessage(validatePassword(newPassword));
                 }}
               />
             </div>
@@ -164,15 +127,14 @@ const ChangePassword: React.FC = () => {
                 value={confirmpassword}
                 disabled={!disableState}
                 onChange={(e) => {
-                  setConfirmpassword(e.target.value);
-                  setValidationErrorMessage(
-                    validateConfirmpassword(password, e.target.value)
-                  );
+                  const newConfirmPassword = e.target.value;
+                  setConfirmpassword(newConfirmPassword);
+                  setValidationErrorMessage(validateConfirmpassword(password, newConfirmPassword));
                 }}
               />
             </div>
-            <button className={styles.loginbtn} type="submit">
-              Reset Password
+            <button className={styles.loginbtn} type="submit" disabled={isLoading}>
+              {isLoading ? 'Resetting...' : 'Reset Password'}
             </button>
           </form>
         </div>
