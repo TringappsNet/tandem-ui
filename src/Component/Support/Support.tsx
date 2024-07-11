@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styles from './Support.module.css';
+// import { closeSupport } from '../Redux/slice/support/supportSlice';
 import { AppDispatch } from "../Redux/store";
 import mailImage from './mail.png';
 import { RootState } from '../Redux/reducers';
-import { raiseTicket, clearMessages } from '../Redux/slice/support/supportSlice';
+import { raiseTicket, clearMessages, supportState } from '../Redux/slice/support/supportSlice';
 
 interface SupportProps {
     onCloseDialog: () => void;
@@ -15,6 +16,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
     const [subject, setSubject] = useState('');
     const [description, setDescription] = useState('');
     const [isVisible, setIsVisible] = useState(true);
+    const [formError, setFormError] = useState('');
     const { isLoading, error, successMessage } = useSelector((state: RootState) => state.contact);
     const user = useSelector((state: RootState) => state.auth.user);
 
@@ -22,28 +24,28 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        if (subject.trim() && error === 'Please fill in the subject') {
-            dispatch(clearMessages());
+        if (subject.trim()) {
+            setFormError('');
         }
-    }, [subject, error, dispatch]);
+    }, [subject]);
 
     useEffect(() => {
-        if (description.trim() && error === 'Please fill in the description') {
-            dispatch(clearMessages());
+        if (description.trim() && !subject.trim()) {
+            setFormError('Please fill in the subject');
+        } else if (description.trim()) {
+            setFormError('');
         }
-    }, [description, error, dispatch]);
+    }, [description, subject]);
 
     const validateForm = (): boolean => {
         if (!subject.trim()) {
-            dispatch(clearMessages());
+            setFormError('Please fill in the subject');
             return false;
         }
-
         if (!description.trim()) {
-            dispatch(clearMessages());
+            setFormError('Please fill in the description');
             return false;
         }
-
         return true;
     };
 
@@ -78,9 +80,11 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
 
             setTimeout(() => {
                 navigate('/dashboard');
-            }, 2500);
+                onCloseDialog();
+                dispatch(supportState());
+            }, 2000);
         }
-    }, [successMessage, navigate]);
+    }, [successMessage, navigate, onCloseDialog, dispatch]);
 
     if (!isVisible) {
         return null;
@@ -101,6 +105,11 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
                 {error && (
                     <div className={`${styles.messageBox} ${styles.errorBox}`}>
                         {error}
+                    </div>
+                )}
+                {formError && (
+                    <div className={`${styles.messageBox} ${styles.errorBox}`}>
+                        {formError}
                     </div>
                 )}
                 <div className={styles.formGroup}>

@@ -60,7 +60,7 @@ const BrokerGrid: React.FC = () => {
     roleId: 1,
   });
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
-    pageSize: 5,
+    pageSize: 14,
     page: 0,
   });
 
@@ -146,7 +146,7 @@ const BrokerGrid: React.FC = () => {
       <FullGrid
         className=""
         sx={{
-          height: 480,
+          height: 520,
         }}
         rows={rows}
         columns={columns}

@@ -1,26 +1,40 @@
-import React, { useState } from "react";
-import { axiosInstance } from "../AxiosInterceptor/AxiosInterceptor";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./ForgotPassword.module.css";
+import { forgotPassword, clearState } from "../Redux/slice/auth/forgotPasswordSlice";
+import { RootState } from "../Redux/reducers";
+import { AppDispatch } from "../Redux/store"; 
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState("");
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [showFailureMessage, setShowFailureMessage] = useState(false);
   const [validationErrorMessage, setValidationErrorMessage] = useState("");
-  const Navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const { loading, successMessage, errorMessage } = useSelector(
+    (state: RootState) => state.forgotPassword
+  );
+
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        dispatch(clearState());
+        navigate("/login");
+      }, 3000);
+
+      return () => clearTimeout(timer); // Cleanup the timer on component unmount
+    }
+  }, [successMessage, dispatch, navigate]);
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email === "") {
       setValidationErrorMessage("Email cannot be empty");
-      setShowFailureMessage(true);
     } else if (!emailRegex.test(email)) {
       setValidationErrorMessage("Invalid email address");
-      setShowFailureMessage(true);
     } else {
-      setShowFailureMessage(false);
-      setShowSuccessMessage(false);
+      setValidationErrorMessage("");
     }
   };
 
@@ -34,57 +48,10 @@ const ForgotPassword: React.FC = () => {
     e.preventDefault();
     if (email === "") {
       setValidationErrorMessage("Please enter a valid email");
-      setShowFailureMessage(true);
       return;
     }
 
-    try {
-      const response = await axiosInstance.post("/auth/forgot-password", {
-        email,
-      });
-      const data = response.data;
-
-      if (data.message && response.status === 200) {
-        setShowSuccessMessage(true);
-        setShowFailureMessage(false);
-
-        setTimeout(() => {
-          setShowSuccessMessage(false);
-          setShowFailureMessage(false);
-          Navigate("/"); // Redirect to login page after 3 seconds
-        }, 3000);
-        setEmail("");
-      } else {
-        setShowSuccessMessage(false);
-        setShowFailureMessage(true);
-      }
-    } catch (error: any) {
-      if (error.response) {
-        const { status, data } = error.response;
-
-        if (status === 500) {
-          setValidationErrorMessage("Server error, please try again later");
-        } else if (status === 401 && data.message === "Incorrect Email") {
-          setValidationErrorMessage(
-            "Incorrect Email! Please enter correct email."
-          );
-        } else if (
-          status === 401 &&
-          data.message === "You are not a registered user"
-        ) {
-          setValidationErrorMessage(
-            "You are not a registered user. Please register."
-          );
-        } else {
-          setValidationErrorMessage("An error occurred. Please try again.");
-        }
-      } else {
-        setValidationErrorMessage("An error occurred. Please try again.");
-      }
-
-      setShowSuccessMessage(false);
-      setShowFailureMessage(true);
-    }
+    dispatch(forgotPassword(email));
   };
 
   return (
@@ -103,12 +70,13 @@ const ForgotPassword: React.FC = () => {
             <p>Reset your password here</p>
           </div>
           <form className={styles.loginsection} onSubmit={handleSubmit}>
-            {showSuccessMessage && (
-              <div className={styles.success}>
-                Reset link has been sent to your mail!
-              </div>
+            {successMessage && (
+              <div className={styles.success}>{successMessage}</div>
             )}
-            {showFailureMessage && (
+            {errorMessage && (
+              <div className={styles.failure}>{errorMessage}</div>
+            )}
+            {validationErrorMessage && (
               <div className={styles.failure}>{validationErrorMessage}</div>
             )}
             <div className={styles.inputGroup}>
@@ -123,8 +91,8 @@ const ForgotPassword: React.FC = () => {
                 onChange={handleEmailChange}
               />
             </div>
-            <button className={styles.loginbtn} type="submit">
-              Send Reset Link
+            <button className={styles.loginbtn} type="submit" disabled={loading}>
+              {loading ? "Sending..." : "Send Reset Link"}
             </button>
           </form>
           <div className={styles.rememberpwd}>
