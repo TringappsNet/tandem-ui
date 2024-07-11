@@ -3,7 +3,7 @@ import styles from "./Main.module.css";
 import { axiosInstance } from "../AxiosInterceptor/AxiosInterceptor";
 import BrokerGrid from "../Grids/broker-grid/BrokerGrid";
 import { RootState } from "../Redux/reducers";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 type Deal = {
   totalDeals: number;
