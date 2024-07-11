@@ -143,32 +143,32 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             />
             <h3>TANDEM INFRASTRUCTURE</h3>
           </div>
-          <p onClick={handleCards} style={{ cursor: "pointer" }}>
-            DEALS
-          </p>
-          <p onClick={() => handleRoute("site")} style={{ cursor: "pointer" }}>
-            PROPERTY
-          </p>
-          <p
-            onClick={() => handleRoute("landlord")}
-            style={{ cursor: "pointer" }}
-          >
-            LANDLORD
-          </p>
-          <p
-            onClick={() => handleRoute("invitebroker")}
-            style={{ cursor: "pointer" }}
-          >
-            BROKERDETAILS
-          </p>
+          {userdetails?.roleId === 1 && (
+            <>
+              <p onClick={handleCards} style={{ cursor: "pointer" }}>
+                DEALS
+              </p>
+              <p onClick={() => handleRoute("site")} style={{ cursor: "pointer" }}>
+                PROPERTY
+              </p>
+              <p onClick={() => handleRoute("landlord")} style={{ cursor: "pointer" }}>
+                LANDLORD
+              </p>
+              <p onClick={() => handleRoute("invitebroker")} style={{ cursor: "pointer" }}>
+                BROKER DETAILS
+              </p>
+            </>
+          )}
         </div>
         <div className={styles.rightheadersection}>
+        {userdetails?.roleId === 1 && (
           <div
             className={styles.createdeal}
             onClick={() => dispatch(openDealForm())}
           >
+            
             <p>CREATE</p>
-          </div>
+          </div>)}
           <div
             className={styles.userdropdown}
             onClick={toggleDropdown}
@@ -190,9 +190,11 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                 <button onClick={() => handleOpenPopup("Profile")}>
                   Profile
                 </button>
-                <button onClick={() => handleOpenPopup("SendInvite")}>
-                  Send Invite
-                </button>
+                {userdetails?.roleId === 1 && (
+                  <button onClick={() => handleOpenPopup("SendInvite")}>
+                    Send Invite
+                  </button>
+                )}
                 <button onClick={() => handleOpenPopup("Reset")}>Reset</button>
                 <button onClick={() => handleOpenPopup("Support")}>
                   Contact us

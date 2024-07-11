@@ -84,7 +84,7 @@ const DealForm: React.FC<DealFormProps> = () => {
     noticeToProceedDate: currentDeal?.noticeToProceedDate || "",
     commercialOperationDate: currentDeal?.commercialOperationDate || "",
     potentialcommissiondate: currentDeal?.potentialcommissiondate || "",
-    potentialCommission: currentDeal?.potentialCommission || null,
+    potentialCommission: currentDeal?.potentialCommission || 0,
     status: currentDeal?.status || "",
     activeStep: currentDeal?.activeStep ?? 0,
     createdBy: currentDeal?.createdBy || 0,
