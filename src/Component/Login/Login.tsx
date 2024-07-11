@@ -9,25 +9,50 @@ import { AppDispatch } from "../Redux/store";
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { loading, error } = useSelector((state: RootState) => state.auth);
+  const { loading } = useSelector((state: RootState) => state.auth);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+    setEmailError("");
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+    setPasswordError("");
+  };
+
+  const validateForm = (): boolean => {
+    let isValid = true;
+
+    if (!email.trim()) {
+      setEmailError("Fill in the Email");
+      isValid = false;
+    } else if (!password.trim()) {
+      setPasswordError("Fill in the Password");
+      isValid = false;
+    }
+
+    return isValid;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(login({ email, password })).then((result) => {
-      if (login.fulfilled.match(result)) {
-        navigate("/dashboard");
-      }
-    });
+    setErrorMessage("");
+
+    if (validateForm()) {
+      dispatch(login({ email, password })).then((result) => {
+        if (login.fulfilled.match(result)) {
+          navigate("/dashboard");
+        } else {
+          setErrorMessage("Invalid email or password. Please try again.");
+        }
+      });
+    }
   };
 
   return (
@@ -41,10 +66,15 @@ const Login: React.FC = () => {
             />
             <h2>TANDEM INFRASTRUCTURE</h2>
           </div>
-
           <p>Sign in to continue to TANDEM</p>
+          {(emailError || passwordError) && (
+            <div className={styles.errorBox}>
+              {emailError && <p className={styles.errorText}>{emailError}</p>}
+              {passwordError && <p className={styles.errorText}>{passwordError}</p>}
+            </div>
+          )}
+          {errorMessage && <div className={styles.errorshow}>{errorMessage}</div>}
           <form className={styles.loginsection} onSubmit={handleSubmit}>
-            {error && <div className={styles.failure}>{error}</div>}
             <div className={styles.inputGroup}>
               <label className={styles.label} htmlFor="username">
                 Email ID
@@ -56,7 +86,6 @@ const Login: React.FC = () => {
                 onChange={handleEmailChange}
               />
             </div>
-
             <div className={styles.inputGroup}>
               <label className={styles.label} htmlFor="password">
                 Password
