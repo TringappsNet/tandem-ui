@@ -189,7 +189,7 @@ const InviteBroker: React.FC = () => {
     if (validateForm()) {
       try {
         const response = await axiosInstance.put(
-          `brokers/update-broker/${formData.id}`,
+          `brokers/broker/${formData.id}`,
           formData
         );
         setRows(
@@ -209,7 +209,7 @@ const InviteBroker: React.FC = () => {
 
   const handleConfirmDelete = async () => {
     try {
-      await axiosInstance.delete(`brokers/delete-broker/${deleteId}`);
+      await axiosInstance.delete(`brokers/broker/${deleteId}`);
       setRows(rows.filter((row) => row.id !== deleteId));
       setDeleteConfirmation(false);
     } catch (error) {
