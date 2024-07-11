@@ -15,15 +15,36 @@ const initialState: ResetState = {
   open: false,
 };
 
-export const resetPassword = createAsyncThunk(
+interface ResetPasswordPayload {
+  oldPassword: string;
+  newPassword: string;
+  userId: string;
+}
+
+interface RejectValue {
+  message: string;
+}
+
+export const resetPassword = createAsyncThunk<
+  { message: string },
+  ResetPasswordPayload,
+  { rejectValue: RejectValue }
+>(
   'reset/resetPassword',
-  async ({ oldPassword, newPassword, userId }: { oldPassword: string; newPassword: string; userId: string }) => {
-    const response = await axiosInstance.post('/auth/reset-password', {
-      oldPassword,
-      newPassword,
-      userId,
-    });
-    return response.data;
+  async ({ oldPassword, newPassword, userId }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post('/auth/reset-password', {
+        oldPassword,
+        newPassword,
+        userId,
+      });
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.message) {
+        return rejectWithValue({ message: error.response.data.message });
+      }
+      return rejectWithValue({ message: 'Password reset failed.' });
+    }
   }
 );
 
@@ -50,12 +71,12 @@ const resetSlice = createSlice({
       })
       .addCase(resetPassword.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.responseMessage = 'Password reset successful.';
+        state.responseMessage = action.payload.message;
         state.responseType = 'success';
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.status = 'failed';
-        state.responseMessage = action.error.message || 'Password reset failed.';
+        state.responseMessage = action.payload?.message || 'Password reset failed.';
         state.responseType = 'error';
       });
   },
