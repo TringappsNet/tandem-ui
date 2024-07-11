@@ -113,18 +113,21 @@ const DealForm: React.FC<DealFormProps> = () => {
   const fetchBrokers = async () => {
     try {
       const response = await axiosInstance.get("/brokers");
-      const brokers = response.data.map((broker: any) => ({
-        name: `${broker.user.firstName} ${broker.user.lastName}`,
-        id: broker.user.id,
-      }));
+      const brokers = response.data
+        .filter((broker: any) => !broker.user.isAdmin)
+        .map((broker: any) => ({
+          name: `${broker.user.firstName} ${broker.user.lastName}`,
+          id: broker.user.id,
+        }));
       setBrokerOptions(brokers);
-      if (response.data.length > 0) {
-        setUserId(response.data[0].user.id);
+      if (brokers.length > 0) {
+        setUserId(brokers[0].id);
       }
     } catch (error) {
       console.error("Error fetching broker names:", error);
     }
   };
+
 
   useEffect(() => {
     fetchBrokers();
@@ -225,17 +228,17 @@ const DealForm: React.FC<DealFormProps> = () => {
           >
             {label === "brokerName"
               ? brokerOptions.map((option, idx) => (
-                  <MenuItem key={idx} value={option.name}>
-                    {option.name}
-                  </MenuItem>
-                ))
+                <MenuItem key={idx} value={option.name}>
+                  {option.name}
+                </MenuItem>
+              ))
               : label === "propertyName"
-              ? propertyOptions.map((option, idx) => (
+                ? propertyOptions.map((option, idx) => (
                   <MenuItem key={idx} value={option}>
                     {option}
                   </MenuItem>
                 ))
-              : options?.map((option: string, idx: number) => (
+                : options?.map((option: string, idx: number) => (
                   <MenuItem key={idx} value={option}>
                     {option}
                   </MenuItem>
