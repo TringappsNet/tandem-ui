@@ -9,6 +9,7 @@ import { dealFormReducer } from '../slice/deal/dealCompSlice';
 import resetReducer from '../slice/auth/resetSlice';
 import { sendInviteReducer } from '../slice/auth/sendInviteSlice';
 import { profileReducer } from '../slice/profile/profileSlice';
+import changePasswordReducer from '../slice/auth/changePasswordSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -20,8 +21,8 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   sendInvite: sendInviteReducer,
   roles: rolesReducer,
-  contact: contactReducer
-
+  contact: contactReducer,
+  changePassword: changePasswordReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
