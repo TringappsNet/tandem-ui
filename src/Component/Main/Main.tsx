@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styles from "./Main.module.css";
 import { axiosInstance } from "../AxiosInterceptor/AxiosInterceptor";
 import BrokerGrid from "../Grids/broker-grid/BrokerGrid";
+import { RootState } from "../Redux/reducers";
+import { useDispatch, useSelector } from "react-redux";
 
 type Deal = {
   totalDeals: number;
@@ -12,6 +14,8 @@ type Deal = {
 };
 
 const Main: React.FC = () => {
+  const userdetails = useSelector((state: RootState) => state.auth.user);
+
   const [deal, setDeal] = useState<Deal>({
     totalDeals: 0,
     dealsOpened: 0,
@@ -43,6 +47,15 @@ const Main: React.FC = () => {
   return (
     <>
       <div className={styles.tagsContainer}>
+
+
+<p className={styles.welcome}>
+                 Welcome, {" "}
+                {userdetails
+                  ? `${userdetails.firstName} ${userdetails.lastName} !`
+                  : "Guest"}
+              </p>
+
         <span className={styles.tag}>Total Deals: {deal.totalDeals}</span>
         <span className={styles.tag}>Deals Opened: {deal.dealsOpened}</span>
         <span className={styles.tag}>
