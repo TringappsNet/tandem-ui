@@ -60,7 +60,7 @@ const BrokerGrid: React.FC = () => {
     roleId: 1,
   });
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
-    pageSize: 5,
+    pageSize: 14,
     page: 0,
   });
 

@@ -114,7 +114,7 @@ const DealForm: React.FC<DealFormProps> = () => {
     try {
       const response = await axiosInstance.get("/brokers");
       const brokers = response.data
-        .filter((broker: any) => broker.roleId === 2)
+        .filter((broker: any) => !broker.user.isAdmin)
         .map((broker: any) => ({
           name: `${broker.user.firstName} ${broker.user.lastName}`,
           id: broker.user.id,

@@ -30,10 +30,10 @@ const Login: React.FC = () => {
     let isValid = true;
 
     if (!email.trim()) {
-      setEmailError("Fill in the Email");
+      setEmailError("Please fill in the Email");
       isValid = false;
     } else if (!password.trim()) {
-      setPasswordError("Fill in the Password");
+      setPasswordError("Please fill in the Password");
       isValid = false;
     }
 
