@@ -74,11 +74,12 @@ const FullGrid: React.FC<FullGridProps> = ({
               },
             },
             ".css-yrdy0g-MuiDataGrid-columnHeaderRow ": {
-              background: "#444189 !important",
+              background: "#191c24 !important",
               color: "white",
             },
             ".css-3eek4p-MuiDataGrid-main ": {
-              background: "#f5f7fb !important",
+              background: "#191c24 !important",
+              color:'white',
             },
             "& .css-15n4jlm-MuiDataGrid-root .MuiDataGrid-columnHeaders": {
               fontSize: "14px",
