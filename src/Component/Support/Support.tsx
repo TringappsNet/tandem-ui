@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styles from './Support.module.css';
+// import { closeSupport } from '../Redux/slice/support/supportSlice';
 import { AppDispatch } from "../Redux/store";
 import mailImage from './mail.png';
 import { RootState } from '../Redux/reducers';
-import { raiseTicket, clearMessages } from '../Redux/slice/support/supportSlice';
+import { raiseTicket, clearMessages, supportState } from '../Redux/slice/support/supportSlice';
 
 interface SupportProps {
     onCloseDialog: () => void;
@@ -79,9 +80,11 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
 
             setTimeout(() => {
                 navigate('/dashboard');
-            }, 2500);
+                onCloseDialog();
+                dispatch(supportState());
+            }, 2000);
         }
-    }, [successMessage, navigate]);
+    }, [successMessage, navigate, onCloseDialog, dispatch]);
 
     if (!isVisible) {
         return null;
