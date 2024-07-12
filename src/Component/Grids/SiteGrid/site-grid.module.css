@@ -1,16 +1,14 @@
-.dialogtitle{
-    background-color: #262262 !important;
+.dialogtitle {
+  background-color: #262262 !important;
 }
 
-.css-bdhsul-MuiTypography-root-MuiDialogTitle-root{
-    background: #262262 !important;
+.css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
+  background: #262262 !important;
 }
 .css-knqc4i-MuiDialogActions-root {
-
-    border-top: 1px solid grey !important;
-    
+  border-top: 1px solid grey !important;
 }
 
-.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root{
-    height: 50px !important;
+.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root {
+  height: 50px !important;
 }

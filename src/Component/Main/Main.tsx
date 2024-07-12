@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import styles from "./Main.module.css";
-import { axiosInstance } from "../AxiosInterceptor/AxiosInterceptor";
-import BrokerGrid from "../Grids/broker-grid/BrokerGrid";
-import { RootState } from "../Redux/reducers";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import styles from './Main.module.css';
+import { axiosInstance } from '../AxiosInterceptor/AxiosInterceptor';
+import BrokerGrid from '../Grids/broker-grid/BrokerGrid';
+import { RootState } from '../Redux/reducers';
+import { useSelector } from 'react-redux';
 
 type Deal = {
   totalDeals: number;
@@ -26,7 +26,7 @@ const Main: React.FC = () => {
 
   const fetchDeals = async () => {
     try {
-      const response = await axiosInstance.get("/deals/dealsData");
+      const response = await axiosInstance.get('/deals/dealsData');
       const deal: Deal = {
         totalDeals: response.data.totalDeals,
         dealsOpened: response.data.dealsOpened,
@@ -36,7 +36,7 @@ const Main: React.FC = () => {
       };
       setDeal(deal);
     } catch (error) {
-      console.error("Error fetching deals:", error);
+      console.error('Error fetching deals:', error);
     }
   };
 
@@ -47,14 +47,12 @@ const Main: React.FC = () => {
   return (
     <>
       <div className={styles.tagsContainer}>
-
-
-<p className={styles.welcome}>
-                 Welcome, {" "}
-                {userdetails
-                  ? `${userdetails.firstName} ${userdetails.lastName} !`
-                  : "Guest"}
-              </p>
+        <p className={styles.welcome}>
+          Welcome,{' '}
+          {userdetails
+            ? `${userdetails.firstName} ${userdetails.lastName} !`
+            : 'Guest'}
+        </p>
 
         <span className={styles.tag}>Total Deals: {deal.totalDeals}</span>
         <span className={styles.tag}>Deals Opened: {deal.dealsOpened}</span>

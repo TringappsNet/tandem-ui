@@ -1,17 +1,17 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import Navbar from "../Navbar/Navbar";
-import Cards from "../Cards/Cards";
-import styles from "./Dashboard.module.css";
-import Main from "../Main/Main";
-import SiteGrid from "../Grids/SiteGrid/SiteGrid";
-import LandlordGrid from "../Grids/landlordGrid/Landlord";
-import InviteBrokerGrid from "../Grids/inviteBroker-grid/InviteBroker-grid";
-import { useSelector } from "react-redux";
-import { RootState } from "../Redux/reducers";
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Navbar from '../Navbar/Navbar';
+import Cards from '../Cards/Cards';
+import styles from './Dashboard.module.css';
+import Main from '../Main/Main';
+import SiteGrid from '../Grids/SiteGrid/SiteGrid';
+import LandlordGrid from '../Grids/landlordGrid/Landlord';
+import InviteBrokerGrid from '../Grids/inviteBroker-grid/InviteBroker-grid';
+import { useSelector } from 'react-redux';
+import { RootState } from '../Redux/reducers';
 
 const Dashboard: React.FC = () => {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem('accessToken');
   const user = useSelector((state: RootState) => state.auth);
 
   if (!accessToken) {
@@ -19,10 +19,10 @@ const Dashboard: React.FC = () => {
   }
 
   const links = [
-    { name: "Site", href: "/dashboard/site", disabled: true },
-    { name: "Landlord", href: "/dashboard/landlord", disabled: true },
-    { name: "Cards", href: "/dashboard/cards", disabled: true },
-    { name: "InviteBroker", href: "/dashboard/invitebroker", disabled: true },
+    { name: 'Site', href: '/dashboard/site', disabled: true },
+    { name: 'Landlord', href: '/dashboard/landlord', disabled: true },
+    { name: 'Cards', href: '/dashboard/cards', disabled: true },
+    { name: 'InviteBroker', href: '/dashboard/invitebroker', disabled: true },
   ];
 
   return (

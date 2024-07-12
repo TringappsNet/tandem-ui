@@ -1,193 +1,193 @@
-@import url("@fontsource/public-sans");
-@import url("@fontsource/oswald");
+@import url('@fontsource/public-sans');
+@import url('@fontsource/oswald');
 
 body,
 html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 .contactsContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.3);
-    border: 1px solid #e0e0e0;
-    height: 553px;
-    gap: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.3);
+  border: 1px solid #e0e0e0;
+  height: 553px;
+  gap: 1rem;
 }
 
 .imageContainer {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .mailImage {
-    max-width: 78%;
-    max-height: 100%;
-    object-fit: contain;
+  max-width: 78%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .formGroup {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
 }
 
 .support {
-    color: #060606;
-    border: none;
-    padding: 0.5rem;
-    font-size: 24px;
-    font-weight: bolder;
-    border-radius: 6px;
-    margin-bottom: 20px;
-    text-align: center;
-    font-family: "Oswald", sans-serif;
-    width: 100%;
-    height: 59px;
+  color: #060606;
+  border: none;
+  padding: 0.5rem;
+  font-size: 24px;
+  font-weight: bolder;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 'Oswald', sans-serif;
+  width: 100%;
+  height: 59px;
 }
 
 .formGroup label {
-    margin-bottom: 0.5rem;
-    font-weight: bolder;
-    font-size: 18px;
-    color: rgb(15, 8, 8);
-    font-family: 'Public Sans', sans-serif;
+  margin-bottom: 0.5rem;
+  font-weight: bolder;
+  font-size: 18px;
+  color: rgb(15, 8, 8);
+  font-family: 'Public Sans', sans-serif;
 }
 
 .formGroup input,
 .formGroup textarea {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    background-color: #f2f2f4;
-    border-radius: 10px;
-    width: 344px;
-    font-size: 1rem;
-    font-family: 'Public Sans', sans-serif;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  background-color: #f2f2f4;
+  border-radius: 10px;
+  width: 344px;
+  font-size: 1rem;
+  font-family: 'Public Sans', sans-serif;
 }
 
 .formGroup input:focus,
 .formGroup textarea:focus {
-    border-color: #3e18be;
-    outline: none;
-    box-shadow: 0 0 5px rgba(45, 12, 150, 0.5);
+  border-color: #3e18be;
+  outline: none;
+  box-shadow: 0 0 5px rgba(45, 12, 150, 0.5);
 }
 
 .fadeOut {
-    opacity: 0;
-    transition: opacity 0.5s ease-out;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
 }
 
 .formGroup textarea {
-    resize: vertical;
+  resize: vertical;
 }
 
 .supportName {
-    font-size: 25px;
-    font-family: 'Public Sans', sans-serif;
-    font-weight: bolder;
-    margin-bottom: 48px;
-    color: white;
-    text-align: center;
+  font-size: 25px;
+  font-family: 'Public Sans', sans-serif;
+  font-weight: bolder;
+  margin-bottom: 48px;
+  color: white;
+  text-align: center;
 }
 
 .iconsContainer {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .icon {
-    font-size: 2rem;
-    color: #262262;
+  font-size: 2rem;
+  color: #262262;
 }
 
 .sendButton {
-    background-color: #2d0c96;
-    color: white;
-    border: none;
-    padding: 0.5rem;
-    font-size: 18px;
-    font-weight: bolder;
-    border-radius: 42px;
-    cursor: pointer;
-    margin-top: 20px;
-    width: 100%;
-    transition: background-color 0.3s ease;
+  background-color: #2d0c96;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  font-size: 18px;
+  font-weight: bolder;
+  border-radius: 42px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+  transition: background-color 0.3s ease;
 }
 
 .errorText {
-    color: #721c24;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin-top: 5px;
-    font-size: 0.9em;
-    font-family: 'Public Sans', sans-serif;
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-top: 5px;
+  font-size: 0.9em;
+  font-family: 'Public Sans', sans-serif;
 }
 
 .sendButton:hover {
-    background-color: #3f38a0;
-    color: white;
+  background-color: #3f38a0;
+  color: white;
 }
 
 .loaderContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(122, 119, 119, 0.5);
-    z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(122, 119, 119, 0.5);
+  z-index: 1000;
 }
 
 .loader {
-    width: 60px;
-    height: 60px;
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #262262;
-    border-radius: 70%;
-    animation: spin 1s linear infinite;
+  width: 60px;
+  height: 60px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #262262;
+  border-radius: 70%;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
 
-    100% {
-        transform: rotate(360deg);
-    }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .messageBox {
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    font-family: 'Public Sans', sans-serif;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-family: 'Public Sans', sans-serif;
 }
 
 .successBox {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
 }
 
 .errorBox {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
 }

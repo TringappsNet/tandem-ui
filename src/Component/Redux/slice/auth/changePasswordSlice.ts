@@ -17,10 +17,15 @@ export const changePassword = createAsyncThunk(
   'auth/changePassword',
   async ({ newPassword }: { newPassword: string }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post('auth/change-password', { newPassword });
+      const response = await axiosInstance.post('auth/change-password', {
+        newPassword,
+      });
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data.message || 'Failed to change password. Please try again.');
+      return rejectWithValue(
+        error.response.data.message ||
+          'Failed to change password. Please try again.'
+      );
     }
   }
 );
