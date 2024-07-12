@@ -5,6 +5,7 @@ import {
   updateDealDetails,
   fetchDealDetails,
 } from '../Redux/slice/deal/dealSlice';
+import { closeDealForm } from '../Redux/slice/deal/dealFormSlice';
 import { Deal } from '../Interface/DealFormObject';
 import {
   Stepper,
@@ -24,7 +25,7 @@ import {
 } from '@mui/material';
 import styles from './dealForm.module.css';
 import { RootState } from '../Redux/reducers';
-import { closeDealForm } from '../Redux/slice/deal/dealCompSlice';
+
 import { AppDispatch } from '../Redux/store/index';
 import {
   clearCurrentDeal,
