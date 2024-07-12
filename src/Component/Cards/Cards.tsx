@@ -128,20 +128,22 @@ const Cards: React.FC = () => {
           filteredDeals.map((deal: Deal) => (
             <div key={deal.id} className={styles.card}>
               <div>
-                <div className={styles.cardTitle}>
-                  Deal #{deal.id}
-                  {userdetails.isAdmin && (
-                    <div className={styles.icons}>
-                      <div className={styles.hide}>
-                        <FiEdit onClick={() => editDealForm(deal)} />
-                      </div>
-                      <FiTrash
-                        onClick={() =>
-                          deal.id !== null && handleDelete(deal.id)
-                        }
-                      />
+                {userdetails.isAdmin && (
+                  <div className={styles.icons}>
+                    <div className={styles.hide}>
+                      <FiEdit onClick={() => editDealForm(deal)} className={styles.editHide} />
                     </div>
-                  )}
+                    <FiTrash
+                      onClick={() => deal.id !== null && handleDelete(deal.id)}
+                    />
+                  </div>
+                )}
+                <div className={styles.cardTitle}>
+                  <div className={styles.nameHeader}>
+                    <div className={styles.name}>{deal.propertyName}</div>
+
+                  </div>
+
                   {/* {userdetails?.roleId === 2 && (
                     <div className={styles.hide}>
                       <FiEdit onClick={() => editDealForm(deal)} />
@@ -150,7 +152,7 @@ const Cards: React.FC = () => {
                 </div>
                 <hr className={styles.line} />
                 <div className={styles.nameHeader}>
-                  <div className={styles.name}>{deal.propertyName}</div>
+                  Deal #{deal.id}
                 </div>
               </div>
               <div className={styles.statusLine}>
@@ -179,12 +181,15 @@ const Cards: React.FC = () => {
                   )}
                 </div>
               </div>
+              <div>
+                  <hr
+                    className={`${styles.statuslinecolor} ${getStatusButtonClass(
+                      deal.status
+                    )}`}
+                  />
+                </div>
 
-              <hr
-                className={`${styles.statuslinecolor} ${getStatusButtonClass(
-                  deal.status
-                )}`}
-              />
+
             </div>
           ))
         ) : (
