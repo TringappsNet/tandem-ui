@@ -1,13 +1,10 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import {
-  Button,
   TextField,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import axios from "axios";
 import { axiosInstance } from "../../AxiosInterceptor/AxiosInterceptor";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 
@@ -39,7 +36,7 @@ interface BrokerData extends Omit<User, "roleId"> {
 }
 
 const config = {
-  apiUrl: "/brokers",
+  getUrl: "/brokers",
 };
 
 const BrokerGrid: React.FC = () => {
@@ -70,7 +67,7 @@ const BrokerGrid: React.FC = () => {
 
   const fetchBrokers = async () => {
     try {
-      const response = await axiosInstance.get(config.apiUrl);
+      const response = await axiosInstance.get(config.getUrl);
       const brokers = response.data.map((broker: any) => {
         const fullName = `${broker.user.firstName} ${broker.user.lastName}`;
         const roleName = broker.roleId === 1 ? "Admin" : "Broker";
@@ -110,25 +107,6 @@ const BrokerGrid: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleAdd = async () => {
-    try {
-      await axios.post(config.apiUrl, formData);
-      await fetchBrokers();
-      handleClose();
-    } catch (error) {
-      console.error("Error adding user:", error);
-    }
-  };
-
-  const handleUpdate = async () => {
-    try {
-      await axios.put(`${config.apiUrl}/${formData.id}`, formData);
-      await fetchBrokers();
-      handleClose();
-    } catch (error) {
-      console.error("Error updating user:", error);
-    }
-  };
 
   const columns: GridColDef[] = [
     { field: "fullName", headerName: "Name", width: 170 },
@@ -240,17 +218,6 @@ const BrokerGrid: React.FC = () => {
             onChange={handleChange}
           />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button
-            onClick={formData.id ? handleUpdate : handleAdd}
-            color="primary"
-          >
-            {formData.id ? "Update" : "Add"}
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );
