@@ -73,7 +73,7 @@
 .rightheadersection .createdeal {
     cursor: pointer;
     border: 1px solid #3c3c3c;
-    background-color: #262262;
+    background-color: #252934;
     padding: 6px 12px;
     border-radius: 5px;
     font-size: 0.69rem;
@@ -95,7 +95,7 @@
 }
 
 .rightheadersection .createdeal:hover {
-    background-color: #221a79;
+    background-color: #21232b;
 }
 
 .userdropdown {
@@ -123,7 +123,7 @@
     justify-content: center;
     align-items: center;
     background-color: #fff;
-    color: #000;
+    color: white;
 }
 
 .dropdownMenu {
@@ -132,8 +132,8 @@
     top: 50px;
     right: 0;
     width: 170px;
-    background-color: #fff;
-    color: #262262;
+    background-color: #191c24;
+    color: white;
     border: 1px solid #ccc;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 4px;

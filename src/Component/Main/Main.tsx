@@ -61,64 +61,147 @@ const Main: React.FC = () => {
                   : "Guest"}
               </p>
 
-        <span className={styles.tag}>Total Deals: {deal.totalDeals}
-        <div style={{ width: 55, height: 55 }}>
-  <CircularProgressbarWithChildren  value={deal.totalDeals} styles={buildStyles({
-          textColor: "red",
-          pathColor: "rose",
-        })} >
-  <div style={{ fontSize: 10, marginTop: -1 }} >
 
-  <strong>{deal.totalDeals}%</strong> 
-  </div>
 
-  </CircularProgressbarWithChildren>
+          <span className={styles.tag}>
+            <p className={styles.totalDeals}>
+            Total Deals:
 
-</div>
-        </span>
+            </p>
+
+            <p className={styles.deals}> 
+              <p className={styles.totalDeal}>
+                {deal.totalDeals}</p>
+
+                   <p style={{ width: 60, height: 60 }}>
+                    <CircularProgressbarWithChildren  value={deal.totalDeals} styles={buildStyles({
+                            textColor: "red",
+                            pathColor: "rose",
+                          })} >
+                    <div style={{ fontSize: 10, marginTop: -1 }} >
+
+                    <strong>{deal.totalDeals}%</strong> 
+                    </div>
+
+                    </CircularProgressbarWithChildren>
+
+                  </p>
+            </p>
+         
+          </span>
+
+
+          <span className={styles.tag}>
+            <p className={styles.totalDeals}>
+            Deals Opened:
+
+            </p>
+            {/* <p className={styles.design}>
+            </p> */}
+            
+            <p className={styles.deals}> 
+              <p className={styles.totalDeal}>
+                {deal.dealsOpened}</p>
+                   <p style={{ width: 60, height: 60 }}>
+                    <CircularProgressbarWithChildren   value={deal.dealsOpened} styles={buildStyles({
+                            textColor: "red",
+                            pathColor: "rose",
+                          })}
+                        >
+                    <div style={{ fontSize: 10, marginTop: -1 }} >
+
+                    <strong>{deal.dealsOpened}%</strong> 
+                    </div>
+
+                    </CircularProgressbarWithChildren>
+
+                  </p>
+                  
+            </p>
+            
+          </span>
         
-        <span className={styles.tag}>Deals Opened: {deal.dealsOpened}
-        <div style={{ width: 55, height: 55 }}>
-        <CircularProgressbarWithChildren  value={deal.dealsOpened} >
-  <div style={{ fontSize: 10, marginTop: -1 }}>
 
-  <strong>{deal.totalDeals}%</strong> 
-  </div>
 
-  </CircularProgressbarWithChildren></div>
-        </span>
-        <span className={styles.tag}>
-          Deals In Progress: {deal.dealsInProgress}
-          <div style={{ width: 55, height: 55 }}>
-          <CircularProgressbarWithChildren  value={deal.dealsInProgress} >
-  <div style={{ fontSize: 10, marginTop: -1 }}>
+          <span className={styles.tag}>
+            <p className={styles.totalDeals}>
+            Deals In Progress
+            </p>
 
-  <strong>{deal.dealsInProgress}%</strong> 
-  </div>
+            <p className={styles.deals}> 
+              <p className={styles.totalDeal}>
+                {deal.dealsInProgress}</p>
+                   <p style={{ width: 60, height: 60 }}>
+                    <CircularProgressbarWithChildren  value={deal.dealsInProgress} styles={buildStyles({
+                            textColor: "red",
+                            pathColor: "rose",
+                          })} >
+                    <div style={{ fontSize: 10, marginTop: -1 }} >
 
-  </CircularProgressbarWithChildren></div>
-        </span>
-        <span className={styles.tag}>Deals Closed: {deal.dealsClosed}
-        <div style={{ width: 55, height: 55 }}>
-        <CircularProgressbarWithChildren  value={deal.dealsClosed} >
-  <div style={{ fontSize: 10, marginTop: -1 }}>
+                    <strong>{deal.dealsInProgress}%</strong> 
+                    </div>
 
-  <strong>{deal.dealsClosed}%</strong> 
-  </div>
+                    </CircularProgressbarWithChildren>
 
-  </CircularProgressbarWithChildren></div>
-        </span>
-        <span className={styles.tag}>
-          Total Commission: {deal.totalCommission}
-          <div style={{ width: 55, height: 55 }}>
-          <CircularProgressbarWithChildren  value={deal.totalCommission} >
-  <div style={{ fontSize: 10, marginTop: -1 }}>
+                  </p>
+            </p>
+         
+          </span>
 
-  <strong>{deal.totalCommission}%</strong> 
-  </div>
 
-  </CircularProgressbarWithChildren></div>
-        </span>
+
+
+          <span className={styles.tag}>
+            <p className={styles.totalDeals}>
+            Deals Closed            </p>
+
+            <p className={styles.deals}> 
+              <p className={styles.totalDeal}>
+                {deal.dealsClosed}</p>
+                   <p style={{ width: 60, height: 60 }}>
+                    <CircularProgressbarWithChildren  value={deal.dealsClosed} styles={buildStyles({
+                            textColor: "red",
+                            pathColor: "rose",
+                          })} >
+                    <div style={{ fontSize: 10, marginTop: -1 }} >
+
+                    <strong>{deal.dealsClosed}%</strong> 
+                    </div>
+
+                    </CircularProgressbarWithChildren>
+
+                  </p>
+            </p>
+         
+          </span>
+
+        
+
+        
+          <span className={styles.tag}>
+            <p className={styles.totalDeals}>
+            Total Commission         </p>
+
+            <p className={styles.deals}> 
+              <p className={styles.totalDeal}>
+                {deal.totalCommission}</p>
+                   <p style={{ width: 60, height: 60 }}>
+                    <CircularProgressbarWithChildren  value={deal.totalCommission} styles={buildStyles({
+                            textColor: "red",
+                            pathColor: "rose",
+                          })} >
+                    <div style={{ fontSize: 10, marginTop: -1 }} >
+
+                    <strong>{deal.totalCommission}%</strong> 
+                    </div>
+
+                    </CircularProgressbarWithChildren>
+
+                  </p>
+            </p>
+         
+          </span>
+
       </div>
       <h1 className={styles.b_title}>Users</h1>
       <div>

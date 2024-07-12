@@ -11,50 +11,84 @@
     font-size: 40px !important;
     color: white;
     padding: 10px;
+    
   }
   .tag {
     display: flex;
-    justify-content: space-between;
+flex-direction: column;
+    justify-content: space-around;
     flex: 1 1 10%;
     padding: 0.5rem 2rem;
     border-radius: 10px;
-    background: linear-gradient(90deg, rgba(0,90,158,1) 0%, rgba(22,106,169,1) 35%, rgba(36,112,169,1) 100%);
+    background: linear-gradient(60deg, rgb(3, 55, 96) 0%, rgb(13, 82, 135) 35%, rgb(36, 117, 179) 100%);
     color: #ffffff;
     font-size: 17px;
     font-weight: bold;
     text-transform: uppercase;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-    text-align: center;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;    transition: background-color 0.3s ease;
+    /* text-align: center; */
     width: 100% !important;
-    height: 140px;
+    height: 130px;
     padding-top: 10px;
-    align-items: center;
+    /* align-items: center; */
     /* justify-content: center; */
-    
+    background:  url("../../assests//logo.png"),linear-gradient(60deg, rgb(3, 55, 96) 0%, rgb(13, 82, 135) 35%, rgb(36, 117, 179) 100%);
+
   }
-  
+ 
+ .deals{
+  display: flex;
+  justify-content: space-between;
+ }
+
+
+ .totalDeal{
+  display: flex;
+  /* text-align: center; */
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-family: sans-serif  !important;
+
+
+ }
+ .totalDeals{ 
+  font-family:  sans-serif !important;
+  font-size: 12px;
+
+
+ }
+
+ .design{
+  background-color: #2d7108;
+  color: #ffffff;
+  width:100px;
+  height: 1px;
+  box-shadow: #2d7108;
+ }
   .tag:nth-child(1) {
-    background: linear-gradient(90deg, rgba(0,90,158,1) 0%, rgba(22,106,169,1) 35%, rgba(36,112,169,1) 100%);
+    background: url("../../assests//logo.png"),linear-gradient(90deg, rgba(0,90,158,1) 0%, rgba(22,106,169,1) 35%, rgba(36,112,169,1) 100%);
     
   }
   
   .tag:nth-child(2) {
     /* background-color: #e81123; */
-    background: linear-gradient(90deg, rgba(251,99,99,1) 0%, rgba(250,122,122,1) 35%, rgba(249,120,120,1) 100%);
+    background:  url("../../assests//logo8.png"),linear-gradient(50deg, rgb(169, 55, 55) 0%, rgb(218, 88, 88) 35%, rgb(226, 108, 108) 100%);
+    
+
 
   }
   
   .tag:nth-child(3) {
-    background: linear-gradient(90deg, rgba(80,162,80,1) 0%, rgba(111,185,86,1) 35%, rgba(117,189,98,1) 100%);
+    background:  url("../../assests//logo12.png"),linear-gradient(40deg, rgb(99, 206, 99) 0%, rgb(99, 173, 77) 35%, rgb(84, 146, 69) 100%);
   }
   
   .tag:nth-child(4) {
-    background: linear-gradient(90deg, rgba(255,185,0,1) 0%, rgba(240,187,49,1) 35%, rgba(248,207,101,1) 100%);
+    background: url("../../assests//logo3.png"), linear-gradient(50deg, rgb(211, 155, 2) 0%, rgb(212, 156, 14) 35%, rgb(244, 195, 72) 100%);
   }
   
   .tag:nth-child(5) {
-    background: linear-gradient(90deg, rgba(92,45,145,1) 0%, rgba(114,77,156,1) 35%, rgba(112,80,149,1) 100%);
+    background:  url("../../assests//logo.png"),linear-gradient(90deg, rgb(129, 69, 197) 0%, rgb(107, 70, 149) 35%, rgb(87, 57, 122) 100%);
   }
   
   .tag:hover:nth-child(1) {
@@ -136,5 +170,7 @@
 {
   color: white !important;
 }
+
+
 
 
