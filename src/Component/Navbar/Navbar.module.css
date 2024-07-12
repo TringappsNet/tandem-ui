@@ -134,18 +134,18 @@
 }
 
 .dropdownMenu {
-  display: block;
-  position: absolute;
-  top: 80px;
-  right: 0;
-  width: 170px;
-  background-color: #fff;
-  color: #262262;
-  border: 1px solid #ccc;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  z-index: 1000;
-  padding: 6px 0;
+    display: block;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    width: 160px;
+    background-color: #fff;
+    color: #262262;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1000;
+    padding: 6px 0;
 }
 
 .dropdownMenu::before {
@@ -170,15 +170,17 @@
 }
 
 .dropdownMenu button {
-  display: block;
-  width: 100%;
-  background: none;
-  border: none;
-  padding: 5px 20px;
-  text-align: left;
-  color: black;
-  font-size: inherit;
-  cursor: pointer;
+    display: flex;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 5px 20px;
+    text-align: left;
+    color: black;
+    font-size: 1rem;
+    cursor: pointer;
+    gap: .37rem;
+    align-items: center;
 }
 
 .dropdownMenu button:hover {
@@ -193,4 +195,9 @@
 .saveclose {
   padding: 10px;
   height: 24px !important;
+}
+
+.icons {
+    font-size: 1rem;
+
 }
