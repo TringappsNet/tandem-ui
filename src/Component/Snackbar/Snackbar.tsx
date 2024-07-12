@@ -6,12 +6,14 @@ interface SnackbarProps {
   open: boolean;
   message: string;
   onClose: () => void;
+  severity: 'success' | 'error' | 'warning' | 'info';
 }
 
 const SnackbarComponent: React.FC<SnackbarProps> = ({
   open,
   message,
   onClose,
+  severity,
 }) => {
   return (
     <Snackbar
@@ -22,7 +24,7 @@ const SnackbarComponent: React.FC<SnackbarProps> = ({
     >
       <Alert
         onClose={onClose}
-        severity="error"
+        severity={severity}
         sx={{ width: '700px', textAlign: 'center' }}
       >
         {message}

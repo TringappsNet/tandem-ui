@@ -359,7 +359,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       <SnackbarComponent
         open={snackbarOpen}
         message={snackbarMessage}
-        onClose={handleSnackbarClose}
+        onClose={handleSnackbarClose} 
+        severity={'error'}      
       />
     </>
   );
