@@ -17,6 +17,8 @@ const ChangePassword: React.FC = () => {
   const [validationErrorMessage, setValidationErrorMessage] = useState("");
 
   const validatePassword = (password: string): string => {
+    if (!disableState === false) {
+    }
     const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
     const numberPattern = /\d/g;
     if (password.trim() === "") {
