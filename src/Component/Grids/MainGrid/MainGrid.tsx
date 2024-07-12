@@ -49,8 +49,8 @@ const FullGrid: React.FC<FullGridProps> = ({
           sx={{
             height: 800,
             marginTop: 2,
-            bgcolor: 'darkblue !important', // Set the background color here with !important
-              border:'#191c24 !important',
+            bgcolor: '#142031 !important', // Set the background color here with !important
+              // border:'1px solid white',
 
 
             ...sx,
@@ -60,10 +60,13 @@ const FullGrid: React.FC<FullGridProps> = ({
               border: "none",
               
             },
-            '.css-1kwdphh-MuiDataGrid-virtualScrollerContent,.css-tgsonj,.css-14mxsc7-MuiDataGrid-root .MuiDataGrid-withBorderColor,.css-1rtad1,.css-14mxsc7-MuiDataGrid-root .MuiDataGrid-filler,.css-128fb87-MuiDataGrid-toolbarContainer,.css-wop1k0-MuiDataGrid-footerContainer, .css-yrdy0g-MuiDataGrid-columnHeaderRow,.css-1w53k9d-MuiDataGrid-overlay,.css-1rtad1':{
-              background: '#191c24 !important',
+            '.css-1kwdphh-MuiDataGrid-virtualScrollerContent,.css-tgsonj,.css-14mxsc7-MuiDataGrid-root .MuiDataGrid-withBorderColor,.css-1rtad1,.css-14mxsc7-MuiDataGrid-root .MuiDataGrid-filler,.css-128fb87-MuiDataGrid-toolbarContainer,.css-wop1k0-MuiDataGrid-footerContainer, .css-yrdy0g-MuiDataGrid-columnHeaderRow,.css-1w53k9d-MuiDataGrid-overlay,.css-1rtad1,.css-og3pwy .css-15n4jlm-MuiDataGrid-root':{
+              background: '#142031 !important',
               color: 'white',
-              border:'#191c24',
+              // border:'1px solid white',
+              boxshadow: 'rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
+              
+
           },
           '.css-1eed5fa-MuiInputBase-root-MuiInput-root':{
             color: 'white',
