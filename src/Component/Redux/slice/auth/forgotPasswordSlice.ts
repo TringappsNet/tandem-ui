@@ -4,7 +4,12 @@ import { axiosInstance } from '../../../AxiosInterceptor/AxiosInterceptor';
 import { RootState } from '../../reducers';
 import { ThunkAction } from 'redux-thunk';
 
-type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
+type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;
 
 interface ForgotPasswordState {
   loading: boolean;
@@ -54,35 +59,55 @@ export const {
 
 export default forgotPasswordSlice.reducer;
 
-export const forgotPassword = (email: string): AppThunk<void> => async (dispatch: Dispatch) => {
-  try {
-    dispatch(forgotPasswordStart());
-    const response = await axiosInstance.post('/auth/forgot-password', { email });
-    const data = response.data;
+export const forgotPassword =
+  (email: string): AppThunk<void> =>
+  async (dispatch: Dispatch) => {
+    try {
+      dispatch(forgotPasswordStart());
+      const response = await axiosInstance.post('/auth/forgot-password', {
+        email,
+      });
+      const data = response.data;
 
-    if (data.message && response.status === 200) {
-      dispatch(forgotPasswordSuccess('Reset link has been sent to your mail!'));
-    } else {
-      dispatch(forgotPasswordFailure('Failed to send reset link.'));
-    }
-  } catch (error: any) {
-    if (error.response) {
-      const { status, data } = error.response;
-
-      if (status === 500) {
-        dispatch(forgotPasswordFailure('Server error, please try again later.'));
-      } else if (status === 401 && data.message === 'Incorrect Email') {
-        dispatch(forgotPasswordFailure('Incorrect Email! Please enter correct email.'));
-      } else if (status === 401 && data.message === 'You are not a registered user') {
-        dispatch(forgotPasswordFailure('You are not a registered user. Please register.'));
+      if (data.message && response.status === 200) {
+        dispatch(
+          forgotPasswordSuccess('Reset link has been sent to your mail!')
+        );
+      } else {
+        dispatch(forgotPasswordFailure('Failed to send reset link.'));
       }
-      else if (status === 404 && data.message === 'User not found') {
-        dispatch(forgotPasswordFailure('Please enter valid Email address'));
+    } catch (error: any) {
+      if (error.response) {
+        const { status, data } = error.response;
+
+        if (status === 500) {
+          dispatch(
+            forgotPasswordFailure('Server error, please try again later.')
+          );
+        } else if (status === 401 && data.message === 'Incorrect Email') {
+          dispatch(
+            forgotPasswordFailure(
+              'Incorrect Email! Please enter correct email.'
+            )
+          );
+        } else if (
+          status === 401 &&
+          data.message === 'You are not a registered user'
+        ) {
+          dispatch(
+            forgotPasswordFailure(
+              'You are not a registered user. Please register.'
+            )
+          );
+        } else if (status === 404 && data.message === 'User not found') {
+          dispatch(forgotPasswordFailure('Please enter valid Email address'));
+        } else {
+          dispatch(
+            forgotPasswordFailure('An error occurred. Please try again.')
+          );
+        }
       } else {
         dispatch(forgotPasswordFailure('An error occurred. Please try again.'));
       }
-    } else {
-      dispatch(forgotPasswordFailure('An error occurred. Please try again.'));
     }
-  }
-};
+  };

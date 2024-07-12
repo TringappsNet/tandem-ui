@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import {
   Button,
   TextField,
@@ -8,26 +8,26 @@ import {
   DialogContent,
   IconButton,
   Icon,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../Redux/store";
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../Redux/store';
 import {
   fetchBrokers,
   addBroker,
   updateBroker,
   deleteBroker,
-} from "../../Redux/slice/grids/userSlice";
-import FullGrid from "../MainGrid/MainGrid";
-import { MdEdit, MdDelete } from "react-icons/md";
-import ConfirmationModal from "../../AlertDialog/AlertDialog";
-import SendInvite from "../../SendInvite/SendInvite";
+} from '../../Redux/slice/grids/userSlice';
+import FullGrid from '../MainGrid/MainGrid';
+import { MdEdit, MdDelete } from 'react-icons/md';
+import ConfirmationModal from '../../AlertDialog/AlertDialog';
+import SendInvite from '../../SendInvite/SendInvite';
 import {
   closeSendInvite,
   openSendInvite,
-} from "../../Redux/slice/auth/sendInviteSlice";
-import { RootState } from "../../Redux/reducers";
-import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
+} from '../../Redux/slice/auth/sendInviteSlice';
+import { RootState } from '../../Redux/reducers';
+import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 
 interface Site {
   id: number;
@@ -51,18 +51,20 @@ const InviteBroker: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const inviteOpen = useSelector((state: RootState) => state.sendInvite.open);
-  const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
+  const [selectedComponent, setSelectedComponent] = useState<string | null>(
+    null
+  );
   const brokers = useSelector((state: RootState) => state.inviteBroker.brokers);
   const [formData, setFormData] = useState<Site>({
     id: 0,
-    email: "",
-    firstName: "",
-    lastName: "",
-    mobile: "",
-    city: "",
-    state: "",
-    country: "",
-    zipcode: "",
+    email: '',
+    firstName: '',
+    lastName: '',
+    mobile: '',
+    city: '',
+    state: '',
+    country: '',
+    zipcode: '',
     isNew: true,
     createdBy: 0,
   });
@@ -90,14 +92,14 @@ const InviteBroker: React.FC = () => {
   const resetForm = () => {
     setFormData({
       id: 0,
-      email: "",
-      firstName: "",
-      lastName: "",
-      mobile: "",
-      city: "",
-      state: "",
-      country: "",
-      zipcode: "",
+      email: '',
+      firstName: '',
+      lastName: '',
+      mobile: '',
+      city: '',
+      state: '',
+      country: '',
+      zipcode: '',
       isNew: true,
       createdBy: 0,
     });
@@ -109,26 +111,26 @@ const InviteBroker: React.FC = () => {
     const errors: Partial<Site> = {};
 
     if (!formData.email) {
-      errors.email = "Email is required";
+      errors.email = 'Email is required';
       valid = false;
     }
     if (!formData.city) {
-      errors.city = "City is required";
+      errors.city = 'City is required';
       valid = false;
     }
     if (!formData.state) {
-      errors.state = "State is required";
+      errors.state = 'State is required';
       valid = false;
     }
     if (!formData.country) {
-      errors.country = "Country is required";
+      errors.country = 'Country is required';
       valid = false;
     }
     if (!formData.zipcode) {
-      errors.zipcode = "Zipcode is required";
+      errors.zipcode = 'Zipcode is required';
       valid = false;
     } else if (!/^\d{5}$/.test(formData.zipcode)) {
-      errors.zipcode = "Zipcode must be 5 digits";
+      errors.zipcode = 'Zipcode must be 5 digits';
       valid = false;
     }
 
@@ -176,7 +178,7 @@ const InviteBroker: React.FC = () => {
     setSelectedComponent(componentName);
     setOpenPopup(true);
 
-    if (componentName === "SendInvite") {
+    if (componentName === 'SendInvite') {
       dispatch(openSendInvite());
     }
   };
@@ -185,33 +187,33 @@ const InviteBroker: React.FC = () => {
     setOpenPopup(false);
     setSelectedComponent(null);
 
-    if (selectedComponent === "SendInvite") {
+    if (selectedComponent === 'SendInvite') {
       dispatch(closeSendInvite());
     }
   };
 
   const columns: GridColDef[] = [
-    { field: "email", headerName: "email", width: 140 },
-    { field: "firstName", headerName: "firstName", width: 110 },
-    { field: "lastName", headerName: "lastName", width: 110 },
-    { field: "mobile", headerName: "mobile", width: 110 },
-    { field: "address", headerName: "address", width: 110 },
-    { field: "city", headerName: "City", width: 110 },
-    { field: "state", headerName: "state", width: 120 },
-    { field: "zipcode", headerName: "Zipcode", width: 120 },
-    { field: "country", headerName: "Country", width: 130 },
+    { field: 'email', headerName: 'email', width: 140 },
+    { field: 'firstName', headerName: 'firstName', width: 110 },
+    { field: 'lastName', headerName: 'lastName', width: 110 },
+    { field: 'mobile', headerName: 'mobile', width: 110 },
+    { field: 'address', headerName: 'address', width: 110 },
+    { field: 'city', headerName: 'City', width: 110 },
+    { field: 'state', headerName: 'state', width: 120 },
+    { field: 'zipcode', headerName: 'Zipcode', width: 120 },
+    { field: 'country', headerName: 'Country', width: 130 },
     {
-      field: "actions",
-      headerName: "Actions",
+      field: 'actions',
+      headerName: 'Actions',
       width: 130,
       renderCell: (params) => (
         <>
           <MdEdit
-            style={{ color: "blue", marginRight: 8, cursor: "pointer" }}
+            style={{ color: 'blue', marginRight: 8, cursor: 'pointer' }}
             onClick={() => handleEdit(params.row.id)}
           />
           <MdDelete
-            style={{ color: "red", cursor: "pointer" }}
+            style={{ color: 'red', cursor: 'pointer' }}
             onClick={() => handleDelete(params.row.id)}
           />
         </>
@@ -226,12 +228,12 @@ const InviteBroker: React.FC = () => {
         color="primary"
         style={{
           marginRight: 8,
-          width: "200px",
-          position: "relative",
-          float: "right",
-          backgroundColor: "#262280",
+          width: '200px',
+          position: 'relative',
+          float: 'right',
+          backgroundColor: '#262280',
         }}
-        onClick={() => handleOpenPopup("SendInvite")}
+        onClick={() => handleOpenPopup('SendInvite')}
       >
         send invite
       </Button>
@@ -242,12 +244,12 @@ const InviteBroker: React.FC = () => {
             aria-label="close"
             onClick={handleClosePopup}
             sx={{
-              position: "absolute",
+              position: 'absolute',
               right: 18,
               top: 8,
               zIndex: 999,
               fontSize: 30,
-              cursor: "pointer",
+              cursor: 'pointer',
             }}
           >
             <CloseIcon />
@@ -255,7 +257,7 @@ const InviteBroker: React.FC = () => {
         </DialogTitle>
 
         <DialogContent sx={{ padding: 0 }}>
-          {inviteOpen && selectedComponent === "SendInvite" && (
+          {inviteOpen && selectedComponent === 'SendInvite' && (
             <SendInvite onCloseDialog={handleClosePopup} />
           )}
         </DialogContent>
@@ -285,7 +287,7 @@ const InviteBroker: React.FC = () => {
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialogtitle">
-          {formData.id ? "Edit Property" : "Add Property"}
+          {formData.id ? 'Edit Property' : 'Add Property'}
 
           <IconButton
             aria-label="close"
@@ -293,13 +295,13 @@ const InviteBroker: React.FC = () => {
               handleClose();
             }}
             sx={{
-              position: "absolute",
+              position: 'absolute',
               right: 20,
               top: 10,
               color: (theme) => theme.palette.grey[500],
             }}
           >
-            <CloseIcon sx={{ color: "#999" }} />
+            <CloseIcon sx={{ color: '#999' }} />
           </IconButton>
         </DialogTitle>
         <DialogContent>
@@ -401,7 +403,7 @@ const InviteBroker: React.FC = () => {
             onClick={formData.id ? handleUpdate : handleAdd}
             color="primary"
           >
-            {formData.id ? "Update" : "Add"}
+            {formData.id ? 'Update' : 'Add'}
           </Button>
         </DialogActions>
       </Dialog>

@@ -10,12 +10,20 @@ const initialState = {
 
 export const sendInvite = createAsyncThunk(
   'sendInvite/sendInvite',
-  async ({ email, roleId }: { email: string; roleId: number }, { rejectWithValue }) => {
+  async (
+    { email, roleId }: { email: string; roleId: number },
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await axiosInstance.post('/auth/invite', { email, roleId });
+      const response = await axiosInstance.post('/auth/invite', {
+        email,
+        roleId,
+      });
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data.message || 'An error occurred. Please try again.');
+      return rejectWithValue(
+        error.response.data.message || 'An error occurred. Please try again.'
+      );
     }
   }
 );
@@ -60,5 +68,6 @@ const sendInviteSlice = createSlice({
   },
 });
 
-export const { openSendInvite, closeSendInvite, resetResponse, clearResponse } = sendInviteSlice.actions;
+export const { openSendInvite, closeSendInvite, resetResponse, clearResponse } =
+  sendInviteSlice.actions;
 export const sendInviteReducer = sendInviteSlice.reducer;

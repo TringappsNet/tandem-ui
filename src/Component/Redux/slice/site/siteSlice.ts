@@ -4,7 +4,12 @@ import { axiosInstance } from '../../../AxiosInterceptor/AxiosInterceptor';
 import { RootState } from '../../reducers';
 import { ThunkAction } from 'redux-thunk';
 
-type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
+type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;
 
 interface Site {
   id: number;
@@ -52,11 +57,8 @@ const siteSlice = createSlice({
   },
 });
 
-export const {
-  fetchSitesStart,
-  fetchSitesSuccess,
-  fetchSitesFailure,
-} = siteSlice.actions;
+export const { fetchSitesStart, fetchSitesSuccess, fetchSitesFailure } =
+  siteSlice.actions;
 
 export default siteSlice.reducer;
 

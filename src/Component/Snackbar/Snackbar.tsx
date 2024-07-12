@@ -1,6 +1,6 @@
-import React from "react";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import React from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 interface SnackbarProps {
   open: boolean;
@@ -18,12 +18,12 @@ const SnackbarComponent: React.FC<SnackbarProps> = ({
       open={open}
       autoHideDuration={3000}
       onClose={onClose}
-      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
     >
       <Alert
         onClose={onClose}
         severity="error"
-        sx={{ width: "700px", textAlign: "center" }}
+        sx={{ width: '700px', textAlign: 'center' }}
       >
         {message}
       </Alert>

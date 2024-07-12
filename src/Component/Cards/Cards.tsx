@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import styles from "./Cards.module.css";
-import { FiEdit, FiTrash } from "react-icons/fi";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../Redux/reducers";
+import React, { useEffect, useState } from 'react';
+import styles from './Cards.module.css';
+import { FiEdit, FiTrash } from 'react-icons/fi';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../Redux/reducers';
 import {
   deleteDeal,
   fetchBrokerDealDetails,
   fetchDealDetails,
-} from "../Redux/slice/deal/dealSlice";
-import { openDealForm } from "../Redux/slice/deal/dealCompSlice";
-import { AppDispatch } from "../Redux/store";
-import ConfirmationModal from "../AlertDialog/AlertDialog";
-import { setCurrentDeal } from "../Redux/slice/deal/currentDeal";
+} from '../Redux/slice/deal/dealSlice';
+import { openDealForm } from '../Redux/slice/deal/dealCompSlice';
+import { AppDispatch } from '../Redux/store';
+import ConfirmationModal from '../AlertDialog/AlertDialog';
+import { setCurrentDeal } from '../Redux/slice/deal/currentDeal';
 
 interface Deal {
   id: number | null;
@@ -35,8 +35,8 @@ interface Deal {
 
 const Cards: React.FC = () => {
   const userdetails = useSelector((state: RootState) => state.auth);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterStatus, setFilterStatus] = useState('');
   const dispatch = useDispatch<AppDispatch>();
   const dealsData = useSelector((state: RootState) => state.deal.dealDetails);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
@@ -64,14 +64,14 @@ const Cards: React.FC = () => {
 
   const getStatusButtonClass = (status: string | null) => {
     switch (status) {
-      case "Completed":
+      case 'Completed':
         return styles.statusButtonFinished;
-      case "In-Progress":
+      case 'In-Progress':
         return styles.statusButtonInProgress;
-      case "Started":
+      case 'Started':
         return styles.statusButtonStarted;
       default:
-        return "";
+        return '';
     }
   };
 
@@ -136,7 +136,9 @@ const Cards: React.FC = () => {
                         <FiEdit onClick={() => editDealForm(deal)} />
                       </div>
                       <FiTrash
-                        onClick={() => deal.id !== null && handleDelete(deal.id)}
+                        onClick={() =>
+                          deal.id !== null && handleDelete(deal.id)
+                        }
                       />
                     </div>
                   )}
@@ -164,15 +166,13 @@ const Cards: React.FC = () => {
               </div>
               <div className={styles.statusLine}>
                 <div className={styles.timestamp}>
-                  Last updated on:{" "}
-                  {deal.updatedAt?.split("T")[0] || "Unknown"}
+                  Last updated on: {deal.updatedAt?.split('T')[0] || 'Unknown'}
                 </div>
                 <div className={styles.circle} title={deal.brokerName}>
-                  {deal.brokerName &&
-                    deal.brokerName.split(" ").length >= 2 ? (
+                  {deal.brokerName && deal.brokerName.split(' ').length >= 2 ? (
                     <p>
-                      {deal.brokerName.split(" ")[0][0]}
-                      {deal.brokerName.split(" ")[1][0]}
+                      {deal.brokerName.split(' ')[0][0]}
+                      {deal.brokerName.split(' ')[1][0]}
                     </p>
                   ) : (
                     <p>NA</p>

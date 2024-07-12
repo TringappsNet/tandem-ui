@@ -1,14 +1,9 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
-import {
-  TextField,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@mui/material";
-import { axiosInstance } from "../../AxiosInterceptor/AxiosInterceptor";
-import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
+import React, { useState, useEffect, ChangeEvent } from 'react';
+import { TextField, Dialog, DialogContent, DialogTitle } from '@mui/material';
+import { axiosInstance } from '../../AxiosInterceptor/AxiosInterceptor';
+import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 
-import FullGrid from "../MainGrid/MainGrid";
+import FullGrid from '../MainGrid/MainGrid';
 
 interface User {
   id: number;
@@ -25,7 +20,7 @@ interface User {
   roleId: number;
 }
 
-interface BrokerData extends Omit<User, "roleId"> {
+interface BrokerData extends Omit<User, 'roleId'> {
   fullName: string;
   totalDeals: number;
   dealsOpened: number;
@@ -36,7 +31,7 @@ interface BrokerData extends Omit<User, "roleId"> {
 }
 
 const config = {
-  getUrl: "/brokers",
+  getUrl: '/brokers',
 };
 
 const BrokerGrid: React.FC = () => {
@@ -44,15 +39,15 @@ const BrokerGrid: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<User>({
     id: 0,
-    email: "",
-    firstName: "",
-    lastName: "",
-    mobile: "",
-    address: "",
-    city: "",
-    state: "",
-    country: "",
-    zipcode: "",
+    email: '',
+    firstName: '',
+    lastName: '',
+    mobile: '',
+    address: '',
+    city: '',
+    state: '',
+    country: '',
+    zipcode: '',
     isActive: true,
     roleId: 1,
   });
@@ -70,7 +65,7 @@ const BrokerGrid: React.FC = () => {
       const response = await axiosInstance.get(config.getUrl);
       const brokers = response.data.map((broker: any) => {
         const fullName = `${broker.user.firstName} ${broker.user.lastName}`;
-        const roleName = broker.roleId === 1 ? "Admin" : "Broker";
+        const roleName = broker.roleId === 1 ? 'Admin' : 'Broker';
 
         return {
           id: broker.user.id,
@@ -96,7 +91,7 @@ const BrokerGrid: React.FC = () => {
 
       setRows(brokers);
     } catch (error) {
-      console.error("Error fetching broker names:", error);
+      console.error('Error fetching broker names:', error);
     }
   };
 
@@ -107,16 +102,15 @@ const BrokerGrid: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-
   const columns: GridColDef[] = [
-    { field: "fullName", headerName: "Name", width: 170 },
-    { field: "roleName", headerName: "Role", width: 120 },
-    { field: "mobile", headerName: "Mobile", width: 150 },
-    { field: "totalDeals", headerName: "Total Deals", width: 130 },
-    { field: "dealsOpened", headerName: "Deals Opened", width: 130 },
-    { field: "dealsInProgress", headerName: "Deals In-Progress", width: 150 },
-    { field: "dealsClosed", headerName: "Deals Closed", width: 130 },
-    { field: "totalCommission", headerName: "Total Commission", width: 150 },
+    { field: 'fullName', headerName: 'Name', width: 170 },
+    { field: 'roleName', headerName: 'Role', width: 120 },
+    { field: 'mobile', headerName: 'Mobile', width: 150 },
+    { field: 'totalDeals', headerName: 'Total Deals', width: 130 },
+    { field: 'dealsOpened', headerName: 'Deals Opened', width: 130 },
+    { field: 'dealsInProgress', headerName: 'Deals In-Progress', width: 150 },
+    { field: 'dealsClosed', headerName: 'Deals Closed', width: 130 },
+    { field: 'totalCommission', headerName: 'Total Commission', width: 150 },
   ];
 
   return (
@@ -133,7 +127,7 @@ const BrokerGrid: React.FC = () => {
       />
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{formData.id ? "Edit User" : "Add User"}</DialogTitle>
+        <DialogTitle>{formData.id ? 'Edit User' : 'Add User'}</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus

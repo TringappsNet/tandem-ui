@@ -59,9 +59,15 @@ const initialState: AuthState = loadStateFromLocalStorage();
 
 export const login = createAsyncThunk(
   'auth/login',
-  async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
+  async (
+    { email, password }: { email: string; password: string },
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await axiosInstance.post('/auth/login', { email, password });
+      const response = await axiosInstance.post('/auth/login', {
+        email,
+        password,
+      });
       const data = response.data;
       if (data.message === 'Login successful' && response.status === 200) {
         const { session, user } = data;
@@ -85,7 +91,10 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setCredentials: (state, action: PayloadAction<{ user: User; session: Session }>) => {
+    setCredentials: (
+      state,
+      action: PayloadAction<{ user: User; session: Session }>
+    ) => {
       state.user = action.payload.user;
       state.session = action.payload.session;
       state.isAdmin = action.payload.user.roleId === 1;
@@ -107,13 +116,16 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(login.fulfilled, (state, action: PayloadAction<{ user: User; session: Session }>) => {
-        state.user = action.payload.user;
-        state.session = action.payload.session;
-        state.isAdmin = action.payload.user.roleId === 1;
-        state.loading = false;
-        state.error = null;
-      })
+      .addCase(
+        login.fulfilled,
+        (state, action: PayloadAction<{ user: User; session: Session }>) => {
+          state.user = action.payload.user;
+          state.session = action.payload.session;
+          state.isAdmin = action.payload.user.roleId === 1;
+          state.loading = false;
+          state.error = null;
+        }
+      )
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -124,9 +136,11 @@ const authSlice = createSlice({
 export const { logout, setCredentials } = authSlice.actions;
 
 // Selectors
-export const selectCurrentUser = (state: { auth: AuthState }) => state.auth.user;
+export const selectCurrentUser = (state: { auth: AuthState }) =>
+  state.auth.user;
 export const selectIsAdmin = (state: { auth: AuthState }) => state.auth.isAdmin;
-export const selectAuthLoading = (state: { auth: AuthState }) => state.auth.loading;
+export const selectAuthLoading = (state: { auth: AuthState }) =>
+  state.auth.loading;
 export const selectAuthError = (state: { auth: AuthState }) => state.auth.error;
 
 export default authSlice.reducer;

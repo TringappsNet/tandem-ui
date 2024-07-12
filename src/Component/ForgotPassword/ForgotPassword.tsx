@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import styles from "./ForgotPassword.module.css";
-import { forgotPassword, clearState } from "../Redux/slice/auth/forgotPasswordSlice";
-import { RootState } from "../Redux/reducers";
-import { AppDispatch } from "../Redux/store";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import styles from './ForgotPassword.module.css';
+import {
+  forgotPassword,
+  clearState,
+} from '../Redux/slice/auth/forgotPasswordSlice';
+import { RootState } from '../Redux/reducers';
+import { AppDispatch } from '../Redux/store';
 
 const ForgotPassword: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [validationErrorMessage, setValidationErrorMessage] = useState("");
+  const [email, setEmail] = useState('');
+  const [validationErrorMessage, setValidationErrorMessage] = useState('');
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -20,7 +23,7 @@ const ForgotPassword: React.FC = () => {
     if (successMessage) {
       const timer = setTimeout(() => {
         dispatch(clearState());
-        navigate("/login");
+        navigate('/login');
       }, 3000);
       return () => clearTimeout(timer);
     }
@@ -42,17 +45,17 @@ const ForgotPassword: React.FC = () => {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
-    setValidationErrorMessage("");
+    setValidationErrorMessage('');
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email === "") {
-      setValidationErrorMessage("Please enter the Email address");
+    if (email === '') {
+      setValidationErrorMessage('Please enter the Email address');
       return;
     }
     if (!validateEmail(email)) {
-      setValidationErrorMessage("Invalid email address");
+      setValidationErrorMessage('Invalid email address');
       return;
     }
     dispatch(forgotPassword(email));
@@ -92,8 +95,12 @@ const ForgotPassword: React.FC = () => {
                 onChange={handleEmailChange}
               />
             </div>
-            <button className={styles.loginbtn} type="submit" disabled={loading}>
-              {loading ? "Sending..." : "Send Reset Link"}
+            <button
+              className={styles.loginbtn}
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? 'Sending...' : 'Send Reset Link'}
             </button>
           </form>
           <div className={styles.rememberpwd}>

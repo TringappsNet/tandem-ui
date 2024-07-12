@@ -4,7 +4,6 @@ const initialState = {
   open: false,
 };
 
-
 const dealFormSlice = createSlice({
   name: 'dealForm',
   initialState,
@@ -18,9 +17,5 @@ const dealFormSlice = createSlice({
   },
 });
 
-
 export const dealFormReducer = dealFormSlice.reducer;
 export const { openDealForm, closeDealForm } = dealFormSlice.actions;
-
-
-

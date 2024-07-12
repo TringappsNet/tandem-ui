@@ -40,7 +40,11 @@ export const resetPassword = createAsyncThunk<
       });
       return response.data;
     } catch (error: any) {
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         return rejectWithValue({ message: error.response.data.message });
       }
       return rejectWithValue({ message: 'Password reset failed.' });
@@ -76,12 +80,14 @@ const resetSlice = createSlice({
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.status = 'failed';
-        state.responseMessage = action.payload?.message || 'Password reset failed.';
+        state.responseMessage =
+          action.payload?.message || 'Password reset failed.';
         state.responseType = 'error';
       });
   },
 });
 
-export const { clearResponse, resetState, openReset, closeReset } = resetSlice.actions;
+export const { clearResponse, resetState, openReset, closeReset } =
+  resetSlice.actions;
 
 export default resetSlice.reducer;
