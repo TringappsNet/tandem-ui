@@ -75,6 +75,9 @@ export const forgotPassword = (email: string): AppThunk<void> => async (dispatch
         dispatch(forgotPasswordFailure('Incorrect Email! Please enter correct email.'));
       } else if (status === 401 && data.message === 'You are not a registered user') {
         dispatch(forgotPasswordFailure('You are not a registered user. Please register.'));
+      }
+      else if (status === 404 && data.message === 'User not found') {
+        dispatch(forgotPasswordFailure('Please enter valid Email address'));
       } else {
         dispatch(forgotPasswordFailure('An error occurred. Please try again.'));
       }
