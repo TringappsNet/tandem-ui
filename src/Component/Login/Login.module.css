@@ -69,9 +69,14 @@
 }
 
 .section p {
-  margin-top: 2rem;
   text-align: center;
-  color: rgb(100, 116, 139);
+  color: rgb(31, 34, 41);
+  margin-left: 11px;
+  margin-top: 15px;
+  margin-bottom: 14px;
+
+
+
 }
 
 .loginsection {
@@ -153,13 +158,26 @@
   background-color: #2f2a79;
 }
 
-.error {
-  font-size: .8125rem !important;
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity)) !important;
-  font-size: .875rem !important;
-  margin-top: .25rem !important;
-  text-align: left !important;
+.errorBox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 2.25rem;
+  width: 100%;
+  background-color: #ffe6e6;
+  color: #e60000;
+  border: 1px solid #e60000;
+  border-radius: .375rem;
+  font-size: .875rem;
+  line-height: 1rem;
+  margin: 1rem 0;
+  padding-right: 1rem;
+  margin-top: 24px;
+
+}
+
+.errorText {
+  padding-right: 1rem;
 }
 
 @media (max-width: 600px) {

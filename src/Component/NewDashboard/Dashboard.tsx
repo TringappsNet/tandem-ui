@@ -7,20 +7,22 @@ import Main from "../Main/Main";
 import SiteGrid from "../Grids/SiteGrid/SiteGrid";
 import LandlordGrid from "../Grids/landlordGrid/Landlord";
 import InviteBrokerGrid from "../Grids/inviteBroker-grid/InviteBroker-grid";
+import { useSelector } from "react-redux";
+import { RootState } from "../Redux/reducers";
 
 const Dashboard: React.FC = () => {
   const accessToken = localStorage.getItem("accessToken");
+  const user = useSelector((state: RootState) => state.auth);
 
   if (!accessToken) {
     return <Navigate to="/login" />;
   }
 
-
   const links = [
     { name: "Site", href: "/dashboard/site", disabled: true },
     { name: "Landlord", href: "/dashboard/landlord", disabled: true },
     { name: "Cards", href: "/dashboard/cards", disabled: true },
-    { name: "InviteBroker", href: "/dashboard/Invitebroker", disabled: true },
+    { name: "InviteBroker", href: "/dashboard/invitebroker", disabled: true },
   ];
 
   return (
@@ -28,12 +30,20 @@ const Dashboard: React.FC = () => {
       <Navbar links={links} />
       <div className={styles.mainContent}>
         <Routes>
-          <Route path="/" element={<Main />} />
+          {user && !user.isAdmin ? (
+            <Route path="/" element={<Navigate to="/cards" />} />
+          ) : (
+            <Route path="/" element={<Main />} />
+          )}
           <Route path="/cards" element={<Cards />} />
-          <Route path="/site" element={<SiteGrid />} />
-          <Route path="/landlord" element={<LandlordGrid />} />
-          <Route path="/invitebroker" element={<InviteBrokerGrid />} />
-          <Route path="*" element={<Navigate to="/dashboard" />} />
+          {user && user.isAdmin && (
+            <>
+              <Route path="/site" element={<SiteGrid />} />
+              <Route path="/landlord" element={<LandlordGrid />} />
+              <Route path="/invitebroker" element={<InviteBrokerGrid />} />
+            </>
+          )}
+          <Route path="*" element={<Navigate to="/dashboard/cards" />} />
         </Routes>
       </div>
     </div>

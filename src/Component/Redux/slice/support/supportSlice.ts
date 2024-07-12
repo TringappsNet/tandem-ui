@@ -37,12 +37,16 @@ const supportSlice = createSlice({
     name: 'support',
     initialState,
     reducers: {
+
+        supportState: () => initialState,
         openSupport(state) {
             state.open = true;
         },
         closeSupport(state) {
             state.open = false;
         },
+
+
         clearMessages(state) {
             state.error = null;
             state.successMessage = null;
@@ -66,5 +70,5 @@ const supportSlice = createSlice({
     },
 });
 
-export const { openSupport, closeSupport, clearMessages } = supportSlice.actions;
+export const { openSupport, closeSupport, clearMessages, supportState } = supportSlice.actions;
 export default supportSlice.reducer;

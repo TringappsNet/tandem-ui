@@ -3,7 +3,11 @@ import styles from "./Cards.module.css";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/reducers";
-import { deleteDeal, fetchDealDetails } from "../Redux/slice/deal/dealSlice";
+import {
+  deleteDeal,
+  fetchBrokerDealDetails,
+  fetchDealDetails,
+} from "../Redux/slice/deal/dealSlice";
 import { openDealForm } from "../Redux/slice/deal/dealCompSlice";
 import { AppDispatch } from "../Redux/store";
 import ConfirmationModal from "../AlertDialog/AlertDialog";
@@ -20,7 +24,7 @@ interface Deal {
   noticeToProceedDate: string;
   commercialOperationDate: string;
   potentialcommissiondate: string;
-  potentialCommission: number | null;
+  potentialCommission: number | 0;
   status: string;
   activeStep: number;
   createdBy: number;
@@ -30,6 +34,7 @@ interface Deal {
 }
 
 const Cards: React.FC = () => {
+  const userdetails = useSelector((state: RootState) => state.auth);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const dispatch = useDispatch<AppDispatch>();
@@ -38,8 +43,12 @@ const Cards: React.FC = () => {
   const [dealId, setDealId] = useState<number | null>(null);
 
   useEffect(() => {
-    dispatch(fetchDealDetails());
-  }, [dispatch]);
+    if (userdetails.isAdmin === true) {
+      dispatch(fetchDealDetails());
+    } else if (userdetails.isAdmin === false) {
+      dispatch(fetchBrokerDealDetails(userdetails.user?.id || 0));
+    }
+  }, [dispatch, userdetails]);
 
   const editDealForm = (deal: Deal) => {
     dispatch(setCurrentDeal(deal));
@@ -77,21 +86,21 @@ const Cards: React.FC = () => {
   const cancelDelete = () => {
     setDeleteConfirmation(false);
   };
+
   const handleDelete = (id: number) => {
     setDealId(id);
     setDeleteConfirmation(true);
   };
 
-  const filteredDeals =
-    dealsData?.filter((deal: any) => {
-      const matchesSearch =
-        deal.brokerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        deal.propertyName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        deal.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        deal.id?.toString().includes(searchTerm);
-      const matchesStatus = filterStatus ? deal.status === filterStatus : true;
-      return matchesSearch && matchesStatus && deal.id !== null;
-    }) || [];
+  const filteredDeals = dealsData.filter((deal: Deal) => {
+    const matchesSearch =
+      deal.brokerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      deal.propertyName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      deal.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      deal.id?.toString().includes(searchTerm);
+    const matchesStatus = filterStatus ? deal.status === filterStatus : true;
+    return matchesSearch && matchesStatus && deal.id !== null;
+  });
 
   return (
     <>
@@ -115,59 +124,72 @@ const Cards: React.FC = () => {
         </select>
       </div>
       <div className={styles.cardList}>
-        {filteredDeals.map((deal: any, index: number) => (
-          <div key={index} className={styles.card}>
-            <div>
-              <div className={styles.cardTitle}>
-                Deal #{deal.id}
-                <div className={styles.icons}>
-                  <div className={styles.hide}>
-                    <FiEdit onClick={() => editDealForm(deal)} />
+        {filteredDeals.length > 0 ? (
+          filteredDeals.map((deal: Deal) => (
+            <div key={deal.id} className={styles.card}>
+              <div>
+                <div className={styles.cardTitle}>
+                  Deal #{deal.id}
+                  {userdetails.isAdmin && (
+                    <div className={styles.icons}>
+                      <div className={styles.hide}>
+                        <FiEdit onClick={() => editDealForm(deal)} />
+                      </div>
+                      <FiTrash
+                        onClick={() => deal.id !== null && handleDelete(deal.id)}
+                      />
+                    </div>
+                  )}
+                  {/* {userdetails?.roleId === 2 && (
+                    <div className={styles.hide}>
+                      <FiEdit onClick={() => editDealForm(deal)} />
+                    </div>
+                  )} */}
+                </div>
+                <hr className={styles.line} />
+                <div className={styles.nameHeader}>
+                  <div className={styles.name}>{deal.propertyName}</div>
+                </div>
+              </div>
+              <div className={styles.statusLine}>
+                <div className={styles.statuscontainer}>
+                  <div
+                    className={`${styles.statusButton} ${getStatusButtonClass(
+                      deal.status
+                    )}`}
+                  >
+                    {deal.status}
                   </div>
-                  <FiTrash
-                    onClick={() => deal.id !== null && handleDelete(deal.id)}
-                  />
                 </div>
               </div>
-              <hr className={styles.line} />
-              <div className={styles.nameHeader}>
-                <div className={styles.name}>{deal.propertyName}</div>
-              </div>
-            </div>
-            <div className={styles.statusLine}>
-              <div className={styles.statuscontainer}>
-                <div
-                  className={`${styles.statusButton} ${getStatusButtonClass(
-                    deal.status
-                  )}`}
-                >
-                  {deal.status}
+              <div className={styles.statusLine}>
+                <div className={styles.timestamp}>
+                  Last updated on:{" "}
+                  {deal.updatedAt?.split("T")[0] || "Unknown"}
+                </div>
+                <div className={styles.circle} title={deal.brokerName}>
+                  {deal.brokerName &&
+                    deal.brokerName.split(" ").length >= 2 ? (
+                    <p>
+                      {deal.brokerName.split(" ")[0][0]}
+                      {deal.brokerName.split(" ")[1][0]}
+                    </p>
+                  ) : (
+                    <p>NA</p>
+                  )}
                 </div>
               </div>
-            </div>
-            <div className={styles.statusLine}>
-              <div className={styles.timestamp}>
-                Last updated on: {deal.updatedAt?.split("T")[0] || "Unknown"}
-              </div>
-              <div className={styles.circle} title={deal.brokerName}>
-                {deal.brokerName && deal.brokerName.split(" ").length >= 2 ? (
-                  <p>
-                    {deal.brokerName.split(" ")[0][0]}
-                    {deal.brokerName.split(" ")[1][0]}
-                  </p>
-                ) : (
-                  <p>NA</p>
-                )}
-              </div>
-            </div>
 
-            <hr
-              className={`${styles.statuslinecolor} ${getStatusButtonClass(
-                deal.status
-              )}`}
-            />
-          </div>
-        ))}
+              <hr
+                className={`${styles.statuslinecolor} ${getStatusButtonClass(
+                  deal.status
+                )}`}
+              />
+            </div>
+          ))
+        ) : (
+          <div className={styles.noDealsFound}>No Deals Found</div>
+        )}
       </div>
       <ConfirmationModal
         show={deleteConfirmation}

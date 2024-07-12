@@ -5,7 +5,6 @@ import {
   updateDealDetails,
 } from "../Redux/slice/deal/dealSlice";
 import { Deal } from "../Interface/DealFormObject";
-import { axiosInstance } from "../AxiosInterceptor/AxiosInterceptor";
 import {
   Stepper,
   Step,
@@ -29,6 +28,8 @@ import {
   clearCurrentDeal,
   setCurrentDeal,
 } from "../Redux/slice/deal/currentDeal";
+import { fetchSites } from "../Redux/slice/site/siteSlice";
+import { fetchBrokers } from "../Redux/slice/broker/brokerSlice";
 
 const steps = [
   {
@@ -72,6 +73,9 @@ const DealForm: React.FC<DealFormProps> = () => {
     (state: RootState) => state.currentDeal.currentDeal
   );
   const open = useSelector((state: RootState) => state.dealForm.open);
+  const sites = useSelector((state: RootState) => state.site.sites);
+  const brokers = useSelector((state: RootState) => state.broker.brokers);
+  console.log("bro:", sites)
   const [activeStep, setActiveStep] = useState(currentDeal?.activeStep || 0);
   const [formData, setFormData] = useState<Deal>({
     id: currentDeal?.id || null,
@@ -84,52 +88,26 @@ const DealForm: React.FC<DealFormProps> = () => {
     noticeToProceedDate: currentDeal?.noticeToProceedDate || "",
     commercialOperationDate: currentDeal?.commercialOperationDate || "",
     potentialcommissiondate: currentDeal?.potentialcommissiondate || "",
-    potentialCommission: currentDeal?.potentialCommission || null,
+    potentialCommission: currentDeal?.potentialCommission || 0,
     status: currentDeal?.status || "",
     activeStep: currentDeal?.activeStep ?? 0,
     createdBy: currentDeal?.createdBy || 0,
     updatedBy: currentDeal?.updatedBy || 0,
     isNew: currentDeal?.isNew || true,
   });
-  const [brokerOptions, setBrokerOptions] = useState<
-    { name: string; id: number }[]
-  >([]);
-  const [propertyOptions, setPropertyOptions] = useState<string[]>([]);
   const [userId, setUserId] = useState<number | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
-  const fetchSite = async () => {
-    try {
-      const response = await axiosInstance.get("/sites");
-      const sitename = response.data.map(
-        (sites: any) => `${sites.addressline1}, ${sites.addressline2}`
-      );
-      setPropertyOptions(sitename);
-    } catch (error) {
-      console.error("Error fetching broker names:", error);
-    }
-  };
-
-  const fetchBrokers = async () => {
-    try {
-      const response = await axiosInstance.get("/brokers");
-      const brokers = response.data.map((broker: any) => ({
-        name: `${broker.user.firstName} ${broker.user.lastName}`,
-        id: broker.user.id,
-      }));
-      setBrokerOptions(brokers);
-      if (response.data.length > 0) {
-        setUserId(response.data[0].user.id);
-      }
-    } catch (error) {
-      console.error("Error fetching broker names:", error);
-    }
-  };
+  useEffect(() => {
+    dispatch(fetchBrokers());
+    dispatch(fetchSites());
+  }, [dispatch]);
 
   useEffect(() => {
-    fetchBrokers();
-    fetchSite();
-  }, []);
+    if (brokers.length > 0) {
+      setUserId(brokers[0].id);
+    }
+  }, [brokers]);
 
   const handleNext = () => {
     if (saveSuccess) {
@@ -138,9 +116,9 @@ const DealForm: React.FC<DealFormProps> = () => {
     }
   };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+  // const handleBack = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  // };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -161,8 +139,7 @@ const DealForm: React.FC<DealFormProps> = () => {
   const saveFormData = () => {
     const status = getStatus(activeStep);
     const brokerId =
-      brokerOptions.find((broker) => broker.name === formData.brokerName)?.id ||
-      null;
+      brokers.find((broker) => broker.name === formData.brokerName)?.id || null;
     const payload = {
       ...formData,
       activeStep: activeStep + 1,
@@ -224,18 +201,18 @@ const DealForm: React.FC<DealFormProps> = () => {
             size="small"
           >
             {label === "brokerName"
-              ? brokerOptions.map((option, idx) => (
-                  <MenuItem key={idx} value={option.name}>
-                    {option.name}
+              ? brokers.map((broker, idx) => (
+                  <MenuItem key={idx} value={broker.name}>
+                    {broker.name}
                   </MenuItem>
                 ))
               : label === "propertyName"
-              ? propertyOptions.map((option, idx) => (
-                  <MenuItem key={idx} value={option}>
-                    {option}
+              ? sites.map((site, idx) => (
+                  <MenuItem key={idx} value={`${site.addressline1}, ${site.addressline2}`}>
+                    {`${site.addressline1}, ${site.addressline2}`}
                   </MenuItem>
                 ))
-              : options?.map((option: string, idx: number) => (
+                : options?.map((option: string, idx: number) => (
                   <MenuItem key={idx} value={option}>
                     {option}
                   </MenuItem>
@@ -334,7 +311,6 @@ const DealForm: React.FC<DealFormProps> = () => {
               width: "100px",
               border: "1px solid grey",
               borderRadius: "3px",
-              // boxShadow:' rgba(99, 99, 99, 0.2) 0px 2px 2px 0px' ,
               color: "white",
               backgroundColor: "#262262",
               cursor: "pointer",
@@ -342,8 +318,6 @@ const DealForm: React.FC<DealFormProps> = () => {
           >
             Save/Close
           </button>
-
-          {/* <CloseIcon sx={{ color: "#999" }} /> */}
         </IconButton>
       </DialogTitle>
       <DialogContent>
@@ -372,62 +346,16 @@ const DealForm: React.FC<DealFormProps> = () => {
             <Box
               sx={{
                 width: "100%",
-                marginTop: "30px",
+                marginTop: "10px",
                 display: "flex",
                 flexDirection: "column",
                 padding: "30px",
               }}
             >
-              {activeStep === steps.length ? (
-                <Box>
-                  <Typography
-                    variant="h3"
-                    sx={{ textAlign: "center", color: "green" }}
-                  >
-                    Deal is Completed
-                  </Typography>
-                </Box>
-              ) : (
-                <Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      marginTop: 2,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        width: "100%",
-                      }}
-                    >
-                      <Button
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        sx={{ width: 100 }}
-                      >
-                        Back
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        sx={{ width: 100 }}
-                        disabled={!saveSuccess || !isFormValid()}
-                      >
-                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                      </Button>
-                    </Box>
-                  </Box>
-                  <Box
+              <Box
                     sx={{
                       display: "flex",
                       flexDirection: "column",
-                      position: "absolute",
-                      top: "260px",
-                      zIndex: 999,
                     }}
                   >
                     {steps[activeStep].fields.map((field, index) =>
@@ -443,6 +371,49 @@ const DealForm: React.FC<DealFormProps> = () => {
                       Save
                     </Button>
                   </Box>
+              {activeStep === steps.length ? (
+                <Box>
+                  <Typography
+                    variant="h3"
+                    sx={{ textAlign: "center", color: "green" }}
+                  >
+                    Deal is Completed
+                  </Typography>
+                </Box>
+              ) : (
+                <Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        width: "100%",
+                      }}
+                    >
+                      {/* <Button
+                        disabled={activeStep === 0}
+                        onClick={handleBack}
+                        sx={{ width: 100 }}
+                      >
+                        Back
+                      </Button> */}
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        sx={{ width: 100 }}
+                        disabled={!saveSuccess || !isFormValid()}
+                      >
+                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                      </Button>
+                    </Box>
+                  </Box>
+                  
                 </Box>
               )}
             </Box>

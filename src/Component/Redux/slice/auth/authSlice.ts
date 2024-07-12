@@ -67,7 +67,7 @@ export const login = createAsyncThunk(
         const { session, user } = data;
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('session', JSON.stringify(session));
-        localStorage.setItem('accessToken', JSON.stringify(data.session.token));
+        localStorage.setItem('accessToken', data.session.token); // Fixed accessToken storage
         return { user, session };
       } else {
         return rejectWithValue(data.message);
@@ -85,20 +85,20 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setCredentials: (state: AuthState, action: PayloadAction<{ user: User; session: Session }>) => {
+    setCredentials: (state, action: PayloadAction<{ user: User; session: Session }>) => {
       state.user = action.payload.user;
       state.session = action.payload.session;
       state.isAdmin = action.payload.user.roleId === 1;
       localStorage.setItem('user', JSON.stringify(action.payload.user));
       localStorage.setItem('session', JSON.stringify(action.payload.session));
     },
-    logout: (state: AuthState) => {
+    logout: (state) => {
       state.user = null;
       state.session = null;
       state.isAdmin = false;
       localStorage.removeItem('user');
       localStorage.removeItem('session');
-      localStorage.clear();
+      localStorage.removeItem('accessToken'); // Clear accessToken on logout
     },
   },
   extraReducers: (builder) => {
@@ -122,4 +122,11 @@ const authSlice = createSlice({
 });
 
 export const { logout, setCredentials } = authSlice.actions;
+
+// Selectors
+export const selectCurrentUser = (state: { auth: AuthState }) => state.auth.user;
+export const selectIsAdmin = (state: { auth: AuthState }) => state.auth.isAdmin;
+export const selectAuthLoading = (state: { auth: AuthState }) => state.auth.loading;
+export const selectAuthError = (state: { auth: AuthState }) => state.auth.error;
+
 export default authSlice.reducer;

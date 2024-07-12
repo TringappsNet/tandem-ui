@@ -1,3 +1,4 @@
+// App.tsx
 import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
@@ -17,7 +18,6 @@ import "./App.css";
 import { Provider } from "react-redux";
 import store from './Component/Redux/store/index';
 
-
 const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(
     localStorage.getItem("accessToken")
@@ -36,30 +36,23 @@ const App: React.FC = () => {
 
   return (
     <Provider store={store}>
-    <Router>
-      <AxiosInterceptor>
-        <Routes>
-          <Route
-            path="/"
-            element={accessToken ? <Navigate to="/dashboard" /> : <Login />}
-          />
-          <Route path="/registerform" element={<Registration />} />
-          <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/change" element={<ChangePassword />} />
-          <Route path="/login" element={<Login />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route
-              path="/support"
-              element={<Support onCloseDialog={handleCloseDialog} />}
-            />
-            <Route path="/*" element={<Dashboard />} />
-          </Route>
-        </Routes>
-      </AxiosInterceptor>
-    </Router>
+      <Router>
+        <AxiosInterceptor>
+          <Routes>
+            <Route path="/" element={accessToken ? <Navigate to="/dashboard" /> : <Login />} />
+            <Route path="/registerform" element={<Registration />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/change" element={<ChangePassword />} />
+            <Route path="/login" element={<Login />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/support" element={<Support onCloseDialog={handleCloseDialog} />} />
+              <Route path="/*" element={<Dashboard />} />
+            </Route>
+          </Routes>
+        </AxiosInterceptor>
+      </Router>
     </Provider>
-
   );
 };
 
