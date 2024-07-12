@@ -20,6 +20,7 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
+  // colors,
 } from '@mui/material';
 import styles from './dealForm.module.css';
 import { RootState } from '../Redux/reducers';
@@ -31,6 +32,7 @@ import {
 } from '../Redux/slice/deal/currentDeal';
 import { fetchSites } from '../Redux/slice/site/siteSlice';
 import { fetchBrokers } from '../Redux/slice/broker/brokerSlice';
+// import { purple } from '@mui/material/colors';
 
 const steps = [
   {
@@ -99,6 +101,8 @@ const DealForm: React.FC<DealFormProps> = () => {
   });
   const [userId, setUserId] = useState<number | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
+
+
 
   useEffect(() => {
     dispatch(fetchBrokers());
@@ -205,12 +209,12 @@ const DealForm: React.FC<DealFormProps> = () => {
           >
             {label === 'brokerName'
               ? brokers.map((broker, idx) => (
-                  <MenuItem key={idx} value={broker.name}>
-                    {broker.name}
-                  </MenuItem>
-                ))
+                <MenuItem key={idx} value={broker.name}>
+                  {broker.name}
+                </MenuItem>
+              ))
               : label === 'propertyName'
-              ? sites
+                ? sites
                   .filter(
                     (site) =>
                       !deals.some(
@@ -227,7 +231,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                       {`${site.addressline1}, ${site.addressline2}`}
                     </MenuItem>
                   ))
-              : options?.map((option: string, idx: number) => (
+                : options?.map((option: string, idx: number) => (
                   <MenuItem key={idx} value={option}>
                     {option}
                   </MenuItem>
@@ -284,6 +288,75 @@ const DealForm: React.FC<DealFormProps> = () => {
     return true;
   }
 
+  const renderSummary = () => {
+    const events = [
+      { label: 'Deal Start', date: formData.dealStartDate },
+      { label: 'Proposal', date: formData.proposalDate },
+      { label: 'LOI Execute', date: formData.loiExecuteDate },
+      { label: 'Lease Signed', date: formData.leaseSignedDate },
+      { label: 'Notice to Proceed', date: formData.noticeToProceedDate },
+      { label: 'Commercial Operation', date: formData.commercialOperationDate },
+      // { label: 'Deal Closed', date: formData.potentialcommissiondate },
+    ];
+
+    return (
+      <Box sx={{ mt: 4, width: '100%' }}>
+        <Typography variant="h5" gutterBottom>
+          <div className={styles.summary}> Summary of the deal</div>
+        </Typography>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>
+          {events.map((event, index) => (
+            <Box
+              key={index}
+              sx={{
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                padding: '10px',
+                width: 'calc(40% - 10px)',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                backgroundColor: '#f9f9f9',
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                height: '65px', // Set a fixed height
+              }}
+            >
+              <Typography variant="subtitle1" fontWeight="bold" textAlign="center">
+                {event.label}:
+              </Typography>
+              <Typography textAlign="center">
+                {event.date ? new Date(event.date).toLocaleDateString() : 'N/A'}
+              </Typography>
+            </Box>
+          ))}
+          <Box
+            sx={{
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+              padding: '10px',
+              width: 'calc(80% + 2px)',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              backgroundColor: '#f9f9f9',
+              alignItems: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              height: '65px',
+            }}
+          >
+            <Typography variant="subtitle1" fontWeight="bold" textAlign="center">
+              Potential Commission:
+            </Typography>
+            <Typography textAlign="center">
+              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : 'N/A'}
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
+    );
+  };
+
   return (
     <Dialog
       fullScreen
@@ -316,7 +389,6 @@ const DealForm: React.FC<DealFormProps> = () => {
             position: 'absolute',
             right: 25,
             top: 2,
-
             color: (theme) => theme.palette.grey[500],
           }}
         >
@@ -368,32 +440,33 @@ const DealForm: React.FC<DealFormProps> = () => {
                 padding: '30px',
               }}
             >
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                {activeStep < steps.length && steps[activeStep].fields.map((field, index) =>
-                  renderField(field, index)
-                )}
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={saveFormData}
-                  sx={{ width: 100, marginTop: 2 }}
-                  disabled={!isFormValid()}
+              {activeStep < steps.length ? (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
                 >
-                  Save
-                </Button>
-              </Box>
-              {activeStep === steps.length ? (
-                <Box>
-                  <Typography
-                    variant="h3"
-                    sx={{ textAlign: 'center', color: 'green' }}
+                  {steps[activeStep].fields.map((field, index) =>
+                    renderField(field, index)
+                  )}
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={saveFormData}
+                    sx={{ width: 100, marginTop: 2 }}
+                    disabled={!isFormValid()}
                   >
-                    Deal is Completed
+                    Save
+                  </Button>
+                </Box>
+              ) : (
+                renderSummary()
+              )}
+              {activeStep === steps.length ? (
+                <Box sx={{ mt: 4, textAlign: 'center' }}>
+                  <Typography variant="h5" sx={{ color: 'green' }}>
+                    {/* Deal is Completed */}
                   </Typography>
                 </Box>
               ) : (
@@ -401,33 +474,20 @@ const DealForm: React.FC<DealFormProps> = () => {
                   <Box
                     sx={{
                       display: 'flex',
-                      justifyContent: 'space-between',
+                      justifyContent: 'flex-end',
+                      width: '100%',
+                      mt: 2,
                     }}
                   >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        width: '100%',
-                      }}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      sx={{ width: 100 }}
+                      disabled={!saveSuccess || !isFormValid()}
                     >
-                      {/* <Button
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        sx={{ width: 100 }}
-                      >
-                        Back
-                      </Button> */}
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        sx={{ width: 100 }}
-                        disabled={!saveSuccess || !isFormValid()}
-                      >
-                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                      </Button>
-                    </Box>
+                      {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    </Button>
                   </Box>
                 </Box>
               )}

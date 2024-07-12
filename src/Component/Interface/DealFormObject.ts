@@ -9,7 +9,7 @@ export interface Deal {
   noticeToProceedDate: string;
   commercialOperationDate: string;
   potentialcommissiondate: string;
-  potentialCommission: number | 0;
+  potentialCommission: number;
   status: string;
   activeStep: number;
   createdBy: number;
