@@ -21,10 +21,10 @@ const ChangePassword: React.FC = () => {
     const numberPattern = /\d/g;
     if (password.trim() === "") {
       setDisableState(false);
-      return "Password is required.";
+      return "";
     } else if (password.length < 8) {
       setDisableState(false);
-      return "Password should be at least 8 characters long.";
+      return "Password should be at least 8 long.";
     } else if (!specialCharPattern.test(password)) {
       setDisableState(false);
       return "Password should contain at least one special character.";
@@ -37,46 +37,41 @@ const ChangePassword: React.FC = () => {
     }
   };
 
-  const validateConfirmpassword = (password: string, confirmpassword: string): string => {
-    if (confirmpassword.trim() === "") {
-      return "Password field cannot be empty.";
-    } else if (password !== confirmpassword) {
-      return "Passwords do not match.";
-    } else {
-      return "";
-    }
-  };
-
-  const handleValidation = (): boolean => {
-    const passwordError = validatePassword(password);
-    const confirmpasswordError = validateConfirmpassword(password, confirmpassword);
-
-    if (passwordError || confirmpasswordError) {
-      setValidationErrorMessage(passwordError || confirmpasswordError);
-      return false;
-    }
-
-    setValidationErrorMessage("");
-    return true;
-  };
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (password === "" || confirmpassword === "") {
-      setValidationErrorMessage("Please enter values in all fields.");
+    if (password.trim() === "") {
+      setValidationErrorMessage("Please fill in your New password");
       return;
     }
 
-    if (!handleValidation()) {
+    if (confirmpassword.trim() === "") {
+      setValidationErrorMessage("Please confirm your password");
+      return;
+    }
+
+    const passwordError = validatePassword(password);
+
+    if (passwordError) {
+      setValidationErrorMessage(passwordError);
+      return;
+    }
+
+    if (password !== confirmpassword) {
+      setValidationErrorMessage("Passwords do not match.");
       return;
     }
 
     dispatch(changePassword({ newPassword: password }));
 
-        setTimeout(() => {
-          navigate('/login')
-        }, 5000);
+    setTimeout(() => {
+      navigate('/login')
+    }, 5000);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<string>>) => {
+    setter(e.target.value);
+    setValidationErrorMessage("");
   };
 
   return (
@@ -98,11 +93,8 @@ const ChangePassword: React.FC = () => {
             {responseType === 'success' && (
               <div className={styles.success}>{responseMessage}</div>
             )}
-            {responseType === 'error' && (
-              <div className={styles.failure}>{responseMessage}</div>
-            )}
-            {validationErrorMessage && (
-              <div className={styles.failure}>{validationErrorMessage}</div>
+            {(responseType === 'error' || validationErrorMessage) && (
+              <div className={styles.failure}>{responseMessage || validationErrorMessage}</div>
             )}
             <div className={styles.inputGroup}>
               <label htmlFor="password" className={styles.label}>
@@ -113,11 +105,7 @@ const ChangePassword: React.FC = () => {
                 id="password"
                 placeholder="Enter your password"
                 value={password}
-                onChange={(e) => {
-                  const newPassword = e.target.value;
-                  setPassword(newPassword);
-                  setValidationErrorMessage(validatePassword(newPassword));
-                }}
+                onChange={(e) => handleInputChange(e, setPassword)}
               />
             </div>
             <div className={styles.inputGroup}>
@@ -129,12 +117,7 @@ const ChangePassword: React.FC = () => {
                 id="confirmPassword"
                 placeholder="Confirm your password"
                 value={confirmpassword}
-                disabled={!disableState}
-                onChange={(e) => {
-                  const newConfirmPassword = e.target.value;
-                  setConfirmpassword(newConfirmPassword);
-                  setValidationErrorMessage(validateConfirmpassword(password, newConfirmPassword));
-                }}
+                onChange={(e) => handleInputChange(e, setConfirmpassword)}
               />
             </div>
             <button className={styles.loginbtn} type="submit" disabled={isLoading}>
