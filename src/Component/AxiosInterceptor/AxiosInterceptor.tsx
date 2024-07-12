@@ -106,7 +106,8 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
       <SnackbarComponent
         open={snackbarOpen}
         message={snackbarMessage}
-        onClose={handleSnackbarClose}
+        onClose={handleSnackbarClose} 
+        severity={'error'}      
       />
       {children}
     </>
