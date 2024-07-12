@@ -53,7 +53,9 @@ const landlordSlice = createSlice({
       state.error = null;
     },
     updateLandlordSuccess: (state, action: PayloadAction<Landlord>) => {
-      const index = state.landlords.findIndex(landlord => landlord.id === action.payload.id);
+      const index = state.landlords.findIndex(
+        (landlord) => landlord.id === action.payload.id
+      );
       if (index !== -1) {
         state.landlords[index] = action.payload;
       }
@@ -61,7 +63,9 @@ const landlordSlice = createSlice({
       state.error = null;
     },
     deleteLandlordSuccess: (state, action: PayloadAction<number>) => {
-      state.landlords = state.landlords.filter(landlord => landlord.id !== action.payload);
+      state.landlords = state.landlords.filter(
+        (landlord) => landlord.id !== action.payload
+      );
       state.loading = false;
       state.error = null;
     },
@@ -79,39 +83,53 @@ export const {
 
 export default landlordSlice.reducer;
 
-export const fetchLandlords = (): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
-  try {
-    dispatch(fetchLandlordsStart());
-    const response = await axiosInstance.get('/landlords');
-    dispatch(fetchLandlordsSuccess(response.data));
-  } catch (error) {
-    dispatch(fetchLandlordsFailure((error as Error).message));
-  }
-};
+export const fetchLandlords =
+  (): ThunkAction<void, RootState, unknown, Action<string>> =>
+  async (dispatch: Dispatch) => {
+    try {
+      dispatch(fetchLandlordsStart());
+      const response = await axiosInstance.get('/landlords');
+      dispatch(fetchLandlordsSuccess(response.data));
+    } catch (error) {
+      dispatch(fetchLandlordsFailure((error as Error).message));
+    }
+  };
 
-export const addLandlord = (landlord: Landlord): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
-  try {
-    const response = await axiosInstance.post('/landlords/landlord/', landlord);
-    dispatch(addLandlordSuccess(response.data));
-  } catch (error) {
-    dispatch(fetchLandlordsFailure((error as Error).message));
-  }
-};
+export const addLandlord =
+  (landlord: Landlord): ThunkAction<void, RootState, unknown, Action<string>> =>
+  async (dispatch: Dispatch) => {
+    try {
+      const response = await axiosInstance.post(
+        '/landlords/landlord/',
+        landlord
+      );
+      dispatch(addLandlordSuccess(response.data));
+    } catch (error) {
+      dispatch(fetchLandlordsFailure((error as Error).message));
+    }
+  };
 
-export const updateLandlord = (landlord: Landlord): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
-  try {
-    const response = await axiosInstance.patch(`/landlords/landlord/${landlord.id}`, landlord);
-    dispatch(updateLandlordSuccess(response.data));
-  } catch (error) {
-    dispatch(fetchLandlordsFailure((error as Error).message));
-  }
-};
+export const updateLandlord =
+  (landlord: Landlord): ThunkAction<void, RootState, unknown, Action<string>> =>
+  async (dispatch: Dispatch) => {
+    try {
+      const response = await axiosInstance.patch(
+        `/landlords/landlord/${landlord.id}`,
+        landlord
+      );
+      dispatch(updateLandlordSuccess(response.data));
+    } catch (error) {
+      dispatch(fetchLandlordsFailure((error as Error).message));
+    }
+  };
 
-export const deleteLandlord = (id: number): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
-  try {
-    await axiosInstance.delete(`/landlords/landlord/${id}`);
-    dispatch(deleteLandlordSuccess(id));
-  } catch (error) {
-    dispatch(fetchLandlordsFailure((error as Error).message));
-  }
-};
+export const deleteLandlord =
+  (id: number): ThunkAction<void, RootState, unknown, Action<string>> =>
+  async (dispatch: Dispatch) => {
+    try {
+      await axiosInstance.delete(`/landlords/landlord/${id}`);
+      dispatch(deleteLandlordSuccess(id));
+    } catch (error) {
+      dispatch(fetchLandlordsFailure((error as Error).message));
+    }
+  };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import {
   Button,
   TextField,
@@ -7,22 +7,22 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-} from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../Redux/store";
+} from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../Redux/store';
 import {
   fetchSites,
   addSite,
   updateSite,
   deleteSite,
-} from "../../Redux/slice/grids/siteSlice";
-import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
-import FullGrid from "../MainGrid/MainGrid";
-import { MdEdit, MdDelete } from "react-icons/md";
-import ConfirmationModal from "../../AlertDialog/AlertDialog";
-import CloseIcon from "@mui/icons-material/Close";
-import "./site-grid.module.css";
-import { RootState } from "../../Redux/reducers";
+} from '../../Redux/slice/grids/siteSlice';
+import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
+import FullGrid from '../MainGrid/MainGrid';
+import { MdEdit, MdDelete } from 'react-icons/md';
+import ConfirmationModal from '../../AlertDialog/AlertDialog';
+import CloseIcon from '@mui/icons-material/Close';
+import './site-grid.module.css';
+import { RootState } from '../../Redux/reducers';
 
 interface Site {
   id: number;
@@ -46,12 +46,12 @@ const SiteGrid: React.FC = () => {
   const userdetails = useSelector((state: RootState) => state.auth.user);
   const [formData, setFormData] = useState<Site>({
     id: 0,
-    addressline1: "",
-    addressline2: "",
-    city: "",
-    state: "",
-    country: "",
-    zipcode: "",
+    addressline1: '',
+    addressline2: '',
+    city: '',
+    state: '',
+    country: '',
+    zipcode: '',
     isNew: true,
     createdBy: 0,
   });
@@ -73,12 +73,12 @@ const SiteGrid: React.FC = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === "address") {
-      const [addressline1, addressline2] = value.split(", ");
+    if (name === 'address') {
+      const [addressline1, addressline2] = value.split(', ');
       setFormData((prevFormData) => ({
         ...prevFormData,
-        addressline1: addressline1 || "",
-        addressline2: addressline2 || "",
+        addressline1: addressline1 || '',
+        addressline2: addressline2 || '',
       }));
     } else {
       setFormData({ ...formData, [name]: value });
@@ -88,12 +88,12 @@ const SiteGrid: React.FC = () => {
   const resetForm = () => {
     setFormData({
       id: 0,
-      addressline1: "",
-      addressline2: "",
-      city: "",
-      state: "",
-      country: "",
-      zipcode: "",
+      addressline1: '',
+      addressline2: '',
+      city: '',
+      state: '',
+      country: '',
+      zipcode: '',
       isNew: true,
       createdBy: 0,
     });
@@ -105,26 +105,26 @@ const SiteGrid: React.FC = () => {
     const errors: Partial<Site> = {};
 
     if (!formData.addressline1) {
-      errors.addressline1 = "Address Line 1 is required";
+      errors.addressline1 = 'Address Line 1 is required';
       valid = false;
     }
     if (!formData.city) {
-      errors.city = "City is required";
+      errors.city = 'City is required';
       valid = false;
     }
     if (!formData.state) {
-      errors.state = "State is required";
+      errors.state = 'State is required';
       valid = false;
     }
     if (!formData.country) {
-      errors.country = "Country is required";
+      errors.country = 'Country is required';
       valid = false;
     }
     if (!formData.zipcode) {
-      errors.zipcode = "Zipcode is required";
+      errors.zipcode = 'Zipcode is required';
       valid = false;
     } else if (!/^\d{5}$/.test(formData.zipcode)) {
-      errors.zipcode = "Zipcode must be 5 digits";
+      errors.zipcode = 'Zipcode must be 5 digits';
       valid = false;
     }
 
@@ -154,13 +154,13 @@ const SiteGrid: React.FC = () => {
   const handleUpdate = () => {
     if (validateForm()) {
       const user_id = userdetails?.id;
-  
+
       if (user_id) {
         const updatedFormData = {
           ...formData,
           updatedBy: user_id,
         };
-  
+
         dispatch(updateSite(updatedFormData));
         handleClose();
       }
@@ -177,24 +177,24 @@ const SiteGrid: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: "addressline1", headerName: "AddressLine1", width: 190 },
-    { field: "addressline2", headerName: "AddressLine2", width: 190 },
-    { field: "state", headerName: "State", width: 190 },
-    { field: "city", headerName: "City", width: 190 },
-    { field: "zipcode", headerName: "Zipcode", width: 170 },
-    { field: "country", headerName: "Country", width: 170 },
+    { field: 'addressline1', headerName: 'AddressLine1', width: 190 },
+    { field: 'addressline2', headerName: 'AddressLine2', width: 190 },
+    { field: 'state', headerName: 'State', width: 190 },
+    { field: 'city', headerName: 'City', width: 190 },
+    { field: 'zipcode', headerName: 'Zipcode', width: 170 },
+    { field: 'country', headerName: 'Country', width: 170 },
     {
-      field: "actions",
-      headerName: "Actions",
+      field: 'actions',
+      headerName: 'Actions',
       width: 130,
       renderCell: (params) => (
         <>
           <MdEdit
-            style={{ color: "blue", marginRight: 8, cursor: "pointer" }}
+            style={{ color: 'blue', marginRight: 8, cursor: 'pointer' }}
             onClick={() => handleEdit(params.row.id)}
           />
           <MdDelete
-            style={{ color: "red", cursor: "pointer" }}
+            style={{ color: 'red', cursor: 'pointer' }}
             onClick={() => handleDelete(params.row.id)}
           />
         </>
@@ -216,10 +216,10 @@ const SiteGrid: React.FC = () => {
         color="primary"
         style={{
           marginRight: 8,
-          width: "200px",
-          position: "relative",
-          float: "right",
-          backgroundColor: "#262280",
+          width: '200px',
+          position: 'relative',
+          float: 'right',
+          backgroundColor: '#262280',
         }}
         onClick={() => handleEditNew(true)}
       >
@@ -250,20 +250,20 @@ const SiteGrid: React.FC = () => {
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialogtitle">
-          {formData.id ? "Edit Property" : "Add Property"}
+          {formData.id ? 'Edit Property' : 'Add Property'}
           <IconButton
             aria-label="close"
             onClick={() => {
               handleClose();
             }}
             sx={{
-              position: "absolute",
+              position: 'absolute',
               right: 20,
               top: 10,
               color: (theme) => theme.palette.grey[500],
             }}
           >
-            <CloseIcon sx={{ color: "#999" }} />
+            <CloseIcon sx={{ color: '#999' }} />
           </IconButton>
         </DialogTitle>
         <DialogContent>
@@ -343,7 +343,7 @@ const SiteGrid: React.FC = () => {
             onClick={formData.id ? handleUpdate : handleAdd}
             color="primary"
           >
-            {formData.id ? "Update" : "Add"}
+            {formData.id ? 'Update' : 'Add'}
           </Button>
         </DialogActions>
       </Dialog>

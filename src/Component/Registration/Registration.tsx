@@ -1,32 +1,32 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../Redux/slice/auth/registerSlice";
-import styles from "./Registration.module.css";
-import logo from "./logo.jpeg";
-import { useNavigate } from "react-router-dom";
-import { AppDispatch } from "../Redux/store";
-import { RootState } from "../Redux/reducers";
+import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../Redux/slice/auth/registerSlice';
+import styles from './Registration.module.css';
+import logo from './logo.jpeg';
+import { useNavigate } from 'react-router-dom';
+import { AppDispatch } from '../Redux/store';
+import { RootState } from '../Redux/reducers';
 
 const Registration: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { registering } = useSelector((state: RootState) => state.register);
 
-  const [firstName, setFirstname] = useState("");
-  const [lastName, setLastname] = useState("");
-  const [mobileNo, setMobileno] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmpassword] = useState("");
+  const [firstName, setFirstname] = useState('');
+  const [lastName, setLastname] = useState('');
+  const [mobileNo, setMobileno] = useState('');
+  const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [country, setCountry] = useState('');
+  const [zipcode, setZipcode] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmpassword] = useState('');
   const [disableState, setDisableState] = useState(false);
-  const [validationErrorMessage, setValidationErrorMessage] = useState("");
-  const [validationSucessMessage, setValidationSucessMessage] = useState("");
-  const [inviteTokenError, setInviteTokenError] = useState("");
-  const [inviteToken, setInviteToken] = useState("");
+  const [validationErrorMessage, setValidationErrorMessage] = useState('');
+  const [validationSucessMessage, setValidationSucessMessage] = useState('');
+  const [inviteTokenError, setInviteTokenError] = useState('');
+  const [inviteToken, setInviteToken] = useState('');
 
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
@@ -41,7 +41,7 @@ const Registration: React.FC = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("inviteToken");
+    const token = urlParams.get('inviteToken');
     if (token) {
       setInviteToken(token);
     }
@@ -49,66 +49,66 @@ const Registration: React.FC = () => {
 
   const validatefirstName = (name: string): string => {
     const namePattern = /^[a-zA-Z\s]+$/;
-    if (name.trim() === "") {
-      return "First Name is required.";
+    if (name.trim() === '') {
+      return 'First Name is required.';
     } else if (name.length > 20) {
-      return "Name should not exceed 20 characters.";
+      return 'Name should not exceed 20 characters.';
     } else if (!namePattern.test(name)) {
-      return "Name should contain only alphabets and spaces.";
+      return 'Name should contain only alphabets and spaces.';
     } else {
-      return "";
+      return '';
     }
   };
 
   const validatelastName = (name: string): string => {
     const namePattern = /^[a-zA-Z\s]+$/;
-    if (firstName === "") {
-      return " First Name is required.";
-    } else if (name.trim() === "") {
-      return "Last Name is required.";
+    if (firstName === '') {
+      return ' First Name is required.';
+    } else if (name.trim() === '') {
+      return 'Last Name is required.';
     } else if (name.length > 20) {
-      return "Name should not exceed 20 characters.";
+      return 'Name should not exceed 20 characters.';
     } else if (!namePattern.test(name)) {
-      return "Name should contain only alphabets and spaces.";
+      return 'Name should contain only alphabets and spaces.';
     } else {
-      return "";
+      return '';
     }
   };
 
   const validatePassword = (password: string): string => {
     const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
     const numberPattern = /\d/g;
-    if (firstName === "") {
-      return "first name is required.";
-    } else if (lastName === "") {
-      return "last name is required.";
-    } else if (address === "") {
-      return "address is required.";
-    } else if (mobileNo === "") {
-      return "mobile number is required";
-    } else if (city === "") {
-      return "City is required";
-    } else if (state === "") {
-      return "State is required";
-    } else if (country === "") {
-      return "Country is required";
-    } else if (zipcode === "") {
-      return "Zipcode is required";
-    } else if (password.trim() === "") {
+    if (firstName === '') {
+      return 'first name is required.';
+    } else if (lastName === '') {
+      return 'last name is required.';
+    } else if (address === '') {
+      return 'address is required.';
+    } else if (mobileNo === '') {
+      return 'mobile number is required';
+    } else if (city === '') {
+      return 'City is required';
+    } else if (state === '') {
+      return 'State is required';
+    } else if (country === '') {
+      return 'Country is required';
+    } else if (zipcode === '') {
+      return 'Zipcode is required';
+    } else if (password.trim() === '') {
       setDisableState(false);
-      return "Password is required.";
+      return 'Password is required.';
     } else if (password.length < 8) {
       setDisableState(false);
-      return "Password should be at least 8 characters long.";
+      return 'Password should be at least 8 characters long.';
     } else if (!specialCharPattern.test(password)) {
       setDisableState(false);
-      return "Password should contain at least one special character.";
+      return 'Password should contain at least one special character.';
     } else if ((password.match(numberPattern) || []).length < 2) {
       setDisableState(false);
-      return "Password should contain at least two numerical digits.";
+      return 'Password should contain at least two numerical digits.';
     } else {
       setDisableState(true);
-      return "";
+      return '';
     }
   };
 
@@ -116,131 +116,131 @@ const Registration: React.FC = () => {
     password: string,
     confirmpassword: string
   ): string => {
-    if (firstName === "") {
-      return "first name is required.";
-    } else if (lastName === "") {
-      return "last name is required.";
-    } else if (address === "") {
-      return "address is required.";
-    } else if (mobileNo === "") {
-      return "mobile number is required";
-    } else if (city === "") {
-      return "City is required";
-    } else if (state === "") {
-      return "State is required";
-    } else if (country === "") {
-      return "Country is required";
-    } else if (zipcode === "") {
-      return "Zipcode is required";
-    } else if (password === "") {
-      return "Password is required";
-    } else if (confirmpassword.trim() === "") {
-      return "Please confirm your password.";
+    if (firstName === '') {
+      return 'first name is required.';
+    } else if (lastName === '') {
+      return 'last name is required.';
+    } else if (address === '') {
+      return 'address is required.';
+    } else if (mobileNo === '') {
+      return 'mobile number is required';
+    } else if (city === '') {
+      return 'City is required';
+    } else if (state === '') {
+      return 'State is required';
+    } else if (country === '') {
+      return 'Country is required';
+    } else if (zipcode === '') {
+      return 'Zipcode is required';
+    } else if (password === '') {
+      return 'Password is required';
+    } else if (confirmpassword.trim() === '') {
+      return 'Please confirm your password.';
     } else if (password !== confirmpassword) {
-      return "Passwords do not match.";
+      return 'Passwords do not match.';
     } else {
-      return "";
+      return '';
     }
   };
 
   const validateAddress = (address: string): string => {
-    if (firstName === "") {
-      return "first name is required.";
-    } else if (lastName === "") {
-      return "last name is required.";
-    } else if (address.trim() === "") {
-      return "Address field should not be empty.";
+    if (firstName === '') {
+      return 'first name is required.';
+    } else if (lastName === '') {
+      return 'last name is required.';
+    } else if (address.trim() === '') {
+      return 'Address field should not be empty.';
     }
-    return "";
+    return '';
   };
 
   const validateMobileNo = (mobileNo: string): string => {
     const mobileNoPattern = /^\d{10}$/;
-    if (firstName === "") {
-      return "first name is required.";
-    } else if (lastName === "") {
-      return "last name is required.";
-    } else if (address === "") {
-      return "address is required.";
-    } else if (mobileNo.trim() === "") {
-      return "Mobile number should not be empty.";
+    if (firstName === '') {
+      return 'first name is required.';
+    } else if (lastName === '') {
+      return 'last name is required.';
+    } else if (address === '') {
+      return 'address is required.';
+    } else if (mobileNo.trim() === '') {
+      return 'Mobile number should not be empty.';
     } else if (!mobileNoPattern.test(mobileNo)) {
-      return "Mobile number should be exactly 10";
+      return 'Mobile number should be exactly 10';
     } else {
-      return "";
+      return '';
     }
   };
 
   const validateCity = () => {
-    if (firstName === "") {
-      return "first name is required.";
-    } else if (lastName === "") {
-      return "last name is required.";
-    } else if (address === "") {
-      return "address is required.";
-    } else if (mobileNo === "") {
-      return "mobile number is required";
+    if (firstName === '') {
+      return 'first name is required.';
+    } else if (lastName === '') {
+      return 'last name is required.';
+    } else if (address === '') {
+      return 'address is required.';
+    } else if (mobileNo === '') {
+      return 'mobile number is required';
     } else {
-      return "";
+      return '';
     }
   };
 
   const validateState = () => {
-    if (firstName === "") {
-      return "first name is required.";
-    } else if (lastName === "") {
-      return "last name is required.";
-    } else if (address === "") {
-      return "address is required.";
-    } else if (mobileNo === "") {
-      return "mobile number is required";
-    } else if (city === "") {
-      return "City is required";
+    if (firstName === '') {
+      return 'first name is required.';
+    } else if (lastName === '') {
+      return 'last name is required.';
+    } else if (address === '') {
+      return 'address is required.';
+    } else if (mobileNo === '') {
+      return 'mobile number is required';
+    } else if (city === '') {
+      return 'City is required';
     } else {
-      return "";
+      return '';
     }
   };
 
   const validateCountry = () => {
-    if (firstName === "") {
-      return "first name is required.";
-    } else if (lastName === "") {
-      return "last name is required.";
-    } else if (address === "") {
-      return "address is required.";
-    } else if (mobileNo === "") {
-      return "mobile number is required";
-    } else if (city === "") {
-      return "City is required";
-    } else if (state === "") {
-      return "State is required";
+    if (firstName === '') {
+      return 'first name is required.';
+    } else if (lastName === '') {
+      return 'last name is required.';
+    } else if (address === '') {
+      return 'address is required.';
+    } else if (mobileNo === '') {
+      return 'mobile number is required';
+    } else if (city === '') {
+      return 'City is required';
+    } else if (state === '') {
+      return 'State is required';
     } else {
-      return "";
+      return '';
     }
   };
 
   const validateZipcode = (zipcode: string): string => {
     const zipcodePattern = /^\d{5}$/;
-    if (firstName === "") {
-      return "first name is required.";
-    } else if (lastName === "") {
-      return "last name is required.";
-    } else if (address === "") {
-      return "address is required.";
-    } else if (mobileNo === "") {
-      return "mobile number is required";
-    } else if (city === "") {
-      return "City is required";
-    } else if (state === "") {
-      return "State is required";
-    } else if (country === "") {
-      return "Country is required";
-    } else if (zipcode.trim() === "") {
-      return "Zipcode is required.";
+    if (firstName === '') {
+      return 'first name is required.';
+    } else if (lastName === '') {
+      return 'last name is required.';
+    } else if (address === '') {
+      return 'address is required.';
+    } else if (mobileNo === '') {
+      return 'mobile number is required';
+    } else if (city === '') {
+      return 'City is required';
+    } else if (state === '') {
+      return 'State is required';
+    } else if (country === '') {
+      return 'Country is required';
+    } else if (zipcode.trim() === '') {
+      return 'Zipcode is required.';
     } else if (!zipcodePattern.test(zipcode)) {
-      return "Zipcode should be exactly 5 digits.";
+      return 'Zipcode should be exactly 5 digits.';
     } else {
-      return "";
+      return '';
     }
   };
 
@@ -266,7 +266,7 @@ const Registration: React.FC = () => {
       zipcodeError,
     ].filter((error) => error);
 
-    setValidationErrorMessage(errors.length > 0 ? errors[0] : "");
+    setValidationErrorMessage(errors.length > 0 ? errors[0] : '');
 
     return errors.length === 0;
   };
@@ -294,30 +294,30 @@ const Registration: React.FC = () => {
     );
 
     if (registerUser.fulfilled.match(resultAction)) {
-      setValidationSucessMessage("Registration successful!");
-      setInviteTokenError("");
+      setValidationSucessMessage('Registration successful!');
+      setInviteTokenError('');
 
-      setFirstname("");
-      setLastname("");
-      setMobileno("");
-      setAddress("");
-      setCity("");
-      setState("");
-      setCountry("");
-      setZipcode("");
-      setPassword("");
-      setConfirmpassword("");
+      setFirstname('');
+      setLastname('');
+      setMobileno('');
+      setAddress('');
+      setCity('');
+      setState('');
+      setCountry('');
+      setZipcode('');
+      setPassword('');
+      setConfirmpassword('');
       setDisableState(false);
-      setInviteToken("");
-      setInviteTokenError("");
+      setInviteToken('');
+      setInviteTokenError('');
       setTimeout(() => {
-        navigate("/login");
+        navigate('/login');
       }, 2000);
     } else {
       if (resultAction.payload) {
         setValidationErrorMessage(resultAction.payload as string);
       } else {
-        setValidationErrorMessage("Registration failed. Please try again.");
+        setValidationErrorMessage('Registration failed. Please try again.');
       }
     }
   };
@@ -524,7 +524,7 @@ const Registration: React.FC = () => {
                     className={styles.buttoncls}
                     disabled={registering}
                   >
-                    {registering ? "Registering..." : "Register"}
+                    {registering ? 'Registering...' : 'Register'}
                   </button>
                 </div>
               </form>

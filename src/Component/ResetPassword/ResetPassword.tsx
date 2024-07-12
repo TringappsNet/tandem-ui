@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetPassword, clearResponse, resetState } from '../Redux/slice/auth/resetSlice';
+import {
+  resetPassword,
+  clearResponse,
+  resetState,
+} from '../Redux/slice/auth/resetSlice';
 import styles from './ResetPassword.module.css';
 import { RootState } from '../Redux/reducers';
 import { AppDispatch } from '../Redux/store';
@@ -16,7 +20,9 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const dispatch = useDispatch<AppDispatch>();
-  const { responseMessage, responseType, status } = useSelector((state: RootState) => state.reset);
+  const { responseMessage, responseType, status } = useSelector(
+    (state: RootState) => state.reset
+  );
 
   const validatePassword = (password: string) => {
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
@@ -45,7 +51,10 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
       dispatch(clearResponse());
       dispatch({
         type: 'reset/resetPassword/rejected',
-        error: { message: 'Password must contain at least 1 special character, 1 number, and 1 capital letter.' },
+        error: {
+          message:
+            'Password must contain at least 1 special character, 1 number, and 1 capital letter.',
+        },
       });
       return;
     }
@@ -60,7 +69,7 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
         setOldPassword('');
         setNewPassword('');
         setConfirmPassword('');
-        onCloseDialog(); 
+        onCloseDialog();
         dispatch(resetState());
       }, 1000);
     }
@@ -71,7 +80,9 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
       {showResetForm && (
         <div className={styles.formContainer}>
           <h2>Reset Password</h2>
-          {responseMessage && <div className={styles[responseType]}>{responseMessage}</div>}
+          {responseMessage && (
+            <div className={styles[responseType]}>{responseMessage}</div>
+          )}
           <form onSubmit={handleResetPassword}>
             <div className={styles.formGroup}>
               <label htmlFor="oldPassword">Old Password:</label>

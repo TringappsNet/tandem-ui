@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   createNewDeal,
   updateDealDetails,
   fetchDealDetails,
-} from "../Redux/slice/deal/dealSlice";
-import { Deal } from "../Interface/DealFormObject";
+} from '../Redux/slice/deal/dealSlice';
+import { Deal } from '../Interface/DealFormObject';
 import {
   Stepper,
   Step,
@@ -20,46 +20,46 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
-} from "@mui/material";
-import styles from "./dealForm.module.css";
-import { RootState } from "../Redux/reducers";
-import { closeDealForm } from "../Redux/slice/deal/dealCompSlice";
-import { AppDispatch } from "../Redux/store/index";
+} from '@mui/material';
+import styles from './dealForm.module.css';
+import { RootState } from '../Redux/reducers';
+import { closeDealForm } from '../Redux/slice/deal/dealCompSlice';
+import { AppDispatch } from '../Redux/store/index';
 import {
   clearCurrentDeal,
   setCurrentDeal,
-} from "../Redux/slice/deal/currentDeal";
-import { fetchSites } from "../Redux/slice/site/siteSlice";
-import { fetchBrokers } from "../Redux/slice/broker/brokerSlice";
+} from '../Redux/slice/deal/currentDeal';
+import { fetchSites } from '../Redux/slice/site/siteSlice';
+import { fetchBrokers } from '../Redux/slice/broker/brokerSlice';
 
 const steps = [
   {
-    label: "Tandem",
+    label: 'Tandem',
     fields: [
-      { type: "dropdown", label: "propertyName", options: [] },
-      { type: "dropdown", label: "brokerName", options: [] },
-      { type: "date", label: "dealStartDate" },
+      { type: 'dropdown', label: 'propertyName', options: [] },
+      { type: 'dropdown', label: 'brokerName', options: [] },
+      { type: 'date', label: 'dealStartDate' },
     ],
   },
-  { label: "Proposal", fields: [{ type: "date", label: "proposalDate" }] },
-  { label: "LOI Execute", fields: [{ type: "date", label: "loiExecuteDate" }] },
+  { label: 'Proposal', fields: [{ type: 'date', label: 'proposalDate' }] },
+  { label: 'LOI Execute', fields: [{ type: 'date', label: 'loiExecuteDate' }] },
   {
-    label: "Lease Signed",
-    fields: [{ type: "date", label: "leaseSignedDate" }],
+    label: 'Lease Signed',
+    fields: [{ type: 'date', label: 'leaseSignedDate' }],
   },
   {
-    label: "Notice to Proceed",
-    fields: [{ type: "date", label: "noticeToProceedDate" }],
+    label: 'Notice to Proceed',
+    fields: [{ type: 'date', label: 'noticeToProceedDate' }],
   },
   {
-    label: "Commercial Operation",
-    fields: [{ type: "date", label: "commercialOperationDate" }],
+    label: 'Commercial Operation',
+    fields: [{ type: 'date', label: 'commercialOperationDate' }],
   },
   {
-    label: "Potential Commission",
+    label: 'Potential Commission',
     fields: [
-      { type: "date", label: "potentialCommissionDate" },
-      { type: "text", label: "potentialCommission" },
+      { type: 'date', label: 'potentialCommissionDate' },
+      { type: 'text', label: 'potentialCommission' },
     ],
   },
 ];
@@ -81,17 +81,17 @@ const DealForm: React.FC<DealFormProps> = () => {
   const [activeStep, setActiveStep] = useState(currentDeal?.activeStep || 0);
   const [formData, setFormData] = useState<Deal>({
     id: currentDeal?.id || null,
-    brokerName: currentDeal?.brokerName || "",
-    propertyName: currentDeal?.propertyName || "",
-    dealStartDate: currentDeal?.dealStartDate || "",
-    proposalDate: currentDeal?.proposalDate || "",
-    loiExecuteDate: currentDeal?.loiExecuteDate || "",
-    leaseSignedDate: currentDeal?.leaseSignedDate || "",
-    noticeToProceedDate: currentDeal?.noticeToProceedDate || "",
-    commercialOperationDate: currentDeal?.commercialOperationDate || "",
-    potentialcommissiondate: currentDeal?.potentialcommissiondate || "",
+    brokerName: currentDeal?.brokerName || '',
+    propertyName: currentDeal?.propertyName || '',
+    dealStartDate: currentDeal?.dealStartDate || '',
+    proposalDate: currentDeal?.proposalDate || '',
+    loiExecuteDate: currentDeal?.loiExecuteDate || '',
+    leaseSignedDate: currentDeal?.leaseSignedDate || '',
+    noticeToProceedDate: currentDeal?.noticeToProceedDate || '',
+    commercialOperationDate: currentDeal?.commercialOperationDate || '',
+    potentialcommissiondate: currentDeal?.potentialcommissiondate || '',
     potentialCommission: currentDeal?.potentialCommission || 0,
-    status: currentDeal?.status || "",
+    status: currentDeal?.status || '',
     activeStep: currentDeal?.activeStep ?? 0,
     createdBy: currentDeal?.createdBy || 0,
     updatedBy: currentDeal?.updatedBy || 0,
@@ -125,8 +125,8 @@ const DealForm: React.FC<DealFormProps> = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    if (name.endsWith("Date")) {
-      const formattedDate = value.split("T")[0];
+    if (name.endsWith('Date')) {
+      const formattedDate = value.split('T')[0];
       setFormData((prevData) => ({
         ...prevData,
         [name]: formattedDate,
@@ -156,7 +156,7 @@ const DealForm: React.FC<DealFormProps> = () => {
       dispatch(setCurrentDeal(payload));
       setSaveSuccess(true);
     } catch (error) {
-      console.error("Error saving form data:", error);
+      console.error('Error saving form data:', error);
       setSaveSuccess(false);
     }
   };
@@ -173,15 +173,15 @@ const DealForm: React.FC<DealFormProps> = () => {
         }
       }
     } catch (error) {
-      console.error("Error saving form data:", error);
+      console.error('Error saving form data:', error);
     }
   };
 
   const getStatus = (step: number) => {
-    if (step === 0) return "Started";
-    if (step > 0 && step < 6) return "In-Progress";
-    if (step === 6) return "Completed";
-    return "";
+    if (step === 0) return 'Started';
+    if (step > 0 && step < 6) return 'In-Progress';
+    if (step === 6) return 'Completed';
+    return '';
   };
 
   const renderField = (
@@ -190,26 +190,26 @@ const DealForm: React.FC<DealFormProps> = () => {
   ) => {
     const { label, type, options } = field;
     switch (type) {
-      case "dropdown":
+      case 'dropdown':
         return (
           <TextField
             key={index}
             select
             label={label}
             name={label}
-            value={formData[label as keyof Deal] || ""}
+            value={formData[label as keyof Deal] || ''}
             onChange={handleChange}
             sx={{ width: 300 }}
             margin="normal"
             size="small"
           >
-            {label === "brokerName"
+            {label === 'brokerName'
               ? brokers.map((broker, idx) => (
                   <MenuItem key={idx} value={broker.name}>
                     {broker.name}
                   </MenuItem>
                 ))
-              : label === "propertyName"
+              : label === 'propertyName'
               ? sites
                   .filter(
                     (site) =>
@@ -234,7 +234,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                 ))}
           </TextField>
         );
-      case "date":
+      case 'date':
         return (
           <TextField
             key={index}
@@ -242,8 +242,8 @@ const DealForm: React.FC<DealFormProps> = () => {
             label={label}
             name={label}
             value={
-              formData[label as keyof Deal]?.toLocaleString().split("T")[0] ||
-              ""
+              formData[label as keyof Deal]?.toLocaleString().split('T')[0] ||
+              ''
             }
             onChange={handleChange}
             margin="normal"
@@ -254,14 +254,14 @@ const DealForm: React.FC<DealFormProps> = () => {
             }}
           />
         );
-      case "text":
+      case 'text':
         return (
           <TextField
             key={index}
             type="text"
             label={label}
             name={label}
-            value={formData[label as keyof Deal] || ""}
+            value={formData[label as keyof Deal] || ''}
             onChange={handleChange}
             margin="normal"
             size="small"
@@ -286,7 +286,7 @@ const DealForm: React.FC<DealFormProps> = () => {
   return (
     <Dialog
       fullScreen
-      sx={{ margin: "30px 190px" }}
+      sx={{ margin: '30px 190px' }}
       open={open}
       onClose={() => {
         dispatch(closeDealForm());
@@ -297,10 +297,10 @@ const DealForm: React.FC<DealFormProps> = () => {
     >
       <DialogTitle
         sx={{
-          backgroundColor: "#262262",
-          color: "white",
-          height: "44px",
-          padding: "6px 24px",
+          backgroundColor: '#262262',
+          color: 'white',
+          height: '44px',
+          padding: '6px 24px',
         }}
       >
         Deal Form
@@ -312,7 +312,7 @@ const DealForm: React.FC<DealFormProps> = () => {
             dispatch(clearCurrentDeal());
           }}
           sx={{
-            position: "absolute",
+            position: 'absolute',
             right: 25,
             top: 2,
 
@@ -322,13 +322,13 @@ const DealForm: React.FC<DealFormProps> = () => {
           <button
             className="saveclose"
             style={{
-              height: "24px",
-              width: "100px",
-              border: "1px solid grey",
-              borderRadius: "3px",
-              color: "white",
-              backgroundColor: "#262262",
-              cursor: "pointer",
+              height: '24px',
+              width: '100px',
+              border: '1px solid grey',
+              borderRadius: '3px',
+              color: 'white',
+              backgroundColor: '#262262',
+              cursor: 'pointer',
             }}
           >
             Save/Close
@@ -340,10 +340,10 @@ const DealForm: React.FC<DealFormProps> = () => {
           <Box
             sx={{
               width: 1,
-              marginTop: "3rem",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
+              marginTop: '3rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
             }}
           >
             <Stepper
@@ -360,17 +360,17 @@ const DealForm: React.FC<DealFormProps> = () => {
             </Stepper>
             <Box
               sx={{
-                width: "100%",
-                marginTop: "10px",
-                display: "flex",
-                flexDirection: "column",
-                padding: "30px",
+                width: '100%',
+                marginTop: '10px',
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '30px',
               }}
             >
               <Box
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
                 {steps[activeStep].fields.map((field, index) =>
@@ -390,7 +390,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                 <Box>
                   <Typography
                     variant="h3"
-                    sx={{ textAlign: "center", color: "green" }}
+                    sx={{ textAlign: 'center', color: 'green' }}
                   >
                     Deal is Completed
                   </Typography>
@@ -399,15 +399,15 @@ const DealForm: React.FC<DealFormProps> = () => {
                 <Box>
                   <Box
                     sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
+                      display: 'flex',
+                      justifyContent: 'space-between',
                     }}
                   >
                     <Box
                       sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        width: "100%",
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        width: '100%',
                       }}
                     >
                       {/* <Button
@@ -424,7 +424,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                         sx={{ width: 100 }}
                         disabled={!saveSuccess || !isFormValid()}
                       >
-                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                       </Button>
                     </Box>
                   </Box>
