@@ -23,7 +23,7 @@ import {
 } from '@mui/material';
 import styles from './dealForm.module.css';
 import { RootState } from '../Redux/reducers';
-import { closeDealForm } from '../Redux/slice/deal/dealCompSlice';
+import { closeDealForm } from '../Redux/slice/deal/dealFormSlice';
 import { AppDispatch } from '../Redux/store/index';
 import {
   clearCurrentDeal,
@@ -374,9 +374,10 @@ const DealForm: React.FC<DealFormProps> = () => {
                   flexDirection: 'column',
                 }}
               >
-                {activeStep < steps.length && steps[activeStep].fields.map((field, index) =>
-                  renderField(field, index)
-                )}
+                {activeStep < steps.length &&
+                  steps[activeStep].fields.map((field, index) =>
+                    renderField(field, index)
+                  )}
                 <Button
                   variant="contained"
                   color="primary"

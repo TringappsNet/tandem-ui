@@ -8,7 +8,7 @@ import {
   fetchBrokerDealDetails,
   fetchDealDetails,
 } from '../Redux/slice/deal/dealSlice';
-import { openDealForm } from '../Redux/slice/deal/dealCompSlice';
+import { openDealForm } from '../Redux/slice/deal/dealFormSlice';
 import { AppDispatch } from '../Redux/store';
 import ConfirmationModal from '../AlertDialog/AlertDialog';
 import { setCurrentDeal } from '../Redux/slice/deal/currentDeal';
@@ -131,7 +131,10 @@ const Cards: React.FC = () => {
                 {userdetails.isAdmin && (
                   <div className={styles.icons}>
                     <div className={styles.hide}>
-                      <FiEdit onClick={() => editDealForm(deal)} className={styles.editHide} />
+                      <FiEdit
+                        onClick={() => editDealForm(deal)}
+                        className={styles.editHide}
+                      />
                     </div>
                     <FiTrash
                       onClick={() => deal.id !== null && handleDelete(deal.id)}
@@ -141,7 +144,6 @@ const Cards: React.FC = () => {
                 <div className={styles.cardTitle}>
                   <div className={styles.nameHeader}>
                     <div className={styles.name}>{deal.propertyName}</div>
-
                   </div>
 
                   {/* {userdetails?.roleId === 2 && (
@@ -151,9 +153,7 @@ const Cards: React.FC = () => {
                   )} */}
                 </div>
                 <hr className={styles.line} />
-                <div className={styles.nameHeader}>
-                  Deal #{deal.id}
-                </div>
+                <div className={styles.nameHeader}>Deal #{deal.id}</div>
               </div>
               <div className={styles.statusLine}>
                 <div className={styles.statuscontainer}>
@@ -182,14 +182,12 @@ const Cards: React.FC = () => {
                 </div>
               </div>
               <div>
-                  <hr
-                    className={`${styles.statuslinecolor} ${getStatusButtonClass(
-                      deal.status
-                    )}`}
-                  />
-                </div>
-
-
+                <hr
+                  className={`${styles.statuslinecolor} ${getStatusButtonClass(
+                    deal.status
+                  )}`}
+                />
+              </div>
             </div>
           ))
         ) : (

@@ -6,18 +6,22 @@
 }
 
 .card {
-    background: linear-gradient(45deg, rgba(3, 3, 3, 0.8) 60%, rgba(1, 1, 1, 0.8) 90%);
-    filter: brightness(0.9) contrast(0.85); 
-    box-shadow: 0 2px 10px rgba(26, 22, 62, 0.2);
-    border-radius: 5px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    /* min-height: 155px; */
-    width: 220px;
-    transition: transform 0.3s;
-    gap: 8px 0;
-    color: #f5f2f2;
+  background: linear-gradient(
+    45deg,
+    rgba(3, 3, 3, 0.8) 60%,
+    rgba(1, 1, 1, 0.8) 90%
+  );
+  filter: brightness(0.9) contrast(0.85);
+  box-shadow: 0 2px 10px rgba(26, 22, 62, 0.2);
+  border-radius: 5px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  /* min-height: 155px; */
+  width: 220px;
+  transition: transform 0.3s;
+  gap: 8px 0;
+  color: #f5f2f2;
 }
 
 .card:hover {
@@ -25,10 +29,10 @@
 }
 
 .cardTitle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: .5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
 }
 
 .card .line {
@@ -39,23 +43,23 @@
 }
 
 .icons {
-    display: flex;
-    cursor: pointer;
-    justify-content: flex-end;
-    font-size: .7rem;
-    gap: 2px;
-    margin-bottom: .3rem;
+  display: flex;
+  cursor: pointer;
+  justify-content: flex-end;
+  font-size: 0.7rem;
+  gap: 2px;
+  margin-bottom: 0.3rem;
 }
 
 .editHide {
-    display: none;
+  display: none;
 }
 
-.card:hover .editHide{
-    display: block;
+.card:hover .editHide {
+  display: block;
 }
-.card:hover .statuslinecolor{
-    display: block;
+.card:hover .statuslinecolor {
+  display: block;
 }
 
 .statusLine {
@@ -180,11 +184,10 @@
 }
 
 .statuslinecolor {
-    display: none;
-    border: .01rem solid;
-    position:absolute;
-    width: 80%;
-
+  display: none;
+  border: 0.01rem solid;
+  position: absolute;
+  width: 80%;
 }
 .noDealsFound {
   display: flex;

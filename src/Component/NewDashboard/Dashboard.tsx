@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Cards from '../Cards/Cards';
 import styles from './Dashboard.module.css';
-import Main from '../Main/Main';
+import Main from '../DashboardTiles/Main/dashboardTile';
 import SiteGrid from '../Grids/SiteGrid/SiteGrid';
 import LandlordGrid from '../Grids/landlordGrid/Landlord';
 import InviteBrokerGrid from '../Grids/inviteBroker-grid/InviteBroker-grid';
