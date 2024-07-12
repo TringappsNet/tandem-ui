@@ -22,12 +22,16 @@ interface LandlordState {
   landlords: Landlord[];
   loading: boolean;
   error: string | null;
+  snackbarMessage: string | null;
+  snackbarOpen: boolean;
 }
 
 const initialState: LandlordState = {
   landlords: [],
   loading: false,
   error: null,
+  snackbarMessage: null,
+  snackbarOpen: false,
 };
 
 const landlordSlice = createSlice({
@@ -69,6 +73,12 @@ const landlordSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+    setSnackbarMessage: (state, action: PayloadAction<string>) => {
+      state.snackbarMessage = action.payload;
+    },
+    setSnackbarOpen: (state, action: PayloadAction<boolean>) => {
+      state.snackbarOpen = action.payload;
+    },
   },
 });
 
@@ -79,6 +89,8 @@ export const {
   addLandlordSuccess,
   updateLandlordSuccess,
   deleteLandlordSuccess,
+  setSnackbarMessage,
+  setSnackbarOpen,
 } = landlordSlice.actions;
 
 export default landlordSlice.reducer;
@@ -90,8 +102,13 @@ export const fetchLandlords =
       dispatch(fetchLandlordsStart());
       const response = await axiosInstance.get('/landlords');
       dispatch(fetchLandlordsSuccess(response.data));
+      dispatch(setSnackbarMessage('Landlords fetched successfully'));
+      dispatch(setSnackbarOpen(true));
     } catch (error) {
-      dispatch(fetchLandlordsFailure((error as Error).message));
+      const errorMessage = (error as any).response?.data?.message || (error as Error).message;
+      dispatch(fetchLandlordsFailure(errorMessage));
+      dispatch(setSnackbarMessage(errorMessage));
+      dispatch(setSnackbarOpen(true));
     }
   };
 
@@ -104,8 +121,13 @@ export const addLandlord =
         landlord
       );
       dispatch(addLandlordSuccess(response.data));
+      dispatch(setSnackbarMessage('Landlord added successfully'));
+      dispatch(setSnackbarOpen(true));
     } catch (error) {
-      dispatch(fetchLandlordsFailure((error as Error).message));
+      const errorMessage = (error as any).response?.data?.message || (error as Error).message;
+      dispatch(fetchLandlordsFailure(errorMessage));
+      dispatch(setSnackbarMessage(errorMessage));
+      dispatch(setSnackbarOpen(true));
     }
   };
 
@@ -118,8 +140,13 @@ export const updateLandlord =
         landlord
       );
       dispatch(updateLandlordSuccess(response.data));
+      dispatch(setSnackbarMessage('Landlord updated successfully'));
+      dispatch(setSnackbarOpen(true));
     } catch (error) {
-      dispatch(fetchLandlordsFailure((error as Error).message));
+      const errorMessage = (error as any).response?.data?.message || (error as Error).message;
+      dispatch(fetchLandlordsFailure(errorMessage));
+      dispatch(setSnackbarMessage(errorMessage));
+      dispatch(setSnackbarOpen(true));
     }
   };
 
@@ -129,7 +156,12 @@ export const deleteLandlord =
     try {
       await axiosInstance.delete(`/landlords/landlord/${id}`);
       dispatch(deleteLandlordSuccess(id));
+      dispatch(setSnackbarMessage('Landlord deleted successfully'));
+      dispatch(setSnackbarOpen(true));
     } catch (error) {
-      dispatch(fetchLandlordsFailure((error as Error).message));
+      const errorMessage = (error as any).response?.data?.message || (error as Error).message;
+      dispatch(fetchLandlordsFailure(errorMessage));
+      dispatch(setSnackbarMessage(errorMessage));
+      dispatch(setSnackbarOpen(true));
     }
   };
