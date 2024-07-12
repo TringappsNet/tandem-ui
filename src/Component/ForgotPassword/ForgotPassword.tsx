@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./ForgotPassword.module.css";
 import { forgotPassword, clearState } from "../Redux/slice/auth/forgotPasswordSlice";
 import { RootState } from "../Redux/reducers";
-import { AppDispatch } from "../Redux/store"; 
+import { AppDispatch } from "../Redux/store";
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -12,7 +12,7 @@ const ForgotPassword: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const { loading, successMessage, errorMessage } = useSelector(
+  const { loading, successMessage } = useSelector(
     (state: RootState) => state.forgotPassword
   );
 
@@ -22,35 +22,39 @@ const ForgotPassword: React.FC = () => {
         dispatch(clearState());
         navigate("/login");
       }, 3000);
-
-      return () => clearTimeout(timer); // Cleanup the timer on component unmount
+      return () => clearTimeout(timer);
     }
   }, [successMessage, dispatch, navigate]);
 
+  // useEffect(() => {
+  //   if (statusCode === 404) {
+  //     setValidationErrorMessage("User not found");
+  //   } else if (errorMessage) {
+  //     setValidationErrorMessage(errorMessage);
+  //   }
+  // }, [statusCode, errorMessage]);
+
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (email === "") {
-      setValidationErrorMessage("Email cannot be empty");
-    } else if (!emailRegex.test(email)) {
-      setValidationErrorMessage("Invalid email address");
-    } else {
-      setValidationErrorMessage("");
-    }
+    return emailRegex.test(email);
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
-    validateEmail(value);
+    setValidationErrorMessage("");
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email === "") {
-      setValidationErrorMessage("Please enter a valid email");
+      setValidationErrorMessage("Please enter the Email address");
       return;
     }
-
+    if (!validateEmail(email)) {
+      setValidationErrorMessage("Invalid email address");
+      return;
+    }
     dispatch(forgotPassword(email));
   };
 
@@ -72,9 +76,6 @@ const ForgotPassword: React.FC = () => {
           <form className={styles.loginsection} onSubmit={handleSubmit}>
             {successMessage && (
               <div className={styles.success}>{successMessage}</div>
-            )}
-            {errorMessage && (
-              <div className={styles.failure}>{errorMessage}</div>
             )}
             {validationErrorMessage && (
               <div className={styles.failure}>{validationErrorMessage}</div>
