@@ -17,7 +17,7 @@ import {
   addBroker,
   updateBroker,
   deleteBroker,
-} from '../../Redux/slice/grids/userSlice';
+} from '../../Redux/slice/user/userSlice';
 import FullGrid from '../MainGrid/MainGrid';
 import { MdEdit, MdDelete } from 'react-icons/md';
 import ConfirmationModal from '../../AlertDialog/AlertDialog';

@@ -15,7 +15,7 @@ import {
   addSite,
   updateSite,
   deleteSite,
-} from '../../Redux/slice/grids/siteSlice';
+} from '../../Redux/slice/site/siteSlice';
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 import FullGrid from '../MainGrid/MainGrid';
 import { MdEdit, MdDelete } from 'react-icons/md';
@@ -42,7 +42,7 @@ const SiteGrid: React.FC = () => {
   const [deleteId, setDeleteId] = useState<number>(0);
   const [formErrors, setFormErrors] = useState<Partial<Site>>({});
   const dispatch = useDispatch<AppDispatch>();
-  const sites = useSelector((state: RootState) => state.siteGrid.sites);
+  const sites = useSelector((state: RootState) => state.site.sites);
   const userdetails = useSelector((state: RootState) => state.auth.user);
   const [formData, setFormData] = useState<Site>({
     id: 0,
