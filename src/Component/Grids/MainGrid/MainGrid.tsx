@@ -64,6 +64,9 @@ const FullGrid: React.FC<FullGridProps> = ({
            ' .css-1wc0mgy .parent-grid_dataGrid__Uj-3s ':{
               border  :'1px solid grey !important'
             },
+            '.css-15n4jlm-MuiDataGrid-root .MuiDataGrid-container--top [role=row], .css-15n4jlm-MuiDataGrid-root .MuiDataGrid-container--bottom [role=row]':{
+              background: 'linear-gradient(58deg,  rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%)',
+            },
           
             '.css-1kwdphh-MuiDataGrid-virtualScrollerContent,.css-tgsonj,.css-14mxsc7-MuiDataGrid-root .MuiDataGrid-withBorderColor,.css-1rtad1,.css-14mxsc7-MuiDataGrid-root .MuiDataGrid-filler,.css-128fb87-MuiDataGrid-toolbarContainer,.css-wop1k0-MuiDataGrid-footerContainer, .css-yrdy0g-MuiDataGrid-columnHeaderRow,.css-1w53k9d-MuiDataGrid-overlay,.css-1rtad1,.css-og3pwy .css-15n4jlm-MuiDataGrid-root':{
               // background: '#142031 !important',
@@ -87,6 +90,7 @@ const FullGrid: React.FC<FullGridProps> = ({
           '.parent-grid_dataGrid__Uj-3s  ':{
             // border:'1px solid grey',
             backdropfilter: 'blur(20px)',
+            border:'2px solid #39404f',
 
           }
           ,
