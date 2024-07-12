@@ -4,6 +4,8 @@ const initialState = {
   open: false,
 };
 
+
+
 const dealFormSlice = createSlice({
   name: 'dealForm',
   initialState,
