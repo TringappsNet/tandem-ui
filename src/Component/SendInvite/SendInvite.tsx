@@ -1,16 +1,21 @@
-import React, { useState, useRef, useEffect } from "react";
-import styles from "./SendInvite.module.css";
-import classNames from "classnames";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../Redux/reducers";
-import { closeSendInvite, sendInvite, resetResponse, clearResponse } from "../Redux/slice/auth/sendInviteSlice";
-import { AppDispatch } from "../Redux/store";
+import React, { useState, useRef, useEffect } from 'react';
+import styles from './SendInvite.module.css';
+import classNames from 'classnames';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../Redux/reducers';
+import {
+  closeSendInvite,
+  sendInvite,
+  resetResponse,
+  clearResponse,
+} from '../Redux/slice/auth/sendInviteSlice';
+import { AppDispatch } from '../Redux/store';
 import {
   fetchRoles,
   selectRolesLoading,
   selectRolesError,
-} from "../Redux/slice/role/rolesSlice";
+} from '../Redux/slice/role/rolesSlice';
 
 interface SendInviteProps {
   onCloseDialog: () => void;
@@ -23,11 +28,17 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
   const roles = useSelector((state: RootState) => state.roles.roles);
   const rolesLoading = useSelector(selectRolesLoading);
   const rolesError = useSelector(selectRolesError);
-  const isLoading = useSelector((state: RootState) => state.sendInvite.isLoading);
-  const responseMessage = useSelector((state: RootState) => state.sendInvite.responseMessage);
-  const responseType = useSelector((state: RootState) => state.sendInvite.responseType);
+  const isLoading = useSelector(
+    (state: RootState) => state.sendInvite.isLoading
+  );
+  const responseMessage = useSelector(
+    (state: RootState) => state.sendInvite.responseMessage
+  );
+  const responseType = useSelector(
+    (state: RootState) => state.sendInvite.responseType
+  );
   const [showInviteForm, setShowInviteForm] = useState(true);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [roleId, setRoleId] = useState<number | null>(null);
   const selectRef = useRef<HTMLSelectElement>(null);
 
@@ -36,7 +47,7 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("Roles in send invite:", roles);
+    console.log('Roles in send invite:', roles);
   }, [roles]);
 
   const handleSendInvite = async (e: React.FormEvent) => {
@@ -56,9 +67,9 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
         setTimeout(() => {
           dispatch(closeSendInvite());
           setShowInviteForm(false);
-          setEmail("");
+          setEmail('');
           dispatch(clearResponse());
-          navigate("/dashboard");
+          navigate('/dashboard');
           onCloseDialog();
         }, 3000);
       }
@@ -73,8 +84,8 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
           {responseMessage && (
             <div
               className={classNames(styles.responseMessage, {
-                [styles.success]: responseType === "success",
-                [styles.error]: responseType === "error",
+                [styles.success]: responseType === 'success',
+                [styles.error]: responseType === 'error',
               })}
             >
               {responseMessage}
@@ -103,7 +114,7 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
                   name="roleId"
                   ref={selectRef}
                   className={styles.customSelect}
-                  value={roleId ?? ""}
+                  value={roleId ?? ''}
                   onChange={(e) => setRoleId(Number(e.target.value))}
                   required
                 >
@@ -119,7 +130,7 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
               </div>
             </div>
             <button type="submit" disabled={isLoading || rolesLoading}>
-              {isLoading ? "Sending Invite" : "Send Invite"}
+              {isLoading ? 'Sending Invite' : 'Send Invite'}
             </button>
           </form>
           {(isLoading || rolesLoading) && (

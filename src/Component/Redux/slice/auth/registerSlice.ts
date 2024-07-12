@@ -43,7 +43,10 @@ const registerSlice = createSlice({
   name: 'register',
   initialState,
   reducers: {
-    setCredentials: (state: RegisterState, action: PayloadAction<{ token: string; userId: string; email: string }>) => {
+    setCredentials: (
+      state: RegisterState,
+      action: PayloadAction<{ token: string; userId: string; email: string }>
+    ) => {
       state.token = action.payload.token;
       state.userId = action.payload.userId;
       state.email = action.payload.email;
@@ -60,16 +63,25 @@ const registerSlice = createSlice({
     clearError: (state: RegisterState) => {
       state.error = null;
     },
-    setResettingPassword: (state: RegisterState, action: PayloadAction<boolean>) => {
+    setResettingPassword: (
+      state: RegisterState,
+      action: PayloadAction<boolean>
+    ) => {
       state.resettingPassword = action.payload;
       state.resetPasswordSuccess = false; // Reset success flag when starting reset
       state.resetPasswordError = null; // Reset error message when starting reset
     },
-    setResetPasswordSuccess: (state: RegisterState, action: PayloadAction<boolean>) => {
+    setResetPasswordSuccess: (
+      state: RegisterState,
+      action: PayloadAction<boolean>
+    ) => {
       state.resetPasswordSuccess = action.payload;
       state.resettingPassword = false; // Resetting password is complete
     },
-    setResetPasswordError: (state: RegisterState, action: PayloadAction<string>) => {
+    setResetPasswordError: (
+      state: RegisterState,
+      action: PayloadAction<string>
+    ) => {
       state.resetPasswordError = action.payload;
       state.resettingPassword = false; // Resetting password encountered an error
     },

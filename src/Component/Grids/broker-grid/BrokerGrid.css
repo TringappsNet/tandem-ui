@@ -1,9 +1,7 @@
-.gridContainer{
-    height: 580px !important;
+.gridContainer {
+  height: 580px !important;
 }
 
-
 .css-15n4jlm-MuiDataGrid-root .MuiDataGrid-menuOpen {
-    visibility:'hidden !important',
-  }
-  
+  visibility: 'hidden !important';
+}

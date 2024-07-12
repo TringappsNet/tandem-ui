@@ -1,70 +1,78 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { changePassword } from "../Redux/slice/auth/changePasswordSlice";
-import styles from "./ChangePassword.module.css";
-import { useNavigate } from "react-router-dom";
-import { AppDispatch } from "../Redux/store";
-import { RootState } from "../Redux/reducers";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { changePassword } from '../Redux/slice/auth/changePasswordSlice';
+import styles from './ChangePassword.module.css';
+import { useNavigate } from 'react-router-dom';
+import { AppDispatch } from '../Redux/store';
+import { RootState } from '../Redux/reducers';
 
 const ChangePassword: React.FC = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const { isLoading, responseMessage, responseType } = useSelector((state: RootState) => state.changePassword);
+  const { isLoading, responseMessage, responseType } = useSelector(
+    (state: RootState) => state.changePassword
+  );
 
-  const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmpassword] = useState("");
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmpassword] = useState('');
   const [disableState, setDisableState] = useState(false);
-  const [validationErrorMessage, setValidationErrorMessage] = useState("");
+  const [validationErrorMessage, setValidationErrorMessage] = useState('');
 
   const validatePassword = (password: string): string => {
     const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
     const numberPattern = /\d/g;
-    if (password.trim() === "") {
+    if (password.trim() === '') {
       setDisableState(false);
-      return "Password is required.";
+      return 'Password is required.';
     } else if (password.length < 8) {
       setDisableState(false);
-      return "Password should be at least 8 characters long.";
+      return 'Password should be at least 8 characters long.';
     } else if (!specialCharPattern.test(password)) {
       setDisableState(false);
-      return "Password should contain at least one special character.";
+      return 'Password should contain at least one special character.';
     } else if ((password.match(numberPattern) || []).length < 2) {
       setDisableState(false);
-      return "Password should contain at least two numerical digits.";
+      return 'Password should contain at least two numerical digits.';
     } else {
       setDisableState(true);
-      return "";
+      return '';
     }
   };
 
-  const validateConfirmpassword = (password: string, confirmpassword: string): string => {
-    if (confirmpassword.trim() === "") {
-      return "Password field cannot be empty.";
+  const validateConfirmpassword = (
+    password: string,
+    confirmpassword: string
+  ): string => {
+    if (confirmpassword.trim() === '') {
+      return 'Password field cannot be empty.';
     } else if (password !== confirmpassword) {
-      return "Passwords do not match.";
+      return 'Passwords do not match.';
     } else {
-      return "";
+      return '';
     }
   };
 
   const handleValidation = (): boolean => {
     const passwordError = validatePassword(password);
-    const confirmpasswordError = validateConfirmpassword(password, confirmpassword);
+    const confirmpasswordError = validateConfirmpassword(
+      password,
+      confirmpassword
+    );
 
     if (passwordError || confirmpasswordError) {
       setValidationErrorMessage(passwordError || confirmpasswordError);
       return false;
     }
 
-    setValidationErrorMessage("");
+    setValidationErrorMessage('');
     return true;
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (password === "" || confirmpassword === "") {
-      setValidationErrorMessage("Please enter values in all fields.");
+    if (password === '' || confirmpassword === '') {
+      setValidationErrorMessage('Please enter values in all fields.');
       return;
     }
 
@@ -74,9 +82,9 @@ const ChangePassword: React.FC = () => {
 
     dispatch(changePassword({ newPassword: password }));
 
-        setTimeout(() => {
-          navigate('/login')
-        }, 5000);
+    setTimeout(() => {
+      navigate('/login');
+    }, 5000);
   };
 
   return (
@@ -92,7 +100,10 @@ const ChangePassword: React.FC = () => {
           </div>
           <div className={styles.headingsection}>
             <h3>Set a New Password</h3>
-            <p>Your new password should be distinct from any of your prior passwords</p>
+            <p>
+              Your new password should be distinct from any of your prior
+              passwords
+            </p>
           </div>
           <form className={styles.loginsection} onSubmit={handleSubmit}>
             {responseType === 'success' && (
@@ -133,11 +144,17 @@ const ChangePassword: React.FC = () => {
                 onChange={(e) => {
                   const newConfirmPassword = e.target.value;
                   setConfirmpassword(newConfirmPassword);
-                  setValidationErrorMessage(validateConfirmpassword(password, newConfirmPassword));
+                  setValidationErrorMessage(
+                    validateConfirmpassword(password, newConfirmPassword)
+                  );
                 }}
               />
             </div>
-            <button className={styles.loginbtn} type="submit" disabled={isLoading}>
+            <button
+              className={styles.loginbtn}
+              type="submit"
+              disabled={isLoading}
+            >
               {isLoading ? 'Resetting...' : 'Reset Password'}
             </button>
           </form>

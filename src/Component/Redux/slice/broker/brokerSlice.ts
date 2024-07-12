@@ -5,7 +5,12 @@ import { axiosInstance } from '../../../AxiosInterceptor/AxiosInterceptor';
 import { RootState } from '../../reducers';
 import { ThunkAction } from 'redux-thunk';
 
-type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
+type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;
 
 interface Broker {
   id: number;
@@ -43,9 +48,9 @@ const brokerSlice = createSlice({
       state.error = null;
     },
     fetchBrokersSuccess: (state, action: PayloadAction<Broker[]>) => {
-      state.brokers = action.payload.map(broker => ({
+      state.brokers = action.payload.map((broker) => ({
         ...broker,
-        name: `${broker.firstName} ${broker.lastName}`
+        name: `${broker.firstName} ${broker.lastName}`,
       }));
       state.loading = false;
       state.error = null;
@@ -57,21 +62,19 @@ const brokerSlice = createSlice({
   },
 });
 
-export const {
-  fetchBrokersStart,
-  fetchBrokersSuccess,
-  fetchBrokersFailure,
-} = brokerSlice.actions;
+export const { fetchBrokersStart, fetchBrokersSuccess, fetchBrokersFailure } =
+  brokerSlice.actions;
 
 export default brokerSlice.reducer;
 
-export const fetchBrokers = (): AppThunk<void> => async (dispatch: Dispatch) => {
-  try {
-    dispatch(fetchBrokersStart());
-    const response = await axiosInstance.get('/brokers/all-users');
-    dispatch(fetchBrokersSuccess(response.data));
-  } catch (error) {
-    console.error('Error fetching brokers:', error);
-    dispatch(fetchBrokersFailure((error as Error).message));
-  }
-};
+export const fetchBrokers =
+  (): AppThunk<void> => async (dispatch: Dispatch) => {
+    try {
+      dispatch(fetchBrokersStart());
+      const response = await axiosInstance.get('/brokers/all-users');
+      dispatch(fetchBrokersSuccess(response.data));
+    } catch (error) {
+      console.error('Error fetching brokers:', error);
+      dispatch(fetchBrokersFailure((error as Error).message));
+    }
+  };
