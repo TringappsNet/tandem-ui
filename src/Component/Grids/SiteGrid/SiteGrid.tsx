@@ -1,22 +1,28 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import {
   Button,
   TextField,
   Dialog,
   DialogActions,
-  DialogTitle,
   DialogContent,
+  DialogTitle,
   IconButton,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-
-import { axiosInstance } from "../../AxiosInterceptor/AxiosInterceptor";
-import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
-import FullGrid from "../MainGrid/MainGrid";
-import { MdEdit, MdDelete } from "react-icons/md";
-import ConfirmationModal from "../../AlertDialog/AlertDialog";
-
-import "./site-grid.module.css";
+} from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../Redux/store';
+import {
+  fetchSites,
+  addSite,
+  updateSite,
+  deleteSite,
+} from '../../Redux/slice/site/siteSlice';
+import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
+import FullGrid from '../MainGrid/MainGrid';
+import { MdEdit, MdDelete } from 'react-icons/md';
+import ConfirmationModal from '../../AlertDialog/AlertDialog';
+import CloseIcon from '@mui/icons-material/Close';
+import './site-grid.module.css';
+import { RootState } from '../../Redux/reducers';
 
 interface Site {
   id: number;
@@ -30,25 +36,22 @@ interface Site {
   createdBy: number;
 }
 
-const config = {
-  apiUrl: "/sites",
-};
-
 const SiteGrid: React.FC = () => {
-  const [rows, setRows] = useState<Site[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number>(0);
   const [formErrors, setFormErrors] = useState<Partial<Site>>({});
-
+  const dispatch = useDispatch<AppDispatch>();
+  const sites = useSelector((state: RootState) => state.site.sites);
+  const userdetails = useSelector((state: RootState) => state.auth.user);
   const [formData, setFormData] = useState<Site>({
     id: 0,
-    addressline1: "",
-    addressline2: "",
-    city: "",
-    state: "",
-    country: "",
-    zipcode: "",
+    addressline1: '',
+    addressline2: '',
+    city: '',
+    state: '',
+    country: '',
+    zipcode: '',
     isNew: true,
     createdBy: 0,
   });
@@ -59,17 +62,8 @@ const SiteGrid: React.FC = () => {
   });
 
   useEffect(() => {
-    fetchSites();
-  }, []);
-
-  const fetchSites = async () => {
-    try {
-      const response = await axiosInstance.get(config.apiUrl);
-      setRows(response.data);
-    } catch (error) {
-      console.error("Error fetching Sites:", error);
-    }
-  };
+    dispatch(fetchSites());
+  }, [dispatch]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -79,12 +73,12 @@ const SiteGrid: React.FC = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === "address") {
-      const [addressline1, addressline2] = value.split(", ");
+    if (name === 'address') {
+      const [addressline1, addressline2] = value.split(', ');
       setFormData((prevFormData) => ({
         ...prevFormData,
-        addressline1: addressline1 || "",
-        addressline2: addressline2 || "",
+        addressline1: addressline1 || '',
+        addressline2: addressline2 || '',
       }));
     } else {
       setFormData({ ...formData, [name]: value });
@@ -94,12 +88,12 @@ const SiteGrid: React.FC = () => {
   const resetForm = () => {
     setFormData({
       id: 0,
-      addressline1: "",
-      addressline2: "",
-      city: "",
-      state: "",
-      country: "",
-      zipcode: "",
+      addressline1: '',
+      addressline2: '',
+      city: '',
+      state: '',
+      country: '',
+      zipcode: '',
       isNew: true,
       createdBy: 0,
     });
@@ -108,32 +102,32 @@ const SiteGrid: React.FC = () => {
 
   const validateForm = () => {
     let valid = true;
-
     const errors: Partial<Site> = {};
+
     if (!formData.addressline1) {
-      errors.addressline1 = "Address Line 1 is required";
+      errors.addressline1 = 'Address Line 1 is required';
       valid = false;
     }
     if (!formData.city) {
-      errors.city = "City is required";
+      errors.city = 'City is required';
       valid = false;
     }
     if (!formData.state) {
-      errors.state = "State is required";
+      errors.state = 'State is required';
       valid = false;
     }
     if (!formData.country) {
-      errors.country = "Country is required";
+      errors.country = 'Country is required';
+      valid = false;
+    }
+    if (!formData.zipcode) {
+      errors.zipcode = 'Zipcode is required';
+      valid = false;
+    } else if (!/^\d{5}$/.test(formData.zipcode)) {
+      errors.zipcode = 'Zipcode must be 5 digits';
       valid = false;
     }
 
-    if (!formData.zipcode) {
-      errors.zipcode = "Zipcode is required";
-      valid = false;
-    } else if (!/^\d{5}$/.test(formData.zipcode)) {
-      errors.zipcode = "Zipcode must be 5 digits";
-      valid = false;
-    }
     setFormErrors(errors);
     return valid;
   };
@@ -142,93 +136,65 @@ const SiteGrid: React.FC = () => {
     setDeleteConfirmation(false);
   };
 
-  const handleAdd = async () => {
-    try {
-      if (validateForm()) {
-        const response = await axiosInstance.post("sites/site/", formData);
-        setRows([...rows, response.data]);
-        handleClose();
-      }
-    } catch (error) {
-      console.error("Error adding Site:", error);
+  const handleAdd = () => {
+    if (validateForm()) {
+      dispatch(addSite(formData));
+      handleClose();
     }
   };
 
   const handleEdit = (id: number) => {
-    const row = rows.find((row) => row.id === id);
-    if (row) {
-      setFormData(row);
+    const site = sites.find((site) => site.id === id);
+    if (site) {
+      setFormData(site);
       handleOpen();
     }
   };
 
-  const handleUpdate = async () => {
-    try {
-      const updateBy: any = localStorage.getItem("auth");
-      const user_id = JSON.parse(updateBy);
+  const handleUpdate = () => {
+    if (validateForm()) {
+      const user_id = userdetails?.id;
 
-      console.log("User Id", user_id.user.id);
-
-      if (updateBy) {
+      if (user_id) {
         const updatedFormData = {
           ...formData,
-          updatedBy: user_id.user.id,
+          updatedBy: user_id,
         };
 
-        const response = await axiosInstance.put(
-          `sites/site/${updatedFormData.id}`,
-          updatedFormData
-        );
-
-        setRows(
-          rows.map((row) =>
-            row.id === updatedFormData.id ? response.data : row
-          )
-        );
-
+        dispatch(updateSite(updatedFormData));
         handleClose();
       }
-    } catch (error) {
-      console.error("Error updating Site:", error);
     }
   };
-
-  const handleDelete = async (id: number) => {
+  const handleDelete = (id: number) => {
     setDeleteConfirmation(true);
     setDeleteId(id);
   };
 
-  const handleConfirmDelete = async () => {
-    try {
-      await axiosInstance.delete(`sites/site/${deleteId}`);
-      setRows(rows.filter((row) => row.id !== deleteId));
-      setDeleteConfirmation(false);
-    } catch (error) {
-      console.error("Error deleting Site:", error);
-    }
+  const handleConfirmDelete = () => {
+    dispatch(deleteSite(deleteId));
+    setDeleteConfirmation(false);
   };
 
   const columns: GridColDef[] = [
-    { field: "addressline1", headerName: "AddressLine1", width: 190 },
-    { field: "addressline2", headerName: "AddressLine2", width: 190 },
-
-    { field: "state", headerName: "State", width: 190 },
-    { field: "city", headerName: "City", width: 190 },
-    { field: "zipcode", headerName: "Zipcode", width: 170 },
-    { field: "country", headerName: "Country", width: 170 },
+    { field: 'addressline1', headerName: 'AddressLine1', width: 190 },
+    { field: 'addressline2', headerName: 'AddressLine2', width: 190 },
+    { field: 'state', headerName: 'State', width: 190 },
+    { field: 'city', headerName: 'City', width: 190 },
+    { field: 'zipcode', headerName: 'Zipcode', width: 170 },
+    { field: 'country', headerName: 'Country', width: 170 },
     {
-      field: "actions",
-      headerName: "Actions",
+      field: 'actions',
+      headerName: 'Actions',
       width: 130,
-
       renderCell: (params) => (
         <>
           <MdEdit
-            style={{ color: "blue", marginRight: 8, cursor: "pointer" }}
+            style={{ color: 'blue', marginRight: 8, cursor: 'pointer' }}
             onClick={() => handleEdit(params.row.id)}
           />
           <MdDelete
-            style={{ color: "red", cursor: "pointer" }}
+            style={{ color: 'red', cursor: 'pointer' }}
             onClick={() => handleDelete(params.row.id)}
           />
         </>
@@ -250,10 +216,10 @@ const SiteGrid: React.FC = () => {
         color="primary"
         style={{
           marginRight: 8,
-          width: "200px",
-          position: "relative",
-          float: "right",
-          backgroundColor: "#262280",
+          width: '200px',
+          position: 'relative',
+          float: 'right',
+          backgroundColor: '#262280',
         }}
         onClick={() => handleEditNew(true)}
       >
@@ -264,7 +230,7 @@ const SiteGrid: React.FC = () => {
         sx={{
           height: 450,
         }}
-        rows={rows}
+        rows={sites}
         columns={columns}
         paginationModel={paginationModel}
         setPaginationModel={setPaginationModel}
@@ -282,48 +248,22 @@ const SiteGrid: React.FC = () => {
         confirmVariant="danger"
       />
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        //  sx={{
-        //   '.css-bdhsul-MuiTypography-root-MuiDialogTitle-root': {
-        //     background: '#262262 !important',
-        //     color: 'white',
-        //     height: '54px',
-        //     textAlign: 'center',
-        //     padding: '10px'
-        //   },
-        //   '.css-knqc4i-MuiDialogActions-root ': {
-        //     borderTop: '1px solid grey !important',
-        //   },
-        //   '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': {
-        //     height: '0.4375em',
-        //   },
-        //   '.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root': {
-        //     lineHeight: '0.4375em',
-        //   },
-        //   '.css-fss0q2-MuiModal-root-MuiDialog-root .css-1z10yd4-MuiFormControl-root-MuiTextField-root': {
-        //     marginTop: 0,
-        //   }
-        // }}
-      >
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialogtitle">
-          {formData.id ? "Edit Property" : "Add Property"}
-
+          {formData.id ? 'Edit Property' : 'Add Property'}
           <IconButton
             aria-label="close"
             onClick={() => {
               handleClose();
             }}
             sx={{
-              position: "absolute",
+              position: 'absolute',
               right: 20,
               top: 10,
-
               color: (theme) => theme.palette.grey[500],
             }}
           >
-            <CloseIcon sx={{ color: "#999" }} />
+            <CloseIcon sx={{ color: '#999' }} />
           </IconButton>
         </DialogTitle>
         <DialogContent>
@@ -403,7 +343,7 @@ const SiteGrid: React.FC = () => {
             onClick={formData.id ? handleUpdate : handleAdd}
             color="primary"
           >
-            {formData.id ? "Update" : "Add"}
+            {formData.id ? 'Update' : 'Add'}
           </Button>
         </DialogActions>
       </Dialog>

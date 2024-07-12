@@ -67,13 +67,13 @@ const Login: React.FC = () => {
             <h2>TANDEM INFRASTRUCTURE</h2>
           </div>
           <p>Sign in to continue to TANDEM</p>
-          {(emailError || passwordError) && (
+          {(emailError || passwordError || errorMessage) && (
             <div className={styles.errorBox}>
               {emailError && <p className={styles.errorText}>{emailError}</p>}
               {passwordError && <p className={styles.errorText}>{passwordError}</p>}
+              {errorMessage && <p className={styles.errorText}>{errorMessage}</p>}
             </div>
           )}
-          {errorMessage && <div className={styles.errorshow}>{errorMessage}</div>}
           <form className={styles.loginsection} onSubmit={handleSubmit}>
             <div className={styles.inputGroup}>
               <label className={styles.label} htmlFor="username">

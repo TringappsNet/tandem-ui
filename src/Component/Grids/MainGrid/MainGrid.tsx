@@ -3,11 +3,11 @@ import {
   GridColDef,
   GridPaginationModel,
   GridToolbar,
-} from "@mui/x-data-grid";
-import styles from "./parent-grid.module.css";
-import Box from "@mui/material/Box";
+} from '@mui/x-data-grid';
+import styles from './parent-grid.module.css';
+import Box from '@mui/material/Box';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 interface FullGridProps {
   rows: any[];
@@ -52,6 +52,7 @@ const FullGrid: React.FC<FullGridProps> = ({
             bgcolor: 'darkblue !important', // Set the background color here with !important
               border:'#191c24 !important',
 
+
             ...sx,
 
             lineHeight: 2,
@@ -76,6 +77,7 @@ const FullGrid: React.FC<FullGridProps> = ({
             border: 'none', 
           }
           
+
           }}
         >
           <DataGrid

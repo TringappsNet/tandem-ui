@@ -10,9 +10,11 @@ import resetReducer from '../slice/auth/resetSlice';
 import { sendInviteReducer } from '../slice/auth/sendInviteSlice';
 import { profileReducer } from '../slice/profile/profileSlice';
 import changePasswordReducer from '../slice/auth/changePasswordSlice';
-import siteReducer from '../slice/site/siteSlice';
 import brokerReducer from '../slice/broker/brokerSlice';
-import forgotPasswordReducer from '../slice/auth/forgotPasswordSlice'; 
+import forgotPasswordReducer from '../slice/auth/forgotPasswordSlice';
+import inviteBrokerReducer from '../slice/user/userSlice';
+import landlordReducer from '../slice/landlord/landlordSlice';
+import siteReducer from '../slice/site/siteSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -26,9 +28,11 @@ const rootReducer = combineReducers({
   roles: rolesReducer,
   contact: contactReducer,
   changePassword: changePasswordReducer,
-  site: siteReducer,
   broker: brokerReducer,
-  forgotPassword: forgotPasswordReducer, 
+  forgotPassword: forgotPasswordReducer,
+  inviteBroker: inviteBrokerReducer,
+  landlord: landlordReducer,
+  site: siteReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

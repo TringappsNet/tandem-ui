@@ -1,130 +1,129 @@
-@import url("@fontsource/public-sans");
+@import url('@fontsource/public-sans');
 
 body,
 html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 .profileContainer {
-    width: 610px;
-    max-width: 100%;
-    background-color: rgb(255, 255, 255);
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.3);
-    overflow-y: auto;
-    max-height: 100vh;
-    margin-top: 15px;
+  width: 610px;
+  max-width: 100%;
+  background-color: rgb(255, 255, 255);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.3);
+  overflow-y: auto;
+  max-height: 100vh;
+  margin-top: 15px;
 }
 
-
 .loaderContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(122, 119, 119, 0.5);
-    z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(122, 119, 119, 0.5);
+  z-index: 1000;
 }
 
 .loader {
-    width: 60px;
-    height: 60px;
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #262262;
-    border-radius: 70%;
-    animation: spin 1s linear infinite;
+  width: 60px;
+  height: 60px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #262262;
+  border-radius: 70%;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
 
-    100% {
-        transform: rotate(360deg);
-    }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 50px;
-    box-sizing: border-box;
-    margin-top: 10px;
-    margin-top: -65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  margin-top: -65px;
 }
 
 .headerSection {
-    display: flex;
-    align-items: center;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .circle {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: #9375bd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #9375bd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
 }
 
 .circle p {
-    color: rgb(250, 250, 250);
-    font-size: 24px;
-    font-weight: bold;
-    margin: 0;
+  color: rgb(250, 250, 250);
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
 }
 
 .userName {
-    font-size: 24px;
-    font-family: 'Public Sans', sans-serif;
-    font-weight: bolder;
-    margin: 0;
+  font-size: 24px;
+  font-family: 'Public Sans', sans-serif;
+  font-weight: bolder;
+  margin: 0;
 }
 
 .profileBlock {
-    background-color: #fbfcfd;
-    border-radius: 8px;
-    padding: 8px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: rgb(13, 13, 13);
-    padding-top: 20px;
-    margin-bottom: 15px;
+  background-color: #fbfcfd;
+  border-radius: 8px;
+  padding: 8px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(13, 13, 13);
+  padding-top: 20px;
+  margin-bottom: 15px;
 }
 
 .profileBlock:hover {
-    background-color: #e7e5e5;
-    outline: none;
-    box-shadow: 0 0 5px rgba(45, 12, 150, 0.5);
+  background-color: #e7e5e5;
+  outline: none;
+  box-shadow: 0 0 5px rgba(45, 12, 150, 0.5);
 }
 
 .profileItem {
-    margin-bottom: 12px;
-    display: flex;
-    padding: 8px;
-    font-family: 'Public Sans', sans-serif;
+  margin-bottom: 12px;
+  display: flex;
+  padding: 8px;
+  font-family: 'Public Sans', sans-serif;
 }
 
 .label {
-    font-weight: bold;
-    width: 100px;
-    display: inline-block;
+  font-weight: bold;
+  width: 100px;
+  display: inline-block;
 }
 
 .value {
-    flex: 1;
+  flex: 1;
 }

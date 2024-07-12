@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import styles from "./ForgotPassword.module.css";
-import { forgotPassword, clearState } from "../Redux/slice/auth/forgotPasswordSlice";
-import { RootState } from "../Redux/reducers";
-import { AppDispatch } from "../Redux/store"; 
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import styles from './ForgotPassword.module.css';
+import {
+  forgotPassword,
+  clearState,
+} from '../Redux/slice/auth/forgotPasswordSlice';
+import { RootState } from '../Redux/reducers';
+import { AppDispatch } from '../Redux/store';
 
 const ForgotPassword: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [validationErrorMessage, setValidationErrorMessage] = useState("");
+  const [email, setEmail] = useState('');
+  const [validationErrorMessage, setValidationErrorMessage] = useState('');
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const { loading, successMessage, errorMessage } = useSelector(
+  const { loading, successMessage } = useSelector(
     (state: RootState) => state.forgotPassword
   );
 
@@ -20,37 +23,41 @@ const ForgotPassword: React.FC = () => {
     if (successMessage) {
       const timer = setTimeout(() => {
         dispatch(clearState());
-        navigate("/login");
+        navigate('/login');
       }, 3000);
-
-      return () => clearTimeout(timer); // Cleanup the timer on component unmount
+      return () => clearTimeout(timer);
     }
   }, [successMessage, dispatch, navigate]);
 
+  // useEffect(() => {
+  //   if (statusCode === 404) {
+  //     setValidationErrorMessage("User not found");
+  //   } else if (errorMessage) {
+  //     setValidationErrorMessage(errorMessage);
+  //   }
+  // }, [statusCode, errorMessage]);
+
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (email === "") {
-      setValidationErrorMessage("Email cannot be empty");
-    } else if (!emailRegex.test(email)) {
-      setValidationErrorMessage("Invalid email address");
-    } else {
-      setValidationErrorMessage("");
-    }
+    return emailRegex.test(email);
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
-    validateEmail(value);
+    setValidationErrorMessage('');
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email === "") {
-      setValidationErrorMessage("Please enter a valid email");
+    if (email === '') {
+      setValidationErrorMessage('Please enter the Email address');
       return;
     }
-
+    if (!validateEmail(email)) {
+      setValidationErrorMessage('Invalid email address');
+      return;
+    }
     dispatch(forgotPassword(email));
   };
 
@@ -73,9 +80,6 @@ const ForgotPassword: React.FC = () => {
             {successMessage && (
               <div className={styles.success}>{successMessage}</div>
             )}
-            {errorMessage && (
-              <div className={styles.failure}>{errorMessage}</div>
-            )}
             {validationErrorMessage && (
               <div className={styles.failure}>{validationErrorMessage}</div>
             )}
@@ -91,8 +95,12 @@ const ForgotPassword: React.FC = () => {
                 onChange={handleEmailChange}
               />
             </div>
-            <button className={styles.loginbtn} type="submit" disabled={loading}>
-              {loading ? "Sending..." : "Send Reset Link"}
+            <button
+              className={styles.loginbtn}
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? 'Sending...' : 'Send Reset Link'}
             </button>
           </form>
           <div className={styles.rememberpwd}>

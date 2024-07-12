@@ -9,6 +9,7 @@ import {
   buildStyles
 } from "react-circular-progressbar";import 'react-circular-progressbar/dist/styles.css';
 import logo1 from "../../assests/rup.png";
+
 type Deal = {
   totalDeals: number;
   dealsOpened: number;
@@ -31,7 +32,7 @@ const Main: React.FC = () => {
 
   const fetchDeals = async () => {
     try {
-      const response = await axiosInstance.get("/deals/dealsData");
+      const response = await axiosInstance.get('/deals/dealsData');
       const deal: Deal = {
         totalDeals: response.data.totalDeals,
         dealsOpened: response.data.dealsOpened,
@@ -41,7 +42,7 @@ const Main: React.FC = () => {
       };
       setDeal(deal);
     } catch (error) {
-      console.error("Error fetching deals:", error);
+      console.error('Error fetching deals:', error);
     }
   };
 
@@ -65,6 +66,7 @@ const Main: React.FC = () => {
                  </div>
               
               </p>
+       
 
 
 
