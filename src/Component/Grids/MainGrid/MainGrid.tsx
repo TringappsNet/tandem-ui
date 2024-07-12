@@ -57,30 +57,54 @@ const FullGrid: React.FC<FullGridProps> = ({
 
             lineHeight: 2,
             ".css-15n4jlm-MuiDataGrid-root": {
-              border: "none",
+              // border: "none",
+              
               
             },
+           ' .css-1wc0mgy .parent-grid_dataGrid__Uj-3s ':{
+              border  :'1px solid grey !important'
+            },
+          
             '.css-1kwdphh-MuiDataGrid-virtualScrollerContent,.css-tgsonj,.css-14mxsc7-MuiDataGrid-root .MuiDataGrid-withBorderColor,.css-1rtad1,.css-14mxsc7-MuiDataGrid-root .MuiDataGrid-filler,.css-128fb87-MuiDataGrid-toolbarContainer,.css-wop1k0-MuiDataGrid-footerContainer, .css-yrdy0g-MuiDataGrid-columnHeaderRow,.css-1w53k9d-MuiDataGrid-overlay,.css-1rtad1,.css-og3pwy .css-15n4jlm-MuiDataGrid-root':{
-              background: '#142031 !important',
+              // background: '#142031 !important',
+              background: 'linear-gradient(58deg,  rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%)',
+
+
+              // background: 'radial-gradient(circle, rgba(2,83,145,1) 0%, rgba(7,85,144,1) 35%, rgba(5,90,155,1) 100%)',
+
               color: 'white',
               // border:'1px solid white',
-              boxshadow: 'rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
+              backdropfilter: 'blur(10px)',
+              webkitbackdropfilter: 'blur(40px)',
+              boxshadow: '0 10px 25px rgba(0,0,0,0.2)',
+              // boxshadow: 'rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
               
 
           },
           '.css-1eed5fa-MuiInputBase-root-MuiInput-root':{
             color: 'white',
+          },
+          '.parent-grid_dataGrid__Uj-3s  ':{
+            // border:'1px solid grey',
+            backdropfilter: 'blur(20px)',
+
           }
           ,
           '.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root':{
 
   color:'white',
           },
-          '.css-14mxsc7-MuiDataGrid-root ':{
-            border: 'none', 
+         
+'.css-12doopn .css-15n4jlm-MuiDataGrid-root':{
+  // border: '1px solid grey !important' 
+
+},
+          '.css-14mdrlu .css-15n4jlm-MuiDataGrid-root ':{
+            // border: '1px solid grey !important' 
+
           }
           
-
+ 
           }}
         >
           <DataGrid
@@ -92,7 +116,11 @@ const FullGrid: React.FC<FullGridProps> = ({
             rowHeight={40                             }
             columnHeaderHeight={39}
             disableColumnFilter
+            
             disableColumnMenu
+            hideFooter
+            hideFooterPagination
+            hideFooterSelectedRowCount
             slots={{ toolbar: GridToolbar }}
             slotProps={{
               toolbar: {
