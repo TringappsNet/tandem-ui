@@ -92,7 +92,8 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
             </div>
           )}
 
-          <form onSubmit={handleSendInvite}>
+          <form onSubmit={handleSendInvite}    autoComplete="off"
+          >
             <div className={styles.formGroup}>
               <label htmlFor="email">Email:</label>
               <input
