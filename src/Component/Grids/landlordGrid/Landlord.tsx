@@ -8,13 +8,21 @@ import {
   DialogTitle,
   IconButton,
 } from "@mui/material";
-import { axiosInstance } from "../../AxiosInterceptor/AxiosInterceptor";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../Redux/store";
+import {
+  fetchLandlords,
+  addLandlord,
+  updateLandlord,
+  deleteLandlord,
+} from "../../Redux/slice/grids/landlordSlice";
 import styles from "./landlord-grid.module.css";
 import { GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import FullGrid from "../MainGrid/MainGrid";
 import { MdEdit, MdDelete } from "react-icons/md";
 import ConfirmationModal from "../../AlertDialog/AlertDialog";
 import CloseIcon from "@mui/icons-material/Close";
+import { RootState } from "../../Redux/reducers";
 
 interface Landlord {
   id: number;
@@ -30,12 +38,7 @@ interface Landlord {
   isNew: boolean;
 }
 
-const config = {
-  apiUrl: "/landlords",
-};
-
 const LandlordGrid: React.FC = () => {
-  const [rows, setRows] = useState<Landlord[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
@@ -57,19 +60,12 @@ const LandlordGrid: React.FC = () => {
     page: 0,
   });
   const [formErrors, setFormErrors] = useState<Partial<Landlord>>({});
+  const dispatch = useDispatch<AppDispatch>();
+  const landlords = useSelector((state: RootState) => state.landlord.landlords);
 
   useEffect(() => {
-    fetchLandlords();
-  }, []);
-
-  const fetchLandlords = async () => {
-    try {
-      const response = await axiosInstance.get(config.apiUrl);
-      setRows(response.data);
-    } catch (error) {
-      console.error("Error fetching landlords:", error);
-    }
-  };
+    dispatch(fetchLandlords());
+  }, [dispatch]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -86,25 +82,17 @@ const LandlordGrid: React.FC = () => {
     }));
   };
 
-  const handleAdd = async () => {
+  const handleAdd = () => {
     if (validateForm()) {
-      try {
-        const response = await axiosInstance.post(
-          "landlords/landlord/",
-          formData
-        );
-        setRows([...rows, response.data]);
-        handleClose();
-      } catch (error) {
-        console.error("Error adding landlord:", error);
-      }
+      dispatch(addLandlord(formData));
+      handleClose();
     }
   };
 
   const handleEdit = (id: number) => {
-    const row = rows.find((row) => row.id === id);
-    if (row) {
-      setFormData(row);
+    const landlord = landlords.find((landlord) => landlord.id === id);
+    if (landlord) {
+      setFormData(landlord);
       handleOpen();
     }
   };
@@ -128,36 +116,21 @@ const LandlordGrid: React.FC = () => {
     }
   };
 
-  const handleUpdate = async () => {
+  const handleUpdate = () => {
     if (validateForm()) {
-      try {
-        const response = await axiosInstance.patch(
-          `landlords/landlord/${formData.id}`,
-          formData
-        );
-        setRows(
-          rows.map((row) => (row.id === formData.id ? response.data : row))
-        );
-        handleClose();
-      } catch (error) {
-        console.error("Error updating landlord:", error);
-      }
+      dispatch(updateLandlord(formData));
+      handleClose();
     }
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = (id: number) => {
     setDeleteConfirmation(true);
     setDeleteId(id);
   };
 
-  const handleConfirmDelete = async () => {
-    try {
-      await axiosInstance.delete(`landlords/landlord/${deleteId}`);
-      setRows(rows.filter((row) => row.id !== deleteId));
-      setDeleteConfirmation(false);
-    } catch (error) {
-      console.error("Error deleting landlord:", error);
-    }
+  const handleConfirmDelete = () => {
+    dispatch(deleteLandlord(deleteId));
+    setDeleteConfirmation(false);
   };
 
   const columns: GridColDef[] = [
@@ -174,7 +147,6 @@ const LandlordGrid: React.FC = () => {
       field: "actions",
       headerName: "Actions",
       width: 100,
-
       renderCell: (params) => (
         <>
           <MdEdit
@@ -196,7 +168,6 @@ const LandlordGrid: React.FC = () => {
 
     if (!formData.name) {
       errors.name = "Name is required";
-
       valid = false;
     }
 
@@ -273,7 +244,7 @@ const LandlordGrid: React.FC = () => {
         sx={{
           height: 450,
         }}
-        rows={rows}
+        rows={landlords}
         columns={columns}
         paginationModel={paginationModel}
         setPaginationModel={setPaginationModel}
@@ -303,7 +274,6 @@ const LandlordGrid: React.FC = () => {
               position: "absolute",
               right: 20,
               top: 10,
-
               color: (theme) => theme.palette.grey[500],
             }}
           >
@@ -356,7 +326,6 @@ const LandlordGrid: React.FC = () => {
             error={!!formErrors.address1}
             helperText={formErrors.address1}
           />
-
           <TextField
             margin="dense"
             name="address2"
@@ -368,7 +337,6 @@ const LandlordGrid: React.FC = () => {
             error={!!formErrors.address2}
             helperText={formErrors.address2}
           />
-
           <TextField
             margin="dense"
             name="city"

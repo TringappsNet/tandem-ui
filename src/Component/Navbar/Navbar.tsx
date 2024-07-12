@@ -167,7 +167,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               onClick={() => dispatch(openDealForm())}
             >
 
-              <p>CREATE</p>
+              <p>CREATE DEAL</p>
             </div>)}
           <div
             className={styles.userdropdown}
