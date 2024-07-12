@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, Action } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
-import {axiosInstance} from '../../../AxiosInterceptor/AxiosInterceptor';
+import { axiosInstance } from '../../../AxiosInterceptor/AxiosInterceptor';
 import { RootState } from '../../reducers';
 import { ThunkAction } from 'redux-thunk';
 import { Deal } from '../../../Interface/DealFormObject';
@@ -17,7 +17,7 @@ interface DealState {
 
 const initialState: DealState = {
   activeStep: 0,
-  dealDetails: [], 
+  dealDetails: [],
   loading: false,
   error: null,
 };
@@ -66,7 +66,7 @@ const dealSlice = createSlice({
       state.dealDetails = state.dealDetails.filter(deal => deal.id !== action.payload);
       state.loading = false;
       state.error = null;
-    },    
+    },
   },
 });
 
@@ -89,6 +89,17 @@ export const fetchDealDetails = (): AppThunk<void> => async (dispatch: Dispatch)
     dispatch(fetchDealDetailsSuccess(response.data));
   } catch (error) {
     console.error('Error fetching deal details:', error);
+    dispatch(fetchDealDetailsFailure((error as Error).message));
+  }
+};
+
+export const fetchBrokerDealDetails = (brokerId: number): AppThunk<void> => async (dispatch: Dispatch) => {
+  try {
+    dispatch(fetchDealDetailsStart());
+    const response = await axiosInstance.get(`deals/assignedTo/${brokerId}`);
+    dispatch(fetchDealDetailsSuccess(response.data.deals));
+  } catch (error) {
+    console.error('Error fetching broker deal details:', error);
     dispatch(fetchDealDetailsFailure((error as Error).message));
   }
 };

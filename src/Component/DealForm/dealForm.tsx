@@ -88,7 +88,7 @@ const DealForm: React.FC<DealFormProps> = () => {
     noticeToProceedDate: currentDeal?.noticeToProceedDate || "",
     commercialOperationDate: currentDeal?.commercialOperationDate || "",
     potentialcommissiondate: currentDeal?.potentialcommissiondate || "",
-    potentialCommission: currentDeal?.potentialCommission || null,
+    potentialCommission: currentDeal?.potentialCommission || 0,
     status: currentDeal?.status || "",
     activeStep: currentDeal?.activeStep ?? 0,
     createdBy: currentDeal?.createdBy || 0,
@@ -116,9 +116,9 @@ const DealForm: React.FC<DealFormProps> = () => {
     }
   };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+  // const handleBack = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  // };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -346,62 +346,16 @@ const DealForm: React.FC<DealFormProps> = () => {
             <Box
               sx={{
                 width: "100%",
-                marginTop: "30px",
+                marginTop: "10px",
                 display: "flex",
                 flexDirection: "column",
                 padding: "30px",
               }}
             >
-              {activeStep === steps.length ? (
-                <Box>
-                  <Typography
-                    variant="h3"
-                    sx={{ textAlign: "center", color: "green" }}
-                  >
-                    Deal is Completed
-                  </Typography>
-                </Box>
-              ) : (
-                <Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      marginTop: 2,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        width: "100%",
-                      }}
-                    >
-                      <Button
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        sx={{ width: 100 }}
-                      >
-                        Back
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        sx={{ width: 100 }}
-                        disabled={!saveSuccess || !isFormValid()}
-                      >
-                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                      </Button>
-                    </Box>
-                  </Box>
-                  <Box
+              <Box
                     sx={{
                       display: "flex",
                       flexDirection: "column",
-                      position: "absolute",
-                      top: "260px",
-                      zIndex: 999,
                     }}
                   >
                     {steps[activeStep].fields.map((field, index) =>
@@ -417,6 +371,49 @@ const DealForm: React.FC<DealFormProps> = () => {
                       Save
                     </Button>
                   </Box>
+              {activeStep === steps.length ? (
+                <Box>
+                  <Typography
+                    variant="h3"
+                    sx={{ textAlign: "center", color: "green" }}
+                  >
+                    Deal is Completed
+                  </Typography>
+                </Box>
+              ) : (
+                <Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        width: "100%",
+                      }}
+                    >
+                      {/* <Button
+                        disabled={activeStep === 0}
+                        onClick={handleBack}
+                        sx={{ width: 100 }}
+                      >
+                        Back
+                      </Button> */}
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        sx={{ width: 100 }}
+                        disabled={!saveSuccess || !isFormValid()}
+                      >
+                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                      </Button>
+                    </Box>
+                  </Box>
+                  
                 </Box>
               )}
             </Box>

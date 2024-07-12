@@ -35,7 +35,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const userdetails = useSelector((state: RootState) => state.auth.user);
+  const userdetails = useSelector((state: RootState) => state.auth);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [selectedComponent, setSelectedComponent] = useState<string | null>(
     null
@@ -143,32 +143,32 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             />
             <h3>TANDEM INFRASTRUCTURE</h3>
           </div>
-          <p onClick={handleCards} style={{ cursor: "pointer" }}>
-            DEALS
-          </p>
-          <p onClick={() => handleRoute("site")} style={{ cursor: "pointer" }}>
-            PROPERTY
-          </p>
-          <p
-            onClick={() => handleRoute("landlord")}
-            style={{ cursor: "pointer" }}
-          >
-            LANDLORD
-          </p>
-          <p
-            onClick={() => handleRoute("invitebroker")}
-            style={{ cursor: "pointer" }}
-          >
-            BROKERDETAILS
-          </p>
+          {userdetails.isAdmin && (
+            <>
+              <p onClick={handleCards} style={{ cursor: "pointer" }}>
+                DEALS
+              </p>
+              <p onClick={() => handleRoute("site")} style={{ cursor: "pointer" }}>
+                PROPERTY
+              </p>
+              <p onClick={() => handleRoute("landlord")} style={{ cursor: "pointer" }}>
+                LANDLORD
+              </p>
+              <p onClick={() => handleRoute("invitebroker")} style={{ cursor: "pointer" }}>
+                BROKERDETAILS
+              </p>
+            </>
+          )}
         </div>
         <div className={styles.rightheadersection}>
-          <div
-            className={styles.createdeal}
-            onClick={() => dispatch(openDealForm())}
-          >
-            <p>CREATE</p>
-          </div>
+          {userdetails.isAdmin && (
+            <div
+              className={styles.createdeal}
+              onClick={() => dispatch(openDealForm())}
+            >
+
+              <p>CREATE</p>
+            </div>)}
           <div
             className={styles.userdropdown}
             onClick={toggleDropdown}
@@ -178,21 +178,25 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               <p>
                 Welcome,{" "}
                 {userdetails
-                  ? `${userdetails.firstName} ${userdetails.lastName}`
+                  ? `${userdetails.user?.firstName} ${userdetails.user?.lastName}`
                   : "Guest"}
               </p>
+              {userdetails &&
+                <div className={styles.roleType}> {userdetails.isAdmin ? "(Admin)"  : "(Broker)"} </div>}
             </div>
             <div className={styles.circle}>
-              <p>{userdetails ? userdetails.firstName[0] : "G"}</p>
+              <p>{userdetails ? userdetails.user?.firstName[0] : "G"}</p>
             </div>
             {isDropdownOpen && (
               <div className={styles.dropdownMenu}>
                 <button onClick={() => handleOpenPopup("Profile")}>
                   Profile
                 </button>
-                <button onClick={() => handleOpenPopup("SendInvite")}>
-                  Send Invite
-                </button>
+                {userdetails.isAdmin && (
+                  <button onClick={() => handleOpenPopup("SendInvite")}>
+                    Send Invite
+                  </button>
+                )}
                 <button onClick={() => handleOpenPopup("Reset")}>Reset</button>
                 <button onClick={() => handleOpenPopup("Support")}>
                   Contact us
