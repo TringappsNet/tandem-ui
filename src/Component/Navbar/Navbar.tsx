@@ -15,20 +15,19 @@ import Profile from '../Profile/profile';
 import Support from '../Support/Support';
 import DealForm from '../DealForm/dealForm';
 import ConfirmationModal from '../AlertDialog/AlertDialog';
-import { openDealForm } from '../Redux/slice/deal/dealCompSlice';
+import { openDealForm } from '../Redux/slice/deal/dealFormSlice';
 import {
   closeSendInvite,
   openSendInvite,
-} from "../Redux/slice/auth/sendInviteSlice";
-import { closeReset, openReset } from "../Redux/slice/auth/resetSlice";
-import { closeSupport, openSupport } from "../Redux/slice/support/supportSlice";
-import { closeProfile, openProfile } from "../Redux/slice/profile/profileSlice";
-import { PiUserCirclePlusFill } from "react-icons/pi";
-import { IoIosSend, IoIosContacts  } from "react-icons/io";
-import { MdOutlineLockReset } from "react-icons/md";
-import { IoLogOutOutline } from "react-icons/io5";
+} from '../Redux/slice/auth/sendInviteSlice';
+import { closeReset, openReset } from '../Redux/slice/auth/resetSlice';
+import { closeSupport, openSupport } from '../Redux/slice/support/supportSlice';
+import { closeProfile, openProfile } from '../Redux/slice/profile/profileSlice';
+import { PiUserCirclePlusFill } from 'react-icons/pi';
+import { IoIosSend, IoIosContacts } from 'react-icons/io';
+import { MdOutlineLockReset } from 'react-icons/md';
+import { IoLogOutOutline } from 'react-icons/io5';
 import SnackbarComponent from '../Snackbar/Snackbar';
-
 
 interface NavbarProps {
   links: {
@@ -230,19 +229,27 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             </div>
             {isDropdownOpen && (
               <div className={styles.dropdownMenu}>
-                <button onClick={() => handleOpenPopup("Profile")}>
-                <PiUserCirclePlusFill className={styles.icons} />Profile
+                <button onClick={() => handleOpenPopup('Profile')}>
+                  <PiUserCirclePlusFill className={styles.icons} />
+                  Profile
                 </button>
                 {userdetails.isAdmin && (
-                  <button onClick={() => handleOpenPopup("SendInvite")}>
-                    <IoIosSend className={styles.icons} />Send Invite
+                  <button onClick={() => handleOpenPopup('SendInvite')}>
+                    <IoIosSend className={styles.icons} />
+                    Send Invite
                   </button>
                 )}
-                <button onClick={() => handleOpenPopup("Reset")}><MdOutlineLockReset className={styles.icons} />Reset</button>
-                <button onClick={() => handleOpenPopup("Support")}>
-                <IoIosContacts className={styles.icons} /> Contact us
+                <button onClick={() => handleOpenPopup('Reset')}>
+                  <MdOutlineLockReset className={styles.icons} />
+                  Reset
                 </button>
-                <button onClick={handleLogoutClick}><IoLogOutOutline className={styles.icons} />Logout</button>
+                <button onClick={() => handleOpenPopup('Support')}>
+                  <IoIosContacts className={styles.icons} /> Contact us
+                </button>
+                <button onClick={handleLogoutClick}>
+                  <IoLogOutOutline className={styles.icons} />
+                  Logout
+                </button>
               </div>
             )}
           </div>

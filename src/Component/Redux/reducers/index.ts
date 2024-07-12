@@ -5,7 +5,7 @@ import dealReducer from '../slice/deal/dealSlice';
 import currentDeal from '../slice/deal/currentDeal';
 import rolesReducer from '../slice/role/rolesSlice';
 import contactReducer from '../slice/support/supportSlice';
-import { dealFormReducer } from '../slice/deal/dealCompSlice';
+import { dealFormReducer } from '../slice/deal/dealFormSlice';
 import resetReducer from '../slice/auth/resetSlice';
 import { sendInviteReducer } from '../slice/auth/sendInviteSlice';
 import { profileReducer } from '../slice/profile/profileSlice';
@@ -15,6 +15,7 @@ import forgotPasswordReducer from '../slice/auth/forgotPasswordSlice';
 import inviteBrokerReducer from '../slice/user/userSlice';
 import landlordReducer from '../slice/landlord/landlordSlice';
 import siteReducer from '../slice/site/siteSlice';
+import dealDataReducer from '../slice/deal/dealsDataSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -33,6 +34,8 @@ const rootReducer = combineReducers({
   inviteBroker: inviteBrokerReducer,
   landlord: landlordReducer,
   site: siteReducer,
+  dealData: dealDataReducer, 
+
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
