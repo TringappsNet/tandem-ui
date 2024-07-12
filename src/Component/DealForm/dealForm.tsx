@@ -274,7 +274,8 @@ const DealForm: React.FC<DealFormProps> = () => {
   };
 
   function isFormValid() {
-    const currentFields = steps[activeStep].fields;
+    if (activeStep >= steps.length) return false;
+    const currentFields = steps[activeStep]?.fields || [];
     for (const field of currentFields) {
       if (!formData[field.label as keyof Deal]) {
         return false;
@@ -373,7 +374,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                   flexDirection: 'column',
                 }}
               >
-                {steps[activeStep].fields.map((field, index) =>
+                {activeStep < steps.length && steps[activeStep].fields.map((field, index) =>
                   renderField(field, index)
                 )}
                 <Button
