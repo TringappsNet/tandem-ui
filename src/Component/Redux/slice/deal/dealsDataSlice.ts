@@ -59,30 +59,26 @@ const mainSlice = createSlice({
   },
 });
 
-export const {
-  fetchDealsStart,
-  fetchDealsSuccess,
-  fetchDealsFailure,
-} = mainSlice.actions;
-
+export const { fetchDealsStart, fetchDealsSuccess, fetchDealsFailure } =
+  mainSlice.actions;
 
 export const fetchDeals = (): AppThunk<void> => async (dispatch: Dispatch) => {
-    try {
-      dispatch(fetchDealsStart());
-      const response = await axiosInstance.get('/deals/dealsData');
-      const deal: Deal = {
-        id: response.data.id,
-        totalDeals: response.data.totalDeals,
-        dealsOpened: response.data.dealsOpened,
-        dealsInProgress: response.data.dealsInProgress,
-        dealsClosed: response.data.dealsClosed,
-        totalCommission: response.data.totalCommission,
-      };
-      dispatch(fetchDealsSuccess(deal));
-    } catch (error) {
-      console.error('Error fetching deals:', error);
-      dispatch(fetchDealsFailure((error as Error).message));
-    }
-  };
-  
+  try {
+    dispatch(fetchDealsStart());
+    const response = await axiosInstance.get('/deals/dealsData');
+    const deal: Deal = {
+      id: response.data.id,
+      totalDeals: response.data.totalDeals,
+      dealsOpened: response.data.dealsOpened,
+      dealsInProgress: response.data.dealsInProgress,
+      dealsClosed: response.data.dealsClosed,
+      totalCommission: response.data.totalCommission,
+    };
+    dispatch(fetchDealsSuccess(deal));
+  } catch (error) {
+    console.error('Error fetching deals:', error);
+    dispatch(fetchDealsFailure((error as Error).message));
+  }
+};
+
 export default mainSlice.reducer;

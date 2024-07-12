@@ -34,8 +34,7 @@ const rootReducer = combineReducers({
   inviteBroker: inviteBrokerReducer,
   landlord: landlordReducer,
   site: siteReducer,
-  dealData: dealDataReducer, 
-
+  dealData: dealDataReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

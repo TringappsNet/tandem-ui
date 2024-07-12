@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styles from "./dashboardTile.module.css";
-import BrokerGrid from "../../Grids/broker-grid/BrokerGrid";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styles from './dashboardTile.module.css';
+import BrokerGrid from '../../Grids/broker-grid/BrokerGrid';
 import {
   CircularProgressbarWithChildren,
-  buildStyles
-} from "react-circular-progressbar";
+  buildStyles,
+} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import logo1 from "../../../assests/rup.png";
-import { fetchDeals } from "../../Redux/slice/deal/dealsDataSlice";
-import { RootState } from "../../Redux/reducers";
-import { AppDispatch } from "../../Redux/store";
-import { fetchSites } from "../../Redux/slice/site/siteSlice";
+import logo1 from '../../../assests/rup.png';
+import { fetchDeals } from '../../Redux/slice/deal/dealsDataSlice';
+import { RootState } from '../../Redux/reducers';
+import { AppDispatch } from '../../Redux/store';
+import { fetchSites } from '../../Redux/slice/site/siteSlice';
 
 const Main: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,26 +28,25 @@ const Main: React.FC = () => {
       <div className={styles.tagsContainer}>
         <p className={styles.welcome}>
           <div className={styles.welcomefade}>
-            Welcome, {" "}
+            Welcome,{' '}
             {userdetails
               ? `${userdetails.firstName} ${userdetails.lastName} !`
-              : "Guest"}
+              : 'Guest'}
           </div>
         </p>
 
         <span className={styles.tag}>
-          <p className={styles.totalDeals}>
-            Total Deals:
-          </p>
+          <p className={styles.totalDeals}>Total Deals:</p>
           <p className={styles.deals}>
-            <p className={styles.totalDeal}>
-              {deal.totalDeals}
-            </p>
+            <p className={styles.totalDeal}>{deal.totalDeals}</p>
             <p style={{ width: 50, height: 50 }}>
-              <CircularProgressbarWithChildren value={deal.totalDeals} styles={buildStyles({
-                textColor: "red",
-                pathColor: "rose",
-              })}>
+              <CircularProgressbarWithChildren
+                value={deal.totalDeals}
+                styles={buildStyles({
+                  textColor: 'red',
+                  pathColor: 'rose',
+                })}
+              >
                 <div style={{ fontSize: 10, marginTop: -1 }}>
                   <strong>{deal.totalDeals}%</strong>
                 </div>
@@ -57,18 +56,17 @@ const Main: React.FC = () => {
         </span>
 
         <span className={styles.tag}>
-          <p className={styles.totalDeals}>
-            Deals Opened:
-          </p>
+          <p className={styles.totalDeals}>Deals Opened:</p>
           <p className={styles.deals}>
-            <p className={styles.totalDeal}>
-              {deal.dealsOpened}
-            </p>
+            <p className={styles.totalDeal}>{deal.dealsOpened}</p>
             <p style={{ width: 50, height: 50 }}>
-              <CircularProgressbarWithChildren value={deal.dealsOpened} styles={buildStyles({
-                textColor: "red",
-                pathColor: "rose",
-              })}>
+              <CircularProgressbarWithChildren
+                value={deal.dealsOpened}
+                styles={buildStyles({
+                  textColor: 'red',
+                  pathColor: 'rose',
+                })}
+              >
                 <div style={{ fontSize: 10, marginTop: -1 }}>
                   <strong>{deal.dealsOpened}%</strong>
                 </div>
@@ -78,18 +76,17 @@ const Main: React.FC = () => {
         </span>
 
         <span className={styles.tag}>
-          <p className={styles.totalDeals}>
-            Deals In Progress
-          </p>
+          <p className={styles.totalDeals}>Deals In Progress</p>
           <p className={styles.deals}>
-            <p className={styles.totalDeal}>
-              {deal.dealsInProgress}
-            </p>
+            <p className={styles.totalDeal}>{deal.dealsInProgress}</p>
             <p style={{ width: 50, height: 50 }}>
-              <CircularProgressbarWithChildren value={deal.dealsInProgress} styles={buildStyles({
-                textColor: "red",
-                pathColor: "rose",
-              })}>
+              <CircularProgressbarWithChildren
+                value={deal.dealsInProgress}
+                styles={buildStyles({
+                  textColor: 'red',
+                  pathColor: 'rose',
+                })}
+              >
                 <div style={{ fontSize: 10, marginTop: -1 }}>
                   <strong>{deal.dealsInProgress}%</strong>
                 </div>
@@ -99,18 +96,17 @@ const Main: React.FC = () => {
         </span>
 
         <span className={styles.tag}>
-          <p className={styles.totalDeals}>
-            Deals Closed
-          </p>
+          <p className={styles.totalDeals}>Deals Closed</p>
           <p className={styles.deals}>
-            <p className={styles.totalDeal}>
-              {deal.dealsClosed}
-            </p>
+            <p className={styles.totalDeal}>{deal.dealsClosed}</p>
             <p style={{ width: 50, height: 50 }}>
-              <CircularProgressbarWithChildren value={deal.dealsClosed} styles={buildStyles({
-                textColor: "red",
-                pathColor: "rose",
-              })}>
+              <CircularProgressbarWithChildren
+                value={deal.dealsClosed}
+                styles={buildStyles({
+                  textColor: 'red',
+                  pathColor: 'rose',
+                })}
+              >
                 <div style={{ fontSize: 10, marginTop: -1 }}>
                   <strong>{deal.dealsClosed}%</strong>
                 </div>
@@ -120,13 +116,9 @@ const Main: React.FC = () => {
         </span>
 
         <span className={styles.tag}>
-          <p className={styles.totalDeals}>
-            Total Commission
-          </p>
+          <p className={styles.totalDeals}>Total Commission</p>
           <p className={styles.deals}>
-            <p className={styles.totalDeal}>
-              ${deal.totalCommission}
-            </p>
+            <p className={styles.totalDeal}>${deal.totalCommission}</p>
             <p style={{ width: 50, height: 50 }}>
               <div>
                 <div style={{ fontSize: 10, marginTop: -1 }}>
