@@ -197,7 +197,8 @@
     justify-content: center;
     width: 100%;
     align-items: center;
-    font-size: 55px;
+    font-size: 30px;
+    opacity: .23;
 }
 .searchInput{
     background-color: rgb(201, 200, 212);

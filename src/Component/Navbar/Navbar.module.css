@@ -8,7 +8,7 @@
     display: flex;
     color: #fff;
     justify-content: space-between;
-    position: sticky;
+    position: relative;
     top: 0;
     z-index: 999;
 }
@@ -84,6 +84,7 @@
 
 .username {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 5px;
 }
@@ -91,7 +92,14 @@
 .username p {
     margin: 0;
     font-weight: 500 !important;
-    font-family: 'Public Sans', sans-serif !important;
+}
+
+.roleType{
+    font-size: .67rem;
+    letter-spacing: .09rem;
+    color: rgb(224, 80, 80);
+    /* margin-left: 4rem; */
+    text-align: center;
 }
 
 .rightheadersection .createdeal:hover {
@@ -129,7 +137,7 @@
 .dropdownMenu {
     display: block;
     position: absolute;
-    top: 50px;
+    top: 80px;
     right: 0;
     width: 170px;
     background-color: #fff;
@@ -153,7 +161,6 @@
 }
 
 .dropdownMenu::after {
-    content: "";
     position: absolute;
     top: -11px;
     right: 20px;
@@ -188,3 +195,4 @@
     padding: 10px;
     height: 24px !important;
 }
+

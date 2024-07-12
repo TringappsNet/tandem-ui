@@ -12,7 +12,7 @@ import { RootState } from "../Redux/reducers";
 
 const Dashboard: React.FC = () => {
   const accessToken = localStorage.getItem("accessToken");
-  const user = useSelector((state: RootState) => state.auth.user);
+  const user = useSelector((state: RootState) => state.auth);
 
   if (!accessToken) {
     return <Navigate to="/login" />;
@@ -30,13 +30,13 @@ const Dashboard: React.FC = () => {
       <Navbar links={links} />
       <div className={styles.mainContent}>
         <Routes>
-          {user && user.roleId === 2 ? (
+          {user && !user.isAdmin ? (
             <Route path="/" element={<Navigate to="/cards" />} />
           ) : (
             <Route path="/" element={<Main />} />
           )}
           <Route path="/cards" element={<Cards />} />
-          {user && user.roleId === 1 && (
+          {user && user.isAdmin && (
             <>
               <Route path="/site" element={<SiteGrid />} />
               <Route path="/landlord" element={<LandlordGrid />} />

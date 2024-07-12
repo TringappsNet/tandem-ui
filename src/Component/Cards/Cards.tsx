@@ -34,7 +34,7 @@ interface Deal {
 }
 
 const Cards: React.FC = () => {
-  const userdetails = useSelector((state: RootState) => state.auth.user);
+  const userdetails = useSelector((state: RootState) => state.auth);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const dispatch = useDispatch<AppDispatch>();
@@ -43,10 +43,10 @@ const Cards: React.FC = () => {
   const [dealId, setDealId] = useState<number | null>(null);
 
   useEffect(() => {
-    if (userdetails?.roleId === 1) {
+    if (userdetails.isAdmin === true) {
       dispatch(fetchDealDetails());
-    } else if (userdetails?.roleId === 2) {
-      dispatch(fetchBrokerDealDetails(userdetails?.id || 0));
+    } else if (userdetails.isAdmin === false) {
+      dispatch(fetchBrokerDealDetails(userdetails.user?.id || 0));
     }
   }, [dispatch, userdetails]);
 
@@ -130,12 +130,11 @@ const Cards: React.FC = () => {
               <div>
                 <div className={styles.cardTitle}>
                   Deal #{deal.id}
-                  {userdetails?.roleId === 1 && (
+                  {userdetails.isAdmin && (
                     <div className={styles.icons}>
                       <div className={styles.hide}>
                         <FiEdit onClick={() => editDealForm(deal)} />
                       </div>
-                      <FiEdit onClick={() => editDealForm(deal)} />
                       <FiTrash
                         onClick={() => deal.id !== null && handleDelete(deal.id)}
                       />
