@@ -30,10 +30,10 @@
 }
 
 .cardTitle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: .5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
 }
 
 .card .line {
@@ -44,23 +44,23 @@
 }
 
 .icons {
-    display: flex;
-    cursor: pointer;
-    justify-content: flex-end;
-    font-size: .7rem;
-    gap: 2px;
-    margin-bottom: .3rem;
+  display: flex;
+  cursor: pointer;
+  justify-content: flex-end;
+  font-size: 0.7rem;
+  gap: 2px;
+  margin-bottom: 0.3rem;
 }
 
 .editHide {
-    display: none;
+  display: none;
 }
 
-.card:hover .editHide{
-    display: block;
+.card:hover .editHide {
+  display: block;
 }
-.card:hover .statuslinecolor{
-    display: block;
+.card:hover .statuslinecolor {
+  display: block;
 }
 
 .statusLine {
@@ -185,11 +185,10 @@
 }
 
 .statuslinecolor {
-    display: none;
-    border: .01rem solid;
-    position:absolute;
-    width: 80%;
-
+  display: none;
+  border: 0.01rem solid;
+  position: absolute;
+  width: 80%;
 }
 .noDealsFound {
   display: flex;

@@ -1,39 +1,39 @@
-import React, { useState } from "react";
-import styles from "./Login.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { login } from "../Redux/slice/auth/authSlice";
-import { RootState } from "../Redux/reducers";
-import { AppDispatch } from "../Redux/store";
+import React, { useState } from 'react';
+import styles from './Login.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../Redux/slice/auth/authSlice';
+import { RootState } from '../Redux/reducers';
+import { AppDispatch } from '../Redux/store';
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { loading } = useSelector((state: RootState) => state.auth);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-    setEmailError("");
+    setEmailError('');
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-    setPasswordError("");
+    setPasswordError('');
   };
 
   const validateForm = (): boolean => {
     let isValid = true;
 
     if (!email.trim()) {
-      setEmailError("Please fill in the Email");
+      setEmailError('Please fill in the Email');
       isValid = false;
     } else if (!password.trim()) {
-      setPasswordError("Please fill in the Password");
+      setPasswordError('Please fill in the Password');
       isValid = false;
     }
 
@@ -42,14 +42,14 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setErrorMessage("");
+    setErrorMessage('');
 
     if (validateForm()) {
       dispatch(login({ email, password })).then((result) => {
         if (login.fulfilled.match(result)) {
-          navigate("/dashboard");
+          navigate('/dashboard');
         } else {
-          setErrorMessage("Invalid email or password. Please try again.");
+          setErrorMessage('Invalid email or password. Please try again.');
         }
       });
     }
@@ -70,8 +70,12 @@ const Login: React.FC = () => {
           {(emailError || passwordError || errorMessage) && (
             <div className={styles.errorBox}>
               {emailError && <p className={styles.errorText}>{emailError}</p>}
-              {passwordError && <p className={styles.errorText}>{passwordError}</p>}
-              {errorMessage && <p className={styles.errorText}>{errorMessage}</p>}
+              {passwordError && (
+                <p className={styles.errorText}>{passwordError}</p>
+              )}
+              {errorMessage && (
+                <p className={styles.errorText}>{errorMessage}</p>
+              )}
             </div>
           )}
           <form className={styles.loginsection} onSubmit={handleSubmit}>
@@ -106,7 +110,7 @@ const Login: React.FC = () => {
               type="submit"
               disabled={loading}
             >
-              {loading ? "Signing In..." : "Sign In"}
+              {loading ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
           {loading && (
