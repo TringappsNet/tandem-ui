@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createNewDeal,
   updateDealDetails,
+  fetchDealDetails,
 } from "../Redux/slice/deal/dealSlice";
 import { Deal } from "../Interface/DealFormObject";
 import {
@@ -75,7 +76,8 @@ const DealForm: React.FC<DealFormProps> = () => {
   const open = useSelector((state: RootState) => state.dealForm.open);
   const sites = useSelector((state: RootState) => state.site.sites);
   const brokers = useSelector((state: RootState) => state.broker.brokers);
-  console.log("bro:", sites)
+  const deals = useSelector((state: RootState) => state.deal.dealDetails);
+
   const [activeStep, setActiveStep] = useState(currentDeal?.activeStep || 0);
   const [formData, setFormData] = useState<Deal>({
     id: currentDeal?.id || null,
@@ -101,6 +103,7 @@ const DealForm: React.FC<DealFormProps> = () => {
   useEffect(() => {
     dispatch(fetchBrokers());
     dispatch(fetchSites());
+    dispatch(fetchDealDetails());
   }, [dispatch]);
 
   useEffect(() => {
@@ -207,12 +210,24 @@ const DealForm: React.FC<DealFormProps> = () => {
                   </MenuItem>
                 ))
               : label === "propertyName"
-              ? sites.map((site, idx) => (
-                  <MenuItem key={idx} value={`${site.addressline1}, ${site.addressline2}`}>
-                    {`${site.addressline1}, ${site.addressline2}`}
-                  </MenuItem>
-                ))
-                : options?.map((option: string, idx: number) => (
+              ? sites
+                  .filter(
+                    (site) =>
+                      !deals.some(
+                        (deal) =>
+                          deal.propertyName ===
+                          `${site.addressline1}, ${site.addressline2}`
+                      )
+                  )
+                  .map((site, idx) => (
+                    <MenuItem
+                      key={idx}
+                      value={`${site.addressline1}, ${site.addressline2}`}
+                    >
+                      {`${site.addressline1}, ${site.addressline2}`}
+                    </MenuItem>
+                  ))
+              : options?.map((option: string, idx: number) => (
                   <MenuItem key={idx} value={option}>
                     {option}
                   </MenuItem>
@@ -353,24 +368,24 @@ const DealForm: React.FC<DealFormProps> = () => {
               }}
             >
               <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    {steps[activeStep].fields.map((field, index) =>
-                      renderField(field, index)
-                    )}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={saveFormData}
-                      sx={{ width: 100, marginTop: 2 }}
-                      disabled={!isFormValid()}
-                    >
-                      Save
-                    </Button>
-                  </Box>
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                {steps[activeStep].fields.map((field, index) =>
+                  renderField(field, index)
+                )}
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={saveFormData}
+                  sx={{ width: 100, marginTop: 2 }}
+                  disabled={!isFormValid()}
+                >
+                  Save
+                </Button>
+              </Box>
               {activeStep === steps.length ? (
                 <Box>
                   <Typography
@@ -413,7 +428,6 @@ const DealForm: React.FC<DealFormProps> = () => {
                       </Button>
                     </Box>
                   </Box>
-                  
                 </Box>
               )}
             </Box>
