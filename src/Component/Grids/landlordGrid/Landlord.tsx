@@ -292,7 +292,7 @@ const LandlordGrid: React.FC = () => {
       />
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>
+        <DialogTitle >
           {formData.id ? "Edit Landlord" : "Add Landlord"}
           <IconButton
             aria-label="close"
@@ -322,6 +322,8 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.name}
             helperText={formErrors.name}
+            autoComplete="off"
+
           />
           <TextField
             margin="dense"
@@ -333,6 +335,8 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.phoneNumber}
             helperText={formErrors.phoneNumber}
+            autoComplete="off"
+
           />
           <TextField
             margin="dense"
@@ -344,6 +348,8 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.email}
             helperText={formErrors.email}
+            autoComplete="off"
+
           />
           <TextField
             margin="dense"
@@ -355,6 +361,8 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.address1}
             helperText={formErrors.address1}
+            autoComplete="off"
+
           />
 
           <TextField
@@ -367,6 +375,8 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.address2}
             helperText={formErrors.address2}
+            autoComplete="off"
+
           />
 
           <TextField
@@ -379,6 +389,8 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.city}
             helperText={formErrors.city}
+            autoComplete="off"
+
           />
           <TextField
             margin="dense"
@@ -390,6 +402,8 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.state}
             helperText={formErrors.state}
+            autoComplete="off"
+
           />
           <TextField
             margin="dense"
@@ -401,6 +415,8 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.country}
             helperText={formErrors.country}
+            autoComplete="off"
+
           />
           <TextField
             margin="dense"
@@ -412,6 +428,8 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.zipcode}
             helperText={formErrors.zipcode}
+            autoComplete="off"
+
           />
         </DialogContent>
         <DialogActions>

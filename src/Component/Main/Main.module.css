@@ -19,21 +19,28 @@ flex-direction: column;
     justify-content: space-around;
     flex: 1 1 10%;
     padding: 0.5rem 2rem;
-    border-radius: 10px;
+    border-radius: 6px;
     background: linear-gradient(60deg, rgb(3, 55, 96) 0%, rgb(13, 82, 135) 35%, rgb(36, 117, 179) 100%);
     color: #ffffff;
     font-size: 17px;
     font-weight: bold;
     text-transform: uppercase;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;    transition: background-color 0.3s ease;
-    /* text-align: center; */
+   
     width: 100% !important;
     height: 130px;
     padding-top: 10px;
-    /* align-items: center; */
-    /* justify-content: center; */
-    background:  url("../../assests//logo.png"),linear-gradient(60deg, rgb(3, 55, 96) 0%, rgb(13, 82, 135) 35%, rgb(36, 117, 179) 100%);
 
+    background: linear-gradient(60deg, rgb(3, 55, 96) 0%, rgb(13, 82, 135) 35%, rgb(36, 117, 179) 100%);
+    
+    border:1px solid white ;
+    /* background: rgba(255,255,255,0.4); */
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.4);
+     position:relative;
+   color:white;
+     backdrop-filter: blur(10px);
+   -webkit-backdrop-filter: blur(10px);
+   box-shadow: 0 10px 25px rgba(0,0,0,0.2)
   }
  
  .deals{
@@ -67,28 +74,33 @@ flex-direction: column;
   box-shadow: #2d7108;
  }
   .tag:nth-child(1) {
-    background: url("../../assests//logo.png"),linear-gradient(90deg, rgba(0,90,158,1) 0%, rgba(22,106,169,1) 35%, rgba(36,112,169,1) 100%);
+    background: linear-gradient(90deg, rgba(0,90,158,1) 0%, rgba(22,106,169,1) 35%, rgba(36,112,169,1) 100%);
     
   }
   
   .tag:nth-child(2) {
     /* background-color: #e81123; */
-    background:  url("../../assests//logo8.png"),linear-gradient(50deg, rgb(169, 55, 55) 0%, rgb(218, 88, 88) 35%, rgb(226, 108, 108) 100%);
+    background: linear-gradient(50deg, rgb(153, 39, 39) 0%, rgb(218, 88, 88) 35%, rgb(233, 116, 116) 100%);
     
 
 
   }
   
   .tag:nth-child(3) {
-    background:  url("../../assests//logo12.png"),linear-gradient(40deg, rgb(99, 206, 99) 0%, rgb(99, 173, 77) 35%, rgb(84, 146, 69) 100%);
+    background: linear-gradient(48deg, rgb(47, 237, 177) 0%, rgb(45, 189, 143) 35%, rgb(0, 137, 92) 100%);
+
   }
   
   .tag:nth-child(4) {
-    background: url("../../assests//logo3.png"), linear-gradient(50deg, rgb(211, 155, 2) 0%, rgb(212, 156, 14) 35%, rgb(244, 195, 72) 100%);
+    background:  linear-gradient(49deg, rgb(172, 127, 2) 0%, rgb(212, 156, 14) 35%, rgb(244, 195, 72) 100%);
+    
   }
   
   .tag:nth-child(5) {
-    background:  url("../../assests//logo.png"),linear-gradient(90deg, rgb(129, 69, 197) 0%, rgb(107, 70, 149) 35%, rgb(87, 57, 122) 100%);
+    background: linear-gradient(90deg, rgb(129, 69, 197) 0%, rgb(107, 70, 149) 35%, rgb(87, 57, 122) 100%);
+    /* backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    */
   }
   
   .tag:hover:nth-child(1) {
@@ -174,3 +186,28 @@ flex-direction: column;
 
 
 
+.img{
+  height: 70px;
+  width: 70px;
+}
+
+
+
+.welcomefade{
+  animation: fadeInAnimation ease 7s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+}
+
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  
+  
+
+  100% {
+    opacity: 5;
+  }
+}

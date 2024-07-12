@@ -3,13 +3,12 @@ import styles from "./Main.module.css";
 import { axiosInstance } from "../AxiosInterceptor/AxiosInterceptor";
 import BrokerGrid from "../Grids/broker-grid/BrokerGrid";
 import { RootState } from "../Redux/reducers";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import {
-  CircularProgressbar,
   CircularProgressbarWithChildren,
   buildStyles
 } from "react-circular-progressbar";import 'react-circular-progressbar/dist/styles.css';
-
+import logo1 from "../../assests/rup.png";
 type Deal = {
   totalDeals: number;
   dealsOpened: number;
@@ -21,6 +20,7 @@ type Deal = {
 const Main: React.FC = () => {
   const userdetails = useSelector((state: RootState) => state.auth.user);
 
+  
   const [deal, setDeal] = useState<Deal>({
     totalDeals: 0,
     dealsOpened: 0,
@@ -55,10 +55,15 @@ const Main: React.FC = () => {
 
 
 <p className={styles.welcome}>
+
+                 <div className={styles.welcomefade}>
                  Welcome, {" "}
-                {userdetails
+
+                 {userdetails
                   ? `${userdetails.firstName} ${userdetails.lastName} !`
                   : "Guest"}
+                 </div>
+              
               </p>
 
 
@@ -73,14 +78,16 @@ const Main: React.FC = () => {
               <p className={styles.totalDeal}>
                 {deal.totalDeals}</p>
 
-                   <p style={{ width: 60, height: 60 }}>
+
+                   <p style={{ width: 50, height: 50 }}>
+
                     <CircularProgressbarWithChildren  value={deal.totalDeals} styles={buildStyles({
                             textColor: "red",
                             pathColor: "rose",
                           })} >
                     <div style={{ fontSize: 10, marginTop: -1 }} >
-
                     <strong>{deal.totalDeals}%</strong> 
+
                     </div>
 
                     </CircularProgressbarWithChildren>
@@ -102,7 +109,7 @@ const Main: React.FC = () => {
             <p className={styles.deals}> 
               <p className={styles.totalDeal}>
                 {deal.dealsOpened}</p>
-                   <p style={{ width: 60, height: 60 }}>
+                   <p style={{ width: 50, height: 50 }}>
                     <CircularProgressbarWithChildren   value={deal.dealsOpened} styles={buildStyles({
                             textColor: "red",
                             pathColor: "rose",
@@ -131,7 +138,7 @@ const Main: React.FC = () => {
             <p className={styles.deals}> 
               <p className={styles.totalDeal}>
                 {deal.dealsInProgress}</p>
-                   <p style={{ width: 60, height: 60 }}>
+                   <p style={{ width: 50, height: 50 }}>
                     <CircularProgressbarWithChildren  value={deal.dealsInProgress} styles={buildStyles({
                             textColor: "red",
                             pathColor: "rose",
@@ -158,7 +165,7 @@ const Main: React.FC = () => {
             <p className={styles.deals}> 
               <p className={styles.totalDeal}>
                 {deal.dealsClosed}</p>
-                   <p style={{ width: 60, height: 60 }}>
+                   <p style={{ width: 50, height: 50 }}>
                     <CircularProgressbarWithChildren  value={deal.dealsClosed} styles={buildStyles({
                             textColor: "red",
                             pathColor: "rose",
@@ -184,18 +191,16 @@ const Main: React.FC = () => {
 
             <p className={styles.deals}> 
               <p className={styles.totalDeal}>
-                {deal.totalCommission}</p>
-                   <p style={{ width: 60, height: 60 }}>
-                    <CircularProgressbarWithChildren  value={deal.totalCommission} styles={buildStyles({
-                            textColor: "red",
-                            pathColor: "rose",
-                          })} >
+                ${deal.totalCommission}</p>
+                   <p style={{ width: 50, height: 50 }}>
+                    <div >
                     <div style={{ fontSize: 10, marginTop: -1 }} >
 
-                    <strong>{deal.totalCommission}%</strong> 
+                    {/* <strong>{deal.totalCommission}$</strong>  */}
+                    <img className={styles.img} src={logo1} alt="img "></img>
                     </div>
 
-                    </CircularProgressbarWithChildren>
+                    </div>
 
                   </p>
             </p>
