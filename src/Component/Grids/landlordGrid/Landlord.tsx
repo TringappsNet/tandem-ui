@@ -15,7 +15,7 @@ import {
   addLandlord,
   updateLandlord,
   deleteLandlord,
-} from '../../Redux/slice/grids/landlordSlice';
+} from '../../Redux/slice/landlord/landlordSlice';
 import styles from './landlord-grid.module.css';
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 import FullGrid from '../MainGrid/MainGrid';

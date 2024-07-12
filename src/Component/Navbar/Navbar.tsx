@@ -23,6 +23,7 @@ import {
 import { closeReset, openReset } from '../Redux/slice/auth/resetSlice';
 import { closeSupport, openSupport } from '../Redux/slice/support/supportSlice';
 import { closeProfile, openProfile } from '../Redux/slice/profile/profileSlice';
+import SnackbarComponent from '../Snackbar/Snackbar';
 
 interface NavbarProps {
   links: {
@@ -36,12 +37,16 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const dispatch = useDispatch<AppDispatch>();
   const userdetails = useSelector((state: RootState) => state.auth);
+  const sites = useSelector((state: RootState) => state.site.sites);
+  const deals = useSelector((state: RootState) => state.deal.dealDetails);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [selectedComponent, setSelectedComponent] = useState<string | null>(
     null
   );
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
@@ -132,6 +137,27 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     navigate('/dashboard');
   };
 
+  const handleCreateDealClick = () => {
+    const availableSites = sites.filter(
+      (site) =>
+        !deals.some(
+          (deal) =>
+            deal.propertyName === `${site.addressline1}, ${site.addressline2}`
+        )
+    );
+
+    if (availableSites.length === 0) {
+      setSnackbarMessage('No sites available to create a deal.');
+      setSnackbarOpen(true);
+    } else {
+      dispatch(openDealForm());
+    }
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
   return (
     <>
       <nav className={styles.navbarcontainer}>
@@ -171,10 +197,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         </div>
         <div className={styles.rightheadersection}>
           {userdetails.isAdmin && (
-            <div
-              className={styles.createdeal}
-              onClick={() => dispatch(openDealForm())}
-            >
+            <div className={styles.createdeal} onClick={handleCreateDealClick}>
               <p>CREATE DEAL</p>
             </div>
           )}
@@ -319,6 +342,12 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         confirmText="Logout"
         cancelVariant="secondary"
         confirmVariant="primary"
+      />
+
+      <SnackbarComponent
+        open={snackbarOpen}
+        message={snackbarMessage}
+        onClose={handleSnackbarClose}
       />
     </>
   );
