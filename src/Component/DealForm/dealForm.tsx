@@ -21,6 +21,7 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
+  // StepIcon, 
   // colors,
 } from '@mui/material';
 import styles from './dealForm.module.css';
@@ -438,7 +439,8 @@ const DealForm: React.FC<DealFormProps> = () => {
               sx={{ width: 1 }}
             >
               {steps.map((step, index) => (
-                <Step key={index}>
+                <Step key={index} sx={{ width: 1, color: 'blue !important' }}
+                >
                   <StepLabel>{step.label}</StepLabel>
                 </Step>
               ))}
