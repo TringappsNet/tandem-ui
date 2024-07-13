@@ -17,6 +17,7 @@ import {
   addBroker,
   updateBroker,
   deleteBroker,
+  setSnackbarOpen,
 } from '../../Redux/slice/user/userSlice';
 import FullGrid from '../MainGrid/MainGrid';
 import { MdEdit, MdDelete } from 'react-icons/md';
@@ -28,6 +29,7 @@ import {
 } from '../../Redux/slice/auth/sendInviteSlice';
 import { RootState } from '../../Redux/reducers';
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
+import SnackbarComponent from '../../Snackbar/Snackbar';
 
 interface Site {
   id: number;
@@ -73,6 +75,9 @@ const InviteBroker: React.FC = () => {
     pageSize: 12,
     page: 0,
   });
+
+  const snackbarOpen = useSelector((state: RootState) => state.inviteBroker.snackbarOpen);
+  const snackbarMessage = useSelector((state: RootState) => state.inviteBroker.snackbarMessage);
 
   useEffect(() => {
     dispatch(fetchBrokers());
@@ -192,6 +197,10 @@ const InviteBroker: React.FC = () => {
     }
   };
 
+  const handleCloseSnackbar = () => {
+    dispatch(setSnackbarOpen(false));
+  };
+
   const columns: GridColDef[] = [
     { field: 'email', headerName: 'email', width: 140 },
     { field: 'firstName', headerName: 'firstName', width: 110 },
@@ -220,6 +229,9 @@ const InviteBroker: React.FC = () => {
       ),
     },
   ];
+
+  // Determine the severity based on the snackbar message
+  const snackbarSeverity = snackbarMessage?.includes('successfully') ? 'success' : 'error';
 
   return (
     <div>
@@ -407,6 +419,13 @@ const InviteBroker: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <SnackbarComponent
+        open={snackbarOpen}
+        message={snackbarMessage || ''}
+        onClose={handleCloseSnackbar}
+        severity={snackbarSeverity}
+      />
     </div>
   );
 };
