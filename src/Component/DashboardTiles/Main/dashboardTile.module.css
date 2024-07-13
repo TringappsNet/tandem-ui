@@ -7,9 +7,9 @@
 .welcome {
   display: block;
   width: 100%;
-  font-size: 40px !important;
+  font-size: 25px !important;
   color: white;
-  padding: 10px;
+  padding: 0px;
 }
 .tag {
   display: flex;
@@ -224,3 +224,5 @@
     opacity: 5;
   }
 }
+
+
