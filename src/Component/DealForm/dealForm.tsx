@@ -32,6 +32,7 @@ import {
   setCurrentDeal,
 } from '../Redux/slice/deal/currentDeal';
 import { fetchSites } from '../Redux/slice/site/siteSlice';
+
 import { fetchBrokers } from '../Redux/slice/broker/brokerSlice';
 // import { purple } from '@mui/material/colors';
 
@@ -82,6 +83,8 @@ const DealForm: React.FC<DealFormProps> = () => {
   const sites = useSelector((state: RootState) => state.site.sites);
   const brokers = useSelector((state: RootState) => state.broker.brokers);
   const deals = useSelector((state: RootState) => state.deal.dealDetails);
+  const isAdmin = useSelector((state: RootState) => state.auth.isAdmin);
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const [activeStep, setActiveStep] = useState(currentDeal?.activeStep || 0);
   const [formData, setFormData] = useState<Deal>({
@@ -211,11 +214,13 @@ const DealForm: React.FC<DealFormProps> = () => {
             size="small"
           >
             {label === 'brokerName'
-              ? brokers.map((broker, idx) => (
-                <MenuItem key={idx} value={broker.name}>
-                  {broker.name}
-                </MenuItem>
-              ))
+              ? brokers
+                .filter(broker => !broker.isAdmin)
+                .map((broker, idx) => (
+                  <MenuItem key={idx} value={broker.name}>
+                    {broker.name}
+                  </MenuItem>
+                ))
               : label === 'propertyName'
                 ? sites
                   .filter(

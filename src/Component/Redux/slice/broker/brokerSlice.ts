@@ -1,4 +1,3 @@
-// brokerSlice.ts
 import { createSlice, PayloadAction, Action } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
 import { axiosInstance } from '../../../AxiosInterceptor/AxiosInterceptor';
@@ -23,6 +22,7 @@ interface Broker {
   state: string;
   country: string;
   zipcode: string;
+  isAdmin: boolean;
   lastModifiedBy: number;
   name: string;
 }
