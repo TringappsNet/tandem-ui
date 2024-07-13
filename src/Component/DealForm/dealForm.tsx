@@ -83,8 +83,8 @@ const DealForm: React.FC<DealFormProps> = () => {
   const sites = useSelector((state: RootState) => state.site.sites);
   const brokers = useSelector((state: RootState) => state.broker.brokers);
   const deals = useSelector((state: RootState) => state.deal.dealDetails);
-  const isAdmin = useSelector((state: RootState) => state.auth.isAdmin);
-  const user = useSelector((state: RootState) => state.auth.user);
+  // const isAdmin = useSelector((state: RootState) => state.auth.isAdmin);
+  // const user = useSelector((state: RootState) => state.auth.user);
 
   const [activeStep, setActiveStep] = useState(currentDeal?.activeStep || 0);
   const [formData, setFormData] = useState<Deal>({
