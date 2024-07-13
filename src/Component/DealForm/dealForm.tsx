@@ -65,6 +65,8 @@ const steps = [
       { type: 'text', label: 'potentialCommission' },
     ],
   },
+  { label: 'Completed', fields: [] },
+
 ];
 
 interface DealFormProps {
@@ -297,7 +299,6 @@ const DealForm: React.FC<DealFormProps> = () => {
       { label: 'Lease Signed', date: formData.leaseSignedDate },
       { label: 'Notice to Proceed', date: formData.noticeToProceedDate },
       { label: 'Commercial Operation', date: formData.commercialOperationDate },
-      // { label: 'Deal Closed', date: formData.potentialcommissiondate },
     ];
 
     return (
@@ -320,7 +321,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                height: '65px', // Set a fixed height
+                height: '65px',
               }}
             >
               <Typography variant="subtitle1" fontWeight="bold" textAlign="center">
@@ -333,24 +334,29 @@ const DealForm: React.FC<DealFormProps> = () => {
           ))}
           <Box
             sx={{
-              border: '1px solid #ccc',
+              border: '2px solid #262262',
               borderRadius: '4px',
               padding: '10px',
               width: 'calc(80% + 2px)',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-              backgroundColor: '#f9f9f9',
+              boxShadow: '0 4px 8px rgba(38, 34, 98, 0.2)',
+              backgroundColor: '#f0f0ff',
               alignItems: 'center',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              height: '65px',
+              height: '80px',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                transform: 'scale(1.02)',
+                boxShadow: '0 6px 12px rgba(38, 34, 98, 0.3)',
+              },
             }}
           >
-            <Typography variant="subtitle1" fontWeight="bold" textAlign="center">
+            <Typography variant="h6" fontWeight="bold" textAlign="center" color="#262262">
               Potential Commission:
             </Typography>
-            <Typography textAlign="center">
-              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : 'N/A'}
+            <Typography textAlign="center" fontWeight="bolder" variant="h5" color="#262262">
+              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : '0'}
             </Typography>
           </Box>
         </Box>
@@ -441,7 +447,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                 padding: '30px',
               }}
             >
-              {activeStep < steps.length ? (
+              {activeStep < steps.length - 1 ? (
                 <Box
                   sx={{
                     display: 'flex',
@@ -464,7 +470,7 @@ const DealForm: React.FC<DealFormProps> = () => {
               ) : (
                 renderSummary()
               )}
-              {activeStep === steps.length ? (
+              {activeStep === steps.length - 1 ? (
                 <Box sx={{ mt: 4, textAlign: 'center' }}>
                   <Typography variant="h5" sx={{ color: 'green' }}>
                     {/* Deal is Completed */}
@@ -487,7 +493,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                       sx={{ width: 100 }}
                       disabled={!saveSuccess || !isFormValid()}
                     >
-                      {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                      {activeStep === steps.length - 2 ? 'Finish' : 'Next'}
                     </Button>
                   </Box>
                 </Box>
