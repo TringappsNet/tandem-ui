@@ -3,5 +3,51 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #0F1928;
+}
+
+
+.MuiDataGrid-virtualScroller{
+  background: linear-gradient(58deg,  rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%) ;
+  color: white;
+
+
+}
+
+.MuiDataGrid-withBorderColor{
+  background:rgba(31,47,71,1);
+}
+
+.parent-grid_dataGrid__Uj-3s {
+  border: 2px solid #39404f !important;
+  backdrop-filter:blur(20px);
+
+}
+
+/* .css-1eed5fa-MuiInputBase-root-MuiInput-root{
+  color: white !important;
+} */
+
+/* .MuiInputBase-root-MuiInput-root{
+  color: white !important;
+
+} */
+.css-1klb8j8-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter input{
+  color: white !important;
+}
+
+.MuiDataGrid-root .MuiDataGrid-container--top [role=row], .MuiDataGrid-root .MuiDataGrid-container--bottom [role=row]{
+  background: linear-gradient(58deg,  rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%) !important
+}
+
+
+
+.MuiDataGrid-toolbarContainer button.MuiButton-root {
+    display: none;
+}
+
+.MuiSvgIcon-root{
+  color: white !important;
+}
+.css-c6bojz{
+  color: white !important;
 }
