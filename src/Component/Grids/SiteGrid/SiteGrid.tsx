@@ -219,7 +219,7 @@ const SiteGrid: React.FC = () => {
           width: '200px',
           position: 'relative',
           float: 'right',
-          backgroundColor: '#262280',
+          backgroundColor: '#39404f',
         }}
         onClick={() => handleEditNew(true)}
       >

@@ -14,13 +14,16 @@ html {
   justify-content: center;
   align-items: center;
   background: linear-gradient(58deg, rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(10px);
-  border-radius: 10px;
+  border-radius: 0px;
+
   border: 1.5px solid #39404f ;
   padding: 5rem;
   height: 553px;
   gap: 1rem;
+  border: 2px solid #39404f !important;
+
 }
 
 .imageContainer {
