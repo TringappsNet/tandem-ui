@@ -40,11 +40,15 @@ const Main: React.FC = () => {
           <p className={styles.deals}>
             <p className={styles.totalDeal}>{deal.totalDeals}</p>
             <p style={{ width: 50, height: 50 }}>
-              <CircularProgressbarWithChildren
-                value={deal.totalDeals}
+            <CircularProgressbarWithChildren
+                value={10}
+                text={`${deal.totalDeals}%`}
                 styles={buildStyles({
-                  textColor: 'red',
-                  pathColor: 'rose',
+                  textColor: '#fff',
+                  pathColor: '#3f98e8', // Blue theme color
+                  trailColor: 'rgba(255, 255, 255, 0.1) !important',
+                  backgroundColor: 'transparent',
+                  // trailWidth: 10, // Increase trail width
                 })}
               >
                 <div style={{ fontSize: 10, marginTop: -1 }}>

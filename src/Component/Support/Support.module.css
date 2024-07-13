@@ -13,13 +13,17 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.8);
+  background: linear-gradient(58deg, rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 0px;
+
+  border: 1.5px solid #39404f ;
   padding: 5rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.3);
-  border: 1px solid #e0e0e0;
   height: 553px;
   gap: 1rem;
+  border: 2px solid #39404f !important;
+
 }
 
 .imageContainer {
@@ -42,7 +46,7 @@ html {
 }
 
 .support {
-  color: #060606;
+  color: white;
   border: none;
   padding: 0.5rem;
   font-size: 24px;
@@ -56,10 +60,10 @@ html {
 }
 
 .formGroup label {
+  color: rgb(218, 219, 220);
   margin-bottom: 0.5rem;
   font-weight: bolder;
   font-size: 18px;
-  color: rgb(15, 8, 8);
   font-family: 'Public Sans', sans-serif;
 }
 
@@ -112,8 +116,8 @@ html {
 }
 
 .sendButton {
-  background-color: #2d0c96;
-  color: white;
+  background: linear-gradient(45deg, rgb(1, 74, 134) 0%, rgb(0, 44, 110) 100%);
+  color: rgb(255, 255, 255);
   border: none;
   padding: 0.5rem;
   font-size: 18px;
@@ -137,7 +141,7 @@ html {
 }
 
 .sendButton:hover {
-  background-color: #3f38a0;
+  background: linear-gradient(90deg, rgb(28, 44, 70) 0%, rgb(8, 28, 53) 100%);
   color: white;
 }
 

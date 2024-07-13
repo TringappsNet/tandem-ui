@@ -2,7 +2,9 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #252934;
+  /* background-color: #0f1928; */
+  background: linear-gradient(60deg, rgb(23, 38, 58) 0%, rgb(22, 32, 50) 35%, rgb(19, 32, 51) 100%);
+
 }
 
 .mainContent {
