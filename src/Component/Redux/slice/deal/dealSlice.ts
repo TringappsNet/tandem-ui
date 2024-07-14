@@ -36,6 +36,7 @@ const dealSlice = createSlice({
       state.error = null;
     },
     fetchDealDetailsSuccess: (state, action: PayloadAction<Deal[]>) => {
+      console.log("Fetched deals:", action.payload);
       state.dealDetails = action.payload;
       state.loading = false;
       state.error = null;

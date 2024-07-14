@@ -63,7 +63,7 @@ const steps = [
   {
     label: 'Potential Commission',
     fields: [
-      { type: 'date', label: 'potentialCommissionDate' },
+      { type: 'date', label: 'potentialcommissiondate' },
       { type: 'text', label: 'potentialCommission' },
     ],
   },
@@ -88,7 +88,9 @@ const DealForm: React.FC<DealFormProps> = () => {
   // const user = useSelector((state: RootState) => state.auth.user);
 
   const [activeStep, setActiveStep] = useState(currentDeal?.activeStep || 0);
+
   const [formData, setFormData] = useState<Deal>({
+
     id: currentDeal?.id || null,
     brokerName: currentDeal?.brokerName || '',
     propertyName: currentDeal?.propertyName || '',
@@ -136,6 +138,7 @@ const DealForm: React.FC<DealFormProps> = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+
     if (name.endsWith('Date')) {
       const formattedDate = value.split('T')[0];
       setFormData((prevData) => ({
@@ -148,6 +151,9 @@ const DealForm: React.FC<DealFormProps> = () => {
         [name]: value,
       }));
     }
+
+    console.log(`Changed ${name} to:`, value); // For debugging
+
   };
 
   const saveFormData = () => {
@@ -305,12 +311,13 @@ const DealForm: React.FC<DealFormProps> = () => {
       { label: 'Lease Signed', date: formData.leaseSignedDate },
       { label: 'Notice to Proceed', date: formData.noticeToProceedDate },
       { label: 'Commercial Operation', date: formData.commercialOperationDate },
+      { label: 'Potential Commission Date', date: formData.potentialcommissiondate },
     ];
 
     return (
       <Box sx={{ mt: 4, width: '100%' }}>
         <Typography variant="h5" gutterBottom>
-          <div className={styles.summary}> Summary of the deal</div>
+          <div className={styles.summary}>Summary of the deal</div>
         </Typography>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>
           {events.map((event, index) => (
@@ -320,14 +327,14 @@ const DealForm: React.FC<DealFormProps> = () => {
                 border: '1px solid #ccc',
                 borderRadius: '4px',
                 padding: '10px',
-                width: 'calc(40% - 10px)',
+                width: 'calc(33.33% - 10px)',
                 boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                 backgroundColor: '#f9f9f9',
                 alignItems: 'center',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                height: '65px',
+                height: '80px',
               }}
             >
               <Typography variant="subtitle1" fontWeight="bold" textAlign="center">
@@ -343,7 +350,7 @@ const DealForm: React.FC<DealFormProps> = () => {
               border: '2px solid #262262',
               borderRadius: '4px',
               padding: '10px',
-              width: 'calc(80% + 2px)',
+              width: 'calc(33.33% - 10px)',
               boxShadow: '0 4px 8px rgba(38, 34, 98, 0.2)',
               backgroundColor: '#f0f0ff',
               alignItems: 'center',
@@ -358,11 +365,11 @@ const DealForm: React.FC<DealFormProps> = () => {
               },
             }}
           >
-            <Typography variant="h6" fontWeight="bold" textAlign="center" color="#262262">
+            <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262">
               Potential Commission:
             </Typography>
-            <Typography textAlign="center" fontWeight="bolder" variant="h5" color="#262262">
-              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : '0'}
+            <Typography textAlign="center" fontWeight="bolder" variant="h6" color="#262262">
+              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : 'N/A'}
             </Typography>
           </Box>
         </Box>
