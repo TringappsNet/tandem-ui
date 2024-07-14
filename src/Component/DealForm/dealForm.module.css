@@ -6,6 +6,9 @@
 
 .dealcontainer {
   width: 100%;
+  height: calc(100px - 40px);
+  /* Adjust this to fit the available viewport height */
+
 }
 
 .summary {

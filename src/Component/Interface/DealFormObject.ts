@@ -8,11 +8,13 @@ export interface Deal {
   leaseSignedDate: string;
   noticeToProceedDate: string;
   commercialOperationDate: string;
-  potentialcommissiondate: string;
+  potentialCommissionDate: string;
   potentialCommission: number;
   status: string;
   activeStep: number;
   createdBy: number;
   updatedBy: number;
   isNew: boolean;
+  updatedAt?: string;  // Add this property
+
 }
