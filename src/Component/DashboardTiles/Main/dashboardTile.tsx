@@ -40,7 +40,7 @@ const Main: React.FC = () => {
           <p className={styles.deals}>
             <p className={styles.totalDeal}>{deal.totalDeals}</p>
             <p style={{ width: 50, height: 50 }}>
-            <CircularProgressbarWithChildren
+              <CircularProgressbarWithChildren
                 value={10}
                 text={`${deal.totalDeals}%`}
                 styles={buildStyles({

@@ -1,4 +1,4 @@
-  .cardList {
+.cardList {
   display: flex;
   flex-wrap: wrap;
   gap: 20px 30px;
@@ -9,7 +9,12 @@
   /* background: linear-gradient(45deg, rgba(3, 3, 3, 0.8) 60%, rgba(1, 1, 1, 0.8) 90%);
     filter: brightness(0.9) contrast(0.85);  */
   /* background: linear-gradient(58deg, rgba(20, 32, 49, 1) 0%, rgb(27, 49, 79) 35%, rgba(31, 47, 71, 1) 100%); */
-  background: linear-gradient(58deg, rgba(20, 32, 49, 1) 0%, rgb(26 48 78) 35%, rgb(24 37 56) 100%);
+  background: linear-gradient(
+    58deg,
+    rgba(20, 32, 49, 1) 0%,
+    rgb(26 48 78) 35%,
+    rgb(24 37 56) 100%
+  );
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 10px;
@@ -146,9 +151,14 @@
   gap: 2rem;
   padding: 15px;
   /* background-color: #191c24;  */
-   background: linear-gradient(58deg,  rgb(28, 44, 66) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%) !important;
-   backdrop-filter:blur(20px);
-   border: 1px solid #39404f !important;
+  background: linear-gradient(
+    58deg,
+    rgb(28, 44, 66) 0%,
+    rgba(29, 46, 70, 1) 35%,
+    rgba(31, 47, 71, 1) 100%
+  ) !important;
+  backdrop-filter: blur(20px);
+  border: 1px solid #39404f !important;
 
   border-radius: 5px;
 }

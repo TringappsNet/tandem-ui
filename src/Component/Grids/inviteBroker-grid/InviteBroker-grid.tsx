@@ -69,7 +69,6 @@ const InviteBroker: React.FC = () => {
     zipcode: '',
     isNew: true,
     createdBy: 0,
-    
   });
 
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
@@ -77,8 +76,12 @@ const InviteBroker: React.FC = () => {
     page: 0,
   });
 
-  const snackbarOpen = useSelector((state: RootState) => state.inviteBroker.snackbarOpen);
-  const snackbarMessage = useSelector((state: RootState) => state.inviteBroker.snackbarMessage);
+  const snackbarOpen = useSelector(
+    (state: RootState) => state.inviteBroker.snackbarOpen
+  );
+  const snackbarMessage = useSelector(
+    (state: RootState) => state.inviteBroker.snackbarMessage
+  );
 
   useEffect(() => {
     dispatch(fetchBrokers());
@@ -232,7 +235,9 @@ const InviteBroker: React.FC = () => {
   ];
 
   // Determine the severity based on the snackbar message
-  const snackbarSeverity = snackbarMessage?.includes('successfully') ? 'success' : 'error';
+  const snackbarSeverity = snackbarMessage?.includes('successfully')
+    ? 'success'
+    : 'error';
 
   return (
     <div>
@@ -312,7 +317,6 @@ const InviteBroker: React.FC = () => {
               right: 20,
               top: 10,
               color: (theme) => theme.palette.grey[500],
-              
             }}
           >
             <CloseIcon sx={{ color: '#999' }} />

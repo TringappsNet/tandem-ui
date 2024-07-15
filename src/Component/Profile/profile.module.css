@@ -11,11 +11,16 @@ html {
 .profileContainer {
   width: 610px;
   max-width: 100%;
-  background: linear-gradient(58deg, rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%);
+  background: linear-gradient(
+    58deg,
+    rgba(20, 32, 49, 1) 0%,
+    rgba(29, 46, 70, 1) 35%,
+    rgba(31, 47, 71, 1) 100%
+  );
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 10px;
-  border: 1.5px solid #39404f ;
+  border: 1.5px solid #39404f;
   padding: 30px;
   /* box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.3); */
   overflow-y: auto;

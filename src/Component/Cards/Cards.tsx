@@ -14,7 +14,6 @@ import ConfirmationModal from '../AlertDialog/AlertDialog';
 import { setCurrentDeal } from '../Redux/slice/deal/currentDeal';
 import { Deal } from '../Interface/DealFormObject';
 
-
 const Cards: React.FC = () => {
   const userdetails = useSelector((state: RootState) => state.auth);
   const [searchTerm, setSearchTerm] = useState('');

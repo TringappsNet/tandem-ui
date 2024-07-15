@@ -46,8 +46,12 @@ const SiteGrid: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const sites = useSelector((state: RootState) => state.site.sites);
   const userdetails = useSelector((state: RootState) => state.auth.user);
-  const snackbarOpen = useSelector((state: RootState) => state.site.snackbarOpen);
-  const snackbarMessage = useSelector((state: RootState) => state.site.snackbarMessage);
+  const snackbarOpen = useSelector(
+    (state: RootState) => state.site.snackbarOpen
+  );
+  const snackbarMessage = useSelector(
+    (state: RootState) => state.site.snackbarMessage
+  );
 
   const [formData, setFormData] = useState<Site>({
     id: 0,
@@ -219,7 +223,9 @@ const SiteGrid: React.FC = () => {
   };
 
   // Determine the severity based on the snackbar message
-  const snackbarSeverity = snackbarMessage?.includes('successfully') ? 'success' : 'error';
+  const snackbarSeverity = snackbarMessage?.includes('successfully')
+    ? 'success'
+    : 'error';
 
   return (
     <div>

@@ -36,14 +36,13 @@ const dealSlice = createSlice({
       state.error = null;
     },
     fetchDealDetailsSuccess: (state, action: PayloadAction<Deal[]>) => {
-      console.log("Fetched deals:", action.payload);
+      console.log('Fetched deals:', action.payload);
       state.dealDetails = action.payload;
       state.loading = false;
       state.error = null;
-      console.log("Fetched deals:", state.dealDetails);
+      console.log('Fetched deals:', state.dealDetails);
 
       // console.log("Deal ID:", deal.id, "potentialCommissionDate:", deal.potentialCommissionDate);
-
     },
     fetchDealDetailsFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
@@ -61,8 +60,7 @@ const dealSlice = createSlice({
       } else {
         state.dealDetails.push(action.payload);
       }
-      console.log("Updated/Added deal:", action.payload);
-
+      console.log('Updated/Added deal:', action.payload);
     },
     updateDealField: (
       state,
@@ -78,8 +76,10 @@ const dealSlice = createSlice({
       if (deal) {
         (deal[action.payload.field] as string | number | boolean | null) =
           action.payload.value;
-        console.log(`Updated field ${action.payload.field} for deal ${action.payload.id}:`, deal);
-
+        console.log(
+          `Updated field ${action.payload.field} for deal ${action.payload.id}:`,
+          deal
+        );
       }
     },
     setActiveStep: (state, action: PayloadAction<number>) => {
@@ -124,59 +124,58 @@ export const fetchDealDetails =
 
 export const fetchBrokerDealDetails =
   (brokerId: number): AppThunk<void> =>
-    async (dispatch: Dispatch) => {
-      try {
-        dispatch(fetchDealDetailsStart());
-        const response = await axiosInstance.get(`deals/assignedTo/${brokerId}`);
-        dispatch(fetchDealDetailsSuccess(response.data.deals));
-      } catch (error) {
-        console.error('Error fetching broker deal details:', error);
-        dispatch(fetchDealDetailsFailure((error as Error).message));
-      }
-    };
+  async (dispatch: Dispatch) => {
+    try {
+      dispatch(fetchDealDetailsStart());
+      const response = await axiosInstance.get(`deals/assignedTo/${brokerId}`);
+      dispatch(fetchDealDetailsSuccess(response.data.deals));
+    } catch (error) {
+      console.error('Error fetching broker deal details:', error);
+      dispatch(fetchDealDetailsFailure((error as Error).message));
+    }
+  };
 
 export const deleteDeal =
   (dealId: number): AppThunk<void> =>
-    async (dispatch: Dispatch) => {
-      try {
-        dispatch(fetchDealDetailsStart());
-        await axiosInstance.delete(`/deals/deal/${dealId}`);
-        dispatch(deleteDealSuccess(dealId));
-      } catch (error) {
-        console.error('Error deleting deal:', error);
-        dispatch(fetchDealDetailsFailure((error as Error).message));
-      }
-    };
+  async (dispatch: Dispatch) => {
+    try {
+      dispatch(fetchDealDetailsStart());
+      await axiosInstance.delete(`/deals/deal/${dealId}`);
+      dispatch(deleteDealSuccess(dealId));
+    } catch (error) {
+      console.error('Error deleting deal:', error);
+      dispatch(fetchDealDetailsFailure((error as Error).message));
+    }
+  };
 
 export const createNewDeal =
   (dealData: Deal): AppThunk<void> =>
-    async (dispatch) => {
-      try {
-        dispatch(setCurrentDeal(dealData));
-        const response = await axiosInstance.post('/deals/deal', dealData);
-        dispatch(setDealDetails(response.data));
-        dispatch(clearCurrentDeal());
-      } catch (error) {
-        console.error('Error creating new deal:', error);
-        dispatch(fetchDealDetailsFailure((error as Error).message));
-      }
-    };
+  async (dispatch) => {
+    try {
+      dispatch(setCurrentDeal(dealData));
+      const response = await axiosInstance.post('/deals/deal', dealData);
+      dispatch(setDealDetails(response.data));
+      dispatch(clearCurrentDeal());
+    } catch (error) {
+      console.error('Error creating new deal:', error);
+      dispatch(fetchDealDetailsFailure((error as Error).message));
+    }
+  };
 
 export const updateDealDetails =
   (dealData: Deal): AppThunk<void> =>
-    async (dispatch) => {
-      try {
-        dispatch(setCurrentDeal(dealData));
-        const response = await axiosInstance.put(
-          `/deals/deal/${dealData.id}`,
-          dealData
-        );
-        dispatch(setDealDetails(response.data));
-        dispatch(clearCurrentDeal());
-        console.log("Updated deal details:", response.data);
-
-      } catch (error) {
-        console.error('Error updating deal details:', error);
-        dispatch(fetchDealDetailsFailure((error as Error).message));
-      }
-    };
+  async (dispatch) => {
+    try {
+      dispatch(setCurrentDeal(dealData));
+      const response = await axiosInstance.put(
+        `/deals/deal/${dealData.id}`,
+        dealData
+      );
+      dispatch(setDealDetails(response.data));
+      dispatch(clearCurrentDeal());
+      console.log('Updated deal details:', response.data);
+    } catch (error) {
+      console.error('Error updating deal details:', error);
+      dispatch(fetchDealDetailsFailure((error as Error).message));
+    }
+  };

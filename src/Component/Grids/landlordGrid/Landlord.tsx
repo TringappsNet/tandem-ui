@@ -64,8 +64,12 @@ const LandlordGrid: React.FC = () => {
   const [formErrors, setFormErrors] = useState<Partial<Landlord>>({});
   const dispatch = useDispatch<AppDispatch>();
   const landlords = useSelector((state: RootState) => state.landlord.landlords);
-  const snackbarOpen = useSelector((state: RootState) => state.landlord.snackbarOpen);
-  const snackbarMessage = useSelector((state: RootState) => state.landlord.snackbarMessage);
+  const snackbarOpen = useSelector(
+    (state: RootState) => state.landlord.snackbarOpen
+  );
+  const snackbarMessage = useSelector(
+    (state: RootState) => state.landlord.snackbarMessage
+  );
 
   useEffect(() => {
     dispatch(fetchLandlords());
@@ -232,7 +236,9 @@ const LandlordGrid: React.FC = () => {
   };
 
   // Determine the severity based on the snackbar message
-  const snackbarSeverity = snackbarMessage?.includes('successfully') ? 'success' : 'error';
+  const snackbarSeverity = snackbarMessage?.includes('successfully')
+    ? 'success'
+    : 'error';
 
   return (
     <div className={styles.gridContainer}>
@@ -273,13 +279,8 @@ const LandlordGrid: React.FC = () => {
         confirmVariant="danger"
       />
 
-      <Dialog open={open} onClose={handleClose}
-    
-      >
-        <DialogTitle
-        
-        
-        >
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>
           {formData.id ? 'Edit Landlord' : 'Add Landlord'}
 
           <IconButton
@@ -292,7 +293,6 @@ const LandlordGrid: React.FC = () => {
               right: 20,
               top: 10,
               color: (theme) => theme.palette.grey[500],
-         
             }}
           >
             <CloseIcon sx={{ color: '#999' }} />

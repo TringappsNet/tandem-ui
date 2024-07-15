@@ -99,7 +99,12 @@
 }
 
 .confirm {
-  background: linear-gradient(58deg, rgb(30 54 88) 0%, rgb(25 41 64) 35%, rgb(38 74 125) 100%);
+  background: linear-gradient(
+    58deg,
+    rgb(30 54 88) 0%,
+    rgb(25 41 64) 35%,
+    rgb(38 74 125) 100%
+  );
   color: white;
   border: none;
 }

@@ -212,7 +212,6 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           >
             <div className={styles.username}>
               <p>
-              
                 {userdetails
                   ? `${userdetails.user?.firstName} ${userdetails.user?.lastName}`
                   : 'Guest'}
@@ -225,7 +224,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               )}
             </div>
             <div className={styles.circle}>
-              <p >{userdetails ? userdetails.user?.firstName[0] : 'G'}</p>
+              <p>{userdetails ? userdetails.user?.firstName[0] : 'G'}</p>
             </div>
             {isDropdownOpen && (
               <div className={styles.dropdownMenu}>
@@ -256,7 +255,12 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         </div>
       </nav>
       {openPopup && selectedComponent && (
-        <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg">
+        <Dialog
+          open={openPopup}
+          sx={{ padding: 0, margin: 0 }}
+          maxWidth="lg"
+          onClose={handleClosePopup}
+        >
           <DialogTitle sx={{ padding: 0 }}>
             <Icon
               aria-label="close"
@@ -359,8 +363,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       <SnackbarComponent
         open={snackbarOpen}
         message={snackbarMessage}
-        onClose={handleSnackbarClose} 
-        severity={'error'}      
+        onClose={handleSnackbarClose}
+        severity={'error'}
       />
     </>
   );
