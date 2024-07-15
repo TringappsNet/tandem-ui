@@ -244,7 +244,7 @@ const InviteBroker: React.FC = () => {
           width: '200px',
           position: 'relative',
           float: 'right',
-          backgroundColor: '#262280',
+          backgroundColor: '#39404f',
         }}
         onClick={() => handleOpenPopup('SendInvite')}
       >
@@ -312,6 +312,7 @@ const InviteBroker: React.FC = () => {
               right: 20,
               top: 10,
               color: (theme) => theme.palette.grey[500],
+              
             }}
           >
             <CloseIcon sx={{ color: '#999' }} />

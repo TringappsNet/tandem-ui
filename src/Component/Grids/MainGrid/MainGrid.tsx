@@ -19,6 +19,8 @@ interface FullGridProps {
   sx: any;
 }
 
+
+
 const FullGrid: React.FC<FullGridProps> = ({
   rows,
   columns,
@@ -47,30 +49,16 @@ const FullGrid: React.FC<FullGridProps> = ({
           sx={{
             height: 800,
             marginTop: 2,
-            bgcolor: 'darkblue !important', // Set the background color here with !important
-            border: '#191c24 !important',
+            bgcolor: '#142031 !important', 
+
 
             ...sx,
 
             lineHeight: 2,
-            '.css-15n4jlm-MuiDataGrid-root': {
-              border: 'none',
-            },
-            '.css-1kwdphh-MuiDataGrid-virtualScrollerContent,.css-tgsonj,.css-14mxsc7-MuiDataGrid-root .MuiDataGrid-withBorderColor,.css-1rtad1,.css-14mxsc7-MuiDataGrid-root .MuiDataGrid-filler,.css-128fb87-MuiDataGrid-toolbarContainer,.css-wop1k0-MuiDataGrid-footerContainer, .css-yrdy0g-MuiDataGrid-columnHeaderRow,.css-1w53k9d-MuiDataGrid-overlay,.css-1rtad1':
-              {
-                background: '#191c24 !important',
-                color: 'white',
-                border: '#191c24',
-              },
-            '.css-1eed5fa-MuiInputBase-root-MuiInput-root': {
-              color: 'white',
-            },
-            '.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root': {
-              color: 'white',
-            },
-            '.css-14mxsc7-MuiDataGrid-root ': {
-              border: 'none',
-            },
+         
+
+          
+
           }}
         >
           <DataGrid
@@ -79,10 +67,15 @@ const FullGrid: React.FC<FullGridProps> = ({
             columns={columns}
             paginationModel={paginationModel}
             onPaginationModelChange={setPaginationModel}
-            rowHeight={40}
+            rowHeight={40                             }
             columnHeaderHeight={39}
             disableColumnFilter
+          
             disableColumnMenu
+            hideFooter
+            hideFooterPagination
+            hideFooterSelectedRowCount
+            
             slots={{ toolbar: GridToolbar }}
             slotProps={{
               toolbar: {

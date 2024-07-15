@@ -244,7 +244,7 @@ const LandlordGrid: React.FC = () => {
           width: '200px',
           position: 'relative',
           float: 'right',
-          backgroundColor: '#262280',
+          backgroundColor: '#39404f',
         }}
         onClick={() => handleEditNew(true)}
       >
@@ -273,8 +273,13 @@ const LandlordGrid: React.FC = () => {
         confirmVariant="danger"
       />
 
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>
+      <Dialog open={open} onClose={handleClose}
+    
+      >
+        <DialogTitle
+        
+        
+        >
           {formData.id ? 'Edit Landlord' : 'Add Landlord'}
 
           <IconButton
@@ -287,6 +292,7 @@ const LandlordGrid: React.FC = () => {
               right: 20,
               top: 10,
               color: (theme) => theme.palette.grey[500],
+         
             }}
           >
             <CloseIcon sx={{ color: '#999' }} />
