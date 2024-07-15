@@ -62,7 +62,7 @@
   width: 100%;
   padding: 3rem 2.5rem;
   /* background-color: #142031; */
-  background: linear-gradient(58deg, rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%);
+  background: linear-gradient(60deg, #152133 0%, #142031 35%, #172438 100%);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 10px;
@@ -153,7 +153,7 @@
   margin-top: 2.5rem;
   width: 100%;
   padding: 10px;
-  background: linear-gradient(45deg, rgb(2, 49, 88) 0%, rgb(5, 36, 84) 100%);
+  background: linear-gradient(45deg, #262262 5%, #322e76 45%);
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 4px;
@@ -161,7 +161,7 @@
 }
 
 .loginbtn:hover {
-  background: linear-gradient(90deg, rgb(34, 54, 88) 0%, rgb(8, 28, 53) 100%);
+  background: linear-gradient(45deg, rgb(2, 49, 88) 0%, rgb(5, 36, 84) 100%);
   color: white;
 }
 
