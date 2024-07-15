@@ -4,28 +4,46 @@
   /* height: 500px !important; */
   width: 100%;
 
-  /* border: none !important; */
+  border: none !important;
 }
 
 .dataGrid {
   background-color: #f8f9fa;
 }
 
+
+/* .MuiDataGrid-scrollbar .MuiDataGrid-scrollbar--horizontal */
+/* {
+
+} */
 .dataGrid .MuiDataGrid-footerContainer {
   display: none;
 }
 
 .dataGrid .MuiDataGrid-row {
-  background-color: #ffffff;
+  background-color: #e4e4e4;
 }
 
 .dataGrid .MuiDataGrid-row:hover {
-  background-color: #e0f7fa;
+  background-color: #edeeee;
 }
 
 .dataGrid .MuiDataGrid-cell {
   color: #000000;
 }
+
+/* .MuiDataGrid-root .MuiDataGrid-row {
+  --rowBorderColor: red;
+} */
+
+/* .MuiDataGrid-root {
+  border-color: red !important;
+} */
+/* 
+.MuiDataGrid-root {
+  --rowBorderColor: red;
+} */
+
 
 /* .css-15n4jlm-MuiDataGrid-root .MuiDataGrid-cell--textCenter {
   border: none !important;
@@ -75,4 +93,3 @@
   visibility: hidden !important;
   width: auto;
 }
-
