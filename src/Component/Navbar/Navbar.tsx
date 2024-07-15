@@ -28,6 +28,7 @@ import { IoIosSend, IoIosContacts } from 'react-icons/io';
 import { MdOutlineLockReset } from 'react-icons/md';
 import { IoLogOutOutline } from 'react-icons/io5';
 import SnackbarComponent from '../Snackbar/Snackbar';
+import { fetchSites } from '../Redux/slice/site/siteSlice';
 
 interface NavbarProps {
   links: {
@@ -60,6 +61,10 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const inviteOpen = useSelector((state: RootState) => state.sendInvite.open);
   const resetOpen = useSelector((state: RootState) => state.reset.open);
   const supportOpen = useSelector((state: RootState) => state.contact.open);
+
+  useEffect(() => {
+    dispatch(fetchSites());
+  }, [dispatch]);
 
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
@@ -239,7 +244,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               )}
             </div>
             <div className={styles.circle}>
-              <p >{userdetails ? userdetails.user?.firstName[0] : 'G'}</p>
+              <p >{userdetails ? userdetails.user?.firstName[0] +''+ userdetails.user?.lastName[0] : 'G'}</p>
             </div>
             {isDropdownOpen && (
               <div className={styles.dropdownMenu}>
@@ -270,7 +275,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         </div>
       </nav>
       {openPopup && selectedComponent && (
-        <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg">
+        <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg" onClose={handleClosePopup}>
           <DialogTitle sx={{ padding: 0 }}>
             <Icon
               aria-label="close"
