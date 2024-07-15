@@ -270,7 +270,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         </div>
       </nav>
       {openPopup && selectedComponent && (
-        <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg">
+        <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg" onClose={handleClosePopup}>
           <DialogTitle sx={{ padding: 0 }}>
             <Icon
               aria-label="close"
