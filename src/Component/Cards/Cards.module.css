@@ -1,4 +1,4 @@
-.cardList {
+  .cardList {
   display: flex;
   flex-wrap: wrap;
   gap: 20px 30px;
@@ -145,6 +145,11 @@
   margin: 1px;
   gap: 2rem;
   padding: 15px;
+  /* background-color: #191c24;  */
+   background: linear-gradient(58deg,  rgb(28, 44, 66) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%) !important;
+   backdrop-filter:blur(20px);
+   border: 1px solid #39404f !important;
+
   border-radius: 5px;
 }
 

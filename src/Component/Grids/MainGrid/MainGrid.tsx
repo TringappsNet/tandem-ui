@@ -55,9 +55,7 @@ const FullGrid: React.FC<FullGridProps> = ({
             ...sx,
 
             lineHeight: 2,
-         
-
-          
+                
 
           }}
         >
