@@ -5,10 +5,8 @@ import SnackbarComponent from '../Snackbar/Snackbar';
 import styles from './AxiosInterceptor.module.css';
 
 const axiosInstance = axios.create({
-  // baseURL: "http://localhost:3008/api",
-  baseURL: "http://192.168.1.223:3008/api",
-
-
+  baseURL: "http://localhost:3008/api",
+  // baseURL: 'http://192.168.1.223:3008/api',
 });
 
 const getQueryParam = (param: string): string | null => {
@@ -108,8 +106,8 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
       <SnackbarComponent
         open={snackbarOpen}
         message={snackbarMessage}
-        onClose={handleSnackbarClose} 
-        severity={'error'}      
+        onClose={handleSnackbarClose}
+        severity={'error'}
       />
       {children}
     </>

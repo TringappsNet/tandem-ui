@@ -11,6 +11,7 @@ interface User {
   address: string;
   city: string;
   state: string;
+  isAdmin: boolean;
   country: string;
   zipcode: string;
 }

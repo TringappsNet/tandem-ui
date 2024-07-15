@@ -21,12 +21,16 @@ interface SiteState {
   sites: Site[];
   loading: boolean;
   error: string | null;
+  snackbarMessage: string | null;
+  snackbarOpen: boolean;
 }
 
 const initialState: SiteState = {
   sites: [],
   loading: false,
   error: null,
+  snackbarMessage: null,
+  snackbarOpen: false,
 };
 
 const siteSlice = createSlice({
@@ -66,6 +70,12 @@ const siteSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+    setSnackbarMessage: (state, action: PayloadAction<string>) => {
+      state.snackbarMessage = action.payload;
+    },
+    setSnackbarOpen: (state, action: PayloadAction<boolean>) => {
+      state.snackbarOpen = action.payload;
+    },
   },
 });
 
@@ -76,51 +86,71 @@ export const {
   addSiteSuccess,
   updateSiteSuccess,
   deleteSiteSuccess,
+  setSnackbarMessage,
+  setSnackbarOpen,
 } = siteSlice.actions;
 
 export default siteSlice.reducer;
 
 export const fetchSites =
   (): ThunkAction<void, RootState, unknown, Action<string>> =>
-  async (dispatch: Dispatch) => {
-    try {
-      dispatch(fetchSitesStart());
-      const response = await axiosInstance.get('/sites');
-      dispatch(fetchSitesSuccess(response.data));
-    } catch (error) {
-      dispatch(fetchSitesFailure((error as Error).message));
-    }
-  };
+    async (dispatch: Dispatch) => {
+      try {
+        dispatch(fetchSitesStart());
+        const response = await axiosInstance.get('/sites');
+        dispatch(fetchSitesSuccess(response.data));
+      } catch (error) {
+        const errorMessage = (error as any).response?.data?.message || (error as Error).message;
+        dispatch(fetchSitesFailure(errorMessage));
+        dispatch(setSnackbarMessage(errorMessage));
+        dispatch(setSnackbarOpen(true));
+      }
+    };
 
 export const addSite =
   (site: Site): ThunkAction<void, RootState, unknown, Action<string>> =>
-  async (dispatch: Dispatch) => {
-    try {
-      const response = await axiosInstance.post('/sites/site/', site);
-      dispatch(addSiteSuccess(response.data));
-    } catch (error) {
-      dispatch(fetchSitesFailure((error as Error).message));
-    }
-  };
+    async (dispatch: Dispatch) => {
+      try {
+        const response = await axiosInstance.post('/sites/site/', site);
+        dispatch(addSiteSuccess(response.data));
+        // dispatch(setSnackbarMessage('Site added successfully'));
+        // dispatch(setSnackbarOpen(true));
+      } catch (error) {
+        const errorMessage = (error as any).response?.data?.message || (error as Error).message;
+        dispatch(fetchSitesFailure(errorMessage));
+        dispatch(setSnackbarMessage(errorMessage));
+        dispatch(setSnackbarOpen(true));
+      }
+    };
 
 export const updateSite =
   (site: Site): ThunkAction<void, RootState, unknown, Action<string>> =>
-  async (dispatch: Dispatch) => {
-    try {
-      const response = await axiosInstance.put(`/sites/site/${site.id}`, site);
-      dispatch(updateSiteSuccess(response.data));
-    } catch (error) {
-      dispatch(fetchSitesFailure((error as Error).message));
-    }
-  };
+    async (dispatch: Dispatch) => {
+      try {
+        const response = await axiosInstance.put(`/sites/site/${site.id}`, site);
+        dispatch(updateSiteSuccess(response.data));
+        dispatch(setSnackbarMessage('Site updated successfully'));
+        dispatch(setSnackbarOpen(true));
+      } catch (error) {
+        const errorMessage = (error as any).response?.data?.message || (error as Error).message;
+        dispatch(fetchSitesFailure(errorMessage));
+        dispatch(setSnackbarMessage(errorMessage));
+        dispatch(setSnackbarOpen(true));
+      }
+    };
 
 export const deleteSite =
   (id: number): ThunkAction<void, RootState, unknown, Action<string>> =>
-  async (dispatch: Dispatch) => {
-    try {
-      await axiosInstance.delete(`/sites/site/${id}`);
-      dispatch(deleteSiteSuccess(id));
-    } catch (error) {
-      dispatch(fetchSitesFailure((error as Error).message));
-    }
-  };
+    async (dispatch: Dispatch) => {
+      try {
+        await axiosInstance.delete(`/sites/site/${id}`);
+        dispatch(deleteSiteSuccess(id));
+        dispatch(setSnackbarMessage('Site deleted successfully'));
+        dispatch(setSnackbarOpen(true));
+      } catch (error) {
+        const errorMessage = (error as any).response?.data?.message || (error as Error).message;
+        dispatch(fetchSitesFailure(errorMessage));
+        dispatch(setSnackbarMessage(errorMessage));
+        dispatch(setSnackbarOpen(true));
+      }
+    };

@@ -15,6 +15,7 @@ import {
   addLandlord,
   updateLandlord,
   deleteLandlord,
+  setSnackbarOpen,
 } from '../../Redux/slice/landlord/landlordSlice';
 import styles from './landlord-grid.module.css';
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
@@ -23,6 +24,7 @@ import { MdEdit, MdDelete } from 'react-icons/md';
 import ConfirmationModal from '../../AlertDialog/AlertDialog';
 import CloseIcon from '@mui/icons-material/Close';
 import { RootState } from '../../Redux/reducers';
+import SnackbarComponent from '../../Snackbar/Snackbar';
 
 interface Landlord {
   id: number;
@@ -62,6 +64,8 @@ const LandlordGrid: React.FC = () => {
   const [formErrors, setFormErrors] = useState<Partial<Landlord>>({});
   const dispatch = useDispatch<AppDispatch>();
   const landlords = useSelector((state: RootState) => state.landlord.landlords);
+  const snackbarOpen = useSelector((state: RootState) => state.landlord.snackbarOpen);
+  const snackbarMessage = useSelector((state: RootState) => state.landlord.snackbarMessage);
 
   useEffect(() => {
     dispatch(fetchLandlords());
@@ -222,6 +226,13 @@ const LandlordGrid: React.FC = () => {
   const cancelDelete = () => {
     setDeleteConfirmation(false);
   };
+
+  const handleCloseSnackbar = () => {
+    dispatch(setSnackbarOpen(false));
+  };
+
+  // Determine the severity based on the snackbar message
+  const snackbarSeverity = snackbarMessage?.includes('successfully') ? 'success' : 'error';
 
   return (
     <div className={styles.gridContainer}>
@@ -413,6 +424,13 @@ const LandlordGrid: React.FC = () => {
           )}
         </DialogActions>
       </Dialog>
+
+      <SnackbarComponent
+        open={snackbarOpen}
+        message={snackbarMessage || ''}
+        onClose={handleCloseSnackbar}
+        severity={snackbarSeverity}
+      />
     </div>
   );
 };
