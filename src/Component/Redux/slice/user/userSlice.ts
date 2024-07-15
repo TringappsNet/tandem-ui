@@ -100,8 +100,6 @@ export const fetchBrokers = (): ThunkAction<void, RootState, unknown, Action<str
     dispatch(fetchBrokersStart());
     const response = await axiosInstance.get('/brokers/all-users');
     dispatch(fetchBrokersSuccess(response.data));
-    dispatch(setSnackbarMessage('Brokers fetched successfully'));
-    dispatch(setSnackbarOpen(true));
   } catch (error) {
     const errorMessage = (error as any).response?.data?.message || (error as Error).message;
     dispatch(fetchBrokersFailure(errorMessage));

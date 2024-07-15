@@ -6,7 +6,7 @@
   width: 500px;
   margin: 0 auto;
   padding: 2rem;
-  background: linear-gradient(58deg, rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%);
+  background: linear-gradient(58deg, rgba(20, 32, 49, 1) 0%, rgba(29, 46, 70, 1) 35%, rgba(31, 47, 71, 1) 100%);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 0px;
@@ -54,7 +54,8 @@ label {
 .formContainer button {
   width: 100%;
   padding: 0.75rem;
-  background: linear-gradient(45deg, rgb(2, 49, 88) 0%, rgb(5, 36, 84) 100%);
+  /* background: linear-gradient(45deg, rgb(2, 49, 88) 0%, rgb(5, 36, 84) 100%); */
+  background: linear-gradient(58deg, rgb(15, 29, 48) 0%, rgb(11, 30, 57) 35%, rgba(31, 47, 71, 1) 100%);
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 0.375rem;
