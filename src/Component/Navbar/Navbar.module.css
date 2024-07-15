@@ -5,7 +5,7 @@
   width: 100%;
   height: 70px;
   /* background: linear-gradient(58deg, rgb(21 40 67) 0%, rgb(28 45 69) 35%, rgb(17 38 71) 100%); */
-  background: linear-gradient(58deg, rgb(9 18 31) 0%, rgb(25 41 64) 35%, rgb(6 20 40) 100%);
+  background: linear-gradient(58deg, rgb(11 34 67) 0%, rgb(30 62 108) 35%, rgb(16 42 79) 100%);
   /* background: linear-gradient(58deg, rgb(21 40 67) 0%, rgb(12 27 48) 35%, rgb(17 38 71) 100%); */
   /* background: linear-gradient(58deg, rgb(9 32 63) 0%, rgb(11 22 39) 35%, rgb(9 32 63) 100%); */
   /* background: linear-gradient(45deg, rgb(2, 49, 88) 0%, rgb(5, 36, 84) 100%); */
@@ -16,7 +16,7 @@
   position: relative;
   top: 0;
   z-index: 999;
-  box-shadow: rgba(93, 93, 113, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  border-bottom: 1px solid #091931;
 }
 
 .headersection {
@@ -92,12 +92,13 @@ box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8p
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 2px;
 }
 
 .username p {
   margin: 0;
   font-weight: 500 !important;
+  margin-top: 8px;
 }
 
 .roleType {

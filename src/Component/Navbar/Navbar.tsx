@@ -225,7 +225,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               )}
             </div>
             <div className={styles.circle}>
-              <p >{userdetails ? userdetails.user?.firstName[0] : 'G'}</p>
+              <p >{userdetails ? userdetails.user?.firstName[0] +''+ userdetails.user?.lastName[0] : 'G'}</p>
             </div>
             {isDropdownOpen && (
               <div className={styles.dropdownMenu}>
