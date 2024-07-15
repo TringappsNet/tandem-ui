@@ -18,6 +18,7 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const dispatch = useDispatch<AppDispatch>();
   const { responseMessage, responseType, status } = useSelector(
@@ -38,27 +39,35 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!oldPassword) {
+      setErrorMessage('Please fill in the Old Password.');
+      return;
+    }
+
+    if (!newPassword) {
+      setErrorMessage('Please enter your new password.');
+      return;
+    }
+
+    if (!confirmPassword) {
+      setErrorMessage('Please confirm your password.');
+      console.log('Error message set:', errorMessage);
+      return;
+    }
+
     if (newPassword !== confirmPassword) {
       dispatch(clearResponse());
-      dispatch({
-        type: 'reset/resetPassword/rejected',
-        error: { message: 'Passwords do not match.' },
-      });
+      setErrorMessage('Passwords do not match.');
       return;
     }
 
     if (!validatePassword(newPassword)) {
       dispatch(clearResponse());
-      dispatch({
-        type: 'reset/resetPassword/rejected',
-        error: {
-          message:
-            'Password must contain at least 1 special character, 1 number, and 1 capital letter.',
-        },
-      });
+      setErrorMessage('Password must contain at least 1 special character, 1 number, and 1 capital letter.');
       return;
     }
 
+    setErrorMessage('');
     dispatch(resetPassword({ oldPassword, newPassword, userId: user.id }));
   };
 
@@ -80,6 +89,9 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
       {showResetForm && (
         <div className={styles.formContainer}>
           <h2>Reset Password</h2>
+          {errorMessage && (
+            <div className={styles.error}>{errorMessage}</div>
+          )}
           {responseMessage && (
             <div className={styles[responseType]}>{responseMessage}</div>
           )}
@@ -92,7 +104,10 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
                 autoFocus
                 value={oldPassword}
                 placeholder="Enter your old password"
-                onChange={(e) => setOldPassword(e.target.value)}
+                onChange={(e) => {
+                  setOldPassword(e.target.value);
+                  setErrorMessage('');
+                }}
                 required
               />
             </div>
@@ -103,7 +118,10 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
                 id="newPassword"
                 value={newPassword}
                 placeholder="Enter your new password"
-                onChange={(e) => setNewPassword(e.target.value)}
+                onChange={(e) => {
+                  setNewPassword(e.target.value);
+                  setErrorMessage('');
+                }}
                 required
               />
             </div>
@@ -114,7 +132,10 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
                 id="confirmPassword"
                 value={confirmPassword}
                 placeholder="Confirm your password"
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  setErrorMessage('');
+                }}
                 required
               />
             </div>

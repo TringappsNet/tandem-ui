@@ -102,12 +102,14 @@
   color: rgb(122, 47, 47) !important;
 }
 
-.css
-
-.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+.css .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
   color: white !important;
 }
 
 .css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
   background-color: #1d2a3a;
+}
+
+.MuiBox-root.cspgfmz {
+  margin-bottom: 20px;
 }
