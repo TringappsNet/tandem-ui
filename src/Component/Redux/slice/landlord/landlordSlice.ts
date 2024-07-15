@@ -97,71 +97,69 @@ export default landlordSlice.reducer;
 
 export const fetchLandlords =
   (): ThunkAction<void, RootState, unknown, Action<string>> =>
-  async (dispatch: Dispatch) => {
-    try {
-      dispatch(fetchLandlordsStart());
-      const response = await axiosInstance.get('/landlords');
-      dispatch(fetchLandlordsSuccess(response.data));
-      dispatch(setSnackbarMessage('Landlords fetched successfully'));
-      dispatch(setSnackbarOpen(true));
-    } catch (error) {
-      const errorMessage = (error as any).response?.data?.message || (error as Error).message;
-      dispatch(fetchLandlordsFailure(errorMessage));
-      dispatch(setSnackbarMessage(errorMessage));
-      dispatch(setSnackbarOpen(true));
-    }
-  };
+    async (dispatch: Dispatch) => {
+      try {
+        dispatch(fetchLandlordsStart());
+        const response = await axiosInstance.get('/landlords');
+        dispatch(fetchLandlordsSuccess(response.data));
+      } catch (error) {
+        const errorMessage = (error as any).response?.data?.message || (error as Error).message;
+        dispatch(fetchLandlordsFailure(errorMessage));
+        dispatch(setSnackbarMessage(errorMessage));
+        dispatch(setSnackbarOpen(true));
+      }
+    };
 
 export const addLandlord =
   (landlord: Landlord): ThunkAction<void, RootState, unknown, Action<string>> =>
-  async (dispatch: Dispatch) => {
-    try {
-      const response = await axiosInstance.post(
-        '/landlords/landlord/',
-        landlord
-      );
-      dispatch(addLandlordSuccess(response.data));
-      dispatch(setSnackbarMessage('Landlord added successfully'));
-      dispatch(setSnackbarOpen(true));
-    } catch (error) {
-      const errorMessage = (error as any).response?.data?.message || (error as Error).message;
-      dispatch(fetchLandlordsFailure(errorMessage));
-      dispatch(setSnackbarMessage(errorMessage));
-      dispatch(setSnackbarOpen(true));
-    }
-  };
+    async (dispatch: Dispatch) => {
+      try {
+        const response = await axiosInstance.post(
+          '/landlords/landlord/',
+          landlord
+        );
+        dispatch(addLandlordSuccess(response.data));
+        dispatch(setSnackbarMessage('Landlord added successfully'));
+        dispatch(setSnackbarOpen(true));
+      } catch (error) {
+        const errorMessage = (error as any).response?.data?.message || (error as Error).message;
+        dispatch(fetchLandlordsFailure(errorMessage));
+        dispatch(setSnackbarMessage(errorMessage));
+        dispatch(setSnackbarOpen(true));
+      }
+    };
 
 export const updateLandlord =
   (landlord: Landlord): ThunkAction<void, RootState, unknown, Action<string>> =>
-  async (dispatch: Dispatch) => {
-    try {
-      const response = await axiosInstance.patch(
-        `/landlords/landlord/${landlord.id}`,
-        landlord
-      );
-      dispatch(updateLandlordSuccess(response.data));
-      dispatch(setSnackbarMessage('Landlord updated successfully'));
-      dispatch(setSnackbarOpen(true));
-    } catch (error) {
-      const errorMessage = (error as any).response?.data?.message || (error as Error).message;
-      dispatch(fetchLandlordsFailure(errorMessage));
-      dispatch(setSnackbarMessage(errorMessage));
-      dispatch(setSnackbarOpen(true));
-    }
-  };
+    async (dispatch: Dispatch) => {
+      try {
+        const response = await axiosInstance.patch(
+          `/landlords/landlord/${landlord.id}`,
+          landlord
+        );
+        dispatch(updateLandlordSuccess(response.data));
+        dispatch(setSnackbarMessage('Landlord updated successfully'));
+        dispatch(setSnackbarOpen(true));
+      } catch (error) {
+        const errorMessage = (error as any).response?.data?.message || (error as Error).message;
+        dispatch(fetchLandlordsFailure(errorMessage));
+        dispatch(setSnackbarMessage(errorMessage));
+        dispatch(setSnackbarOpen(true));
+      }
+    };
 
 export const deleteLandlord =
   (id: number): ThunkAction<void, RootState, unknown, Action<string>> =>
-  async (dispatch: Dispatch) => {
-    try {
-      await axiosInstance.delete(`/landlords/landlord/${id}`);
-      dispatch(deleteLandlordSuccess(id));
-      dispatch(setSnackbarMessage('Landlord deleted successfully'));
-      dispatch(setSnackbarOpen(true));
-    } catch (error) {
-      const errorMessage = (error as any).response?.data?.message || (error as Error).message;
-      dispatch(fetchLandlordsFailure(errorMessage));
-      dispatch(setSnackbarMessage(errorMessage));
-      dispatch(setSnackbarOpen(true));
-    }
-  };
+    async (dispatch: Dispatch) => {
+      try {
+        await axiosInstance.delete(`/landlords/landlord/${id}`);
+        dispatch(deleteLandlordSuccess(id));
+        dispatch(setSnackbarMessage('Landlord deleted successfully'));
+        dispatch(setSnackbarOpen(true));
+      } catch (error) {
+        const errorMessage = (error as any).response?.data?.message || (error as Error).message;
+        dispatch(fetchLandlordsFailure(errorMessage));
+        dispatch(setSnackbarMessage(errorMessage));
+        dispatch(setSnackbarOpen(true));
+      }
+    };
