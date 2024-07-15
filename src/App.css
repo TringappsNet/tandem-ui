@@ -3,15 +3,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(rgb(50, 35, 51) 20%, rgb(22, 32, 50) 70%);
+  background: linear-gradient(180deg, rgb(23, 38, 58) 0%, #342333 -5%, rgb(19, 32, 51) 50%);
 
-}
+} 
 
 .MuiDataGrid-withBorderColor {
   /* background: rgb(14, 27, 64); */
   background: rgb(41, 55, 81);
   /* background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(57, 92, 190, 1) 47%); */
 }
+
 
 
 .MuiDataGrid-virtualScroller {
@@ -76,17 +77,13 @@
   display: none;
 }
 
-.MuiSvgIcon-root {
-  color: white;
-}
-
 .css-c6bojz {
   color: white !important;
 
 }
 
 .css-i4bv87-MuiSvgIcon-root {
-  color: white
+  color: white;
 }
 
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
@@ -110,4 +107,9 @@
 
 .css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
   background-color: #1d2a3a;
+
+}
+.css-1fu2e3p-MuiPaper-root-MuiDialog-paper {
+  background-color: #342333 !important;
+
 }

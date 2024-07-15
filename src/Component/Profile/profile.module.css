@@ -15,7 +15,7 @@ html {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 10px;
-  border: 1.5px solid #39404f ;
+  border: 1.5px solid #342333 ;
   padding: 30px;
   /* box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.3); */
   overflow-y: auto;
@@ -63,6 +63,7 @@ html {
   box-sizing: border-box;
   margin-top: 10px;
   margin-top: -65px;
+  border: 2px #39404f;
 }
 
 .headerSection {

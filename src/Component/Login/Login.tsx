@@ -66,7 +66,7 @@ const Login: React.FC = () => {
             />
             <h2>TANDEM INFRASTRUCTURE</h2>
           </div>
-          <p>Sign in to continue to TANDEM</p>
+          <p style={{ color: 'rgb(218, 219, 220)' }}>Sign in to continue to TANDEM</p>
           {(emailError || passwordError || errorMessage) && (
             <div className={styles.errorBox}>
               {emailError && <p className={styles.errorText}>{emailError}</p>}
