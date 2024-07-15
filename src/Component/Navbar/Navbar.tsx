@@ -45,6 +45,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const sites = useSelector((state: RootState) => state.site.sites);
   const deals = useSelector((state: RootState) => state.deal.dealDetails);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
+  const [activePage, setActivePage] = useState<string>('dashboard');
   const [selectedComponent, setSelectedComponent] = useState<string | null>(
     null
   );
@@ -109,21 +110,21 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     setShowLogoutConfirmation(false);
   };
 
-  const handleCards = () => {
-    navigate('/cards');
-  };
+
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-
   const handleRoute = (route: string) => {
     if (route === 'site') {
       navigate('/site');
+      setActivePage('site');
     } else if (route === 'landlord') {
       navigate('/landlord');
+      setActivePage('landlord');
     } else if (route === 'invitebroker') {
       navigate('/invitebroker');
+      setActivePage('invitebroker');
     }
   };
 
@@ -145,6 +146,16 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const handlelogoclick = () => {
     navigate('/dashboard');
   };
+
+
+  const handleCards = () => {
+    navigate('/cards');
+  };
+  const handleDealsClick = () => {
+    handleCards();
+    setActivePage('deals');
+  };
+
 
   const handleCreateDealClick = () => {
     const availableSites = sites.filter(
@@ -180,24 +191,27 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           </div>
           {userdetails.isAdmin && (
             <>
-              <p onClick={handleCards} style={{ cursor: 'pointer' }}>
+              <p
+                onClick={handleDealsClick}
+                className={`${styles.navItem} ${activePage === 'deals' ? styles.active : ''}`}
+              >
                 DEALS
               </p>
               <p
                 onClick={() => handleRoute('site')}
-                style={{ cursor: 'pointer' }}
+                className={`${styles.navItem} ${activePage === 'site' ? styles.active : ''}`}
               >
                 PROPERTY
               </p>
               <p
                 onClick={() => handleRoute('landlord')}
-                style={{ cursor: 'pointer' }}
+                className={`${styles.navItem} ${activePage === 'landlord' ? styles.active : ''}`}
               >
                 LANDLORD
               </p>
               <p
                 onClick={() => handleRoute('invitebroker')}
-                style={{ cursor: 'pointer' }}
+                className={`${styles.navItem} ${activePage === 'invitebroker' ? styles.active : ''}`}
               >
                 BROKERDETAILS
               </p>
@@ -217,7 +231,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           >
             <div className={styles.username}>
               <p>
-              
+
                 {userdetails
                   ? `${userdetails.user?.firstName} ${userdetails.user?.lastName}`
                   : 'Guest'}
@@ -364,8 +378,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       <SnackbarComponent
         open={snackbarOpen}
         message={snackbarMessage}
-        onClose={handleSnackbarClose} 
-        severity={'error'}      
+        onClose={handleSnackbarClose}
+        severity={'error'}
       />
     </>
   );

@@ -138,15 +138,15 @@ const LandlordGrid: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: 'name', headerName: 'Name', width: 100 },
+    { field: 'name', headerName: 'Name', width: 140 },
     { field: 'phoneNumber', headerName: 'Phone Number', width: 150 },
-    { field: 'email', headerName: 'Email', width: 150 },
-    { field: 'address1', headerName: 'AddressLine1', width: 140 },
+    { field: 'email', headerName: 'Email', width: 183 },
+    { field: 'address1', headerName: 'AddressLine1', width: 160 },
     { field: 'address2', headerName: 'AddressLine2', width: 140 },
-    { field: 'city', headerName: 'City', width: 100 },
-    { field: 'state', headerName: 'State', width: 100 },
-    { field: 'country', headerName: 'Country', width: 100 },
-    { field: 'zipcode', headerName: 'Zipcode', width: 120 },
+    { field: 'city', headerName: 'City', width: 150 },
+    { field: 'state', headerName: 'State', width: 150 },
+    { field: 'country', headerName: 'Country', width: 140 },
+    { field: 'zipcode', headerName: 'Zipcode', width: 140 },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -274,11 +274,11 @@ const LandlordGrid: React.FC = () => {
       />
 
       <Dialog open={open} onClose={handleClose}
-    
+
       >
         <DialogTitle
-        
-        
+
+
         >
           {formData.id ? 'Edit Landlord' : 'Add Landlord'}
 
@@ -292,7 +292,7 @@ const LandlordGrid: React.FC = () => {
               right: 20,
               top: 10,
               color: (theme) => theme.palette.grey[500],
-         
+
             }}
           >
             <CloseIcon sx={{ color: '#999' }} />

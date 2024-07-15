@@ -69,7 +69,7 @@ const InviteBroker: React.FC = () => {
     zipcode: '',
     isNew: true,
     createdBy: 0,
-    
+
   });
 
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
@@ -203,15 +203,15 @@ const InviteBroker: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: 'email', headerName: 'email', width: 140 },
-    { field: 'firstName', headerName: 'firstName', width: 110 },
-    { field: 'lastName', headerName: 'lastName', width: 110 },
-    { field: 'mobile', headerName: 'mobile', width: 110 },
-    { field: 'address', headerName: 'address', width: 110 },
-    { field: 'city', headerName: 'City', width: 110 },
-    { field: 'state', headerName: 'state', width: 120 },
-    { field: 'zipcode', headerName: 'Zipcode', width: 120 },
-    { field: 'country', headerName: 'Country', width: 130 },
+    { field: 'email', headerName: 'email', width: 180 },
+    { field: 'firstName', headerName: 'firstName', width: 140 },
+    { field: 'lastName', headerName: 'lastName', width: 120 },
+    { field: 'mobile', headerName: 'mobile', width: 150 },
+    { field: 'address', headerName: 'address', width: 160 },
+    { field: 'city', headerName: 'City', width: 140 },
+    { field: 'state', headerName: 'state', width: 140 },
+    { field: 'zipcode', headerName: 'Zipcode', width: 140 },
+    { field: 'country', headerName: 'Country', width: 150 },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -312,7 +312,7 @@ const InviteBroker: React.FC = () => {
               right: 20,
               top: 10,
               color: (theme) => theme.palette.grey[500],
-              
+
             }}
           >
             <CloseIcon sx={{ color: '#999' }} />
