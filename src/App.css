@@ -7,18 +7,46 @@
 
 } 
 
-
-.MuiDataGrid-virtualScroller{
-  background: linear-gradient(58deg,  rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%) ;
-  color: white;
-
-
-}
-
-
 .MuiDataGrid-withBorderColor {
-  background: rgba(31, 47, 71, 1);
+  /* background: rgb(14, 27, 64); */
+  background: rgb(41, 55, 81);
+  /* background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(57, 92, 190, 1) 47%); */
 }
+
+
+
+.MuiDataGrid-virtualScroller {
+  background: linear-gradient(58deg, rgba(20, 32, 49, 1) 0%, rgba(29, 46, 70, 1) 35%, rgba(31, 47, 71, 1) 100%);
+  color: rgb(232, 229, 229);
+}
+
+/* .MuiDataGrid-root {
+  border-color: black;
+} */
+
+.MuiDataGrid-root {
+  border-color: rgb(99, 99, 99) !important;
+  /* --rowBorderColor: rgb(59, 58, 62) !important; */
+  box-shadow: 1px 1px 1px 1px #292c38;
+}
+
+/* .MuiDataGrid-root.MuiDataGrid-withBorderColor {
+  border-color: rgb(126, 80, 19);
+} */
+
+
+.MuiDataGrid-root .MuiDataGrid-row {
+  --rowBorderColor: rgb(59, 58, 62) !important;
+}
+
+
+/* 
+.MuiDataGrid-root {
+  --rowBorderColor: rgb(59, 58, 62) !important;
+} */
+
+
+
 
 .parent-grid_dataGrid__Uj-3s {
   border: 2px solid #39404f !important;
@@ -34,7 +62,6 @@
   color: white !important;
 
 } */
-
 .css-1klb8j8-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter input {
   color: white !important;
 }
@@ -69,8 +96,10 @@
 }
 
 .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
-  color: white !important;
+  color: rgb(122, 47, 47) !important;
 }
+
+.css
 
 .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
   color: white !important;
@@ -82,4 +111,5 @@
 }
 .css-1fu2e3p-MuiPaper-root-MuiDialog-paper {
   background-color: #39404f !important;
+
 }

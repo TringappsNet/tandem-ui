@@ -182,12 +182,12 @@ const SiteGrid: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: 'addressline1', headerName: 'AddressLine1', width: 190 },
-    { field: 'addressline2', headerName: 'AddressLine2', width: 190 },
-    { field: 'state', headerName: 'State', width: 190 },
-    { field: 'city', headerName: 'City', width: 190 },
-    { field: 'zipcode', headerName: 'Zipcode', width: 170 },
-    { field: 'country', headerName: 'Country', width: 170 },
+    { field: 'addressline1', headerName: 'AddressLine1', width: 220 },
+    { field: 'addressline2', headerName: 'AddressLine2', width: 220 },
+    { field: 'state', headerName: 'State', width: 240 },
+    { field: 'city', headerName: 'City', width: 220 },
+    { field: 'zipcode', headerName: 'Zipcode', width: 210 },
+    { field: 'country', headerName: 'Country', width: 210 },
     {
       field: 'actions',
       headerName: 'Actions',

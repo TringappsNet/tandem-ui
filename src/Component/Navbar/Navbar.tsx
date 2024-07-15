@@ -28,6 +28,7 @@ import { IoIosSend, IoIosContacts } from 'react-icons/io';
 import { MdOutlineLockReset } from 'react-icons/md';
 import { IoLogOutOutline } from 'react-icons/io5';
 import SnackbarComponent from '../Snackbar/Snackbar';
+import { fetchSites } from '../Redux/slice/site/siteSlice';
 
 interface NavbarProps {
   links: {
@@ -44,6 +45,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const sites = useSelector((state: RootState) => state.site.sites);
   const deals = useSelector((state: RootState) => state.deal.dealDetails);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
+  const [activePage, setActivePage] = useState<string>('dashboard');
   const [selectedComponent, setSelectedComponent] = useState<string | null>(
     null
   );
@@ -59,6 +61,10 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const inviteOpen = useSelector((state: RootState) => state.sendInvite.open);
   const resetOpen = useSelector((state: RootState) => state.reset.open);
   const supportOpen = useSelector((state: RootState) => state.contact.open);
+
+  useEffect(() => {
+    dispatch(fetchSites());
+  }, [dispatch]);
 
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
@@ -104,21 +110,21 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     setShowLogoutConfirmation(false);
   };
 
-  const handleCards = () => {
-    navigate('/cards');
-  };
+
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-
   const handleRoute = (route: string) => {
     if (route === 'site') {
       navigate('/site');
+      setActivePage('site');
     } else if (route === 'landlord') {
       navigate('/landlord');
+      setActivePage('landlord');
     } else if (route === 'invitebroker') {
       navigate('/invitebroker');
+      setActivePage('invitebroker');
     }
   };
 
@@ -140,6 +146,16 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const handlelogoclick = () => {
     navigate('/dashboard');
   };
+
+
+  const handleCards = () => {
+    navigate('/cards');
+  };
+  const handleDealsClick = () => {
+    handleCards();
+    setActivePage('deals');
+  };
+
 
   const handleCreateDealClick = () => {
     const availableSites = sites.filter(
@@ -175,24 +191,27 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           </div>
           {userdetails.isAdmin && (
             <>
-              <p onClick={handleCards} style={{ cursor: 'pointer' }}>
+              <p
+                onClick={handleDealsClick}
+                className={`${styles.navItem} ${activePage === 'deals' ? styles.active : ''}`}
+              >
                 DEALS
               </p>
               <p
                 onClick={() => handleRoute('site')}
-                style={{ cursor: 'pointer' }}
+                className={`${styles.navItem} ${activePage === 'site' ? styles.active : ''}`}
               >
                 PROPERTY
               </p>
               <p
                 onClick={() => handleRoute('landlord')}
-                style={{ cursor: 'pointer' }}
+                className={`${styles.navItem} ${activePage === 'landlord' ? styles.active : ''}`}
               >
                 LANDLORD
               </p>
               <p
                 onClick={() => handleRoute('invitebroker')}
-                style={{ cursor: 'pointer' }}
+                className={`${styles.navItem} ${activePage === 'invitebroker' ? styles.active : ''}`}
               >
                 BROKERDETAILS
               </p>
@@ -212,7 +231,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           >
             <div className={styles.username}>
               <p>
-              
+
                 {userdetails
                   ? `${userdetails.user?.firstName} ${userdetails.user?.lastName}`
                   : 'Guest'}
@@ -225,7 +244,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               )}
             </div>
             <div className={styles.circle}>
-              <p >{userdetails ? userdetails.user?.firstName[0] : 'G'}</p>
+              <p >{userdetails ? userdetails.user?.firstName[0] +''+ userdetails.user?.lastName[0] : 'G'}</p>
             </div>
             {isDropdownOpen && (
               <div className={styles.dropdownMenu}>
@@ -256,7 +275,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         </div>
       </nav>
       {openPopup && selectedComponent && (
-        <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg">
+        <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg" onClose={handleClosePopup}>
           <DialogTitle sx={{ padding: 0 }}>
             <Icon
               aria-label="close"
@@ -359,8 +378,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       <SnackbarComponent
         open={snackbarOpen}
         message={snackbarMessage}
-        onClose={handleSnackbarClose} 
-        severity={'error'}      
+        onClose={handleSnackbarClose}
+        severity={'error'}
       />
     </>
   );
