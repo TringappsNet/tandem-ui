@@ -133,7 +133,6 @@ const Main: React.FC = () => {
           </p>
         </span>
       </div>
-      <h1 className={styles.b_title}>Users</h1>
       <div>
         <BrokerGrid />
       </div>
