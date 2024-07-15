@@ -116,7 +116,7 @@ html {
 }
 
 .sendButton {
-  background: linear-gradient(45deg, rgb(1, 74, 134) 0%, rgb(0, 44, 110) 100%);
+  background: linear-gradient(90deg, #342333 5%, #3f293c 45%);
   color: rgb(255, 255, 255);
   border: none;
   padding: 0.5rem;
@@ -141,7 +141,7 @@ html {
 }
 
 .sendButton:hover {
-  background: linear-gradient(90deg, rgb(28, 44, 70) 0%, rgb(8, 28, 53) 100%);
+  background: linear-gradient(45deg, rgb(2, 49, 88) 0%, rgb(5, 36, 84) 100%);
   color: white;
 }
 

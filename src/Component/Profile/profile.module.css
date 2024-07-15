@@ -63,6 +63,7 @@ html {
   box-sizing: border-box;
   margin-top: 10px;
   margin-top: -65px;
+  border: 2px #39404f;
 }
 
 .headerSection {
