@@ -334,7 +334,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                height: '70px',
+                height: '60px',
               }}
             >
               <Typography variant="subtitle1" fontWeight="bold" textAlign="center">
@@ -357,7 +357,7 @@ const DealForm: React.FC<DealFormProps> = () => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              height: '70px',
+              height: '60px',
               transition: 'all 0.3s ease',
               '&:hover': {
                 transform: 'scale(1.02)',
