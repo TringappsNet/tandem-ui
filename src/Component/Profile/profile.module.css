@@ -11,10 +11,13 @@ html {
 .profileContainer {
   width: 610px;
   max-width: 100%;
-  background-color: rgb(255, 255, 255);
+  background: linear-gradient(58deg, rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border: 1.5px solid #39404f ;
   padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.3);
+  /* box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.3); */
   overflow-y: auto;
   max-height: 100vh;
   margin-top: 15px;
@@ -92,10 +95,11 @@ html {
   font-family: 'Public Sans', sans-serif;
   font-weight: bolder;
   margin: 0;
+  color: rgb(218, 219, 220);
 }
 
 .profileBlock {
-  background-color: #fbfcfd;
+  background-color: #c9d6e9;
   border-radius: 8px;
   padding: 8px;
   border-style: solid;
@@ -106,7 +110,7 @@ html {
 }
 
 .profileBlock:hover {
-  background-color: #e7e5e5;
+  background-color: #b7c8e1;
   outline: none;
   box-shadow: 0 0 5px rgba(45, 12, 150, 0.5);
 }

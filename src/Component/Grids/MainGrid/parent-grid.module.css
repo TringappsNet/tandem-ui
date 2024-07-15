@@ -4,7 +4,7 @@
   /* height: 500px !important; */
   width: 100%;
 
-  border: none !important;
+  /* border: none !important; */
 }
 
 .dataGrid {
@@ -27,13 +27,13 @@
   color: #000000;
 }
 
-.css-15n4jlm-MuiDataGrid-root .MuiDataGrid-cell--textCenter {
+/* .css-15n4jlm-MuiDataGrid-root .MuiDataGrid-cell--textCenter {
   border: none !important;
 }
 
 .css-15n4jlm-MuiDataGrid-root .MuiDataGrid-cell--textCenter {
   border: none !important;
-}
+} */
 
 .css-3eek4p-MuiDataGrid-main {
   background-color: #e8e8ee !important;
@@ -75,3 +75,4 @@
   visibility: hidden !important;
   width: auto;
 }
+

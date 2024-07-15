@@ -3,19 +3,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(60deg, rgb(23, 38, 58) 0%, rgb(22, 32, 50) 35%, rgb(19, 32, 51) 100%);
+
 }
 
 
-.MuiDataGrid-virtualScroller, .MuiDataGrid-columnHeaderRow,.MuiDataGrid-withBorderColor{
-  background: linear-gradient(58deg,  rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%) ;
+
+.MuiDataGrid-virtualScroller {
+  background: linear-gradient(58deg, rgba(20, 32, 49, 1) 0%, rgba(29, 46, 70, 1) 35%, rgba(31, 47, 71, 1) 100%);
   color: white;
 
 
 }
 
+
+.MuiDataGrid-withBorderColor {
+  background: rgba(31, 47, 71, 1);
+}
+
 .parent-grid_dataGrid__Uj-3s {
   border: 2px solid #39404f !important;
-  backdrop-filter:blur(20px);
+  backdrop-filter: blur(20px);
 
 }
 
@@ -27,14 +35,53 @@
   color: white !important;
 
 } */
-.css-1klb8j8-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter input{
+
+.css-1klb8j8-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter input {
   color: white !important;
 }
 
-.MuiDataGrid-root .MuiDataGrid-container--top [role=row], .MuiDataGrid-root .MuiDataGrid-container--bottom [role=row]{
-  background: linear-gradient(58deg,  rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%) !important
+.MuiDataGrid-root .MuiDataGrid-container--top [role=row],
+.MuiDataGrid-root .MuiDataGrid-container--bottom [role=row] {
+  background: linear-gradient(58deg, rgba(20, 32, 49, 1) 0%, rgba(29, 46, 70, 1) 35%, rgba(31, 47, 71, 1) 100%) !important
 }
 
+
+
 .MuiDataGrid-toolbarContainer button.MuiButton-root {
-    display: none;
+  display: none;
+}
+
+.MuiSvgIcon-root {
+  color: white;
+}
+
+.css-c6bojz {
+  color: white !important;
+
+}
+
+.css-i4bv87-MuiSvgIcon-root {
+  color: white
+}
+
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  /* background: linear-gradient(58deg, rgba(20, 32, 49, 1) 0%, rgba(29, 46, 70, 1) 35%, rgba(31, 47, 71, 1) 100%) !important; */
+
+  background: linear-gradient(90deg, rgb(37 55 80) 0%, rgb(40 60 88) 35%, rgb(51 66 89) 100%) !important;
+  color: white !important;
+
+  backdrop-filter: blur(20px);
+}
+
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+  color: white !important;
+}
+
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  color: white !important;
+}
+
+.css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
+  background-color: #1d2a3a;
+
 }
