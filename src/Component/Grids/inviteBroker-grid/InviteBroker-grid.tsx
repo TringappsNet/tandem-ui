@@ -69,6 +69,7 @@ const InviteBroker: React.FC = () => {
     zipcode: '',
     isNew: true,
     createdBy: 0,
+    
   });
 
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
