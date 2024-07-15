@@ -1,7 +1,22 @@
+@import url('@fontsource/public-sans');
+
 * {
   font-family: 'Public Sans' !important;
 }
 
 .dealcontainer {
   width: 100%;
+  height: calc(100px - 40px);
+  /* Adjust this to fit the available viewport height */
+
+}
+
+.summary {
+  font-weight: bold;
+  text-align: center;
+  color: rgb(31, 11, 51);
+  font-family: 'Public Sans', sans-serif !important;
+  margin-bottom: 15px;
+
+  /* margin-left: 184px; */
 }
