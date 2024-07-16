@@ -14,6 +14,8 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: auto;
+  background-color: #dee2e6;
+
 }
 
 .b_title {
@@ -23,6 +25,7 @@
 .mainContent h1 {
   font-size: 22px;
   color: #262262;
+
 }
 
 .tagsContainer {
@@ -31,80 +34,3 @@
   gap: 1rem;
 }
 
-.tag {
-  display: inline-block;
-  flex: 1 1 20%;
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  background-color: #0078d4;
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
-  text-align: center;
-}
-
-.tag:nth-child(1) {
-  background-color: #005a9e;
-}
-
-.tag:nth-child(2) {
-  background-color: #c50f1f;
-}
-
-.tag:nth-child(3) {
-  background-color: #0b6a0b;
-}
-
-.tag:nth-child(4) {
-  background-color: #eaa300;
-}
-
-.tag:nth-child(5) {
-  background-color: #4b217a;
-}
-
-.tag:hover:nth-child(1) {
-  background-color: #0078d4;
-}
-
-.tag:hover:nth-child(2) {
-  background-color: #e81123;
-}
-
-.tag:hover:nth-child(3) {
-  background-color: #107c10;
-}
-
-.tag:hover:nth-child(4) {
-  background-color: #ffb900;
-}
-
-.tag:hover:nth-child(5) {
-  background-color: #5c2d91;
-}
-
-.tag:hover {
-  background-color: #005a9e;
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 1200px) {
-  .tag {
-    flex: 1 1 30%;
-  }
-}
-
-@media (max-width: 768px) {
-  .tag {
-    flex: 1 1 45%;
-  }
-}
-
-@media (max-width: 480px) {
-  .tag {
-    flex: 1 1 100%;
-  }
-}

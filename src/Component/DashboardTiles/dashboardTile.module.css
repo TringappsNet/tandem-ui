@@ -11,6 +11,23 @@
   color: white;
   padding: 0px;
 }
+
+.container {
+  background-color: rgb(0, 0, 0);
+  border-radius: 2px; 
+  width: 180px; 
+
+}
+
+.barCompleted {
+  background-color: rgb(255, 255, 255);
+  height: 2px; 
+  border-radius: 2px; 
+  width: 90%; 
+}
+
+
+
 .tag {
   display: flex;
   flex-direction: column;
@@ -18,31 +35,15 @@
   flex: 1 1 10%;
   padding: 0.5rem 2rem;
   border-radius: 6px;
-  background: linear-gradient(
-    60deg,
-    rgb(3, 55, 96) 0%,
-    rgb(13, 82, 135) 35%,
-    rgb(36, 117, 179) 100%
-  );
   color: #ffffff;
   font-size: 17px;
   font-weight: bold;
   text-transform: uppercase;
-
   width: 100% !important;
-  height: 120px;
+  height: 140px;
   padding-top: 10px;
-
-  background: linear-gradient(
-    60deg,
-    rgb(3, 55, 96) 0%,
-    rgb(13, 82, 135) 35%,
-    rgb(36, 117, 179) 100%
-  );
-
   border: 1px solid white;
-  /* background: rgba(255,255,255,0.4); */
-  border-radius: 10px;
+  border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   position: relative;
   color: white;
@@ -50,10 +51,11 @@
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
-
 .deals {
   display: flex;
   justify-content: space-between;
+  font-size: 10px;
+
 }
 
 .totalDeal {
@@ -63,110 +65,80 @@
   justify-content: center;
   font-size: 26px;
   font-family: sans-serif !important;
+  
 }
 .totalDeals {
-  font-family: sans-serif !important;
-  font-size: 12px;
+  font-family: "Opens Sans", sans-serif !important;
+  font-size: 15px;
+  color: rgba(255, 255, 255, .7);
+
 }
 
-.design {
-  background-color: #2d7108;
-  color: #ffffff;
-  width: 100px;
-  height: 1px;
-  box-shadow: #2d7108;
-}
-.tag:nth-child(1) {
-  background: linear-gradient(
-    90deg,
-    rgba(0, 90, 158, 1) 0%,
-    rgba(22, 106, 169, 1) 35%,
-    rgba(36, 112, 169, 1) 100%
-  );
+.globe { 
+  margin-left: '17px';
+  height: 170px;
+  width: 170px;
+  opacity: .3;
 }
 
 .tag:nth-child(2) {
-  /* background-color: #e81123; */
-  background: linear-gradient(
-    50deg,
-    rgb(153, 39, 39) 0%,
-    rgb(218, 88, 88) 35%,
-    rgb(233, 116, 116) 100%
-  );
+  background-color: #00ACAC;
+  background-image: url('../../assests/tiles/globe.png');
+  background-size: 53%;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-blend-mode:color-burn;
+  background-position-y: 10px;
+  background-position-x: 150px;
+}
+.tag:hover:nth-child(2) {
+  background-color: #00ACAC;
 }
 
 .tag:nth-child(3) {
-  background: linear-gradient(
-    48deg,
-    rgb(47, 237, 177) 0%,
-    rgb(45, 189, 143) 35%,
-    rgb(0, 137, 92) 100%
-  );
-}
+  background-color: #348fe2;
 
-.tag:nth-child(4) {
-  background: linear-gradient(
-    49deg,
-    rgb(172, 127, 2) 0%,
-    rgb(212, 156, 14) 35%,
-    rgb(244, 195, 72) 100%
-  );
-}
-
-.tag:nth-child(5) {
-  background: linear-gradient(
-    90deg,
-    rgb(129, 69, 197) 0%,
-    rgb(107, 70, 149) 35%,
-    rgb(87, 57, 122) 100%
-  );
-  /* backdrop-filter: blur(7px);
-    -webkit-backdrop-filter: blur(7px);
-    */
-}
-
-.tag:hover:nth-child(1) {
-  background-color: #005a9e;
-}
-
-.tag:hover:nth-child(2) {
-  background-color: #c50f1f;
 }
 
 .tag:hover:nth-child(3) {
-  background-color: #0b6a0b;
+  background-color: #348fe2;
+}
+
+.tag:nth-child(4) {
+  background-color: #8753de;
+
 }
 
 .tag:hover:nth-child(4) {
-  background-color: #eaa300;
+  background-color: #8753de;
+}
+
+.tag:nth-child(5) {
+  background-color: #20252a;
+
 }
 
 .tag:hover:nth-child(5) {
-  background-color: #4b217a;
+  background-color: #20252a;
 }
 
-.tag:hover {
-  background-color: #005a9e;
+.tag:nth-child(6) {
+  background-color: #5b4a43;
+  background-image: url('../../assests/tiles/dollar-sign.png');
+  background-size: 53%;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-blend-mode:color-burn;
+  background-position-y: 10px;
+  background-position-x: 150px;
+
 }
 
-/* Media Queries for Responsiveness */
-@media (max-width: 1200px) {
-  .tag {
-    flex: 1 1 30%;
-  }
+.tag:hover:nth-child(6) {
+  background-color: #5b4a43;
 }
 
-@media (max-width: 768px) {
-  .tag {
-    flex: 1 1 45%;
-  }
-}
 
-@media (max-width: 480px) {
-  .tag {
-    flex: 1 1 100%;
-  }
-}
 
 .loaderContainer {
   display: flex;
@@ -188,6 +160,25 @@
   border-top: 5px solid #262262;
   border-radius: 70%;
   animation: spin 1s linear infinite;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+  .tag {
+    flex: 1 1 30%;
+  }
+}
+
+@media (max-width: 768px) {
+  .tag {
+    flex: 1 1 45%;
+  }
+}
+
+@media (max-width: 480px) {
+  .tag {
+    flex: 1 1 100%;
+  }
 }
 
 @keyframes spin {
