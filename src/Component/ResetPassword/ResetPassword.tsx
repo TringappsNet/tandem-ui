@@ -63,7 +63,7 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
 
     if (!validatePassword(newPassword)) {
       dispatch(clearResponse());
-      setErrorMessage('Password must contain at least 1 special character, 1 number, and 1 capital letter.');
+      setErrorMessage('Password must contain at least 1 special character, 1 number, and 1 uppercase letter.');
       return;
     }
 
@@ -95,7 +95,7 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
           {responseMessage && (
             <div className={styles[responseType]}>{responseMessage}</div>
           )}
-          <form onSubmit={handleResetPassword}>
+          <form onSubmit={handleResetPassword} noValidate>
             <div className={styles.formGroup}>
               <label htmlFor="oldPassword">Old Password:</label>
               <input
@@ -108,7 +108,6 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
                   setOldPassword(e.target.value);
                   setErrorMessage('');
                 }}
-                required
               />
             </div>
             <div className={styles.formGroup}>
@@ -122,7 +121,6 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
                   setNewPassword(e.target.value);
                   setErrorMessage('');
                 }}
-                required
               />
             </div>
             <div className={styles.formGroup}>
@@ -136,7 +134,6 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
                   setConfirmPassword(e.target.value);
                   setErrorMessage('');
                 }}
-                required
               />
             </div>
             <button type="submit">Reset Password</button>

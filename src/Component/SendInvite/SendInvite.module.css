@@ -84,7 +84,15 @@ label {
   background-color: #DE5242;
   border-color: #DE5242;
 }
-
+.emailerror{
+  margin: 1rem 0;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  color: #FEF9FD;
+  background-color: #DE5242;
+  border-color: #DE5242;
+}
 .selectWrapper {
   position: relative;
   width: 100%;

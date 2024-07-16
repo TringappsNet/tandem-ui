@@ -39,6 +39,7 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
   );
   const [showInviteForm, setShowInviteForm] = useState(true);
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [roleId, setRoleId] = useState<number | null>(null);
   const selectRef = useRef<HTMLSelectElement>(null);
 
@@ -50,8 +51,26 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
     console.log('Roles in send invite:', roles);
   }, [roles]);
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    if (emailError || validateEmail(e.target.value)) {
+      setEmailError('');
+    }
+  };
   const handleSendInvite = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateEmail(email)) {
+      setEmailError('Please enter a valid email address.');
+      return;
+    } else {
+      setEmailError('');
+    }
 
     if (roleId === null) {
       dispatch(resetResponse());
@@ -91,8 +110,12 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
               {responseMessage}
             </div>
           )}
-
-          <form onSubmit={handleSendInvite} autoComplete="off">
+          {emailError && (
+                <div className={styles.emailerror}>
+                  {emailError}
+                </div>
+          )}
+          <form onSubmit={handleSendInvite} autoComplete="off" noValidate>
             <div className={styles.formGroup}>
               <label htmlFor="email">Email:</label>
               <input
@@ -102,8 +125,7 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
                 placeholder="Enter your email"
                 autoFocus
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
+                onChange={handleEmailChange}
               />
             </div>
             <div className={styles.formGroup}>
@@ -116,7 +138,6 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
                   className={styles.customSelect}
                   value={roleId ?? ''}
                   onChange={(e) => setRoleId(Number(e.target.value))}
-                  required
                 >
                   <option value="" disabled>
                     Select a role
