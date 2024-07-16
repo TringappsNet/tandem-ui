@@ -3,16 +3,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(180deg, rgb(23, 38, 58) 0%, #342333 -5%, rgb(19, 32, 51) 50%);
+  background: linear-gradient(60deg, rgb(23, 38, 58) 0%, rgb(22, 32, 50) 35%, rgb(19, 32, 51) 100%);
 
-} 
+}
 
 .MuiDataGrid-withBorderColor {
   /* background: rgb(14, 27, 64); */
   background: rgb(41, 55, 81);
   /* background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(57, 92, 190, 1) 47%); */
 }
-
 
 
 .MuiDataGrid-virtualScroller {
@@ -23,6 +22,13 @@
 /* .MuiDataGrid-root {
   border-color: black;
 } */
+
+
+.element.style {
+  /* background-color: rgb(38, 34, 98);
+  background: rgb(238,174,202); */
+  background-color: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%) !important;
+}
 
 .MuiDataGrid-root {
   border-color: rgb(99, 99, 99) !important;
@@ -37,6 +43,14 @@
 
 .MuiDataGrid-root .MuiDataGrid-row {
   --rowBorderColor: rgb(59, 58, 62) !important;
+}
+
+.css-o1n1mm-MuiTypography-root-MuiDialogTitle-root {
+  background: linear-gradient(58deg, rgb(33 48 69) 0%, rgb(23 34 51) 35%, rgb(17 50 96) 100%);
+}
+
+.css-15n4jlm-MuiDataGrid-root {
+  --DataGrid-rowBorderColor: rgb(91, 91, 91) !important;
 }
 
 
@@ -77,13 +91,17 @@
   display: none;
 }
 
+.MuiSvgIcon-root {
+  color: white;
+}
+
 .css-c6bojz {
   color: white !important;
 
 }
 
 .css-i4bv87-MuiSvgIcon-root {
-  color: white;
+  color: white
 }
 
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
@@ -99,17 +117,14 @@
   color: rgb(122, 47, 47) !important;
 }
 
-.css
-
-.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+.css .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
   color: white !important;
 }
 
 .css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
   background-color: #1d2a3a;
-
 }
-.css-1fu2e3p-MuiPaper-root-MuiDialog-paper {
-  background-color: #342333 !important;
 
+.MuiBox-root.cspgfmz {
+  margin-bottom: 20px;
 }

@@ -315,7 +315,7 @@ const DealForm: React.FC<DealFormProps> = () => {
     ];
 
     return (
-      <Box sx={{ mt: 4, width: '100%' }}>
+      <div className={styles.summaryContainer}>
         <Typography variant="h5" gutterBottom>
           <div className={styles.summary}>Summary of the deal</div>
         </Typography>
@@ -373,7 +373,7 @@ const DealForm: React.FC<DealFormProps> = () => {
             </Typography>
           </Box>
         </Box>
-      </Box>
+      </div>
     );
   };
 
@@ -465,7 +465,7 @@ const DealForm: React.FC<DealFormProps> = () => {
           <Box
             sx={{
               width: '100%',
-              marginTop: '10px',
+              marginTop: '20px', // Add 20px gap here
               display: 'flex',
               flexDirection: 'column',
               padding: '30px',

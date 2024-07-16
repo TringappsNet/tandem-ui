@@ -13,12 +13,13 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(58deg, rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%);
+  /* background: linear-gradient(58deg, rgba(20, 32, 49, 1) 0%, rgba(29, 46, 70, 1) 35%, rgba(31, 47, 71, 1) 100%); */
+  background: linear-gradient(58deg, rgb(0 0 0) 0%, rgb(89 129 185) 35%, rgb(2 3 5) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 0px;
 
-  border: 2px solid #342333 ;
+  border: 1.5px solid #39404f;
   padding: 5rem;
   height: 553px;
   gap: 1rem;

@@ -104,13 +104,13 @@ const BrokerGrid: React.FC = () => {
 
   const columns: GridColDef[] = [
     { field: 'fullName', headerName: 'Name', width: 170 },
-    { field: 'roleName', headerName: 'Role', width: 120 },
+    { field: 'roleName', headerName: 'Role', width: 130 },
     { field: 'mobile', headerName: 'Mobile', width: 150 },
-    { field: 'totalDeals', headerName: 'Total Deals', width: 130 },
-    { field: 'dealsOpened', headerName: 'Deals Opened', width: 130 },
-    { field: 'dealsInProgress', headerName: 'Deals In-Progress', width: 150 },
-    { field: 'dealsClosed', headerName: 'Deals Closed', width: 130 },
-    { field: 'totalCommission', headerName: 'Total Commission', width: 150 },
+    { field: 'totalDeals', headerName: 'Total Deals', width: 150 },
+    { field: 'dealsOpened', headerName: 'Deals Opened', width: 150 },
+    { field: 'dealsInProgress', headerName: 'Deals In-Progress', width: 170 },
+    { field: 'dealsClosed', headerName: 'Deals Closed', width: 150 },
+    { field: 'totalCommission', headerName: 'Total Commission', width: 170 },
   ];
 
   return (
