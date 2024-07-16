@@ -79,7 +79,6 @@
 
 .section p {
   text-align: center;
-  color: rgb(239 68 68);
   margin-left: 11px;
   margin-top: 15px;
   margin-bottom: 14px;
@@ -171,9 +170,9 @@
   justify-content: flex-start;
   height: 2.25rem;
   width: 100%;
-  background-color: #ffe6e6;
-  color: #e60000;
-  border: 1px solid #e60000;
+  background-color: #DE5242;
+  color: #FEF9FD;
+  border: 1px solid #DE5242;
   border-radius: .375rem;
   font-size: .875rem;
   line-height: 1rem;

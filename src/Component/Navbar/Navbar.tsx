@@ -167,7 +167,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     );
 
     if (availableSites.length === 0) {
-      setSnackbarMessage('No sites available to create a deal.');
+      setSnackbarMessage('Unable to create a deal, all properties are already assigned !');
       setSnackbarOpen(true);
     } else {
       dispatch(openDealForm());
@@ -380,6 +380,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         message={snackbarMessage}
         onClose={handleSnackbarClose}
         severity={'error'}
+        style={{backgroundColor: '#DE5242',color: '#FEF9FD'}}
       />
     </>
   );

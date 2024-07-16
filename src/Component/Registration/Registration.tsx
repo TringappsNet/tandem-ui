@@ -63,7 +63,7 @@ const Registration: React.FC = () => {
   const validatelastName = (name: string): string => {
     const namePattern = /^[a-zA-Z\s]+$/;
     if (firstName === '') {
-      return ' First Name is required.';
+      return 'First Name is required.';
     } else if (name.trim() === '') {
       return 'Last Name is required.';
     } else if (name.length > 20) {
@@ -79,13 +79,13 @@ const Registration: React.FC = () => {
     const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
     const numberPattern = /\d/g;
     if (firstName === '') {
-      return 'first name is required.';
+      return 'First name is required.';
     } else if (lastName === '') {
-      return 'last name is required.';
+      return 'Last name is required.';
     } else if (address === '') {
-      return 'address is required.';
+      return 'Address is required.';
     } else if (mobileNo === '') {
-      return 'mobile number is required';
+      return 'Mobile number is required';
     } else if (city === '') {
       return 'City is required';
     } else if (state === '') {
@@ -117,13 +117,13 @@ const Registration: React.FC = () => {
     confirmpassword: string
   ): string => {
     if (firstName === '') {
-      return 'first name is required.';
+      return 'First name is required.';
     } else if (lastName === '') {
-      return 'last name is required.';
+      return 'Last name is required.';
     } else if (address === '') {
-      return 'address is required.';
+      return 'Address is required.';
     } else if (mobileNo === '') {
-      return 'mobile number is required';
+      return 'Mobile number is required';
     } else if (city === '') {
       return 'City is required';
     } else if (state === '') {
@@ -145,9 +145,9 @@ const Registration: React.FC = () => {
 
   const validateAddress = (address: string): string => {
     if (firstName === '') {
-      return 'first name is required.';
+      return 'First name is required.';
     } else if (lastName === '') {
-      return 'last name is required.';
+      return 'Last name is required.';
     } else if (address.trim() === '') {
       return 'Address field should not be empty.';
     }
@@ -157,11 +157,11 @@ const Registration: React.FC = () => {
   const validateMobileNo = (mobileNo: string): string => {
     const mobileNoPattern = /^\d{10}$/;
     if (firstName === '') {
-      return 'first name is required.';
+      return 'First name is required.';
     } else if (lastName === '') {
-      return 'last name is required.';
+      return 'Last name is required.';
     } else if (address === '') {
-      return 'address is required.';
+      return 'Address is required.';
     } else if (mobileNo.trim() === '') {
       return 'Mobile number should not be empty.';
     } else if (!mobileNoPattern.test(mobileNo)) {
@@ -173,13 +173,13 @@ const Registration: React.FC = () => {
 
   const validateCity = () => {
     if (firstName === '') {
-      return 'first name is required.';
+      return 'First name is required.';
     } else if (lastName === '') {
-      return 'last name is required.';
+      return 'Last name is required.';
     } else if (address === '') {
-      return 'address is required.';
+      return 'Address is required.';
     } else if (mobileNo === '') {
-      return 'mobile number is required';
+      return 'Mobile number is required';
     } else {
       return '';
     }
@@ -187,13 +187,13 @@ const Registration: React.FC = () => {
 
   const validateState = () => {
     if (firstName === '') {
-      return 'first name is required.';
+      return 'First name is required.';
     } else if (lastName === '') {
-      return 'last name is required.';
+      return 'Last name is required.';
     } else if (address === '') {
-      return 'address is required.';
+      return 'Address is required.';
     } else if (mobileNo === '') {
-      return 'mobile number is required';
+      return 'Mobile number is required';
     } else if (city === '') {
       return 'City is required';
     } else {
@@ -203,13 +203,13 @@ const Registration: React.FC = () => {
 
   const validateCountry = () => {
     if (firstName === '') {
-      return 'first name is required.';
+      return 'First name is required.';
     } else if (lastName === '') {
-      return 'last name is required.';
+      return 'Last name is required.';
     } else if (address === '') {
-      return 'address is required.';
+      return 'Address is required.';
     } else if (mobileNo === '') {
-      return 'mobile number is required';
+      return 'Mobile number is required';
     } else if (city === '') {
       return 'City is required';
     } else if (state === '') {
@@ -222,13 +222,13 @@ const Registration: React.FC = () => {
   const validateZipcode = (zipcode: string): string => {
     const zipcodePattern = /^\d{5}$/;
     if (firstName === '') {
-      return 'first name is required.';
+      return 'First name is required.';
     } else if (lastName === '') {
-      return 'last name is required.';
+      return 'Last name is required.';
     } else if (address === '') {
-      return 'address is required.';
+      return 'Address is required.';
     } else if (mobileNo === '') {
-      return 'mobile number is required';
+      return 'Mobile number is required';
     } else if (city === '') {
       return 'City is required';
     } else if (state === '') {
