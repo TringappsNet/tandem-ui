@@ -5,6 +5,10 @@ import styles from './ChangePassword.module.css';
 import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '../Redux/store';
 import { RootState } from '../Redux/reducers';
+import backgroundImage from './bg-login.png';
+
+
+
 
 const ChangePassword: React.FC = () => {
   const navigate = useNavigate();
@@ -82,7 +86,7 @@ const ChangePassword: React.FC = () => {
   };
 
   return (
-    <div className="app">
+    <div className={styles.loginBackground} style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className={styles.card}>
         <div className={styles.section}>
           <div className={styles.header}>
@@ -93,53 +97,57 @@ const ChangePassword: React.FC = () => {
             <h2>TANDEM INFRASTRUCTURE</h2>
           </div>
           <div className={styles.headingsection}>
-            <h3>Set a New Password</h3>
-            <p>
+            <p style={{ color: 'rgb(122, 123, 125)' }}>Forgot Password</p>
+          </div>
+          <div className={styles.formContainer}>
+
+            <p className={styles.reset}>
               Your new password should be distinct from any of your prior
               passwords
             </p>
-          </div>
-          <form className={styles.loginsection} onSubmit={handleSubmit}>
-            {responseType === 'success' && (
-              <div className={styles.success}>{responseMessage}</div>
-            )}
-            {(responseType === 'error' || validationErrorMessage) && (
-              <div className={styles.failure}>
-                {responseMessage || validationErrorMessage}
+
+            <form className={styles.loginsection} onSubmit={handleSubmit}>
+              {responseType === 'success' && (
+                <div className={styles.success}>{responseMessage}</div>
+              )}
+              {(responseType === 'error' || validationErrorMessage) && (
+                <div className={styles.failure}>
+                  {responseMessage || validationErrorMessage}
+                </div>
+              )}
+              <div className={styles.inputGroup}>
+                <label htmlFor="password" className={styles.label}>
+                  New Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => handleInputChange(e, setPassword)}
+                />
               </div>
-            )}
-            <div className={styles.inputGroup}>
-              <label htmlFor="password" className={styles.label}>
-                New Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => handleInputChange(e, setPassword)}
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <label htmlFor="confirmPassword" className={styles.label}>
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                id="confirmPassword"
-                placeholder="Confirm your password"
-                value={confirmpassword}
-                onChange={(e) => handleInputChange(e, setConfirmpassword)}
-              />
-            </div>
-            <button
-              className={styles.loginbtn}
-              type="submit"
-              disabled={isLoading}
-            >
-              {isLoading ? 'Resetting...' : 'Reset Password'}
-            </button>
-          </form>
+              <div className={styles.inputGroup}>
+                <label htmlFor="confirmPassword" className={styles.label}>
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  placeholder="Confirm your password"
+                  value={confirmpassword}
+                  onChange={(e) => handleInputChange(e, setConfirmpassword)}
+                />
+              </div>
+              <button
+                className={styles.loginbtn}
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? 'Resetting...' : 'Reset Password'}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
