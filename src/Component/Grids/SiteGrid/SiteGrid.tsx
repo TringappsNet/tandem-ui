@@ -365,6 +365,7 @@ const SiteGrid: React.FC = () => {
         message={snackbarMessage || ''}
         onClose={handleCloseSnackbar}
         severity={snackbarSeverity}
+        style={{backgroundColor: '#54B471',color: '#FEF9FD'}}
       />
     </div>
   );
