@@ -6,7 +6,7 @@ import Login from './Component/Login/Login';
 import Registration from './Component/Registration/Registration';
 import ForgotPassword from './Component/ForgotPassword/ForgotPassword';
 import ChangePassword from './Component/ChangePassword/ChangePassword';
-import Dashboard from './Component/NewDashboard/Dashboard';
+import Dashboard from './Component/Dashboard/Dashboard';
 import Support from './Component/Support/Support';
 import store from './Component/Redux/store';
 
