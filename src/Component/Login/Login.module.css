@@ -96,11 +96,11 @@
 
 .success {
   --tw-text-opacity: 1;
-  color: rgb(36 151 130 / var(--tw-text-opacity));
+  color: rgb(254 249 253 / var(--tw-text-opacity));
   --tw-bg-opacity: 1;
-  background-color: rgb(234 250 247 / var(--tw-bg-opacity));
+  background-color: rgb(84 180 113 / var(--tw-bg-opacity));
   --tw-border-opacity: 1;
-  border-color: rgb(160 232 219 / var(--tw-border-opacity)) !important;
+  border-color: rgb(84 180 113 / var(--tw-border-opacity)) !important;
   padding: .75rem 1rem !important;
 }
 
