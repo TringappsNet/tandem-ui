@@ -55,7 +55,6 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
           return Promise.reject(error);
         }
       );
-
       responseInterceptor = axiosInstance.interceptors.response.use(
         (response) => {
           setIsLoading(false);
@@ -63,11 +62,11 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
         },
         (error) => {
           setIsLoading(false);
-
-          if (
-            error.response &&
-            (error.response.status === 401 || error.response.status === 403)
-          ) {
+      
+          const config = error.config;
+          const requiresAuth = config.headers['user-id'] && config.headers['access-token'];
+      
+          if (requiresAuth && error.response && (error.response.status === 401 || error.response.status === 403)) {
             setSnackbarMessage('Your session is invalid or expired');
             localStorage.clear();
             setSnackbarOpen(true);
