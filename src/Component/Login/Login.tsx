@@ -17,6 +17,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const { loading } = useSelector((state: RootState) => state.auth);
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
     setEmailError('');
@@ -32,6 +33,9 @@ const Login: React.FC = () => {
 
     if (!email.trim()) {
       setEmailError('Please fill in the Email');
+      isValid = false;
+    } else if (!emailRegex.test(email)) {
+      setEmailError('Please enter a valid email address');
       isValid = false;
     } else if (!password.trim()) {
       setPasswordError('Please fill in the Password');

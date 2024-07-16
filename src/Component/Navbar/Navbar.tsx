@@ -29,7 +29,7 @@ import { MdOutlineLockReset } from 'react-icons/md';
 import { IoLogOutOutline } from 'react-icons/io5';
 import SnackbarComponent from '../Snackbar/Snackbar';
 import { fetchSites } from '../Redux/slice/site/siteSlice';
-
+import ErrorIcon from '@mui/icons-material/ReportProblem';
 interface NavbarProps {
   links: {
     disabled: boolean | undefined;
@@ -167,7 +167,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     );
 
     if (availableSites.length === 0) {
-      setSnackbarMessage('No sites available to create a deal.');
+      setSnackbarMessage('Unable to create a deal, all properties are already assigned !');
       setSnackbarOpen(true);
     } else {
       dispatch(openDealForm());
@@ -380,6 +380,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         message={snackbarMessage}
         onClose={handleSnackbarClose}
         severity={'error'}
+        icon={<ErrorIcon />}
+        style={{backgroundColor: '#DE5242',color: '#FEF9FD'}}
       />
     </>
   );

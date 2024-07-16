@@ -14,6 +14,7 @@
     "@mui/material": "^5.16.0",
     "@mui/x-charts": "^7.9.0",
     "@mui/x-data-grid": "^7.8.0",
+    "@ramonak/react-progress-bar": "^5.2.0",
     "@reduxjs/toolkit": "^2.2.6",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/user-event": "^13.5.0",
