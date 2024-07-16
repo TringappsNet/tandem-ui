@@ -3,10 +3,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SnackbarComponent from '../Snackbar/Snackbar';
 import styles from './AxiosInterceptor.module.css';
+import ErrorIcon from '@mui/icons-material/ReportProblem';
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3008/api",
-  // baseURL: 'http://192.168.1.223:3008/api',
+  // baseURL: "http://localhost:3008/api",
+  baseURL: 'http://192.168.1.223:3008/api',
 });
 
 const getQueryParam = (param: string): string | null => {
@@ -108,6 +109,8 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
         message={snackbarMessage}
         onClose={handleSnackbarClose}
         severity={'error'}
+        icon={<ErrorIcon />}
+        style={{backgroundColor: '#DE5242',color: '#FEF9FD'}}
       />
       {children}
     </>
