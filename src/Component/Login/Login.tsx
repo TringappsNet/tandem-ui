@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../Redux/slice/auth/authSlice';
 import { RootState } from '../Redux/reducers';
 import { AppDispatch } from '../Redux/store';
+import backgroundImage from './bg-login.png';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -56,63 +57,70 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="app">
+    <div className={styles.loginBackground} style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className={styles.card}>
         <div className={styles.section}>
+
           <div className={styles.header}>
             <img
+              className={styles.logo}
               src="https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0"
               alt="Tandem Logo"
             />
-            <h2>TANDEM INFRASTRUCTURE</h2>
+            <h2 className={styles.name}>TANDEM INFRASTRUCTURE</h2>
           </div>
-          <p style={{ color: 'rgb(218, 219, 220)' }}>Sign in to continue to TANDEM</p>
-          {(emailError || passwordError || errorMessage) && (
-            <div className={styles.errorBox}>
-              {emailError && <p className={styles.errorText}>{emailError}</p>}
-              {passwordError && (
-                <p className={styles.errorText}>{passwordError}</p>
-              )}
-              {errorMessage && (
-                <p className={styles.errorText}>{errorMessage}</p>
-              )}
-            </div>
-          )}
-          <form className={styles.loginsection} onSubmit={handleSubmit}>
-            <div className={styles.inputGroup}>
-              <label className={styles.label} htmlFor="username">
-                Email ID
-              </label>
-              <input
-                id="username"
-                placeholder="Enter email"
-                value={email}
-                onChange={handleEmailChange}
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <label className={styles.label} htmlFor="password">
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                placeholder="Enter password"
-                value={password}
-                onChange={handlePasswordChange}
-              />
-            </div>
-            <Link to="/forgotpassword" className={styles.forgotPassword}>
-              Forgot password?
-            </Link>
-            <button
-              className={styles.loginbtn}
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? 'Signing In...' : 'Sign In'}
-            </button>
-          </form>
+          <p style={{ color: 'rgb(150, 151, 153)' }}>Sign in to continue to TANDEM</p>
+
+          <div className={styles.formContainer}>
+            {(emailError || passwordError || errorMessage) && (
+              <div className={styles.errorBox}>
+                {emailError && <p className={styles.errorText}>{emailError}</p>}
+                {passwordError && (
+                  <p className={styles.errorText}>{passwordError}</p>
+                )}
+                {errorMessage && (
+                  <p className={styles.errorText}>{errorMessage}</p>
+                )}
+              </div>
+            )}
+            <form className={styles.loginsection} onSubmit={handleSubmit}>
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="username">
+                  Email ID
+                </label>
+                <input
+                  id="username"
+                  placeholder="Enter email"
+                  value={email}
+                  autoFocus
+                  onChange={handleEmailChange}
+                />
+              </div>
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="password">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+              </div>
+              <Link to="/forgotpassword" className={styles.forgotPassword}>
+                Forgot password?
+              </Link>
+              <button
+                className={styles.loginbtn}
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? 'Signing In...' : 'Sign me in'}
+              </button>
+            </form>
+          </div>
+
           {loading && (
             <div className={styles.loaderContainer}>
               <div className={styles.loader}></div>

@@ -7,6 +7,7 @@ import {
   clearState,
 } from '../Redux/slice/auth/forgotPasswordSlice';
 import { RootState } from '../Redux/reducers';
+import backgroundImage from './bg-login.png';
 import { AppDispatch } from '../Redux/store';
 
 const ForgotPassword: React.FC = () => {
@@ -62,7 +63,7 @@ const ForgotPassword: React.FC = () => {
   };
 
   return (
-    <div className="app">
+    <div className={styles.loginBackground} style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className={styles.card}>
         <div className={styles.section}>
           <div className={styles.header}>
@@ -70,42 +71,48 @@ const ForgotPassword: React.FC = () => {
               src="https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0"
               alt="Tandem Logo"
             />
-            <h2>TANDEM INFRASTRUCTURE</h2>
+            <h2 className={styles.name}>TANDEM INFRASTRUCTURE</h2>
           </div>
           <div className={styles.headingsection}>
-            <h3>Forgot Password?</h3>
-            <p>Reset your password here</p>
+            <p style={{ color: 'rgb(136, 137, 140)' }}>Forgot Password</p>
           </div>
-          <form className={styles.loginsection} onSubmit={handleSubmit}>
-            {successMessage && (
-              <div className={styles.success}>{successMessage}</div>
-            )}
-            {validationErrorMessage && (
-              <div className={styles.failure}>{validationErrorMessage}</div>
-            )}
-            <div className={styles.inputGroup}>
-              <label className={styles.label} htmlFor="username">
-                Email ID
-              </label>
-              <input
-                id="username"
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={handleEmailChange}
-              />
+
+          <div className={styles.formContainer}>
+            <p className={styles.reset}>Reset your password here</p>
+
+            <form className={styles.loginsection} onSubmit={handleSubmit}>
+              {successMessage && (
+                <div className={styles.success}>{successMessage}</div>
+              )}
+              {validationErrorMessage && (
+                <div className={styles.failure}>{validationErrorMessage}</div>
+              )}
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="username">
+                  Email ID
+                </label>
+                <input
+                  id="username"
+                  type="email"
+                  placeholder="Enter email"
+                  value={email}
+                  autoFocus
+                  onChange={handleEmailChange}
+                />
+              </div>
+
+              <button
+                className={styles.loginbtn}
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? 'Sending...' : 'Send Reset Link'}
+              </button>
+            </form>
+            <div className={styles.rememberpwd}>
+              <p style={{ color: 'rgb(150, 151, 153)' }}>Remember Password</p>
+              <Link to="/">click here</Link>
             </div>
-            <button
-              className={styles.loginbtn}
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? 'Sending...' : 'Send Reset Link'}
-            </button>
-          </form>
-          <div className={styles.rememberpwd}>
-            <p>Remember Password?</p>
-            <Link to="/">click here</Link>
           </div>
         </div>
       </div>
