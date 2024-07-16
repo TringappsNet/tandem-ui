@@ -87,7 +87,6 @@
   background-size: 53%;
   background-position: right;
   background-repeat: no-repeat;
-  background-blend-mode:color-burn;
   background-position-y: 10px;
   background-position-x: 150px;
 }
@@ -97,7 +96,12 @@
 
 .tag:nth-child(3) {
   background-color: #348fe2;
-
+  background-image: url('../../assests/tiles/open-folder.png');
+  background-size: 57%;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-position-y: 15px;
+  background-position-x: 140px;
 }
 
 .tag:hover:nth-child(3) {
@@ -106,7 +110,12 @@
 
 .tag:nth-child(4) {
   background-color: #8753de;
-
+  background-image: url('../../assests/tiles/hour-glass.png');
+  background-size: 57%;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-position-y: 15px;
+  background-position-x: 140px;
 }
 
 .tag:hover:nth-child(4) {
@@ -115,7 +124,12 @@
 
 .tag:nth-child(5) {
   background-color: #20252a;
-
+  background-image: url('../../assests/tiles/box.png');
+  background-size: 57%;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-position-y: 15px;
+  background-position-x: 140px;
 }
 
 .tag:hover:nth-child(5) {
