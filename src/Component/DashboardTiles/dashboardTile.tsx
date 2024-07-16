@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './dashboardTile.module.css';
-import BrokerGrid from '../../Grids/broker-grid/BrokerGrid';
+import BrokerGrid from '../Grids/broker-grid/BrokerGrid';
 import {
   CircularProgressbarWithChildren,
   buildStyles,
 } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import logo1 from '../../../assests/rup.png';
-import { fetchDeals } from '../../Redux/slice/deal/dealsDataSlice';
-import { RootState } from '../../Redux/reducers';
-import { AppDispatch } from '../../Redux/store';
-import { fetchSites } from '../../Redux/slice/site/siteSlice';
+import logo1 from '../../assests/rup.png';
+import { fetchDeals } from '../Redux/slice/deal/dealsDataSlice';
+import { RootState } from '../Redux/reducers';
+import { AppDispatch } from '../Redux/store';
+import { fetchSites } from '../Redux/slice/site/siteSlice';
 
 const Main: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
