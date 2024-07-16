@@ -6,8 +6,8 @@ import styles from './AxiosInterceptor.module.css';
 import ErrorIcon from '@mui/icons-material/ReportProblem';
 
 const axiosInstance = axios.create({
-  // baseURL: "http://localhost:3008/api",
-  baseURL: 'http://192.168.1.223:3008/api',
+  baseURL: "http://localhost:3008/api",
+  // baseURL: 'http://192.168.1.223:3008/api',
 });
 
 const getQueryParam = (param: string): string | null => {
