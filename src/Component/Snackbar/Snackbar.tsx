@@ -1,6 +1,7 @@
 import React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import ErrorIcon from '@mui/icons-material/Error';
 
 interface SnackbarProps {
   open: boolean;
@@ -8,6 +9,7 @@ interface SnackbarProps {
   onClose: () => void;
   severity: 'success' | 'error' | 'warning' | 'info';
   style?: React.CSSProperties; 
+  icon?: React.ReactNode;
 }
 
 const SnackbarComponent: React.FC<SnackbarProps> = ({
@@ -16,7 +18,9 @@ const SnackbarComponent: React.FC<SnackbarProps> = ({
   onClose,
   severity,
   style,
+  icon,
 }) => {
+  const defaultIcon = severity === 'error' ? <ErrorIcon fontSize="inherit" /> : null;
   return (
     <Snackbar
       open={open}
@@ -26,6 +30,7 @@ const SnackbarComponent: React.FC<SnackbarProps> = ({
     >
       <Alert
         onClose={onClose}
+        icon={icon || defaultIcon}
         severity={severity}
         sx={{ width: '700px', textAlign: 'center',...style  }}
       >
