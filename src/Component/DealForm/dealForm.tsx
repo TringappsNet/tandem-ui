@@ -397,13 +397,17 @@ const DealForm: React.FC<DealFormProps> = () => {
     >
       <DialogTitle
         sx={{
-          backgroundColor: '#262262',
+          background:'linear-gradient(58deg, rgb(11 34 67) 0%, rgb(30 62 108) 35%, rgb(16 42 79) 100%);',
           color: 'white',
           height: '44px',
           padding: '6px 24px',
+          letterSpacing:'.18rem',
+          fontSize:15,
+          display:'flex',
+          alignItems:'center'
         }}
       >
-        Deal Form
+        DEALFORM
         <IconButton
           aria-label="close"
           onClick={() => {
@@ -423,10 +427,10 @@ const DealForm: React.FC<DealFormProps> = () => {
             style={{
               height: '24px',
               width: '100px',
-              border: '1px solid grey',
+              border: '1px solid whitesmoke',
               borderRadius: '3px',
               color: 'white',
-              backgroundColor: '#262262',
+              backgroundColor: 'transparent',
               cursor: 'pointer',
             }}
           >
@@ -456,7 +460,7 @@ const DealForm: React.FC<DealFormProps> = () => {
             sx={{ width: 1 }}
           >
             {steps.map((step, index) => (
-              <Step key={index} sx={{ width: 1, color: 'blue !important' }}
+              <Step key={index} sx={{ width: 1 }}
               >
                 <StepLabel>{step.label}</StepLabel>
               </Step>
@@ -465,7 +469,7 @@ const DealForm: React.FC<DealFormProps> = () => {
           <Box
             sx={{
               width: '100%',
-              marginTop: '20px', // Add 20px gap here
+              marginTop: '10px', // Add 20px gap here
               display: 'flex',
               flexDirection: 'column',
               padding: '30px',
@@ -476,6 +480,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
+                  textTransform:'capitalize'
                 }}
               >
                 {steps[activeStep].fields.map((field, index) =>
@@ -485,7 +490,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                   variant="contained"
                   color="primary"
                   onClick={saveFormData}
-                  sx={{ width: 100, marginTop: 2 }}
+                  sx={{ width: 100, marginTop: 3, zIndex:999 }}
                   disabled={!isFormValid()}
                 >
                   Save
@@ -507,7 +512,9 @@ const DealForm: React.FC<DealFormProps> = () => {
                     display: 'flex',
                     justifyContent: 'flex-end',
                     width: '100%',
-                    mt: 2,
+                    position:'absolute',
+                    right:60,
+                    bottom:146
                   }}
                 >
                   <Button

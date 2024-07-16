@@ -89,7 +89,7 @@ const Cards: React.FC = () => {
       <div className={styles.filterContainer}>
         <input
           type="text"
-          placeholder="Search by broker, property name, status, or deal ID"
+          placeholder="Search by property name, status, or deal ID"
           value={searchTerm}
           onChange={handleSearchChange}
           className={styles.searchInput}
