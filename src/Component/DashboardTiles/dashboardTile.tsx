@@ -7,7 +7,7 @@ import {
   buildStyles,
 } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import logo1 from '../../assests/rup.png';
+import ProgressBar from '@ramonak/react-progress-bar';
 import { fetchDeals } from '../Redux/slice/deal/dealsDataSlice';
 import { RootState } from '../Redux/reducers';
 import { AppDispatch } from '../Redux/store';
@@ -39,24 +39,13 @@ const Main: React.FC = () => {
           <p className={styles.totalDeals}>Total Deals:</p>
           <p className={styles.deals}>
             <p className={styles.totalDeal}>{deal.totalDeals}</p>
-            <p style={{ width: 50, height: 50 }}>
-            <CircularProgressbarWithChildren
-                value={10}
-                text={`${deal.totalDeals}%`}
-                styles={buildStyles({
-                  textColor: '#fff',
-                  pathColor: '#3f98e8', // Blue theme color
-                  trailColor: 'rgba(255, 255, 255, 0.1) !important',
-                  backgroundColor: 'transparent',
-                  // trailWidth: 10, // Increase trail width
-                })}
-              >
-                <div style={{ fontSize: 10, marginTop: -1 }}>
-                  <strong>{deal.totalDeals}%</strong>
-                </div>
-              </CircularProgressbarWithChildren>
-            </p>
           </p>
+          <ProgressBar
+            completed={''}
+            className={styles.wrapper}
+            barContainerClassName={styles.container}
+            completedClassName={styles.barCompleted}
+          />
         </span>
 
         <span className={styles.tag}>
@@ -123,13 +112,7 @@ const Main: React.FC = () => {
           <p className={styles.totalDeals}>Total Commission</p>
           <p className={styles.deals}>
             <p className={styles.totalDeal}>${deal.totalCommission}</p>
-            <p style={{ width: 50, height: 50 }}>
-              <div>
-                <div style={{ fontSize: 10, marginTop: -1 }}>
-                  <img className={styles.img} src={logo1} alt="img "></img>
-                </div>
-              </div>
-            </p>
+            <p style={{ width: 50, height: 50 }}></p>
           </p>
         </span>
       </div>
