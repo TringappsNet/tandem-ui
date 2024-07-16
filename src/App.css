@@ -23,6 +23,13 @@
   border-color: black;
 } */
 
+
+.element.style {
+  /* background-color: rgb(38, 34, 98);
+  background: rgb(238,174,202); */
+  background-color: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%) !important;
+}
+
 .MuiDataGrid-root {
   border-color: rgb(99, 99, 99) !important;
   /* --rowBorderColor: rgb(59, 58, 62) !important; */
@@ -36,6 +43,14 @@
 
 .MuiDataGrid-root .MuiDataGrid-row {
   --rowBorderColor: rgb(59, 58, 62) !important;
+}
+
+.css-o1n1mm-MuiTypography-root-MuiDialogTitle-root {
+  background: linear-gradient(58deg, rgb(33 48 69) 0%, rgb(23 34 51) 35%, rgb(17 50 96) 100%);
+}
+
+.css-15n4jlm-MuiDataGrid-root {
+  --DataGrid-rowBorderColor: rgb(91, 91, 91) !important;
 }
 
 
