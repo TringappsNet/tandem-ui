@@ -2,10 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './dashboardTile.module.css';
 import BrokerGrid from '../Grids/broker-grid/BrokerGrid';
-import {
-  CircularProgressbarWithChildren,
-  buildStyles,
-} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import ProgressBar from '@ramonak/react-progress-bar';
 import { fetchDeals } from '../Redux/slice/deal/dealsDataSlice';

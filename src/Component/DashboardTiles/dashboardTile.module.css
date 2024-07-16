@@ -54,6 +54,8 @@
 .deals {
   display: flex;
   justify-content: space-between;
+  font-size: 10px;
+
 }
 
 .totalDeal {
@@ -66,8 +68,10 @@
   
 }
 .totalDeals {
-  font-family: sans-serif !important;
-  font-size: 12px;
+  font-family: "Opens Sans", sans-serif !important;
+  font-size: 15px;
+  color: rgba(255, 255, 255, .7);
+
 }
 
 .globe { 
