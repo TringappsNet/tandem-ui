@@ -1,19 +1,37 @@
-
-
 .card {
   display: flex;
-  justify-content: center;
-  width: 500px;
+  /* justify-content: center; */
+  width: 100%;
+  /* Change from 500px to 100% */
+  max-width: 2500px;
+  /* Add this line to limit the maximum width */
   /* background-color: #142031; */
-  color:white;
+  color: white;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-ring-shadow: 0 0 #0000;
   --tw-shadow-color: #0F1928;
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
-  --tw-shadow: var(--tw-shadow-colored);
+  /* --tw-shadow: var(--tw-shadow-colored); */
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  
+
 }
+
+
+
+.formContainer {
+  background-color: #2d353c;
+  padding: 2rem;
+  /* border-radius: 10px; */
+  margin-top: 1.5rem;
+  display: flex;
+  /* Add this line */
+  flex-direction: column;
+  /* Add this line */
+  align-items: center;
+  /* Add this line */
+
+}
+
 
 .loaderContainer {
   display: flex;
@@ -52,21 +70,28 @@
   cursor: not-allowed;
 }
 
-.card img {
-  width: 3rem;
+/* .card img {
   height: 2.5rem;
   object-fit: contain;
+  margin-right: 24px;
+} */
+
+.logo {
+  height: 2.5rem;
+  object-fit: contain;
+  margin-left: -27px;
+  margin-right: 1px;
+  /* This creates the 1px gap */
 }
 
 .section {
   width: 100%;
-  padding: 3rem 2.5rem;
   /* background-color: #142031; */
-  background: linear-gradient(60deg, #152133 0%, #142031 35%, #172438 100%);
+  /* background: linear-gradient(60deg, #152133 0%, #142031 35%, #172438 100%); */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 10px;
-  border: 1.5px solid #342333 ;
+  /* border: 1.5px solid #342333; */
 }
 
 .header {
@@ -74,24 +99,33 @@
   width: 100%;
   align-items: center;
   justify-content: center;
-  gap: .3rem;
+  /* gap: .3rem; */
+  /* Reduce this value to bring the logo and text closer */
+
 }
 
 .section p {
   text-align: center;
   margin-left: 11px;
   margin-top: 15px;
+  margin-right: 36px;
+  /* Remove the right margin */
   margin-bottom: 14px;
 }
 
 .loginsection {
-  margin-top: 2.5rem;
+  width: 100%;
+  /* Add this line */
+  max-width: 400px;
+  /* Add this line to limit the form width */
+
 }
 
 .inputGroup,
 .success,
 .failure {
   margin-bottom: .75rem;
+  /* height: 40px !important; */
 }
 
 .success {
@@ -116,6 +150,7 @@
 
 .label {
   display: block;
+  /* height: 45px; */
   margin-bottom: .5rem;
   font-weight: 500;
   font-size: .875rem;
@@ -125,34 +160,53 @@
 .success,
 .failure {
   width: 100%;
-  border: 1px solid #e5e7eb;
-  border-radius: .375rem;
+  /* border: 1px solid #ced4da; */
+  background-color: #495057;
+  border-radius: 4px;
   font-size: .875rem;
+  height: 50px !important;
   padding: .5rem 1rem;
+  border-color: transparent;
   line-height: 21px;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+
+.loginBackground {
+  background-image: url('./bg-login.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .section input:focus {
   outline: 2px solid #0000;
   outline-offset: 2px;
-  border-color: #262262;
+  /* border-color: #262262; */
 }
 
 .forgotPassword {
   display: block;
   width: 100%;
   text-align: right;
-  color: rgb(218, 219, 220);
+  color: rgb(135 136 136);
   text-decoration: none;
   font-weight: 500;
   font-size: .875rem;
 }
 
 .loginbtn {
-  margin-top: 2.5rem;
+  margin-top: 1.5rem;
   width: 100%;
   padding: 10px;
-  background: linear-gradient(90deg, #342333 5%, #3f293c 45%);
+  height: 45px !important;
+  background: #008181;
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 4px;
@@ -160,7 +214,7 @@
 }
 
 .loginbtn:hover {
-  background: linear-gradient(45deg, rgb(2, 49, 88) 0%, rgb(5, 36, 84) 100%);
+  background: #008181;
   color: white;
 }
 
@@ -180,6 +234,20 @@
   padding-right: 1rem;
   margin-top: 24px;
 
+}
+
+
+.name {
+  color: #20252a;
+  margin-left: 12px;
+  /* Remove any left margin */
+  font-size: 1.5rem;
+  /* Adjust this value as needed */
+  line-height: 1;
+  /* Ensures vertical alignment */
+
+  /* margin-left: 20px; */
+  /* Add a small left margin to separate from the logo */
 }
 
 .errorText {
