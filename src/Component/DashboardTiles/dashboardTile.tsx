@@ -52,60 +52,39 @@ const Main: React.FC = () => {
           <p className={styles.totalDeals}>Deals Opened:</p>
           <p className={styles.deals}>
             <p className={styles.totalDeal}>{deal.dealsOpened}</p>
-            <p style={{ width: 50, height: 50 }}>
-              <CircularProgressbarWithChildren
-                value={deal.dealsOpened}
-                styles={buildStyles({
-                  textColor: 'red',
-                  pathColor: 'rose',
-                })}
-              >
-                <div style={{ fontSize: 10, marginTop: -1 }}>
-                  <strong>{deal.dealsOpened}%</strong>
-                </div>
-              </CircularProgressbarWithChildren>
-            </p>
           </p>
+          <ProgressBar
+            completed={''}
+            className={styles.wrapper}
+            barContainerClassName={styles.container}
+            completedClassName={styles.barCompleted}
+          />
         </span>
 
         <span className={styles.tag}>
           <p className={styles.totalDeals}>Deals In Progress</p>
           <p className={styles.deals}>
             <p className={styles.totalDeal}>{deal.dealsInProgress}</p>
-            <p style={{ width: 50, height: 50 }}>
-              <CircularProgressbarWithChildren
-                value={deal.dealsInProgress}
-                styles={buildStyles({
-                  textColor: 'red',
-                  pathColor: 'rose',
-                })}
-              >
-                <div style={{ fontSize: 10, marginTop: -1 }}>
-                  <strong>{deal.dealsInProgress}%</strong>
-                </div>
-              </CircularProgressbarWithChildren>
-            </p>
           </p>
+          <ProgressBar
+            completed={''}
+            className={styles.wrapper}
+            barContainerClassName={styles.container}
+            completedClassName={styles.barCompleted}
+          />
         </span>
 
         <span className={styles.tag}>
           <p className={styles.totalDeals}>Deals Closed</p>
           <p className={styles.deals}>
             <p className={styles.totalDeal}>{deal.dealsClosed}</p>
-            <p style={{ width: 50, height: 50 }}>
-              <CircularProgressbarWithChildren
-                value={deal.dealsClosed}
-                styles={buildStyles({
-                  textColor: 'red',
-                  pathColor: 'rose',
-                })}
-              >
-                <div style={{ fontSize: 10, marginTop: -1 }}>
-                  <strong>{deal.dealsClosed}%</strong>
-                </div>
-              </CircularProgressbarWithChildren>
-            </p>
           </p>
+          <ProgressBar
+            completed={''}
+            className={styles.wrapper}
+            barContainerClassName={styles.container}
+            completedClassName={styles.barCompleted}
+          />
         </span>
 
         <span className={styles.tag}>
@@ -114,6 +93,12 @@ const Main: React.FC = () => {
             <p className={styles.totalDeal}>${deal.totalCommission}</p>
             <p style={{ width: 50, height: 50 }}></p>
           </p>
+          <ProgressBar
+            completed={''}
+            className={styles.wrapper}
+            barContainerClassName={styles.container}
+            completedClassName={styles.barCompleted}
+          />
         </span>
       </div>
       <div>
