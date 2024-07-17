@@ -18,7 +18,7 @@ import {
   setSnackbarOpen,
 } from '../../Redux/slice/site/siteSlice';
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
-import FullGrid from '../MainGrid/MainGrid';
+import FullGrid from '..//parentGrid/parent-grid';
 import { MdEdit, MdDelete } from 'react-icons/md';
 import ConfirmationModal from '../../AlertDialog/AlertDialog';
 import CloseIcon from '@mui/icons-material/Close';
@@ -46,8 +46,12 @@ const SiteGrid: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const sites = useSelector((state: RootState) => state.site.sites);
   const userdetails = useSelector((state: RootState) => state.auth.user);
-  const snackbarOpen = useSelector((state: RootState) => state.site.snackbarOpen);
-  const snackbarMessage = useSelector((state: RootState) => state.site.snackbarMessage);
+  const snackbarOpen = useSelector(
+    (state: RootState) => state.site.snackbarOpen
+  );
+  const snackbarMessage = useSelector(
+    (state: RootState) => state.site.snackbarMessage
+  );
 
   const [formData, setFormData] = useState<Site>({
     id: 0,
@@ -219,7 +223,9 @@ const SiteGrid: React.FC = () => {
   };
 
   // Determine the severity based on the snackbar message
-  const snackbarSeverity = snackbarMessage?.includes('successfully') ? 'success' : 'error';
+  const snackbarSeverity = snackbarMessage?.includes('successfully')
+    ? 'success'
+    : 'error';
 
   return (
     <div>
@@ -365,7 +371,7 @@ const SiteGrid: React.FC = () => {
         message={snackbarMessage || ''}
         onClose={handleCloseSnackbar}
         severity={snackbarSeverity}
-        style={{backgroundColor: '#54B471',color: '#FEF9FD'}}
+        style={{ backgroundColor: '#54B471', color: '#FEF9FD' }}
       />
     </div>
   );
