@@ -135,7 +135,7 @@ const Cards: React.FC = () => {
                   )} */}
                 </div>
                 <hr className={styles.line} />
-                <div className={styles.nameHeader}>Deal #{deal.id}</div>
+                <div className={styles.nameHeader}>DEAL #{deal.id}</div>
               </div>
               <div className={styles.statusLine}>
                 <div className={styles.statuscontainer}>
