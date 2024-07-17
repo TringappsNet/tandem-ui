@@ -118,8 +118,8 @@ const ForgotPassword: React.FC = () => {
               </button>
             </form>
             <div className={styles.rememberpwd}>
-              <p style={{ color: 'rgb(150, 151, 153)' }}>Remember Password</p>
-              <Link to="/">click here</Link>
+              <p style={{ color: 'rgb(150, 151, 153)' }}>Remember Password?</p>
+              <Link to="/" className={styles.clickHereLink}>Click here</Link>
             </div>
           </div>
         </div>

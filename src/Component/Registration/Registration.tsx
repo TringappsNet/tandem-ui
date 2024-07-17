@@ -6,6 +6,10 @@ import logo from './logo.jpeg';
 import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '../Redux/store';
 import { RootState } from '../Redux/reducers';
+import backgroundImage from './bg-login.png';
+
+
+
 
 const Registration: React.FC = () => {
   const navigate = useNavigate();
@@ -323,7 +327,7 @@ const Registration: React.FC = () => {
   };
 
   return (
-    <div className="app">
+    <div className={styles.loginBackground} style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className={styles.backgroundContainer}>
         <div className={styles.container}>
           <div className={styles.registrationContainer}>

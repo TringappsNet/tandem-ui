@@ -116,7 +116,7 @@ const Login: React.FC = () => {
                 type="submit"
                 disabled={loading}
               >
-                {loading ? 'Signing In...' : 'Sign me in'}
+                {loading ? 'Signing In...' : 'Sign in'}
               </button>
             </form>
           </div>
