@@ -32,7 +32,7 @@ const SnackbarComponent: React.FC<SnackbarProps> = ({
         onClose={onClose}
         icon={icon || defaultIcon}
         severity={severity}
-        sx={{ width: '700px', textAlign: 'center',...style  }}
+        sx={{ width: '700px', textAlign: 'center',...style,padding: '3px 15px'  }}
       >
         {message}
       </Alert>
