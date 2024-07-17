@@ -10,8 +10,6 @@ import { RootState } from '../Redux/reducers';
 import backgroundImage from './bg-login.png';
 import { AppDispatch } from '../Redux/store';
 import SnackbarComponent from '../Snackbar/Snackbar';
-import ErrorIcon from '@mui/icons-material/ReportProblem';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -129,7 +127,6 @@ const ForgotPassword: React.FC = () => {
         message={snackbarMessage}
         onClose={handleSnackbarClose}
         severity={snackbarSeverity}
-        icon={snackbarSeverity === 'success' ? <CheckCircleIcon /> : <ErrorIcon />}
         style={{ backgroundColor: snackbarSeverity === 'success' ? '#54B471' : '#DE5242', color: '#FEF9FD' }}
       />
     </div>

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '../Redux/store';
 import { RootState } from '../Redux/reducers';
 import backgroundImage from './bg-login.png';
+import SnackbarComponent from '../Snackbar/Snackbar';
 
 
 
@@ -27,10 +28,10 @@ const Registration: React.FC = () => {
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmpassword] = useState('');
   const [disableState, setDisableState] = useState(false);
-  const [validationErrorMessage, setValidationErrorMessage] = useState('');
-  const [validationSucessMessage, setValidationSucessMessage] = useState('');
-  const [inviteTokenError, setInviteTokenError] = useState('');
   const [inviteToken, setInviteToken] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'error' | 'success'>('error');
 
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
@@ -103,7 +104,7 @@ const Registration: React.FC = () => {
       return 'Password is required.';
     } else if (password.length < 8) {
       setDisableState(false);
-      return 'Password should be at least 8 characters long.';
+      return 'Password should contain atleast 8 characters.';
     } else if (!specialCharPattern.test(password)) {
       setDisableState(false);
       return 'Password should contain at least one special character.';
@@ -175,7 +176,7 @@ const Registration: React.FC = () => {
     }
   };
 
-  const validateCity = () => {
+  const validateCity = (city: string): string => {
     if (firstName === '') {
       return 'First name is required.';
     } else if (lastName === '') {
@@ -189,7 +190,7 @@ const Registration: React.FC = () => {
     }
   };
 
-  const validateState = () => {
+  const validateState = (state: string): string => {
     if (firstName === '') {
       return 'First name is required.';
     } else if (lastName === '') {
@@ -205,7 +206,7 @@ const Registration: React.FC = () => {
     }
   };
 
-  const validateCountry = () => {
+  const validateCountry = (country: string): string => {
     if (firstName === '') {
       return 'First name is required.';
     } else if (lastName === '') {
@@ -224,7 +225,6 @@ const Registration: React.FC = () => {
   };
 
   const validateZipcode = (zipcode: string): string => {
-    const zipcodePattern = /^\d{5}$/;
     if (firstName === '') {
       return 'First name is required.';
     } else if (lastName === '') {
@@ -241,8 +241,6 @@ const Registration: React.FC = () => {
       return 'Country is required';
     } else if (zipcode.trim() === '') {
       return 'Zipcode is required.';
-    } else if (!zipcodePattern.test(zipcode)) {
-      return 'Zipcode should be exactly 5 digits.';
     } else {
       return '';
     }
@@ -259,6 +257,9 @@ const Registration: React.FC = () => {
       confirmpassword
     );
     const zipcodeError = validateZipcode(zipcode);
+    const cityError = validateCity(city);
+    const stateError = validateState(state);
+    const countryError = validateCountry(country);
 
     const errors = [
       firstNameError,
@@ -268,9 +269,16 @@ const Registration: React.FC = () => {
       addressError,
       confirmpasswordError,
       zipcodeError,
+      cityError,
+      stateError,
+      countryError,
     ].filter((error) => error);
 
-    setValidationErrorMessage(errors.length > 0 ? errors[0] : '');
+    if (errors.length > 0) {
+      setSnackbarMessage(errors[0]);
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+    }
 
     return errors.length === 0;
   };
@@ -298,8 +306,10 @@ const Registration: React.FC = () => {
     );
 
     if (registerUser.fulfilled.match(resultAction)) {
-      setValidationSucessMessage('Registration successful!');
-      setInviteTokenError('');
+      setSnackbarMessage('Registration successful!');
+      setSnackbarSeverity('success');
+      setSnackbarOpen(true);
+
 
       setFirstname('');
       setLastname('');
@@ -313,17 +323,21 @@ const Registration: React.FC = () => {
       setConfirmpassword('');
       setDisableState(false);
       setInviteToken('');
-      setInviteTokenError('');
       setTimeout(() => {
         navigate('/login');
       }, 2000);
     } else {
-      if (resultAction.payload) {
-        setValidationErrorMessage(resultAction.payload as string);
-      } else {
-        setValidationErrorMessage('Registration failed. Please try again.');
-      }
+      const errorMessage = resultAction.payload
+        ? resultAction.payload as string
+        : 'Registration failed. Please try again.';
+      setSnackbarMessage(errorMessage);
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
     }
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -342,19 +356,6 @@ const Registration: React.FC = () => {
             <h4 className={styles.formTitle}>REGISTER HERE</h4>
             <div className={styles.formContainer}>
               <form onSubmit={(e) => handleSubmit(e)}>
-                {validationErrorMessage && (
-                  <div className={styles.errorshow}>
-                    {validationErrorMessage}
-                  </div>
-                )}
-                {inviteTokenError && (
-                  <div className={styles.errorshow}>{inviteTokenError}</div>
-                )}
-                {validationSucessMessage && (
-                  <div className={styles.successshow}>
-                    {validationSucessMessage}
-                  </div>
-                )}
                 <div className={styles.formRow}>
                   <div className={styles.formGroup}>
                     <label htmlFor="firstName">First Name</label>
@@ -367,9 +368,6 @@ const Registration: React.FC = () => {
                       autoFocus
                       onChange={(e) => {
                         setFirstname(e.target.value);
-                        setValidationErrorMessage(
-                          validatefirstName(e.target.value)
-                        );
                       }}
                     />
                   </div>
@@ -383,9 +381,6 @@ const Registration: React.FC = () => {
                       value={lastName}
                       onChange={(e) => {
                         setLastname(e.target.value);
-                        setValidationErrorMessage(
-                          validatelastName(e.target.value)
-                        );
                       }}
                     />
                   </div>
@@ -401,9 +396,6 @@ const Registration: React.FC = () => {
                       value={address}
                       onChange={(e) => {
                         setAddress(e.target.value);
-                        setValidationErrorMessage(
-                          validateAddress(e.target.value)
-                        );
                       }}
                     />
                   </div>
@@ -411,16 +403,13 @@ const Registration: React.FC = () => {
                   <div className={styles.formGroup}>
                     <label htmlFor="mobileNo">Mobile No</label>
                     <input
-                      type="tel"
+                      type="number"
                       id="mobileNo"
                       placeholder="Enter your mobile number"
                       ref={mobileNoRef}
                       value={mobileNo}
                       onChange={(e) => {
                         setMobileno(e.target.value);
-                        setValidationErrorMessage(
-                          validateMobileNo(e.target.value)
-                        );
                       }}
                     />
                   </div>
@@ -436,7 +425,6 @@ const Registration: React.FC = () => {
                       value={city}
                       onChange={(e) => {
                         setCity(e.target.value);
-                        setValidationErrorMessage(validateCity());
                       }}
                     />
                   </div>
@@ -450,7 +438,6 @@ const Registration: React.FC = () => {
                       value={state}
                       onChange={(e) => {
                         setState(e.target.value);
-                        setValidationErrorMessage(validateState());
                       }}
                     />
                   </div>
@@ -466,23 +453,19 @@ const Registration: React.FC = () => {
                       value={country}
                       onChange={(e) => {
                         setCountry(e.target.value);
-                        setValidationErrorMessage(validateCountry());
                       }}
                     />
                   </div>
                   <div className={styles.formGroup}>
                     <label htmlFor="zipcode">Zipcode</label>
                     <input
-                      type="text"
+                      type="number"
                       id="zipcode"
                       placeholder="Enter your zipcode"
                       ref={zipcodeRef}
                       value={zipcode}
                       onChange={(e) => {
                         setZipcode(e.target.value);
-                        setValidationErrorMessage(
-                          validateZipcode(e.target.value)
-                        );
                       }}
                     />
                   </div>
@@ -498,9 +481,6 @@ const Registration: React.FC = () => {
                       value={password}
                       onChange={(e) => {
                         setPassword(e.target.value);
-                        setValidationErrorMessage(
-                          validatePassword(e.target.value)
-                        );
                       }}
                     />
                   </div>
@@ -510,14 +490,11 @@ const Registration: React.FC = () => {
                       type="password"
                       id="confirmPassword"
                       placeholder="Confirm your password"
-                      disabled={!disableState}
+                      disabled={disableState}
                       ref={confirmPasswordRef}
                       value={confirmpassword}
                       onChange={(e) => {
                         setConfirmpassword(e.target.value);
-                        setValidationErrorMessage(
-                          validateConfirmpassword(password, e.target.value)
-                        );
                       }}
                     />
                   </div>
@@ -536,6 +513,13 @@ const Registration: React.FC = () => {
           </div>
         </div>
       </div>
+      <SnackbarComponent
+        open={snackbarOpen}
+        message={snackbarMessage}
+        onClose={handleSnackbarClose}
+        severity={snackbarSeverity}
+        style={{ backgroundColor: snackbarSeverity === 'success' ? '#4caf50' : '#DE5242', color: '#FEF9FD' }}
+      />
     </div>
   );
 };
