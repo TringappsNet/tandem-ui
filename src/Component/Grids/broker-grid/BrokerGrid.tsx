@@ -3,7 +3,7 @@ import { TextField, Dialog, DialogContent, DialogTitle } from '@mui/material';
 import { axiosInstance } from '../../AxiosInterceptor/AxiosInterceptor';
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 
-import FullGrid from '../MainGrid/MainGrid';
+import FullGrid from '../parentGrid/parent-grid';
 
 interface User {
   id: number;
@@ -118,7 +118,7 @@ const BrokerGrid: React.FC = () => {
       <FullGrid
         className=""
         sx={{
-          height: 410,
+          height: 375,
         }}
         rows={rows}
         columns={columns}

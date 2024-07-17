@@ -9,19 +9,14 @@
 
 .MuiDataGrid-withBorderColor {
   /* background: rgb(14, 27, 64); */
-  background: rgb(41, 55, 81);
-  /* background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(57, 92, 190, 1) 47%); */
+  background: rgb(0, 0, 0);
 }
 
 
 .MuiDataGrid-virtualScroller {
-  background: linear-gradient(58deg, rgba(20, 32, 49, 1) 0%, rgba(29, 46, 70, 1) 35%, rgba(31, 47, 71, 1) 100%);
-  color: rgb(232, 229, 229);
+  background-color: #2D353C;
+  color: rgb(252, 252, 252);
 }
-
-/* .MuiDataGrid-root {
-  border-color: black;
-} */
 
 
 .element.style {
@@ -31,9 +26,10 @@
 }
 
 .MuiDataGrid-root {
-  border-color: rgb(99, 99, 99) !important;
+  border-color: rgb(0, 0, 0) !important;
   /* --rowBorderColor: rgb(59, 58, 62) !important; */
   box-shadow: 1px 1px 1px 1px #292c38;
+  border-radius: 20px;
 }
 
 /* .MuiDataGrid-root.MuiDataGrid-withBorderColor {
@@ -82,8 +78,8 @@
 
 .MuiDataGrid-root .MuiDataGrid-container--top [role=row],
 .MuiDataGrid-root .MuiDataGrid-container--bottom [role=row] {
-  background: linear-gradient(58deg, rgba(20, 32, 49, 1) 0%, rgba(29, 46, 70, 1) 35%, rgba(31, 47, 71, 1) 100%) !important
-}
+background-color: black !important
+;}
 
 
 

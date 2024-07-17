@@ -8,7 +8,6 @@ import LandlordGrid from '../Grids/landlordGrid/Landlord';
 import SiteGrid from '../Grids/SiteGrid/SiteGrid';
 
 jest.mock('../AxiosInterceptor/AxiosInterceptor', () => ({}));
-
 jest.mock('../Navbar/Navbar', () => () => <div>Navbar</div>);
 jest.mock('../Cards/Cards', () => () => <div>Cards</div>);
 jest.mock('../Main/Main', () => () => <div>Main</div>);

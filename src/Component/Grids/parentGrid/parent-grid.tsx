@@ -49,11 +49,8 @@ const FullGrid: React.FC<FullGridProps> = ({
           sx={{
             height: 800,
             marginTop: 2,
-            bgcolor: '#142031 !important', 
-
-
+            bgcolor: '#20252a !important', 
             ...sx,
-
             lineHeight: 2,
                 
 
