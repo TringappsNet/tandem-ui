@@ -26,7 +26,7 @@ const SnackbarComponent: React.FC<SnackbarProps> = ({
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: '18px',
-    padding: '4px',
+    padding: '3px',
     height: '30px',
     width: '30px'
   };
