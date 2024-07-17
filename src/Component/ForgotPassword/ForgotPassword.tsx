@@ -130,7 +130,7 @@ const ForgotPassword: React.FC = () => {
         onClose={handleSnackbarClose}
         severity={snackbarSeverity}
         icon={snackbarSeverity === 'success' ? <CheckCircleIcon /> : <ErrorIcon />}
-        style={{ backgroundColor: snackbarSeverity === 'success' ? '#4caf50' : '#DE5242', color: '#FEF9FD' }}
+        style={{ backgroundColor: snackbarSeverity === 'success' ? '#54B471' : '#DE5242', color: '#FEF9FD' }}
       />
     </div>
   );
