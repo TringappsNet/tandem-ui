@@ -246,7 +246,7 @@ const SiteGrid: React.FC = () => {
 
       <FullGrid
         sx={{
-          height: 450,
+          height: 490,
         }}
         rows={sites}
         columns={columns}
