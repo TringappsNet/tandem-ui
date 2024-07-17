@@ -1,7 +1,7 @@
 @import url('@fontsource/public-sans');
 
 * {
-  font-family: 'Public Sans' !important;
+  font-family: 'Public Sans' ;
 }
 
 .dealcontainer {

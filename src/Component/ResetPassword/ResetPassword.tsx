@@ -88,7 +88,11 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
     <>
       {showResetForm && (
         <div className={styles.formContainer}>
+         <div className={styles.headerLine}>
           <h2>Reset Password</h2>
+         </div>
+         <div className= {styles.body}>
+
           {errorMessage && (
             <div className={styles.error}>{errorMessage}</div>
           )}
@@ -139,6 +143,7 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
             <button type="submit">Reset Password</button>
           </form>
         </div>
+      </div>
       )}
     </>
   );

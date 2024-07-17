@@ -3,19 +3,22 @@
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 0.1rem;
+  
 }
 .welcome {
   display: block;
   width: 100%;
-  font-size: 20px !important;
-  color: white;
+  font-size: 24px !important;
+  color: #2D353C;
   padding: 0px;
 }
 
 .container {
   background-color: rgb(0, 0, 0);
   border-radius: 2px; 
-  width: 180px; 
+  width: 230px; 
+  position: relative;
+  bottom: 10px;
 
 }
 
@@ -24,6 +27,7 @@
   height: 2px; 
   border-radius: 2px; 
   width: 90%; 
+
 }
 
 
@@ -33,12 +37,9 @@
   flex-direction: column;
   justify-content: space-around;
   flex: 1 1 10%;
-  padding: 0.5rem 2rem;
+  padding: 1px 12px;
   border-radius: 6px;
   color: #ffffff;
-  font-size: 17px;
-  font-weight: bold;
-  text-transform: uppercase;
   width: 100% !important;
   height: 140px;
   padding-top: 10px;
@@ -53,27 +54,39 @@
 }
 .deals {
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   font-size: 10px;
-
+  position: relative;
+    bottom: 12px; 
+  
 }
 
 .totalDeal {
   display: flex;
-  /* text-align: center; */
   align-items: center;
   justify-content: center;
   font-size: 26px;
+  font-weight: 600;
   font-family: sans-serif !important;
-  
+  letter-spacing: 1px;
+
 }
 .totalDeals {
-  font-family: "Opens Sans", sans-serif !important;
-  font-size: 15px;
+  font-family: Opens Sans, sans-serif !important;
+  font-size: 13.5px;
+  font-weight: 500;
   color: rgba(255, 255, 255, .7);
-
+  margin: 0 0 2px;
 }
 
+
+.add_content {
+  font-family: Opens Sans, sans-serif !important;
+  margin: -5px 0 -3px;
+  color: rgba(255, 255, 255, .7);
+  position: relative;
+  bottom: 7px;
+}
 .globe { 
   margin-left: '17px';
   height: 170px;
@@ -87,7 +100,6 @@
   background-size: 53%;
   background-position: right;
   background-repeat: no-repeat;
-  background-blend-mode:color-burn;
   background-position-y: 10px;
   background-position-x: 150px;
 }
@@ -97,7 +109,12 @@
 
 .tag:nth-child(3) {
   background-color: #348fe2;
-
+  background-image: url('../../assests/tiles/open-folder.png');
+  background-size: 57%;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-position-y: 15px;
+  background-position-x: 140px;
 }
 
 .tag:hover:nth-child(3) {
@@ -106,7 +123,12 @@
 
 .tag:nth-child(4) {
   background-color: #8753de;
-
+  background-image: url('../../assests/tiles/hour-glass.png');
+  background-size: 57%;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-position-y: 15px;
+  background-position-x: 140px;
 }
 
 .tag:hover:nth-child(4) {
@@ -115,7 +137,12 @@
 
 .tag:nth-child(5) {
   background-color: #20252a;
-
+  background-image: url('../../assests/tiles/box.png');
+  background-size: 57%;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-position-y: 15px;
+  background-position-x: 140px;
 }
 
 .tag:hover:nth-child(5) {
@@ -124,12 +151,12 @@
 
 .tag:nth-child(6) {
   background-color: #5b4a43;
-  background-image: url('../../assests/tiles/dollar-sign.png');
-  background-size: 53%;
+  background-image: url('../../assests/tiles/dollar.png');
+  background-size: 40%;
   background-position: right;
   background-repeat: no-repeat;
-  background-blend-mode:color-burn;
   background-position-y: 10px;
+
   background-position-x: 150px;
 
 }

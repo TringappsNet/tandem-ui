@@ -32,7 +32,7 @@ const Main: React.FC = () => {
         </p>
 
         <span className={styles.tag}>
-          <p className={styles.totalDeals}>Total Deals:</p>
+          <p className={styles.totalDeals}>TOTAL DEALS:</p>
           <p className={styles.deals}>
             <p className={styles.totalDeal}>{deal.totalDeals}</p>
           </p>
@@ -42,10 +42,11 @@ const Main: React.FC = () => {
             barContainerClassName={styles.container}
             completedClassName={styles.barCompleted}
           />
+          <p className={styles.add_content}>Better than last week (40.5%)</p>
         </span>
 
         <span className={styles.tag}>
-          <p className={styles.totalDeals}>Deals Opened:</p>
+          <p className={styles.totalDeals}>DEALS OPENED</p>
           <p className={styles.deals}>
             <p className={styles.totalDeal}>{deal.dealsOpened}</p>
           </p>
@@ -55,10 +56,11 @@ const Main: React.FC = () => {
             barContainerClassName={styles.container}
             completedClassName={styles.barCompleted}
           />
+          <p className={styles.add_content}>Better than last week (40.5%)</p>
         </span>
 
         <span className={styles.tag}>
-          <p className={styles.totalDeals}>Deals In Progress</p>
+          <p className={styles.totalDeals}>DEALS IN PROGRESS</p>
           <p className={styles.deals}>
             <p className={styles.totalDeal}>{deal.dealsInProgress}</p>
           </p>
@@ -68,10 +70,11 @@ const Main: React.FC = () => {
             barContainerClassName={styles.container}
             completedClassName={styles.barCompleted}
           />
+          <p className={styles.add_content}>Better than last week (40.5%)</p>
         </span>
 
         <span className={styles.tag}>
-          <p className={styles.totalDeals}>Deals Closed</p>
+          <p className={styles.totalDeals}>DEALS CLOSED</p>
           <p className={styles.deals}>
             <p className={styles.totalDeal}>{deal.dealsClosed}</p>
           </p>
@@ -81,13 +84,13 @@ const Main: React.FC = () => {
             barContainerClassName={styles.container}
             completedClassName={styles.barCompleted}
           />
+          <p className={styles.add_content}>Better than last week (40.5%)</p>
         </span>
 
         <span className={styles.tag}>
-          <p className={styles.totalDeals}>Total Commission</p>
+          <p className={styles.totalDeals}>TOTAL COMMISSION</p>
           <p className={styles.deals}>
             <p className={styles.totalDeal}>${deal.totalCommission}</p>
-            <p style={{ width: 50, height: 50 }}></p>
           </p>
           <ProgressBar
             completed={''}
@@ -95,6 +98,7 @@ const Main: React.FC = () => {
             barContainerClassName={styles.container}
             completedClassName={styles.barCompleted}
           />
+          <p className={styles.add_content}>Better than last week (40.5%)</p>
         </span>
       </div>
       <div>

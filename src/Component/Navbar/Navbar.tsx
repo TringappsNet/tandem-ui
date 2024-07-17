@@ -110,8 +110,6 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     setShowLogoutConfirmation(false);
   };
 
-
-
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -147,7 +145,6 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     navigate('/dashboard');
   };
 
-
   const handleCards = () => {
     navigate('/cards');
   };
@@ -155,7 +152,6 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     handleCards();
     setActivePage('deals');
   };
-
 
   const handleCreateDealClick = () => {
     const availableSites = sites.filter(
@@ -167,6 +163,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     );
 
     if (availableSites.length === 0) {
+
       setSnackbarMessage('Unable to create deal, properties are either assigned or unavailable !');
       setSnackbarOpen(true);
     } else {
@@ -193,25 +190,33 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             <>
               <p
                 onClick={handleDealsClick}
-                className={`${styles.navItem} ${activePage === 'deals' ? styles.active : ''}`}
+                className={`${styles.navItem} ${
+                  activePage === 'deals' ? styles.active : ''
+                }`}
               >
                 DEALS
               </p>
               <p
                 onClick={() => handleRoute('site')}
-                className={`${styles.navItem} ${activePage === 'site' ? styles.active : ''}`}
+                className={`${styles.navItem} ${
+                  activePage === 'site' ? styles.active : ''
+                }`}
               >
                 PROPERTY
               </p>
               <p
                 onClick={() => handleRoute('landlord')}
-                className={`${styles.navItem} ${activePage === 'landlord' ? styles.active : ''}`}
+                className={`${styles.navItem} ${
+                  activePage === 'landlord' ? styles.active : ''
+                }`}
               >
                 LANDLORD
               </p>
               <p
                 onClick={() => handleRoute('invitebroker')}
-                className={`${styles.navItem} ${activePage === 'invitebroker' ? styles.active : ''}`}
+                className={`${styles.navItem} ${
+                  activePage === 'invitebroker' ? styles.active : ''
+                }`}
               >
                 BROKERDETAILS
               </p>
@@ -231,7 +236,6 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           >
             <div className={styles.username}>
               <p>
-
                 {userdetails
                   ? `${userdetails.user?.firstName} ${userdetails.user?.lastName}`
                   : 'Guest'}
@@ -244,7 +248,13 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               )}
             </div>
             <div className={styles.circle}>
-              <p >{userdetails ? userdetails.user?.firstName[0] +''+ userdetails.user?.lastName[0] : 'G'}</p>
+              <p>
+                {userdetails
+                  ? userdetails.user?.firstName[0] +
+                    '' +
+                    userdetails.user?.lastName[0]
+                  : 'G'}
+              </p>
             </div>
             {isDropdownOpen && (
               <div className={styles.dropdownMenu}>
@@ -275,7 +285,12 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         </div>
       </nav>
       {openPopup && selectedComponent && (
-        <Dialog open={openPopup} sx={{ padding: 0, margin: 0 }} maxWidth="lg" onClose={handleClosePopup}>
+        <Dialog
+          open={openPopup}
+          sx={{ padding: 0, margin: 0 }}
+          maxWidth="lg"
+          onClose={handleClosePopup}
+        >
           <DialogTitle sx={{ padding: 0 }}>
             <Icon
               aria-label="close"
@@ -283,7 +298,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               sx={{
                 position: 'absolute',
                 right: 18,
-                top: 8,
+                top: 1,
                 zIndex: 999,
                 fontSize: 30,
                 cursor: 'pointer',
@@ -381,7 +396,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         onClose={handleSnackbarClose}
         severity={'error'}
         icon={<ErrorIcon />}
-        style={{backgroundColor: '#DE5242',color: '#FEF9FD'}}
+        style={{ backgroundColor: '#DE5242', color: '#FEF9FD' }}
       />
     </>
   );
