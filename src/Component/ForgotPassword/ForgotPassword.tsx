@@ -9,10 +9,15 @@ import {
 import { RootState } from '../Redux/reducers';
 import backgroundImage from './bg-login.png';
 import { AppDispatch } from '../Redux/store';
+import SnackbarComponent from '../Snackbar/Snackbar';
+import ErrorIcon from '@mui/icons-material/ReportProblem';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
-  const [validationErrorMessage, setValidationErrorMessage] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'error' | 'success'>('error');
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -22,6 +27,9 @@ const ForgotPassword: React.FC = () => {
 
   useEffect(() => {
     if (successMessage) {
+      setSnackbarMessage(successMessage);
+      setSnackbarSeverity('success');
+      setSnackbarOpen(true);
       const timer = setTimeout(() => {
         dispatch(clearState());
         navigate('/login');
@@ -46,20 +54,26 @@ const ForgotPassword: React.FC = () => {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
-    setValidationErrorMessage('');
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email === '') {
-      setValidationErrorMessage('Please enter the Email address');
+      setSnackbarMessage('Please enter the Email address');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
       return;
     }
     if (!validateEmail(email)) {
-      setValidationErrorMessage('Invalid email address');
+      setSnackbarMessage('Please enter a valid email address');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
       return;
     }
     dispatch(forgotPassword(email));
+  };
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -80,13 +94,7 @@ const ForgotPassword: React.FC = () => {
           <div className={styles.formContainer}>
             <p className={styles.reset}>Reset your password here</p>
 
-            <form className={styles.loginsection} onSubmit={handleSubmit}>
-              {successMessage && (
-                <div className={styles.success}>{successMessage}</div>
-              )}
-              {validationErrorMessage && (
-                <div className={styles.failure}>{validationErrorMessage}</div>
-              )}
+            <form className={styles.loginsection} onSubmit={handleSubmit} noValidate>
               <div className={styles.inputGroup}>
                 <label className={styles.label} htmlFor="username">
                   Email ID
@@ -116,6 +124,14 @@ const ForgotPassword: React.FC = () => {
           </div>
         </div>
       </div>
+      <SnackbarComponent
+        open={snackbarOpen}
+        message={snackbarMessage}
+        onClose={handleSnackbarClose}
+        severity={snackbarSeverity}
+        icon={snackbarSeverity === 'success' ? <CheckCircleIcon /> : <ErrorIcon />}
+        style={{ backgroundColor: snackbarSeverity === 'success' ? '#54B471' : '#DE5242', color: '#FEF9FD' }}
+      />
     </div>
   );
 };

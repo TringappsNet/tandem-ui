@@ -97,12 +97,12 @@
 
 .cancel {
   background-color: rgb(139, 139, 141);
-  color: white;
+  color: #20252A;
   border: none;
 }
 
 .confirm {
-  background: #1BB5B5;
-  color: white;
+  background: #00acac;
+  color: #20252A;
   border: none;
 }

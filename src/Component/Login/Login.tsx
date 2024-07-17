@@ -6,13 +6,14 @@ import { login } from '../Redux/slice/auth/authSlice';
 import { RootState } from '../Redux/reducers';
 import { AppDispatch } from '../Redux/store';
 import backgroundImage from './bg-login.png';
+import SnackbarComponent from '../Snackbar/Snackbar';
+import ErrorIcon from '@mui/icons-material/ReportProblem';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { loading } = useSelector((state: RootState) => state.auth);
@@ -20,25 +21,26 @@ const Login: React.FC = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-    setEmailError('');
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-    setPasswordError('');
   };
 
   const validateForm = (): boolean => {
     let isValid = true;
 
     if (!email.trim()) {
-      setEmailError('Please fill in the Email');
+      setSnackbarMessage('Please enter the email address');
+      setSnackbarOpen(true);
       isValid = false;
     } else if (!emailRegex.test(email)) {
-      setEmailError('Please enter a valid email address');
+      setSnackbarMessage('Please enter a valid email address');
+      setSnackbarOpen(true);
       isValid = false;
     } else if (!password.trim()) {
-      setPasswordError('Please fill in the Password');
+      setSnackbarMessage('Please enter the password');
+      setSnackbarOpen(true);
       isValid = false;
     }
 
@@ -47,17 +49,22 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setErrorMessage('');
+    setSnackbarMessage('');
 
     if (validateForm()) {
       dispatch(login({ email, password })).then((result) => {
         if (login.fulfilled.match(result)) {
           navigate('/dashboard');
         } else {
-          setErrorMessage('Invalid email or password. Please try again.');
+          setSnackbarMessage('Invalid email or password. Please try again.');
+          setSnackbarOpen(true);;
         }
       });
     }
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -76,17 +83,6 @@ const Login: React.FC = () => {
           <p style={{ color: 'rgb(150, 151, 153)' }}>Sign in to continue to TANDEM</p>
 
           <div className={styles.formContainer}>
-            {(emailError || passwordError || errorMessage) && (
-              <div className={styles.errorBox}>
-                {emailError && <p className={styles.errorText}>{emailError}</p>}
-                {passwordError && (
-                  <p className={styles.errorText}>{passwordError}</p>
-                )}
-                {errorMessage && (
-                  <p className={styles.errorText}>{errorMessage}</p>
-                )}
-              </div>
-            )}
             <form className={styles.loginsection} onSubmit={handleSubmit}>
               <div className={styles.inputGroup}>
                 <label className={styles.label} htmlFor="username">
@@ -132,6 +128,14 @@ const Login: React.FC = () => {
           )}
         </div>
       </div>
+      <SnackbarComponent
+        open={snackbarOpen}
+        message={snackbarMessage}
+        onClose={handleSnackbarClose}
+        severity={'error'}
+        icon={<ErrorIcon />}
+        style={{backgroundColor: '#DE5242', color: '#FEF9FD'}}
+      />
     </div>
   );
 };

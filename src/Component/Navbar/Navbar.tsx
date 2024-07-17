@@ -163,9 +163,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     );
 
     if (availableSites.length === 0) {
-      setSnackbarMessage(
-        'Unable to create a deal, all properties are already assigned !'
-      );
+
+      setSnackbarMessage('Unable to create deal, properties are either assigned or unavailable !');
       setSnackbarOpen(true);
     } else {
       dispatch(openDealForm());
