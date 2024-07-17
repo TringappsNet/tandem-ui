@@ -39,7 +39,7 @@
   --tw-bg-opacity: 1;
   background-color: rgb(222 82 66 / var(--tw-bg-opacity));
   --tw-border-opacity: 1;
-  border-color: rgb(222 82 66  / var(--tw-border-opacity)) !important;
+  border-color: rgb(222 82 66 / var(--tw-border-opacity)) !important;
   padding: 0.75rem 1rem !important;
   margin-bottom: 0.75rem;
   margin-top: 0.75rem;
@@ -60,7 +60,8 @@
 .container {
   padding: 2.5rem 2.5rem;
   background-color: #f0f3f7;
-  box-shadow: 5px 10px #6e6e6e;
+  /* background-color: #ebedf0e3; */
+  background-color: #e2e4e8ab;
   /* background: rgb(59, 73, 116);
   background: linear-gradient(90deg, rgba(59, 73, 116, 1) 0%, rgba(45, 53, 60, 1) 100%); */
   --tw-ring-offset-shadow: 0 0 #0000;
