@@ -31,7 +31,7 @@ const Login: React.FC = () => {
     let isValid = true;
 
     if (!email.trim()) {
-      setSnackbarMessage('Please fill in the Email');
+      setSnackbarMessage('Please enter the email address');
       setSnackbarOpen(true);
       isValid = false;
     } else if (!emailRegex.test(email)) {
@@ -39,7 +39,7 @@ const Login: React.FC = () => {
       setSnackbarOpen(true);
       isValid = false;
     } else if (!password.trim()) {
-      setSnackbarMessage('Please fill in the Password');
+      setSnackbarMessage('Please enter the password');
       setSnackbarOpen(true);
       isValid = false;
     }

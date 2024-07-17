@@ -40,7 +40,7 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
     e.preventDefault();
 
     if (!oldPassword) {
-      setErrorMessage('Please fill in the Old Password.');
+      setErrorMessage('Please enter your old password.');
       return;
     }
 

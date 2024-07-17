@@ -113,11 +113,13 @@ export const addSite =
       try {
         const response = await axiosInstance.post('/sites/site/', site);
         dispatch(addSiteSuccess(response.data));
+        dispatch(setSnackbarMessage('Site added successfully'));
+        dispatch(setSnackbarOpen(true));
       } catch (error) {
         const errorMessage = (error as any).response?.data?.message || (error as Error).message;
         dispatch(fetchSitesFailure(errorMessage));
         dispatch(setSnackbarMessage(errorMessage));
-        dispatch(setSnackbarOpen(true));
+        dispatch(setSnackbarOpen(true));  
       }
     };
 
