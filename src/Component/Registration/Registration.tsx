@@ -8,8 +8,6 @@ import { AppDispatch } from '../Redux/store';
 import { RootState } from '../Redux/reducers';
 import backgroundImage from './bg-login.png';
 import SnackbarComponent from '../Snackbar/Snackbar';
-import ErrorIcon from '@mui/icons-material/ReportProblem';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 
 
@@ -106,7 +104,7 @@ const Registration: React.FC = () => {
       return 'Password is required.';
     } else if (password.length < 8) {
       setDisableState(false);
-      return 'Password should be atleast 8 characters long.';
+      return 'Password should contain atleast 8 characters.';
     } else if (!specialCharPattern.test(password)) {
       setDisableState(false);
       return 'Password should contain at least one special character.';
@@ -492,7 +490,7 @@ const Registration: React.FC = () => {
                       type="password"
                       id="confirmPassword"
                       placeholder="Confirm your password"
-                      disabled={!disableState}
+                      disabled={disableState}
                       ref={confirmPasswordRef}
                       value={confirmpassword}
                       onChange={(e) => {
@@ -520,7 +518,6 @@ const Registration: React.FC = () => {
         message={snackbarMessage}
         onClose={handleSnackbarClose}
         severity={snackbarSeverity}
-        icon={snackbarSeverity === 'success' ? <CheckCircleIcon /> : <ErrorIcon />}
         style={{ backgroundColor: snackbarSeverity === 'success' ? '#4caf50' : '#DE5242', color: '#FEF9FD' }}
       />
     </div>

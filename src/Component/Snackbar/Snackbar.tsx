@@ -1,15 +1,15 @@
 import React from 'react';
 import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import ErrorIcon from '@mui/icons-material/Error';
+import Alert, { AlertProps } from '@mui/material/Alert';
+import ErrorIcon from '@mui/icons-material/ReportProblem';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 interface SnackbarProps {
   open: boolean;
   message: string;
   onClose: () => void;
   severity: 'success' | 'error' | 'warning' | 'info';
-  style?: React.CSSProperties; 
-  icon?: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
 const SnackbarComponent: React.FC<SnackbarProps> = ({
@@ -18,9 +18,31 @@ const SnackbarComponent: React.FC<SnackbarProps> = ({
   onClose,
   severity,
   style,
-  icon,
 }) => {
-  const defaultIcon = severity === 'error' ? <ErrorIcon fontSize="inherit" /> : null;
+  const iconStyle: React.CSSProperties = {
+    backgroundColor: '#ffffff3b',
+    borderRadius: '60%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize:'15px',
+    padding:'4px'
+  };
+
+  const IconComponent = severity === 'error' ? ErrorIcon : CheckCircleIcon;
+
+  const alertProps: AlertProps = {
+    onClose: onClose,
+    severity: severity,
+    sx: {
+      width: '700px',
+      textAlign: 'center',
+      ...style,
+      padding:'2px 10px 1px',
+      marginBottom:'50px'
+    },
+  };
+
   return (
     <Snackbar
       open={open}
@@ -28,12 +50,7 @@ const SnackbarComponent: React.FC<SnackbarProps> = ({
       onClose={onClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
     >
-      <Alert
-        onClose={onClose}
-        icon={icon || defaultIcon}
-        severity={severity}
-        sx={{ width: '700px', textAlign: 'center',...style,padding: '1px 15px 1px'}}
-      >
+      <Alert {...alertProps} icon={<div style={iconStyle}><IconComponent fontSize="inherit" /></div>} >
         {message}
       </Alert>
     </Snackbar>
