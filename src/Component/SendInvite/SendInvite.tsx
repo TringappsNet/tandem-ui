@@ -99,7 +99,10 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
     <>
       {open && showInviteForm && (
         <div className={styles.formContainer}>
+          <div className={styles.headerLine}>
           <h2>Send Invite</h2>
+          </div>
+          <div className= {styles.body}>
           {responseMessage && (
             <div
               className={classNames(styles.responseMessage, {
@@ -164,6 +167,7 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
               Error loading roles: {rolesError}
             </div>
           )}
+          </div>
         </div>
       )}
     </>

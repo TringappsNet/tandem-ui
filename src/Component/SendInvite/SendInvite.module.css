@@ -5,8 +5,7 @@
   flex-direction: column;
   width: 500px;
   margin: 0 auto;
-  padding: 2rem;
-  background: linear-gradient(58deg, rgba(20, 32, 49, 1) 0%, rgba(29, 46, 70, 1) 35%, rgba(31, 47, 71, 1) 100%);
+  background-color: #DDE1E5;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 0px;
@@ -14,11 +13,24 @@
   border: 2px solid #342333 !important;
 }
 
+.headerLine {
+  height: 40px;
+  background-color: #20252A;
+  }
+
+.body {
+  padding: 2rem;
+
+}
+
 .formContainer h2 {
-  margin-bottom: 1.5rem;
-  margin-top: 0.1rem;
-  text-align: center;
-  color: white;
+  margin-top: 10px;
+  margin-left: 15px;
+  text-align: left;
+  color: #FFFFFF;
+  font-size: 17px;
+  font-family: "Open Sans",sans-serif;
+  font-weight: 500;
 }
 
 .formGroup {
@@ -29,9 +41,8 @@ label {
   display: block;
   margin-bottom: 0.5rem;
   font-family: 'Public Sans', sans-serif;
-  font-weight: 600;
   font-size: 16px;
-  color: rgb(218, 219, 220);
+  color: #20252a;
 }
 
 .formGroup input,

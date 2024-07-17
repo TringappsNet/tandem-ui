@@ -11,7 +11,7 @@ html {
 .profileContainer {
   width: 610px;
   max-width: 100%;
-  background: linear-gradient(58deg, rgba(20,32,49,1) 0%, rgba(29,46,70,1) 35%, rgba(31,47,71,1)  100%);
+  background-color: #DDE1E5;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 10px;
@@ -96,7 +96,7 @@ html {
   font-family: 'Public Sans', sans-serif;
   font-weight: bolder;
   margin: 0;
-  color: rgb(218, 219, 220);
+  color: #20252a;
 }
 
 .profileBlock {
