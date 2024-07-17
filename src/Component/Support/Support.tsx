@@ -97,62 +97,66 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
   }
 
   return (
-    <div className={styles.contactsContainer}>
-      <div className={styles.imageContainer}>
-        <img src={mailImage} alt="Mail" className={styles.mailImage} />
+    <div>
+      <div className={styles.headerLine}>
+      <h2 className={styles.support}>Contact Us!</h2>
       </div>
-      <form className={styles.contactForm} onSubmit={handleSubmit} noValidate>
-        <h2 className={styles.support}>Contact Us!</h2>
-        {successMessage && (
-          <div className={`${styles.messageBox} ${styles.successBox}`}>
-            {successMessage}
+      <div className={styles.contactsContainer}>
+        <div className={styles.imageContainer}>
+          <img src={mailImage} alt="Mail" className={styles.mailImage} />
+        </div>
+        <form className={styles.contactForm} onSubmit={handleSubmit} noValidate>
+          {successMessage && (
+            <div className={`${styles.messageBox} ${styles.successBox}`}>
+              {successMessage}
+            </div>
+          )}
+          {error && (
+            <div className={`${styles.messageBox} ${styles.errorBox}`}>
+              {error}
+            </div>
+          )}
+          {formError && (
+            <div className={`${styles.messageBox} ${styles.errorBox}`}>
+              {formError}
+            </div>
+          )}
+          <div className={styles.formGroup}>
+            <label htmlFor="subject">Subject:</label>
+            <input
+              type="text"
+              placeholder="Enter your subject"
+              id="subject"
+              name="subject"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="description">Description:</label>
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Add your Comments"
+              rows={8}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={styles.sendButton}
+          >
+            {isLoading ? 'Sending...' : 'Send'}
+          </button>
+        </form>
+        {isLoading && (
+          <div className={styles.loaderContainer}>
+            <div className={styles.loader}></div>
           </div>
         )}
-        {error && (
-          <div className={`${styles.messageBox} ${styles.errorBox}`}>
-            {error}
-          </div>
-        )}
-        {formError && (
-          <div className={`${styles.messageBox} ${styles.errorBox}`}>
-            {formError}
-          </div>
-        )}
-        <div className={styles.formGroup}>
-          <label htmlFor="subject">Subject:</label>
-          <input
-            type="text"
-            placeholder="Enter your subject"
-            id="subject"
-            name="subject"
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            name="description"
-            placeholder="Add your Comments"
-            rows={8}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={isLoading}
-          className={styles.sendButton}
-        >
-          {isLoading ? 'Sending...' : 'Send'}
-        </button>
-      </form>
-      {isLoading && (
-        <div className={styles.loaderContainer}>
-          <div className={styles.loader}></div>
-        </div>
-      )}
+      </div>
     </div>
   );
 };
