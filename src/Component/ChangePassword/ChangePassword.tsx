@@ -6,6 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '../Redux/store';
 import { RootState } from '../Redux/reducers';
 import backgroundImage from './bg-login.png';
+import SnackbarComponent from '../Snackbar/Snackbar';
+import ErrorIcon from '@mui/icons-material/ReportProblem';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 
 
@@ -20,7 +23,9 @@ const ChangePassword: React.FC = () => {
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmpassword] = useState('');
   const [disableState, setDisableState] = useState(false);
-  const [validationErrorMessage, setValidationErrorMessage] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'error' | 'success'>('error');
 
   const validatePassword = (password: string): string => {
     if (!disableState === false) {
@@ -32,13 +37,13 @@ const ChangePassword: React.FC = () => {
       return '';
     } else if (password.length < 8) {
       setDisableState(false);
-      return 'Password should be at least 8 long.';
+      return 'Password should contain atleast 8 characters.';
     } else if (!specialCharPattern.test(password)) {
       setDisableState(false);
-      return 'Password should contain at least one special character.';
+      return 'Password should contain atleast one special character.';
     } else if ((password.match(numberPattern) || []).length < 2) {
       setDisableState(false);
-      return 'Password should contain at least two numerical digits.';
+      return 'Password should contain atleast two numerical digits.';
     } else {
       setDisableState(true);
       return '';
@@ -49,24 +54,24 @@ const ChangePassword: React.FC = () => {
     event.preventDefault();
 
     if (password.trim() === '') {
-      setValidationErrorMessage('Please fill in your New password');
+      handleSnackbarOpen('Please enter your new password', 'error');
       return;
     }
 
     if (confirmpassword.trim() === '') {
-      setValidationErrorMessage('Please confirm your password');
+      handleSnackbarOpen('Please confirm your password', 'error');
       return;
     }
 
     const passwordError = validatePassword(password);
 
     if (passwordError) {
-      setValidationErrorMessage(passwordError);
+      handleSnackbarOpen(passwordError, 'error');
       return;
     }
 
     if (password !== confirmpassword) {
-      setValidationErrorMessage('Passwords do not match.');
+      handleSnackbarOpen('Passwords do not match.', 'error');
       return;
     }
 
@@ -82,9 +87,28 @@ const ChangePassword: React.FC = () => {
     setter: React.Dispatch<React.SetStateAction<string>>
   ) => {
     setter(e.target.value);
-    setValidationErrorMessage('');
+    handleSnackbarClose();
+  };
+  const handleSnackbarOpen = (message: string, severity: 'error' | 'success') => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
+    setSnackbarOpen(true);
   };
 
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+  React.useEffect(() => {
+    if (responseMessage) {
+      handleSnackbarOpen(responseMessage, responseType === 'success' ? 'success' : 'error');
+
+      if (responseType === 'success') {
+        setTimeout(() => {
+          navigate('/login');
+        }, 5000); 
+      }
+    }
+  }, [responseMessage, responseType, navigate]);
   return (
     <div className={styles.loginBackground} style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className={styles.card}>
@@ -107,14 +131,14 @@ const ChangePassword: React.FC = () => {
             </p>
 
             <form className={styles.loginsection} onSubmit={handleSubmit}>
-              {responseType === 'success' && (
-                <div className={styles.success}>{responseMessage}</div>
-              )}
-              {(responseType === 'error' || validationErrorMessage) && (
-                <div className={styles.failure}>
-                  {responseMessage || validationErrorMessage}
-                </div>
-              )}
+            <SnackbarComponent
+                open={snackbarOpen}
+                message={snackbarMessage}
+                onClose={handleSnackbarClose}
+                severity={snackbarSeverity}
+                icon={snackbarSeverity === 'success' ? <CheckCircleIcon /> : <ErrorIcon />}
+                style={{ backgroundColor: snackbarSeverity === 'success' ? '#4caf50' : '#DE5242', color: '#FEF9FD' }}
+              />
               <div className={styles.inputGroup}>
                 <label htmlFor="password" className={styles.label}>
                   New Password
