@@ -405,7 +405,7 @@ const Registration: React.FC = () => {
                   <div className={styles.formGroup}>
                     <label htmlFor="mobileNo">Mobile No</label>
                     <input
-                      type="tel"
+                      type="number"
                       id="mobileNo"
                       placeholder="Enter your mobile number"
                       ref={mobileNoRef}
@@ -461,7 +461,7 @@ const Registration: React.FC = () => {
                   <div className={styles.formGroup}>
                     <label htmlFor="zipcode">Zipcode</label>
                     <input
-                      type="text"
+                      type="number"
                       id="zipcode"
                       placeholder="Enter your zipcode"
                       ref={zipcodeRef}

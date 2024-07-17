@@ -132,9 +132,6 @@ const SiteGrid: React.FC = () => {
     if (!formData.zipcode) {
       errors.zipcode = 'Zipcode is required';
       valid = false;
-    } else if (!/^\d{5}$/.test(formData.zipcode)) {
-      errors.zipcode = 'Zipcode must be 5 digits';
-      valid = false;
     }
 
     setFormErrors(errors);
