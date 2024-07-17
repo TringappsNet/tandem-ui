@@ -78,8 +78,8 @@
 
 .MuiDataGrid-root .MuiDataGrid-container--top [role=row],
 .MuiDataGrid-root .MuiDataGrid-container--bottom [role=row] {
-  background: linear-gradient(58deg, rgba(20, 32, 49, 1) 0%, rgba(29, 46, 70, 1) 35%, rgba(31, 47, 71, 1) 100%) !important
-}
+background-color: black !important
+;}
 
 
 
