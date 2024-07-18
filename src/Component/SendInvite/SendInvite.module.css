@@ -14,8 +14,8 @@
 }
 
 .headerLine {
-  height: 40px;
-  /* background-color: #20252A; */
+  height: 55px;
+  background-color: #161515;
 }
 
 .body {
@@ -24,11 +24,10 @@
 }
 
 .formContainer h2 {
-  margin-top: 12px;
-  margin-left: 190px;
-  margin-top: 24px;
+  margin-top: 16px;
+  margin-left: 181px;
   text-align: left;
-  color: #141111;
+  color: #ffffff;
   font-size: 24px;
   font-family: "Open Sans", sans-serif;
   font-weight: bolder;
@@ -51,7 +50,7 @@ label {
   width: 100%;
   padding: 10px;
   color: #0a1017;
-  background-color: #DDE1E5;
+  background-color: #f1f1f4;
   border: 1px solid #d6d9dd;
   height: 46px;
   border-radius: 0.375rem;

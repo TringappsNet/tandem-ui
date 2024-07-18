@@ -79,7 +79,7 @@ const Login: React.FC = () => {
             />
             <h2 className={styles.name}>TANDEM INFRASTRUCTURE</h2>
           </div>
-          <p style={{ color: 'rgb(150, 151, 153)' }}>Sign in to continue to TANDEM</p>
+          <p style={{ color: 'rgb(127, 129, 133)' }}>Sign in to continue to TANDEM</p>
 
           <div className={styles.formContainer}>
             <form className={styles.loginsection} onSubmit={handleSubmit}>
