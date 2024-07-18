@@ -55,16 +55,16 @@ const ChangePassword: React.FC = () => {
       handleSnackbarOpen('Please enter your new password', 'error');
       return;
     }
-
-    if (confirmpassword.trim() === '') {
-      handleSnackbarOpen('Please confirm your password', 'error');
-      return;
-    }
-
+    
     const passwordError = validatePassword(password);
 
     if (passwordError) {
       handleSnackbarOpen(passwordError, 'error');
+      return;
+    }
+
+    if (confirmpassword.trim() === '') {
+      handleSnackbarOpen('Please confirm your password', 'error');
       return;
     }
 
