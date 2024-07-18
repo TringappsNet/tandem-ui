@@ -11,6 +11,9 @@
   color: #ffffff;
 }
 
+.css-1fu2e3p-MuiPaper-root-MuiDialog-paper {
+  background-color: #0c0c0c !important;
+}
 
 .MuiDataGrid-virtualScroller {
   background-color: rgb(242, 243, 244);
@@ -28,11 +31,13 @@
   /* --rowBorderColor: rgb(59, 58, 62) !important; */
   border-radius: 70px;
 }
+
 .css-15n4jlm-MuiDataGrid-root .MuiDataGrid-main>*:first-of-type {
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
 }
-.css-15n4jlm-MuiDataGrid-root .MuiDataGrid-container--top{
+
+.css-15n4jlm-MuiDataGrid-root .MuiDataGrid-container--top {
   text-transform: uppercase;
 }
 
@@ -80,13 +85,14 @@
 .css-1klb8j8-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter input {
   color: rgb(1, 1, 1) !important;
 }
-.MuiDialogTitle-root + .css-ypiqx9-MuiDialogContent-root{
+
+.MuiDialogTitle-root+.css-ypiqx9-MuiDialogContent-root {
   padding: 30px 30px 10px 30px !important;
 }
 
 .MuiDataGrid-root .MuiDataGrid-container--top [role=row],
 .MuiDataGrid-root .MuiDataGrid-container--bottom [role=row] {
-background-color: #41454A !important;
+  background-color: black !important;
 }
 
 
@@ -121,7 +127,8 @@ background-color: #41454A !important;
 .css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
   background: linear-gradient(58deg, rgb(11 34 67) 0%, rgb(30 62 108) 35%, rgb(16 42 79) 100%);
 }
-.MuiDialogTitle-root+.css-ypiqx9-MuiDialogContent-root{
+
+.MuiDialogTitle-root+.css-ypiqx9-MuiDialogContent-root {
   text-transform: capitalize;
 }
 
@@ -129,22 +136,24 @@ background-color: #41454A !important;
   margin-bottom: 20px;
 }
 
-.css-nnua9j-MuiPaper-root-MuiAlert-root  {
+.css-nnua9j-MuiPaper-root-MuiAlert-root {
   background-color: #DE5242 !important;
   color: #FEF9FD !important;
 }
-.css-1pxa9xg-MuiAlert-message{
+
+.css-1pxa9xg-MuiAlert-message {
   padding: 13px 0px !important;
 }
 .css-1vooibu-MuiSvgIcon-root{
   margin-bottom: 2.5px;
 }
 
-.css-17o1yue-MuiPaper-root-MuiAlert-root{
+.css-17o1yue-MuiPaper-root-MuiAlert-root {
   background-color: #DE5242 !important;
   color: #FEF9FD !important;
 }
-.css-bdhsul-MuiTypography-root-MuiDialogTitle-root  {
+
+.css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
   padding: 0 19px !important;
 }
 .css-ptiqhd-MuiSvgIcon-root{
