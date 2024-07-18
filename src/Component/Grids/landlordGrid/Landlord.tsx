@@ -247,7 +247,7 @@ const LandlordGrid: React.FC = () => {
           width: '200px',
           position: 'relative',
           float: 'right',
-          backgroundColor: '#39404f',
+          backgroundColor:'rgba(16 42 79)'
         }}
         onClick={() => handleEditNew(true)}
       >
@@ -256,7 +256,7 @@ const LandlordGrid: React.FC = () => {
 
       <FullGrid
         sx={{
-          height: 490,
+          height: 'calc(100vh - 8rem)'
         }}
         rows={landlords}
         columns={columns}
@@ -276,8 +276,8 @@ const LandlordGrid: React.FC = () => {
         confirmVariant="danger"
       />
 
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>
+      <Dialog open={open} onClose={handleClose} maxWidth="xs">
+        <DialogTitle style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff' }}>
           {formData.id ? 'Edit Landlord' : 'Add Landlord'}
 
           <IconButton
@@ -286,13 +286,10 @@ const LandlordGrid: React.FC = () => {
               handleClose();
             }}
             sx={{
-              position: 'absolute',
-              right: 20,
-              top: 10,
-              color: (theme) => theme.palette.grey[500],
+              padding:0
             }}
           >
-            <CloseIcon sx={{ color: '#999' }} />
+            <CloseIcon sx={{ color: '#fff' }} />
           </IconButton>
         </DialogTitle>
         <DialogContent>
@@ -303,6 +300,7 @@ const LandlordGrid: React.FC = () => {
             label="Name"
             type="text"
             fullWidth
+            size="small"
             value={formData.name}
             onChange={handleChange}
             error={!!formErrors.name}
@@ -314,6 +312,7 @@ const LandlordGrid: React.FC = () => {
             name="phoneNumber"
             label="Phone Number"
             type="number"
+            size="small"
             fullWidth
             value={formData.phoneNumber}
             onChange={handleChange}
@@ -326,6 +325,7 @@ const LandlordGrid: React.FC = () => {
             name="email"
             label="Email"
             type="email"
+            size="small"
             fullWidth
             value={formData.email}
             onChange={handleChange}
@@ -338,6 +338,7 @@ const LandlordGrid: React.FC = () => {
             name="address1"
             label="Address 1"
             type="text"
+            size="small"
             fullWidth
             value={formData.address1}
             onChange={handleChange}
@@ -350,6 +351,7 @@ const LandlordGrid: React.FC = () => {
             name="address2"
             label="Address2"
             type="text"
+            size="small"
             fullWidth
             value={formData.address2}
             onChange={handleChange}
@@ -362,6 +364,7 @@ const LandlordGrid: React.FC = () => {
             name="city"
             label="City"
             type="text"
+            size="small"
             fullWidth
             value={formData.city}
             onChange={handleChange}
@@ -374,6 +377,7 @@ const LandlordGrid: React.FC = () => {
             name="state"
             label="State"
             type="text"
+            size="small"
             fullWidth
             value={formData.state}
             onChange={handleChange}
@@ -386,6 +390,7 @@ const LandlordGrid: React.FC = () => {
             name="country"
             label="Country"
             type="text"
+            size="small"
             fullWidth
             value={formData.country}
             onChange={handleChange}
@@ -398,6 +403,7 @@ const LandlordGrid: React.FC = () => {
             name="zipcode"
             label="Zipcode"
             type="number"
+            size="small"
             fullWidth
             value={formData.zipcode}
             onChange={handleChange}
@@ -406,16 +412,29 @@ const LandlordGrid: React.FC = () => {
             autoComplete="off"
           />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
+        <DialogActions sx={{ paddingTop: 2, paddingBottom: 2, paddingRight:2}}>
+          <Button
+            onClick={handleClose}
+            size='small'
+            variant="contained"
+            className={styles.btncancel}>
             Cancel
           </Button>
           {formData.id ? (
-            <Button onClick={handleUpdate} color="primary">
+            <Button
+              onClick={handleUpdate}
+              variant="contained"
+              size='small'
+              className={styles.btnadded}
+            >
               Update
             </Button>
           ) : (
-            <Button onClick={handleAdd} color="primary">
+            <Button onClick={handleAdd}
+              variant="contained"
+              size='small'
+              className={styles.btnadded}
+            >
               Add
             </Button>
           )}

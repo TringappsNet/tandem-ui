@@ -21,8 +21,7 @@ const Main: React.FC = () => {
 
   return (
     <>
-      <div className={styles.tagsContainer}>
-        <p className={styles.welcome}>
+    <p className={styles.welcome}>
           <div className={styles.welcomefade}>
             Welcome,{' '}
             {userdetails
@@ -30,6 +29,7 @@ const Main: React.FC = () => {
               : 'Guest'}
           </div>
         </p>
+      <div className={styles.tagsContainer}>
 
         <span className={styles.tag}>
           <p className={styles.totalDeals}>TOTAL DEALS:</p>

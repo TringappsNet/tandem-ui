@@ -1,15 +1,15 @@
 .dashboardContainer {
+  height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  /* background-color: #0f1928; */
   background: linear-gradient(60deg, rgb(23, 38, 58) 0%, rgb(46, 70, 114) 35%, rgb(19, 32, 51) 100%);
-
 }
 
 .mainContent {
   flex: 1;
-  padding: 1rem;
+  padding: .5rem 1rem;
   background-color: #dee2e6;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;

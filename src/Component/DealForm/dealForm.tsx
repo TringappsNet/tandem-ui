@@ -267,7 +267,8 @@ const DealForm: React.FC<DealFormProps> = () => {
             onChange={handleChange}
             margin="normal"
             size="small"
-            sx={{ width: 300 }}
+            
+            sx={{ width: 300, cursor:'pointer' }}
             InputLabelProps={{
               shrink: true,
             }}
@@ -397,14 +398,14 @@ const DealForm: React.FC<DealFormProps> = () => {
     >
       <DialogTitle
         sx={{
-          background:'linear-gradient(58deg, rgb(11 34 67) 0%, rgb(30 62 108) 35%, rgb(16 42 79) 100%);',
+          background: 'linear-gradient(58deg, rgb(11 34 67) 0%, rgb(30 62 108) 35%, rgb(16 42 79) 100%);',
           color: 'white',
           height: '44px',
           padding: '6px 24px',
-          letterSpacing:'.18rem',
-          fontSize:15,
-          display:'flex',
-          alignItems:'center'
+          letterSpacing: '.18rem',
+          fontSize: 15,
+          display: 'flex',
+          alignItems: 'center'
         }}
       >
         DEALFORM
@@ -480,21 +481,12 @@ const DealForm: React.FC<DealFormProps> = () => {
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
-                  textTransform:'capitalize'
+                  textTransform: 'capitalize'
                 }}
               >
                 {steps[activeStep].fields.map((field, index) =>
                   renderField(field, index)
                 )}
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={saveFormData}
-                  sx={{ width: 100, marginTop: 3, zIndex:999 }}
-                  disabled={!isFormValid()}
-                >
-                  Save
-                </Button>
               </Box>
             ) : (
               renderSummary()
@@ -510,13 +502,20 @@ const DealForm: React.FC<DealFormProps> = () => {
                 <Box
                   sx={{
                     display: 'flex',
-                    justifyContent: 'flex-end',
+                    justifyContent: 'space-between',
                     width: '100%',
-                    position:'absolute',
-                    right:60,
-                    bottom:146
+                    marginTop:3
                   }}
                 >
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={saveFormData}
+                    sx={{ width: 100}}
+                    disabled={!isFormValid()}
+                  >
+                    Save
+                  </Button>
                   <Button
                     variant="contained"
                     color="primary"
