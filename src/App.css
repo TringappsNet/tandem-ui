@@ -146,8 +146,9 @@
   padding: 13px 0px !important;
 }
 
+
 .css-1vooibu-MuiSvgIcon-root {
-  margin-top: 3.2px !important;
+  margin-bottom: 2.5px;
 }
 
 .css-17o1yue-MuiPaper-root-MuiAlert-root {
@@ -166,11 +167,12 @@
 }
 
 .MuiDataGrid-main {
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid #cecece;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #cecece;
 }
+  
