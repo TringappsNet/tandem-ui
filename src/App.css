@@ -96,7 +96,7 @@ background-color: #41454A !important;
 }
 
 .MuiSvgIcon-root {
-  color: rgb(5, 5, 5);
+  color: rgb(0, 0, 0);
 }
 
 .css-c6bojz {
@@ -155,6 +155,7 @@ background-color: #41454A !important;
 .css-ptiqhd-MuiSvgIcon-root{
   margin:5px !important;
   font-size: 1rem !important;
+  color: white !important;
 }
 
 .MuiDataGrid-main {
