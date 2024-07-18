@@ -23,9 +23,10 @@ import {
 import { closeReset, openReset } from '../Redux/slice/auth/resetSlice';
 import { closeSupport, openSupport } from '../Redux/slice/support/supportSlice';
 import { closeProfile, openProfile } from '../Redux/slice/profile/profileSlice';
-import { PiUserCirclePlusFill } from 'react-icons/pi';
-import { IoIosSend, IoIosContacts } from 'react-icons/io';
-import { MdOutlineLockReset } from 'react-icons/md';
+import { CgProfile } from "react-icons/cg";
+import { RiSendPlaneLine } from "react-icons/ri";
+import { RiLockPasswordLine } from "react-icons/ri";
+import { BiSupport } from "react-icons/bi";
 import { IoLogOutOutline } from 'react-icons/io5';
 import SnackbarComponent from '../Snackbar/Snackbar';
 import { fetchSites } from '../Redux/slice/site/siteSlice';
@@ -259,21 +260,21 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             {isDropdownOpen && (
               <div className={styles.dropdownMenu}>
                 <button onClick={() => handleOpenPopup('Profile')}>
-                  <PiUserCirclePlusFill className={styles.icons} />
+                  <CgProfile className={styles.icons} />
                   Profile
                 </button>
                 {userdetails.isAdmin && (
                   <button onClick={() => handleOpenPopup('SendInvite')}>
-                    <IoIosSend className={styles.icons} />
+                    <RiSendPlaneLine className={styles.icons} />
                     Send Invite
                   </button>
                 )}
                 <button onClick={() => handleOpenPopup('Reset')}>
-                  <MdOutlineLockReset className={styles.icons} />
+                  <RiLockPasswordLine className={styles.icons} />
                   Reset
                 </button>
                 <button onClick={() => handleOpenPopup('Support')}>
-                  <IoIosContacts className={styles.icons} /> Contact us
+                  <BiSupport className={styles.icons} /> Contact us
                 </button>
                 <button onClick={handleLogoutClick}>
                   <IoLogOutOutline className={styles.icons} />
