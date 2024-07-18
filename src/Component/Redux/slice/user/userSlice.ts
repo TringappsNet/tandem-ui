@@ -149,3 +149,17 @@ export const deleteBroker = (id: number): ThunkAction<void, RootState, unknown, 
     dispatch(setSnackbarOpen(true));
   }
 };
+
+export const inactiveBroker = (id: number): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
+  try {
+    await axiosInstance.delete(`/brokers/broker/${id}`);
+    dispatch(deleteBrokerSuccess(id));
+    dispatch(setSnackbarMessage('Broker deleted successfully'));
+    dispatch(setSnackbarOpen(true));
+  } catch (error) {
+    const errorMessage = (error as any).response?.data?.message || (error as Error).message;
+    dispatch(fetchBrokersFailure(errorMessage));
+    dispatch(setSnackbarMessage(errorMessage));
+    dispatch(setSnackbarOpen(true));
+  }
+};

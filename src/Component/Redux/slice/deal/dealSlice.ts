@@ -36,13 +36,9 @@ const dealSlice = createSlice({
       state.error = null;
     },
     fetchDealDetailsSuccess: (state, action: PayloadAction<Deal[]>) => {
-      console.log("Fetched deals:", action.payload);
       state.dealDetails = action.payload;
       state.loading = false;
       state.error = null;
-      console.log("Fetched deals:", state.dealDetails);
-
-      // console.log("Deal ID:", deal.id, "potentialCommissionDate:", deal.potentialCommissionDate);
 
     },
     fetchDealDetailsFailure: (state, action: PayloadAction<string>) => {
@@ -61,7 +57,6 @@ const dealSlice = createSlice({
       } else {
         state.dealDetails.push(action.payload);
       }
-      console.log("Updated/Added deal:", action.payload);
 
     },
     updateDealField: (
@@ -78,7 +73,6 @@ const dealSlice = createSlice({
       if (deal) {
         (deal[action.payload.field] as string | number | boolean | null) =
           action.payload.value;
-        console.log(`Updated field ${action.payload.field} for deal ${action.payload.id}:`, deal);
 
       }
     },
@@ -173,7 +167,6 @@ export const updateDealDetails =
         );
         dispatch(setDealDetails(response.data));
         dispatch(clearCurrentDeal());
-        console.log("Updated deal details:", response.data);
 
       } catch (error) {
         console.error('Error updating deal details:', error);
