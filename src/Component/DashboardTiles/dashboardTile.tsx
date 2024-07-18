@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './dashboardTile.module.css';
 import BrokerGrid from '../Grids/broker-grid/BrokerGrid';
-import 'react-circular-progressbar/dist/styles.css';
 import { fetchDeals } from '../Redux/slice/deal/dealsDataSlice';
 import { RootState } from '../Redux/reducers';
 import { AppDispatch } from '../Redux/store';
