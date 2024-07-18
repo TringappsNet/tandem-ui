@@ -15,8 +15,8 @@
 
 .headerLine {
   height: 40px;
-  background-color: #20252A;
-  }
+  /* background-color: #20252A; */
+}
 
 .body {
   padding: 2rem;
@@ -24,13 +24,14 @@
 }
 
 .formContainer h2 {
-  margin-top: 10px;
-  margin-left: 15px;
+  margin-top: 12px;
+  margin-left: 190px;
+  margin-top: 24px;
   text-align: left;
-  color: #FFFFFF;
-  font-size: 17px;
-  font-family: "Open Sans",sans-serif;
-  font-weight: 500;
+  color: #141111;
+  font-size: 24px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bolder;
 }
 
 .formGroup {
@@ -49,7 +50,10 @@ label {
 .formGroup select {
   width: 100%;
   padding: 10px;
-  border: 1px solid #e5e7eb;
+  color: #0a1017;
+  background-color: #DDE1E5;
+  border: 1px solid #d6d9dd;
+  height: 46px;
   border-radius: 0.375rem;
   font-size: 0.875rem;
 }
@@ -58,14 +62,16 @@ label {
 .formGroup select:focus {
   outline: 2px solid #0000;
   outline-offset: 2px;
-  border-color: #262262;
+  border-color: #6e747b;
 }
 
 .formContainer button {
   width: 100%;
   padding: 0.75rem;
   /* background: linear-gradient(45deg, rgb(2, 49, 88) 0%, rgb(5, 36, 84) 100%); */
-  background: linear-gradient(90deg, #342333 5%, #3f293c 45%);  color: rgb(255, 255, 255);
+  background: #00acac;
+  height: 46px;
+  color: white;
   border: none;
   border-radius: 0.375rem;
   cursor: pointer;
@@ -73,7 +79,7 @@ label {
 }
 
 .formContainer button:hover {
-  background: linear-gradient(45deg, rgb(2, 49, 88) 0%, rgb(5, 36, 84) 100%);
+  background: #008181;
   color: white;
 }
 
@@ -95,7 +101,8 @@ label {
   background-color: #DE5242;
   border-color: #DE5242;
 }
-.emailerror{
+
+.emailerror {
   margin: 1rem 0;
   padding: 0.75rem;
   border-radius: 0.375rem;
@@ -104,6 +111,7 @@ label {
   background-color: #DE5242;
   border-color: #DE5242;
 }
+
 .selectWrapper {
   position: relative;
   width: 100%;

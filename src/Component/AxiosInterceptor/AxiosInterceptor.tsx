@@ -3,10 +3,10 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SnackbarComponent from '../Snackbar/Snackbar';
 import styles from './AxiosInterceptor.module.css';
-import ErrorIcon from '@mui/icons-material/ReportProblem';
+
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3008/api",
+  baseURL: 'http://localhost:3008/api',
   // baseURL: 'http://192.168.1.225:3008/api',
 });
 
@@ -62,11 +62,16 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
         },
         (error) => {
           setIsLoading(false);
-      
+
           const config = error.config;
-          const requiresAuth = config.headers['user-id'] && config.headers['access-token'];
-      
-          if (requiresAuth && error.response && (error.response.status === 401 || error.response.status === 403)) {
+          const requiresAuth =
+            config.headers['user-id'] && config.headers['access-token'];
+
+          if (
+            requiresAuth &&
+            error.response &&
+            (error.response.status === 401 || error.response.status === 403)
+          ) {
             setSnackbarMessage('Your session is invalid or expired');
             localStorage.clear();
             setSnackbarOpen(true);
@@ -108,8 +113,7 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
         message={snackbarMessage}
         onClose={handleSnackbarClose}
         severity={'error'}
-        icon={<ErrorIcon />}
-        style={{backgroundColor: '#DE5242',color: '#FEF9FD'}}
+        style={{ backgroundColor: '#DE5242', color: '#FEF9FD' }}
       />
       {children}
     </>

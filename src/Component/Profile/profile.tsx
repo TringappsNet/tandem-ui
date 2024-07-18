@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch } from '../Redux/store';
@@ -8,16 +9,13 @@ import {
 } from '../Redux/slice/role/rolesSlice';
 import styles from './profile.module.css';
 import { RootState } from '../Redux/reducers';
+import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaGlobe, FaFlag, FaMapPin, FaRobot } from 'react-icons/fa';
 
 interface ProfileItem {
   label: string;
   value: string | number;
+  icon: React.ReactElement;
 }
-
-// interface Role {
-//     id: number;
-//     roleName: string;
-// }
 
 interface ProfileProps {
   onCloseDialog: () => void;
@@ -25,7 +23,8 @@ interface ProfileProps {
 
 const Profile: React.FC<ProfileProps> = () => {
   const [profileData, setProfileData] = useState<ProfileItem[] | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('personal');
+  // const [isLoading, setIsLoading] = useState(true);
   const roles = useSelector((state: RootState) => state.roles.roles);
   const dispatch = useDispatch<AppDispatch>();
   const rolesLoading = useSelector(selectRolesLoading);
@@ -42,28 +41,20 @@ const Profile: React.FC<ProfileProps> = () => {
     if (!rolesLoading && !rolesError && user) {
       const userRole = roles.find((role) => role.id === user.roleId);
       const userProfileData = [
-        { label: 'Id', value: user.id },
-        { label: 'Name', value: `${user.firstName} ${user.lastName}` },
-        { label: 'Role', value: userRole ? userRole.roleName : 'N/A' },
-        { label: 'Email', value: user.email },
-        { label: 'Mobile', value: user.mobile },
-        { label: 'Address', value: user.address },
-        { label: 'Country', value: user.country },
-        { label: 'State', value: user.state },
-        { label: 'Zipcode', value: user.zipcode },
+        { label: 'Name', value: `${user.firstName} ${user.lastName}`, icon: <FaUser /> },
+        { label: 'Role', value: userRole ? userRole.roleName : 'N/A', icon: <FaRobot /> },
+        { label: 'Email', value: user.email, icon: <FaEnvelope /> },
+        { label: 'Mobile', value: user.mobile, icon: <FaPhone /> },
+        { label: 'Address', value: user.address, icon: <FaMapMarkerAlt /> },
+        { label: 'Country', value: user.country, icon: <FaGlobe /> },
+        { label: 'State', value: user.state, icon: <FaFlag /> },
+        { label: 'Zipcode', value: user.zipcode, icon: <FaMapPin /> },
       ];
       setProfileData(userProfileData);
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   }, [roles, rolesLoading, rolesError, user]);
 
-  if (rolesLoading || isLoading) {
-    return (
-      <div className={styles.loaderContainer}>
-        <div className={styles.loader}></div>
-      </div>
-    );
-  }
 
   if (rolesError) {
     return (
@@ -77,20 +68,42 @@ const Profile: React.FC<ProfileProps> = () => {
 
   return (
     <div className={styles.container}>
+      {/* <div className={styles.header} style={{ backgroundImage: `url(${backgroundImage})` }}>
+        <h1>Profile</h1>
+      </div> */}
       <div className={styles.profileContainer}>
-        <div className={styles.headerSection}>
-          <div className={styles.circle}>
-            <p>{profileData[1].value.toString().charAt(0)}</p>
-          </div>
-          <h2 className={styles.userName}>{profileData[1].value}</h2>
-        </div>
-        <div className={styles.profileBlock}>
-          {profileData.map((item: ProfileItem, index: number) => (
-            <div key={index} className={styles.profileItem}>
-              <span className={styles.label}>{item.label}:</span>
-              <span className={styles.value}>{item.value}</span>
+        <div className={styles.sidebar}>
+          <div className={styles.avatarContainer}>
+            <div className={styles.avatar}>
+              <p>{profileData[0].value.toString().charAt(0)}</p>
             </div>
-          ))}
+          </div>
+          <h2 className={styles.userName}>{profileData[0].value}</h2>
+          <div className={styles.progressContainer}>
+          </div>
+        </div>
+        <div className={styles.mainContent}>
+          <div className={styles.tabs}>
+            <button
+              className={`${styles.tabButton} ${activeTab === 'personal' ? styles.active : ''}`}
+              onClick={() => setActiveTab('personal')}
+            >
+              Personal Info
+            </button>
+          </div>
+          <div className={styles.tabContent}>
+            {activeTab === 'personal' && (
+              <div className={styles.profileBlock}>
+                {profileData.map((item: ProfileItem, index: number) => (
+                  <div key={index} className={styles.profileItem}>
+                    <span className={styles.icon}>{item.icon}</span>
+                    <span className={styles.label}>{item.label}:</span>
+                    <span className={styles.value}>{item.value}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
