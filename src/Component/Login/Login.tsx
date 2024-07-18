@@ -55,7 +55,7 @@ const Login: React.FC = () => {
         if (login.fulfilled.match(result)) {
           navigate('/dashboard');
         } else {
-          setSnackbarMessage('User not registered.');
+          setSnackbarMessage('Invalid Credentials!');
           setSnackbarOpen(true);;
         }
       });
