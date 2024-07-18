@@ -19,8 +19,7 @@ import {
 } from '../../Redux/slice/site/siteSlice';
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 import FullGrid from '..//parentGrid/parent-grid';
-import { MdEdit, MdDelete } from 'react-icons/md';
-import ConfirmationModal from '../../AlertDialog/AlertDialog';
+import { FiEdit, FiTrash } from 'react-icons/fi';import ConfirmationModal from '../../AlertDialog/AlertDialog';
 import CloseIcon from '@mui/icons-material/Close';
 import './site-grid.module.css';
 import { RootState } from '../../Redux/reducers';
@@ -196,12 +195,12 @@ const SiteGrid: React.FC = () => {
       width: 130,
       renderCell: (params) => (
         <>
-          <MdEdit
-            style={{ color: 'blue', marginRight: 8, cursor: 'pointer' }}
+          <FiEdit
+            style={{ marginRight: 28, cursor: 'pointer' }}
             onClick={() => handleEdit(params.row.id)}
           />
-          <MdDelete
-            style={{ color: 'red', cursor: 'pointer' }}
+          <FiTrash
+            style={{ cursor: 'pointer' }}
             onClick={() => handleDelete(params.row.id)}
           />
         </>
@@ -263,8 +262,8 @@ const SiteGrid: React.FC = () => {
         confirmVariant="danger"
       />
 
-      <Dialog open={open} onClose={handleClose} maxWidth="xs">
-        <DialogTitle className="dialogtitle" style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff'}}>
+      <Dialog open={open} onClose={handleClose}  sx={{width:1}}>
+        <DialogTitle className="dialogtitle" style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff',textTransform:'uppercase'}}>
           {formData.id ? 'Edit Property' : 'Add Property'}
           <IconButton
             aria-label="close"

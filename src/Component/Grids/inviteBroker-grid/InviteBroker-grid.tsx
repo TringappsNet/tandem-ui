@@ -20,8 +20,7 @@ import {
   setSnackbarOpen,
 } from '../../Redux/slice/user/userSlice';
 import FullGrid from '../parentGrid/parent-grid';
-import { MdEdit, MdDelete } from 'react-icons/md';
-import ConfirmationModal from '../../AlertDialog/AlertDialog';
+import { FiEdit, FiTrash } from 'react-icons/fi';import ConfirmationModal from '../../AlertDialog/AlertDialog';
 import SendInvite from '../../SendInvite/SendInvite';
 import {
   closeSendInvite,
@@ -207,9 +206,9 @@ const InviteBroker: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: 'email', headerName: 'email', width: 180 },
     { field: 'firstName', headerName: 'firstName', width: 140 },
     { field: 'lastName', headerName: 'lastName', width: 120 },
+    { field: 'email', headerName: 'email', width: 180 },
     { field: 'mobile', headerName: 'mobile', width: 150 },
     { field: 'address', headerName: 'address', width: 160 },
     { field: 'city', headerName: 'City', width: 140 },
@@ -222,12 +221,12 @@ const InviteBroker: React.FC = () => {
       width: 130,
       renderCell: (params) => (
         <>
-          <MdEdit
-            style={{ color: 'blue', marginRight: 8, cursor: 'pointer' }}
+          <FiEdit
+            style={{ marginRight: 28, cursor: 'pointer' }}
             onClick={() => handleEdit(params.row.id)}
           />
-          <MdDelete
-            style={{ color: 'red', cursor: 'pointer' }}
+          <FiTrash
+            style={{ cursor: 'pointer' }}
             onClick={() => handleDelete(params.row.id)}
           />
         </>
@@ -304,8 +303,8 @@ const InviteBroker: React.FC = () => {
         confirmVariant="danger"
       />
 
-      <Dialog open={open} onClose={handleClose} maxWidth="xs">
-        <DialogTitle className="dialogtitle" style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff' }}>
+      <Dialog open={open} onClose={handleClose} sx={{width:1}}>
+        <DialogTitle className="dialogtitle" style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff',textTransform:'uppercase' }}>
           {formData.id ? 'Edit Broker Details' : 'Add Property'}
 
           <IconButton
@@ -321,19 +320,7 @@ const InviteBroker: React.FC = () => {
           </IconButton>
         </DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            name="email"
-            label="email"
-            type="text"
-            size='small'
-            fullWidth
-            value={formData.email}
-            onChange={handleChange}
-            error={!!formErrors.email}
-            helperText={formErrors.email}
-          />
+          
           <TextField
             margin="dense"
             name="firstName"
@@ -357,6 +344,19 @@ const InviteBroker: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.lastName}
             helperText={formErrors.lastName}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            name="email"
+            label="email"
+            type="text"
+            size='small'
+            fullWidth
+            value={formData.email}
+            onChange={handleChange}
+            error={!!formErrors.email}
+            helperText={formErrors.email}
           />
           <TextField
             margin="dense"
