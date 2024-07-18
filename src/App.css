@@ -85,8 +85,12 @@
 .css-1klb8j8-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter input {
   color: rgb(1, 1, 1) !important;
 }
+<<<<<<< Updated upstream
 
 .MuiDialogTitle-root+.css-ypiqx9-MuiDialogContent-root {
+=======
+.MuiDialogTitle-root + .MuiDialogContent-root{
+>>>>>>> Stashed changes
   padding: 30px 30px 10px 30px !important;
 }
 
@@ -127,9 +131,17 @@
 .css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
   background: linear-gradient(58deg, rgb(11 34 67) 0%, rgb(30 62 108) 35%, rgb(16 42 79) 100%);
 }
+<<<<<<< Updated upstream
 
 .MuiDialogTitle-root+.css-ypiqx9-MuiDialogContent-root {
+=======
+.MuiDialogTitle-root+.MuiDialogContent-root{
+>>>>>>> Stashed changes
   text-transform: capitalize;
+}
+
+.MuiDialogContent-root{
+  overflow: auto !important;
 }
 
 .MuiBox-root.cspgfmz {
@@ -159,9 +171,22 @@
 .css-ptiqhd-MuiSvgIcon-root{
   margin:5px !important;
   font-size: 1rem !important;
+<<<<<<< Updated upstream
   color: white!important;
   color: currentColor;
 }
 .css-ptiqhd-MuiSvgIcon-root path{
   color: currentColor;
+=======
+}
+
+.MuiDataGrid-main {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #cecece;
+>>>>>>> Stashed changes
 }
