@@ -46,9 +46,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const deals = useSelector((state: RootState) => state.deal.dealDetails);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<string>('dashboard');
-  const [selectedComponent, setSelectedComponent] = useState<string | null>(
-    null
-  );
+  const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
+  const [availableSites, setAvailableSites] = useState<any[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -65,6 +64,13 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   useEffect(() => {
     dispatch(fetchSites());
   }, [dispatch]);
+
+  useEffect(() => {
+    const filteredSites = sites.filter((site) =>
+      !deals.some((deal) => deal.propertyName === `${site.addressline1}, ${site.addressline2}`)
+    );
+    setAvailableSites(filteredSites);
+  }, [sites, deals, dispatch]);
 
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
@@ -154,15 +160,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   };
 
   const handleCreateDealClick = () => {
-    const availableSites = sites.filter(
-      (site) =>
-        !deals.some(
-          (deal) =>
-            deal.propertyName === `${site.addressline1}, ${site.addressline2}`
-        )
-    );
-
-    if (availableSites.length === 0) {
+      if (availableSites.length === 0) {
       setSnackbarMessage(
         'Unable to create deal, properties are either assigned or unavailable !'
       );
