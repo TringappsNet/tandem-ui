@@ -70,8 +70,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       !deals.some((deal) => deal.propertyName === `${site.addressline1}, ${site.addressline2}`)
     );
     setAvailableSites(filteredSites);
-  }, [sites, deals, dispatch]);
-
+  }, [sites, deals]);
+  
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
     setOpenPopup(true);
