@@ -18,9 +18,12 @@ import {
   updateBroker,
   deleteBroker,
   setSnackbarOpen,
+  setActiveBroker,
 } from '../../Redux/slice/user/userSlice';
 import FullGrid from '../parentGrid/parent-grid';
-import { FiEdit, FiTrash } from 'react-icons/fi';import ConfirmationModal from '../../AlertDialog/AlertDialog';
+import { FiEdit } from 'react-icons/fi';
+import { MdDoNotDisturb } from "react-icons/md";
+import ConfirmationModal from '../../AlertDialog/AlertDialog';
 import SendInvite from '../../SendInvite/SendInvite';
 import {
   closeSendInvite,
@@ -47,8 +50,8 @@ interface Site {
 
 const InviteBroker: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
-  const [deleteId, setDeleteId] = useState<number>(0);
+  const [deleteConfirmation, setDeactivateConfiramtion] = useState<boolean>(false);
+  const [deleteId, setDeactivateId] = useState<number>(0);
   const [formErrors, setFormErrors] = useState<Partial<Site>>({});
   const dispatch = useDispatch<AppDispatch>();
   const [openPopup, setOpenPopup] = useState<boolean>(false);
@@ -145,7 +148,7 @@ const InviteBroker: React.FC = () => {
   };
 
   const cancelDelete = () => {
-    setDeleteConfirmation(false);
+    setDeactivateConfiramtion(false);
   };
 
   const handleAdd = () => {
@@ -170,14 +173,15 @@ const InviteBroker: React.FC = () => {
     }
   };
 
-  const handleDelete = (id: number) => {
-    setDeleteConfirmation(true);
-    setDeleteId(id);
+  const handleDeactivate = (id: number) => {
+    setDeactivateConfiramtion(true);
+    setDeactivateId(id);
   };
 
-  const handleConfirmDelete = () => {
-    dispatch(deleteBroker(deleteId));
-    setDeleteConfirmation(false);
+  const handleConfirmDeactivate = () => {
+    const payload = {isActive: false}
+    dispatch(setActiveBroker(deleteId, payload));
+    setDeactivateConfiramtion(false);
   };
 
   const handleOpenPopup = (componentName: string) => {
@@ -222,9 +226,9 @@ const InviteBroker: React.FC = () => {
             style={{ marginRight: 28, cursor: 'pointer' }}
             onClick={() => handleEdit(params.row.id)}
           />
-          <FiTrash
+          <MdDoNotDisturb
             style={{ cursor: 'pointer' }}
-            onClick={() => handleDelete(params.row.id)}
+            onClick={() => handleDeactivate(params.row.id)}
           />
         </>
       ),
@@ -291,11 +295,11 @@ const InviteBroker: React.FC = () => {
       <ConfirmationModal
         show={deleteConfirmation}
         onHide={cancelDelete}
-        onConfirm={handleConfirmDelete}
-        title="Delete Row"
-        message="Are you sure you want to delete this row?"
+        onConfirm={handleConfirmDeactivate}
+        title="Deactivate User"
+        message="Are you sure you want to deactivatete this user?"
         cancelText="Cancel"
-        confirmText="Delete"
+        confirmText="Deactivate"
         cancelVariant="secondary"
         confirmVariant="danger"
       />
