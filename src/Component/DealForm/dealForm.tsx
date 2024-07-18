@@ -388,7 +388,7 @@ const DealForm: React.FC<DealFormProps> = () => {
     >
       <DialogTitle
         sx={{
-          background: 'linear-gradient(58deg, rgb(11 34 67) 0%, rgb(30 62 108) 35%, rgb(16 42 79) 100%);',
+          background: 'linear-gradient(58deg, rgb(35 39 43) 0%, rgb(79 84 89) 35%, rgb(32 46 59) 100%);',
           color: 'white',
           height: '44px',
           padding: '6px 24px',
