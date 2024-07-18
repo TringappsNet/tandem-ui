@@ -105,7 +105,7 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
               <input
                 type="password"
                 id="oldPassword"
-                autoFocus
+                autoFocus 
                 value={oldPassword}
                 placeholder="Enter your old password"
                 onChange={(e) => {
