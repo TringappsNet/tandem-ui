@@ -55,7 +55,7 @@ const Login: React.FC = () => {
         if (login.fulfilled.match(result)) {
           navigate('/dashboard');
         } else {
-          setSnackbarMessage('Invalid email or password. Please try again.');
+          setSnackbarMessage('User not registered.');
           setSnackbarOpen(true);;
         }
       });
