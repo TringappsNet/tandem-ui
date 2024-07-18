@@ -101,8 +101,8 @@
   display: none;
 }
 
-.MuiSvgIcon-root {
-  color: rgb(5, 5, 5);
+.css-i4bv87-MuiSvgIcon-root {
+  color: rgb(0, 0, 0) !important;
 }
 
 .css-c6bojz {
@@ -146,7 +146,7 @@
 }
 
 .css-1vooibu-MuiSvgIcon-root {
-  margin-top: 3.2px !important;
+  margin-bottom: 2.5px;
 }
 
 .css-17o1yue-MuiPaper-root-MuiAlert-root {
@@ -161,4 +161,5 @@
 .css-ptiqhd-MuiSvgIcon-root {
   margin: 5px !important;
   font-size: 1rem !important;
+  color: white !important;
 }
