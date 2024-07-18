@@ -16,6 +16,41 @@
 
 }
 
+/* For WebKit browsers (Chrome, Safari, newer versions of Opera) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #f3f3f3 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #495057 inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Firefox */
+input:autofill,
+input:autofill:hover,
+input:autofill:focus,
+input:autofill:active {
+  -webkit-text-fill-color: #f3f3f3 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #495057 inset !important;
+  filter: none;
+}
+
+
+input:-ms-input-placeholder {
+  color: #f3f3f3 !important;
+}
+
+
+.section input {
+  background-color: #495057 !important;
+  color: #f3f3f3 !important;
+}
+
+.section input:focus {
+  background-color: #495057 !important;
+  color: #f3f3f3 !important;
+}
 
 
 .formContainer {
