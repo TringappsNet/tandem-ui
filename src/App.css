@@ -105,7 +105,7 @@ background-color: #41454A !important;
 }
 
 .css-i4bv87-MuiSvgIcon-root {
-  color: white
+  color: rgb(0, 0, 0)
 }
 
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
@@ -151,13 +151,6 @@ background-color: #41454A !important;
 .css-bdhsul-MuiTypography-root-MuiDialogTitle-root  {
   padding: 0 19px !important;
 }
-
-.css-ptiqhd-MuiSvgIcon-root{
-  margin:5px !important;
-  font-size: 1rem !important;
-  color: white !important;
-}
-
 .MuiDataGrid-main {
     -webkit-box-flex: 1;
     -webkit-flex-grow: 1;
