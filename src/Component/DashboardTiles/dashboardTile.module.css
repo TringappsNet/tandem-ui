@@ -3,34 +3,29 @@
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 0.1rem;
-  
 }
 .welcome {
   display: block;
   width: 100%;
   font-size: 19px !important;
-  color: #2D353C;
+  color: #2d353c;
   padding: 0px;
 }
 
 .container {
   background-color: rgb(0, 0, 0);
-  border-radius: 2px; 
-  width: 230px; 
+  border-radius: 2px;
+  width: 230px;
   position: relative;
   bottom: 10px;
-
 }
 
 .barCompleted {
   background-color: rgb(255, 255, 255);
-  height: 2px; 
-  border-radius: 2px; 
-  width: 90%; 
-
+  height: 2px;
+  border-radius: 2px;
+  width: 90%;
 }
-
-
 
 .tag {
   display: flex;
@@ -57,8 +52,7 @@
   justify-content: start;
   font-size: 10px;
   position: relative;
-    bottom: 12px; 
-  
+  bottom: 12px;
 }
 
 .totalDeal {
@@ -69,36 +63,34 @@
   font-weight: 600;
   font-family: sans-serif !important;
   letter-spacing: 1px;
-
 }
 .totalDeals {
   font-family: Opens Sans, sans-serif !important;
   font-size: 13.5px;
   font-weight: 500;
-  color: rgba(255, 255, 255, .7);
+  color: rgba(255, 255, 255, 0.7);
   margin: 0 0 2px;
 }
-
 
 .add_content {
   font-family: Opens Sans, sans-serif !important;
   margin: -5px 0 -3px;
-  color: rgba(255, 255, 255, .7);
+  color: rgba(255, 255, 255, 0.7);
   position: relative;
   bottom: 7px;
   font-size: 0.75rem;
   line-height: 1.5;
   font-weight: 400;
 }
-.globe { 
+.globe {
   margin-left: '17px';
   height: 170px;
   width: 170px;
-  opacity: .3;
+  opacity: 0.3;
 }
 
 .tag:nth-child(2) {
-  background-color: #00ACAC;
+  background-color: #00acac;
   background-image: url('../../assests/tiles/globe.png');
   background-size: 53%;
   background-position: right;
@@ -107,7 +99,7 @@
   background-position-x: 150px;
 }
 .tag:hover:nth-child(2) {
-  background-color: #00ACAC;
+  background-color: #00acac;
 }
 
 .tag:nth-child(3) {
@@ -161,14 +153,11 @@
   background-position-y: 10px;
 
   background-position-x: 150px;
-
 }
 
 .tag:hover:nth-child(6) {
   background-color: #5b4a43;
 }
-
-
 
 .loaderContainer {
   display: flex;
@@ -245,5 +234,3 @@
     opacity: 5;
   }
 }
-
-

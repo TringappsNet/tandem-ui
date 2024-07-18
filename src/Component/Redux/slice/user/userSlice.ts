@@ -95,57 +95,72 @@ export const {
 
 export default inviteBrokerSlice.reducer;
 
-export const fetchBrokers = (): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
-  try {
-    dispatch(fetchBrokersStart());
-    const response = await axiosInstance.get('/brokers/all-users');
-    dispatch(fetchBrokersSuccess(response.data));
-  } catch (error) {
-    const errorMessage = (error as any).response?.data?.message || (error as Error).message;
-    dispatch(fetchBrokersFailure(errorMessage));
-    dispatch(setSnackbarMessage(errorMessage));
-    dispatch(setSnackbarOpen(true));
-  }
-};
+export const fetchBrokers =
+  (): ThunkAction<void, RootState, unknown, Action<string>> =>
+  async (dispatch: Dispatch) => {
+    try {
+      dispatch(fetchBrokersStart());
+      const response = await axiosInstance.get('/brokers/all-users');
+      dispatch(fetchBrokersSuccess(response.data));
+    } catch (error) {
+      const errorMessage =
+        (error as any).response?.data?.message || (error as Error).message;
+      dispatch(fetchBrokersFailure(errorMessage));
+      dispatch(setSnackbarMessage(errorMessage));
+      dispatch(setSnackbarOpen(true));
+    }
+  };
 
-export const addBroker = (broker: Site): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
-  try {
-    const response = await axiosInstance.post('/brokers/all-users/', broker);
-    dispatch(addBrokerSuccess(response.data));
-    dispatch(setSnackbarMessage('Broker added successfully'));
-    dispatch(setSnackbarOpen(true));
-  } catch (error) {
-    const errorMessage = (error as any).response?.data?.message || (error as Error).message;
-    dispatch(fetchBrokersFailure(errorMessage));
-    dispatch(setSnackbarMessage(errorMessage));
-    dispatch(setSnackbarOpen(true));
-  }
-};
+export const addBroker =
+  (broker: Site): ThunkAction<void, RootState, unknown, Action<string>> =>
+  async (dispatch: Dispatch) => {
+    try {
+      const response = await axiosInstance.post('/brokers/all-users/', broker);
+      dispatch(addBrokerSuccess(response.data));
+      dispatch(setSnackbarMessage('Broker added successfully'));
+      dispatch(setSnackbarOpen(true));
+    } catch (error) {
+      const errorMessage =
+        (error as any).response?.data?.message || (error as Error).message;
+      dispatch(fetchBrokersFailure(errorMessage));
+      dispatch(setSnackbarMessage(errorMessage));
+      dispatch(setSnackbarOpen(true));
+    }
+  };
 
-export const updateBroker = (broker: Site): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
-  try {
-    const response = await axiosInstance.put(`/brokers/broker/${broker.id}`, broker);
-    dispatch(updateBrokerSuccess(response.data));
-    dispatch(setSnackbarMessage('Broker updated successfully'));
-    dispatch(setSnackbarOpen(true));
-  } catch (error) {
-    const errorMessage = (error as any).response?.data?.message || (error as Error).message;
-    dispatch(fetchBrokersFailure(errorMessage));
-    dispatch(setSnackbarMessage(errorMessage));
-    dispatch(setSnackbarOpen(true));
-  }
-};
+export const updateBroker =
+  (broker: Site): ThunkAction<void, RootState, unknown, Action<string>> =>
+  async (dispatch: Dispatch) => {
+    try {
+      const response = await axiosInstance.put(
+        `/brokers/broker/${broker.id}`,
+        broker
+      );
+      dispatch(updateBrokerSuccess(response.data));
+      dispatch(setSnackbarMessage('Broker updated successfully'));
+      dispatch(setSnackbarOpen(true));
+    } catch (error) {
+      const errorMessage =
+        (error as any).response?.data?.message || (error as Error).message;
+      dispatch(fetchBrokersFailure(errorMessage));
+      dispatch(setSnackbarMessage(errorMessage));
+      dispatch(setSnackbarOpen(true));
+    }
+  };
 
-export const deleteBroker = (id: number): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
-  try {
-    await axiosInstance.delete(`/brokers/broker/${id}`);
-    dispatch(deleteBrokerSuccess(id));
-    dispatch(setSnackbarMessage('Broker deleted successfully'));
-    dispatch(setSnackbarOpen(true));
-  } catch (error) {
-    const errorMessage = (error as any).response?.data?.message || (error as Error).message;
-    dispatch(fetchBrokersFailure(errorMessage));
-    dispatch(setSnackbarMessage(errorMessage));
-    dispatch(setSnackbarOpen(true));
-  }
-};
+export const deleteBroker =
+  (id: number): ThunkAction<void, RootState, unknown, Action<string>> =>
+  async (dispatch: Dispatch) => {
+    try {
+      await axiosInstance.delete(`/brokers/broker/${id}`);
+      dispatch(deleteBrokerSuccess(id));
+      dispatch(setSnackbarMessage('Broker deleted successfully'));
+      dispatch(setSnackbarOpen(true));
+    } catch (error) {
+      const errorMessage =
+        (error as any).response?.data?.message || (error as Error).message;
+      dispatch(fetchBrokersFailure(errorMessage));
+      dispatch(setSnackbarMessage(errorMessage));
+      dispatch(setSnackbarOpen(true));
+    }
+  };

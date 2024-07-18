@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch } from '../Redux/store';
@@ -9,7 +8,16 @@ import {
 } from '../Redux/slice/role/rolesSlice';
 import styles from './profile.module.css';
 import { RootState } from '../Redux/reducers';
-import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaGlobe, FaFlag, FaMapPin, FaRobot } from 'react-icons/fa';
+import {
+  FaUser,
+  FaEnvelope,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaGlobe,
+  FaFlag,
+  FaMapPin,
+  FaRobot,
+} from 'react-icons/fa';
 
 interface ProfileItem {
   label: string;
@@ -41,8 +49,16 @@ const Profile: React.FC<ProfileProps> = () => {
     if (!rolesLoading && !rolesError && user) {
       const userRole = roles.find((role) => role.id === user.roleId);
       const userProfileData = [
-        { label: 'Name', value: `${user.firstName} ${user.lastName}`, icon: <FaUser /> },
-        { label: 'Role', value: userRole ? userRole.roleName : 'N/A', icon: <FaRobot /> },
+        {
+          label: 'Name',
+          value: `${user.firstName} ${user.lastName}`,
+          icon: <FaUser />,
+        },
+        {
+          label: 'Role',
+          value: userRole ? userRole.roleName : 'N/A',
+          icon: <FaRobot />,
+        },
         { label: 'Email', value: user.email, icon: <FaEnvelope /> },
         { label: 'Mobile', value: user.mobile, icon: <FaPhone /> },
         { label: 'Address', value: user.address, icon: <FaMapMarkerAlt /> },
@@ -54,7 +70,6 @@ const Profile: React.FC<ProfileProps> = () => {
       // setIsLoading(false);
     }
   }, [roles, rolesLoading, rolesError, user]);
-
 
   if (rolesError) {
     return (
@@ -79,13 +94,14 @@ const Profile: React.FC<ProfileProps> = () => {
             </div>
           </div>
           <h2 className={styles.userName}>{profileData[0].value}</h2>
-          <div className={styles.progressContainer}>
-          </div>
+          <div className={styles.progressContainer}></div>
         </div>
         <div className={styles.mainContent}>
           <div className={styles.tabs}>
             <button
-              className={`${styles.tabButton} ${activeTab === 'personal' ? styles.active : ''}`}
+              className={`${styles.tabButton} ${
+                activeTab === 'personal' ? styles.active : ''
+              }`}
               onClick={() => setActiveTab('personal')}
             >
               Personal Info

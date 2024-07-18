@@ -56,7 +56,7 @@ const Login: React.FC = () => {
           navigate('/dashboard');
         } else {
           setSnackbarMessage('Invalid email or password. Please try again.');
-          setSnackbarOpen(true);;
+          setSnackbarOpen(true);
         }
       });
     }
@@ -67,10 +67,12 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className={styles.loginBackground} style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <div
+      className={styles.loginBackground}
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       <div className={styles.card}>
         <div className={styles.section}>
-
           <div className={styles.header}>
             <img
               className={styles.logo}
@@ -79,7 +81,9 @@ const Login: React.FC = () => {
             />
             <h2 className={styles.name}>TANDEM INFRASTRUCTURE</h2>
           </div>
-          <p style={{ color: 'rgb(127, 129, 133)' }}>Sign in to continue to TANDEM</p>
+          <p style={{ color: 'rgb(127, 129, 133)' }}>
+            Sign in to continue to TANDEM
+          </p>
 
           <div className={styles.formContainer}>
             <form className={styles.loginsection} onSubmit={handleSubmit}>
@@ -132,7 +136,7 @@ const Login: React.FC = () => {
         message={snackbarMessage}
         onClose={handleSnackbarClose}
         severity={'error'}
-        style={{backgroundColor: '#DE5242', color: '#FEF9FD'}}
+        style={{ backgroundColor: '#DE5242', color: '#FEF9FD' }}
       />
     </div>
   );

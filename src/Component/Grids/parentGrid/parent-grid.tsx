@@ -19,8 +19,6 @@ interface FullGridProps {
   sx: any;
 }
 
-
-
 const FullGrid: React.FC<FullGridProps> = ({
   rows,
   columns,
@@ -49,11 +47,9 @@ const FullGrid: React.FC<FullGridProps> = ({
           sx={{
             height: 800,
             marginTop: 2,
-            bgcolor: '#20252a !important', 
+            bgcolor: '#20252a !important',
             ...sx,
             lineHeight: 2,
-                
-
           }}
         >
           <DataGrid
@@ -62,15 +58,13 @@ const FullGrid: React.FC<FullGridProps> = ({
             columns={columns}
             paginationModel={paginationModel}
             onPaginationModelChange={setPaginationModel}
-            rowHeight={40                             }
+            rowHeight={40}
             columnHeaderHeight={39}
             disableColumnFilter
-          
             disableColumnMenu
             hideFooter
             hideFooterPagination
             hideFooterSelectedRowCount
-            
             slots={{ toolbar: GridToolbar }}
             slotProps={{
               toolbar: {

@@ -15,7 +15,9 @@ const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState<'error' | 'success'>('error');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'error' | 'success'>(
+    'error'
+  );
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -75,7 +77,10 @@ const ForgotPassword: React.FC = () => {
   };
 
   return (
-    <div className={styles.loginBackground} style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <div
+      className={styles.loginBackground}
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       <div className={styles.card}>
         <div className={styles.section}>
           <div className={styles.header}>
@@ -92,7 +97,11 @@ const ForgotPassword: React.FC = () => {
           <div className={styles.formContainer}>
             <p className={styles.reset}>Reset your password here</p>
 
-            <form className={styles.loginsection} onSubmit={handleSubmit} noValidate>
+            <form
+              className={styles.loginsection}
+              onSubmit={handleSubmit}
+              noValidate
+            >
               <div className={styles.inputGroup}>
                 <label className={styles.label} htmlFor="username">
                   Email ID
@@ -117,7 +126,9 @@ const ForgotPassword: React.FC = () => {
             </form>
             <div className={styles.rememberpwd}>
               <p style={{ color: 'rgb(150, 151, 153)' }}>Remember Password?</p>
-              <Link to="/" className={styles.clickHereLink}>Click here</Link>
+              <Link to="/" className={styles.clickHereLink}>
+                Click here
+              </Link>
             </div>
           </div>
         </div>
@@ -127,7 +138,11 @@ const ForgotPassword: React.FC = () => {
         message={snackbarMessage}
         onClose={handleSnackbarClose}
         severity={snackbarSeverity}
-        style={{ backgroundColor: snackbarSeverity === 'success' ? '#54B471' : '#DE5242', color: '#FEF9FD' }}
+        style={{
+          backgroundColor:
+            snackbarSeverity === 'success' ? '#54B471' : '#DE5242',
+          color: '#FEF9FD',
+        }}
       />
     </div>
   );

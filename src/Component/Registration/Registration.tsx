@@ -9,9 +9,6 @@ import { RootState } from '../Redux/reducers';
 import backgroundImage from './bg-login.png';
 import SnackbarComponent from '../Snackbar/Snackbar';
 
-
-
-
 const Registration: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -31,7 +28,9 @@ const Registration: React.FC = () => {
   const [inviteToken, setInviteToken] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState<'error' | 'success'>('error');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'error' | 'success'>(
+    'error'
+  );
 
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
@@ -310,7 +309,6 @@ const Registration: React.FC = () => {
       setSnackbarSeverity('success');
       setSnackbarOpen(true);
 
-
       setFirstname('');
       setLastname('');
       setMobileno('');
@@ -328,7 +326,7 @@ const Registration: React.FC = () => {
       }, 2000);
     } else {
       const errorMessage = resultAction.payload
-        ? resultAction.payload as string
+        ? (resultAction.payload as string)
         : 'Registration failed. Please try again.';
       setSnackbarMessage(errorMessage);
       setSnackbarSeverity('error');
@@ -341,7 +339,10 @@ const Registration: React.FC = () => {
   };
 
   return (
-    <div className={styles.loginBackground} style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <div
+      className={styles.loginBackground}
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       <div className={styles.backgroundContainer}>
         <div className={styles.container}>
           <div className={styles.registrationContainer}>
@@ -518,7 +519,11 @@ const Registration: React.FC = () => {
         message={snackbarMessage}
         onClose={handleSnackbarClose}
         severity={snackbarSeverity}
-        style={{ backgroundColor: snackbarSeverity === 'success' ? '#4caf50' : '#DE5242', color: '#FEF9FD' }}
+        style={{
+          backgroundColor:
+            snackbarSeverity === 'success' ? '#4caf50' : '#DE5242',
+          color: '#FEF9FD',
+        }}
       />
     </div>
   );

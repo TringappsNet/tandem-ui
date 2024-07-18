@@ -13,9 +13,6 @@ import {
   supportState,
 } from '../Redux/slice/support/supportSlice';
 
-
-
-
 interface SupportProps {
   onCloseDialog: () => void;
 }
@@ -101,11 +98,14 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
   }
 
   return (
-    <div >
+    <div>
       <div className={styles.headerLine}>
         <h2 className={styles.support}>Contact Us!</h2>
       </div>
-      <div className={styles.contactsContainer} style={{ backgroundImage: `url(${backgroundImage})` }}>
+      <div
+        className={styles.contactsContainer}
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
         <div className={styles.imageContainer}>
           <img src={mailImage} alt="Mail" className={styles.mailImage} />
         </div>

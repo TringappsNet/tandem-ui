@@ -11,7 +11,6 @@
   background-color: #f8f9fa;
 }
 
-
 /* .MuiDataGrid-scrollbar .MuiDataGrid-scrollbar--horizontal */
 /* {
 
@@ -43,7 +42,6 @@
 .MuiDataGrid-root {
   --rowBorderColor: red;
 } */
-
 
 /* .css-15n4jlm-MuiDataGrid-root .MuiDataGrid-cell--textCenter {
   border: none !important;

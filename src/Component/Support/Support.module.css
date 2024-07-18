@@ -11,14 +11,12 @@ html {
 
 .headerLine {
   height: 51px;
-  background-color: #20252A;
+  background-color: #20252a;
 }
 
 .body {
   padding: 2rem;
-
 }
-
 
 .loginBackground {
   background-image: url('./bg-login.png');
@@ -34,14 +32,13 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #DDE1E5;
+  background-color: #dde1e5;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 0px;
   padding: 6rem;
   height: 500px;
   gap: 1rem;
-
 }
 
 .imageContainer {
@@ -202,13 +199,13 @@ html {
 }
 
 .successBox {
-  background-color: #54B471;
-  color: #FEF9FD;
-  border: 1px solid #54B471;
+  background-color: #54b471;
+  color: #fef9fd;
+  border: 1px solid #54b471;
 }
 
 .errorBox {
-  background-color: #DE5242;
-  color: #FEF9FD;
-  border: 1px solid #DE5242;
+  background-color: #de5242;
+  color: #fef9fd;
+  border: 1px solid #de5242;
 }

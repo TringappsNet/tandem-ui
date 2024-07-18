@@ -21,7 +21,7 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
-  // StepIcon, 
+  // StepIcon,
   // colors,
 } from '@mui/material';
 import styles from './dealForm.module.css';
@@ -68,7 +68,6 @@ const steps = [
     ],
   },
   { label: 'Completed', fields: [] },
-
 ];
 
 interface DealFormProps {
@@ -90,7 +89,6 @@ const DealForm: React.FC<DealFormProps> = () => {
   const [activeStep, setActiveStep] = useState(currentDeal?.activeStep || 0);
 
   const [formData, setFormData] = useState<Deal>({
-
     id: currentDeal?.id || null,
     brokerName: currentDeal?.brokerName || '',
     propertyName: currentDeal?.propertyName || '',
@@ -110,8 +108,6 @@ const DealForm: React.FC<DealFormProps> = () => {
   });
   const [userId, setUserId] = useState<number | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
-
-
 
   useEffect(() => {
     dispatch(fetchBrokers());
@@ -153,7 +149,6 @@ const DealForm: React.FC<DealFormProps> = () => {
     }
 
     console.log(`Changed ${name} to:`, value); // For debugging
-
   };
 
   const saveFormData = () => {
@@ -222,14 +217,14 @@ const DealForm: React.FC<DealFormProps> = () => {
           >
             {label === 'brokerName'
               ? brokers
-                .filter(broker => !broker.isAdmin)
-                .map((broker, idx) => (
-                  <MenuItem key={idx} value={broker.name}>
-                    {broker.name}
-                  </MenuItem>
-                ))
+                  .filter((broker) => !broker.isAdmin)
+                  .map((broker, idx) => (
+                    <MenuItem key={idx} value={broker.name}>
+                      {broker.name}
+                    </MenuItem>
+                  ))
               : label === 'propertyName'
-                ? sites
+              ? sites
                   .filter(
                     (site) =>
                       !deals.some(
@@ -246,7 +241,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                       {`${site.addressline1}, ${site.addressline2}`}
                     </MenuItem>
                   ))
-                : options?.map((option: string, idx: number) => (
+              : options?.map((option: string, idx: number) => (
                   <MenuItem key={idx} value={option}>
                     {option}
                   </MenuItem>
@@ -311,7 +306,10 @@ const DealForm: React.FC<DealFormProps> = () => {
       { label: 'Lease Signed', date: formData.leaseSignedDate },
       { label: 'Notice to Proceed', date: formData.noticeToProceedDate },
       { label: 'Commercial Operation', date: formData.commercialOperationDate },
-      { label: 'Potential Commission Date', date: formData.potentialCommissionDate },
+      {
+        label: 'Potential Commission Date',
+        date: formData.potentialCommissionDate,
+      },
     ];
 
     return (
@@ -319,7 +317,14 @@ const DealForm: React.FC<DealFormProps> = () => {
         <Typography variant="h5" gutterBottom>
           <div className={styles.summary}>Summary of the deal</div>
         </Typography>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 2,
+            justifyContent: 'center',
+          }}
+        >
           {events.map((event, index) => (
             <Box
               key={index}
@@ -337,7 +342,11 @@ const DealForm: React.FC<DealFormProps> = () => {
                 height: '60px',
               }}
             >
-              <Typography variant="subtitle1" fontWeight="bold" textAlign="center">
+              <Typography
+                variant="subtitle1"
+                fontWeight="bold"
+                textAlign="center"
+              >
                 {event.label}:
               </Typography>
               <Typography textAlign="center">
@@ -365,11 +374,23 @@ const DealForm: React.FC<DealFormProps> = () => {
               },
             }}
           >
-            <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262">
+            <Typography
+              variant="subtitle1"
+              fontWeight="bold"
+              textAlign="center"
+              color="#262262"
+            >
               Potential Commission:
             </Typography>
-            <Typography textAlign="center" fontWeight="bolder" variant="h6" color="#262262">
-              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : 'N/A'}
+            <Typography
+              textAlign="center"
+              fontWeight="bolder"
+              variant="h6"
+              color="#262262"
+            >
+              {formData.potentialCommission
+                ? `$${formData.potentialCommission.toLocaleString()}`
+                : 'N/A'}
             </Typography>
           </Box>
         </Box>
@@ -385,7 +406,7 @@ const DealForm: React.FC<DealFormProps> = () => {
         '& .MuiDialog-paper': {
           height: 'calc(100% - 60px)',
           maxHeight: 'none',
-        }
+        },
       }}
       open={open}
       onClose={() => {
@@ -397,14 +418,15 @@ const DealForm: React.FC<DealFormProps> = () => {
     >
       <DialogTitle
         sx={{
-          background:'linear-gradient(58deg, rgb(11 34 67) 0%, rgb(30 62 108) 35%, rgb(16 42 79) 100%);',
+          background:
+            'linear-gradient(58deg, rgb(11 34 67) 0%, rgb(30 62 108) 35%, rgb(16 42 79) 100%);',
           color: 'white',
           height: '44px',
           padding: '6px 24px',
-          letterSpacing:'.18rem',
-          fontSize:15,
-          display:'flex',
-          alignItems:'center'
+          letterSpacing: '.18rem',
+          fontSize: 15,
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
         DEALFORM
@@ -438,99 +460,105 @@ const DealForm: React.FC<DealFormProps> = () => {
           </button>
         </IconButton>
       </DialogTitle>
-      <DialogContent sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: 'calc(100% - 44px)', // Subtracting the height of DialogTitle
-        overflow: 'hidden'
-      }}>
-        <div className={styles.dealcontainer} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>          <Box
-          sx={{
-            width: 1,
-            marginTop: '3rem',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-          }}
+      <DialogContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: 'calc(100% - 44px)', // Subtracting the height of DialogTitle
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          className={styles.dealcontainer}
+          style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
         >
-          <Stepper
-            activeStep={activeStep}
-            alternativeLabel
-            connector={<StepConnector />}
-            sx={{ width: 1 }}
-          >
-            {steps.map((step, index) => (
-              <Step key={index} sx={{ width: 1 }}
-              >
-                <StepLabel>{step.label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
+          {' '}
           <Box
             sx={{
-              width: '100%',
-              marginTop: '10px', // Add 20px gap here
+              width: 1,
+              marginTop: '3rem',
               display: 'flex',
               flexDirection: 'column',
-              padding: '30px',
+              alignItems: 'flex-start',
             }}
           >
-            {activeStep < steps.length - 1 ? (
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  textTransform:'capitalize'
-                }}
-              >
-                {steps[activeStep].fields.map((field, index) =>
-                  renderField(field, index)
-                )}
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={saveFormData}
-                  sx={{ width: 100, marginTop: 3, zIndex:999 }}
-                  disabled={!isFormValid()}
-                >
-                  Save
-                </Button>
-              </Box>
-            ) : (
-              renderSummary()
-            )}
-            {activeStep === steps.length - 1 ? (
-              <Box sx={{ mt: 4, textAlign: 'center' }}>
-                <Typography variant="h5" sx={{ color: 'green' }}>
-                  {/* Deal is Completed */}
-                </Typography>
-              </Box>
-            ) : (
-              <Box>
+            <Stepper
+              activeStep={activeStep}
+              alternativeLabel
+              connector={<StepConnector />}
+              sx={{ width: 1 }}
+            >
+              {steps.map((step, index) => (
+                <Step key={index} sx={{ width: 1 }}>
+                  <StepLabel>{step.label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            <Box
+              sx={{
+                width: '100%',
+                marginTop: '10px', // Add 20px gap here
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '30px',
+              }}
+            >
+              {activeStep < steps.length - 1 ? (
                 <Box
                   sx={{
                     display: 'flex',
-                    justifyContent: 'flex-end',
-                    width: '100%',
-                    position:'absolute',
-                    right:60,
-                    bottom:146
+                    flexDirection: 'column',
+                    textTransform: 'capitalize',
                   }}
                 >
+                  {steps[activeStep].fields.map((field, index) =>
+                    renderField(field, index)
+                  )}
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleNext}
-                    sx={{ width: 100 }}
-                    disabled={!saveSuccess || !isFormValid()}
+                    onClick={saveFormData}
+                    sx={{ width: 100, marginTop: 3, zIndex: 999 }}
+                    disabled={!isFormValid()}
                   >
-                    {activeStep === steps.length - 2 ? 'Finish' : 'Next'}
+                    Save
                   </Button>
                 </Box>
-              </Box>
-            )}
+              ) : (
+                renderSummary()
+              )}
+              {activeStep === steps.length - 1 ? (
+                <Box sx={{ mt: 4, textAlign: 'center' }}>
+                  <Typography variant="h5" sx={{ color: 'green' }}>
+                    {/* Deal is Completed */}
+                  </Typography>
+                </Box>
+              ) : (
+                <Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      width: '100%',
+                      position: 'absolute',
+                      right: 60,
+                      bottom: 146,
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      sx={{ width: 100 }}
+                      disabled={!saveSuccess || !isFormValid()}
+                    >
+                      {activeStep === steps.length - 2 ? 'Finish' : 'Next'}
+                    </Button>
+                  </Box>
+                </Box>
+              )}
+            </Box>
           </Box>
-        </Box>
         </div>
       </DialogContent>
     </Dialog>

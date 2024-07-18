@@ -283,8 +283,7 @@ const InviteBroker: React.FC = () => {
 
       <FullGrid
         sx={{
-          height: 490
-        
+          height: 490,
         }}
         rows={brokers}
         columns={columns}

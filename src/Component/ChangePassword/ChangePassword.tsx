@@ -8,9 +8,6 @@ import { RootState } from '../Redux/reducers';
 import backgroundImage from './bg-login.png';
 import SnackbarComponent from '../Snackbar/Snackbar';
 
-
-
-
 const ChangePassword: React.FC = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
@@ -23,7 +20,9 @@ const ChangePassword: React.FC = () => {
   const [disableState, setDisableState] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState<'error' | 'success'>('error');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'error' | 'success'>(
+    'error'
+  );
 
   const validatePassword = (password: string): string => {
     if (!disableState === false) {
@@ -87,7 +86,10 @@ const ChangePassword: React.FC = () => {
     setter(e.target.value);
     handleSnackbarClose();
   };
-  const handleSnackbarOpen = (message: string, severity: 'error' | 'success') => {
+  const handleSnackbarOpen = (
+    message: string,
+    severity: 'error' | 'success'
+  ) => {
     setSnackbarMessage(message);
     setSnackbarSeverity(severity);
     setSnackbarOpen(true);
@@ -98,17 +100,23 @@ const ChangePassword: React.FC = () => {
   };
   React.useEffect(() => {
     if (responseMessage) {
-      handleSnackbarOpen(responseMessage, responseType === 'success' ? 'success' : 'error');
+      handleSnackbarOpen(
+        responseMessage,
+        responseType === 'success' ? 'success' : 'error'
+      );
 
       if (responseType === 'success') {
         setTimeout(() => {
           navigate('/login');
-        }, 5000); 
+        }, 5000);
       }
     }
   }, [responseMessage, responseType, navigate]);
   return (
-    <div className={styles.loginBackground} style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <div
+      className={styles.loginBackground}
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       <div className={styles.card}>
         <div className={styles.section}>
           <div className={styles.header}>
@@ -122,19 +130,22 @@ const ChangePassword: React.FC = () => {
             <p style={{ color: 'rgb(122, 123, 125)' }}>Forgot Password</p>
           </div>
           <div className={styles.formContainer}>
-
             <p className={styles.reset}>
               Your new password should be distinct from any of your prior
               passwords
             </p>
 
             <form className={styles.loginsection} onSubmit={handleSubmit}>
-            <SnackbarComponent
+              <SnackbarComponent
                 open={snackbarOpen}
                 message={snackbarMessage}
                 onClose={handleSnackbarClose}
                 severity={snackbarSeverity}
-                style={{ backgroundColor: snackbarSeverity === 'success' ? '#4caf50' : '#DE5242', color: '#FEF9FD' }}
+                style={{
+                  backgroundColor:
+                    snackbarSeverity === 'success' ? '#4caf50' : '#DE5242',
+                  color: '#FEF9FD',
+                }}
               />
               <div className={styles.inputGroup}>
                 <label htmlFor="password" className={styles.label}>

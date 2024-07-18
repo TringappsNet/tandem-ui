@@ -12,7 +12,7 @@
 
 .successshow {
   width: 100%;
-  border: 1px solid #54B471;
+  border: 1px solid #54b471;
   border-radius: 0.375rem;
   font-size: 0.875rem;
   line-height: 21px;
@@ -29,7 +29,7 @@
 
 .errorshow {
   width: 100%;
-  border: 1px solid #DE5242;
+  border: 1px solid #de5242;
   border-radius: 0.375rem;
   font-size: 0.875rem;
   padding: 0.5rem 1rem;
@@ -44,8 +44,6 @@
   margin-bottom: 0.75rem;
   margin-top: 0.75rem;
 }
-
-
 
 .loginBackground {
   background-image: url('./bg-login.png');
@@ -292,7 +290,7 @@ h4 {
 .companyName {
   font-size: 20px;
   font-family: 'Public Sans', sans-serif;
-  color: #20252A;
+  color: #20252a;
   font-weight: bolder;
   margin-left: 10px;
 }

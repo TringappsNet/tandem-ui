@@ -24,8 +24,8 @@
 }
 
 .modal-content {
-  background-color: #DEE2E6;
-  border: 1px solid #20252A;
+  background-color: #dee2e6;
+  border: 1px solid #20252a;
   border-radius: 2px;
   height: 200px;
 }
@@ -33,25 +33,25 @@
 .modal-header {
   padding: 15px;
   border-bottom: 1px solid #ddd;
-  background-color: #20252A;
+  background-color: #20252a;
 }
 
 .modal-title {
   font-size: large;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .modal-body {
   font-size: 15px;
   padding: 30px;
-  background-color: #DEE2E6;
+  background-color: #dee2e6;
 }
 
 .modal-footer {
   padding: 15px;
-  border-top: 1px solid #DEE2E6;
+  border-top: 1px solid #dee2e6;
   text-align: right;
-  background-color: #DEE2E6;
+  background-color: #dee2e6;
 }
 
 .close {
@@ -65,7 +65,7 @@
 
 .close:hover,
 .close:focus {
-  color: #DEE2E6;
+  color: #dee2e6;
   text-decoration: none;
   cursor: pointer;
 }
@@ -97,12 +97,12 @@
 
 .cancel {
   background-color: rgb(139, 139, 141);
-  color: #20252A;
+  color: #20252a;
   border: none;
 }
 
 .confirm {
   background: #00acac;
-  color: #20252A;
+  color: #20252a;
   border: none;
 }

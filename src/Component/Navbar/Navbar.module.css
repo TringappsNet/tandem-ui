@@ -5,7 +5,12 @@
   width: 100%;
   height: 70px;
 
-  background: linear-gradient(58deg, rgb(11 34 67) 0%, rgb(30 62 108) 35%, rgb(16 42 79) 100%);
+  background: linear-gradient(
+    58deg,
+    rgb(11 34 67) 0%,
+    rgb(30 62 108) 35%,
+    rgb(16 42 79) 100%
+  );
   display: flex;
   color: #fff;
   justify-content: space-between;
@@ -81,9 +86,9 @@
   font-size: 0.69rem;
   align-items: center;
   margin-right: 15px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
-
 
 .username {
   display: flex;
@@ -120,7 +125,6 @@
   align-items: center;
   margin-right: 25px;
   cursor: pointer;
-
 }
 
 .userdropdown p {
@@ -128,7 +132,6 @@
   font-size: 0.87rem;
   letter-spacing: 0.05rem;
 }
-
 
 .userdropdown .circle {
   width: 35px;
@@ -150,7 +153,12 @@
   width: 178px;
   height: 167px;
   /* background-color: #191c24; */
-  background: linear-gradient(90deg, rgb(31, 46, 68) 0%, rgb(33, 51, 76) 35%, rgb(44, 57, 77) 100%) !important;
+  background: linear-gradient(
+    90deg,
+    rgb(31, 46, 68) 0%,
+    rgb(33, 51, 76) 35%,
+    rgb(44, 57, 77) 100%
+  ) !important;
   border: 1px solid #39404f !important;
   color: white;
   /* border: 1px solid #ccc; */
