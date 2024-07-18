@@ -80,16 +80,11 @@
 .css-1klb8j8-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter input {
   color: rgb(1, 1, 1) !important;
 }
-.MuiDialogTitle-root + .MuiDialogContent-root{
-  padding: 30px 30px 10px 30px !important;
-}
 
 .MuiDataGrid-root .MuiDataGrid-container--top [role=row],
 .MuiDataGrid-root .MuiDataGrid-container--bottom [role=row] {
 background-color: #41454A !important;
 }
-
-
 
 .MuiDataGrid-toolbarContainer button.MuiButton-root {
   display: none;
