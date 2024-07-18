@@ -1,6 +1,12 @@
 .icon {
-    margin-bottom: 3px;
-    font-size: inherit;
+    margin-bottom: 2.5px !important;
+    color: white !important;
+    font-size: 20px !important;
 }
 
+.cross{
+    margin-top: 2px;
+    font-size: 16px !important;
+    color: white !important;
+  }
 
