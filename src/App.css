@@ -12,6 +12,9 @@
   background: rgb(0, 0, 0);
 }
 
+.css-1fu2e3p-MuiPaper-root-MuiDialog-paper {
+  background-color: #0c0c0c !important;
+}
 
 .MuiDataGrid-virtualScroller {
   background-color: #2D353C;
@@ -78,8 +81,8 @@
 
 .MuiDataGrid-root .MuiDataGrid-container--top [role=row],
 .MuiDataGrid-root .MuiDataGrid-container--bottom [role=row] {
-background-color: black !important
-;}
+  background-color: black !important;
+}
 
 
 
@@ -129,14 +132,16 @@ background-color: black !important
   background-color: #DE5242 !important;
   color: #FEF9FD !important;
 }
-.css-1pxa9xg-MuiAlert-message{
+
+.css-1pxa9xg-MuiAlert-message {
   padding: 13px 0px !important;
 }
-.css-1vooibu-MuiSvgIcon-root{
+
+.css-1vooibu-MuiSvgIcon-root {
   margin-top: 2.4px !important;
 }
 
-.css-ptiqhd-MuiSvgIcon-root{
-  margin:5px !important;
+.css-ptiqhd-MuiSvgIcon-root {
+  margin: 5px !important;
   font-size: 1rem !important;
 }

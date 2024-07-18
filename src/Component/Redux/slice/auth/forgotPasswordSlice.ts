@@ -100,14 +100,14 @@ export const forgotPassword =
             )
           );
         } else if (status === 404 && data.message === 'User not found') {
-          dispatch(forgotPasswordFailure('Please enter valid Email address'));
+          dispatch(forgotPasswordFailure(data.message));
         } else {
           dispatch(
-            forgotPasswordFailure('An error occurred. Please try again.')
+            forgotPasswordFailure(error.response.data.message)
           );
         }
       } else {
-        dispatch(forgotPasswordFailure('An error occurred. Please try again.'));
+        dispatch(forgotPasswordFailure(error.response.data.message));
       }
     }
   };
