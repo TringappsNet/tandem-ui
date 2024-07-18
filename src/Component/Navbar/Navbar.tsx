@@ -271,7 +271,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                 )}
                 <button onClick={() => handleOpenPopup('Reset')}>
                   <RiLockPasswordLine className={styles.icons} />
-                  Reset
+                  Reset password
                 </button>
                 <button onClick={() => handleOpenPopup('Support')}>
                   <BiSupport className={styles.icons} /> Contact us
