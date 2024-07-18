@@ -25,6 +25,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import './site-grid.module.css';
 import { RootState } from '../../Redux/reducers';
 import SnackbarComponent from '../../Snackbar/Snackbar';
+import styles from './site-grid.module.css'
 
 interface Site {
   id: number;
@@ -228,13 +229,12 @@ const SiteGrid: React.FC = () => {
     <div>
       <Button
         variant="contained"
-        color="primary"
         style={{
           marginRight: 8,
           width: '200px',
           position: 'relative',
           float: 'right',
-          backgroundColor: '#39404f',
+          backgroundColor:'rgba(16 42 79)'
         }}
         onClick={() => handleEditNew(true)}
       >
@@ -243,7 +243,7 @@ const SiteGrid: React.FC = () => {
 
       <FullGrid
         sx={{
-          height: 490,
+          height: 'calc(100vh - 8rem)'
         }}
         rows={sites}
         columns={columns}
@@ -263,8 +263,8 @@ const SiteGrid: React.FC = () => {
         confirmVariant="danger"
       />
 
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle className="dialogtitle">
+      <Dialog open={open} onClose={handleClose} maxWidth="xs">
+        <DialogTitle className="dialogtitle" style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff'}}>
           {formData.id ? 'Edit Property' : 'Add Property'}
           <IconButton
             aria-label="close"
@@ -272,13 +272,10 @@ const SiteGrid: React.FC = () => {
               handleClose();
             }}
             sx={{
-              position: 'absolute',
-              right: 20,
-              top: 10,
-              color: (theme) => theme.palette.grey[500],
+              padding:0
             }}
           >
-            <CloseIcon sx={{ color: '#999' }} />
+            <CloseIcon sx={{ color: '#fff' }} />
           </IconButton>
         </DialogTitle>
         <DialogContent>
@@ -288,6 +285,7 @@ const SiteGrid: React.FC = () => {
             name="addressline1"
             label="addressline1"
             type="text"
+            size="small"
             fullWidth
             value={formData.addressline1}
             onChange={handleChange}
@@ -299,6 +297,7 @@ const SiteGrid: React.FC = () => {
             name="addressline2"
             label="addressline2"
             type="text"
+            size="small"
             fullWidth
             value={formData.addressline2}
             onChange={handleChange}
@@ -310,6 +309,7 @@ const SiteGrid: React.FC = () => {
             name="state"
             label="state"
             type="text"
+            size="small"
             fullWidth
             value={formData.state}
             onChange={handleChange}
@@ -321,6 +321,7 @@ const SiteGrid: React.FC = () => {
             name="city"
             label="City"
             type="text"
+            size="small"
             fullWidth
             value={formData.city}
             onChange={handleChange}
@@ -332,6 +333,7 @@ const SiteGrid: React.FC = () => {
             name="country"
             label="Country"
             type="text"
+            size="small"
             fullWidth
             value={formData.country}
             onChange={handleChange}
@@ -343,6 +345,7 @@ const SiteGrid: React.FC = () => {
             name="zipcode"
             label="Zipcode"
             type="number"
+            size="small"
             fullWidth
             value={formData.zipcode}
             onChange={handleChange}
@@ -350,13 +353,19 @@ const SiteGrid: React.FC = () => {
             helperText={formErrors.zipcode}
           />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
+        <DialogActions sx={{ paddingTop: 2, paddingBottom: 2, paddingRight:2 }}>
+          <Button
+            onClick={handleClose}
+            size='small'
+            variant="contained"
+            className={styles.btncancel}>
             Cancel
           </Button>
           <Button
             onClick={formData.id ? handleUpdate : handleAdd}
-            color="primary"
+            variant="contained"
+            size='small'
+            className={styles.btnadded}
           >
             {formData.id ? 'Update' : 'Add'}
           </Button>

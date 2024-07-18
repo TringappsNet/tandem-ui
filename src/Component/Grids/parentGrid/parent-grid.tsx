@@ -1,13 +1,7 @@
-import {
-  DataGrid,
-  GridColDef,
-  GridPaginationModel,
-  GridToolbar,
-} from '@mui/x-data-grid';
-import styles from './parent-grid.module.css';
-import Box from '@mui/material/Box';
-
 import React, { useState, useEffect } from 'react';
+import { DataGrid, GridColDef, GridPaginationModel, GridToolbar } from '@mui/x-data-grid';
+import Box from '@mui/material/Box';
+import styles from './parent-grid.module.css';
 
 interface FullGridProps {
   rows: any[];
@@ -16,10 +10,8 @@ interface FullGridProps {
   setPaginationModel: (model: GridPaginationModel) => void;
   className?: string;
   disablePagination?: boolean;
-  sx: any;
+  sx?: any;
 }
-
-
 
 const FullGrid: React.FC<FullGridProps> = ({
   rows,
@@ -30,6 +22,7 @@ const FullGrid: React.FC<FullGridProps> = ({
   className,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -47,13 +40,10 @@ const FullGrid: React.FC<FullGridProps> = ({
       ) : (
         <Box
           sx={{
-            height: 800,
             marginTop: 2,
-            bgcolor: '#20252a !important', 
+            width: '100%',
+            height: '100%',
             ...sx,
-            lineHeight: 2,
-                
-
           }}
         >
           <DataGrid
@@ -62,19 +52,23 @@ const FullGrid: React.FC<FullGridProps> = ({
             columns={columns}
             paginationModel={paginationModel}
             onPaginationModelChange={setPaginationModel}
-            rowHeight={40                             }
+            rowHeight={40}
             columnHeaderHeight={39}
             disableColumnFilter
-          
             disableColumnMenu
             hideFooter
             hideFooterPagination
             hideFooterSelectedRowCount
-            
+            getRowClassName={(params) => (params.indexRelativeToCurrentPage % 2 === 0 ? styles.evenRow : styles.oddRow)}
             slots={{ toolbar: GridToolbar }}
             slotProps={{
               toolbar: {
+                sx: {
+                  backgroundColor: '#dee2e6',
+                  color: 'black',
+                },
                 showQuickFilter: true,
+                quickFilterProps: { debounceMs: 500 },
               },
             }}
           />

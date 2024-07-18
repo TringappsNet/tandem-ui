@@ -118,7 +118,7 @@ const BrokerGrid: React.FC = () => {
       <FullGrid
         className=""
         sx={{
-          height: 372,
+          height: 'calc(100vh - 15rem)',
         }}
         rows={rows}
         columns={columns}
@@ -136,6 +136,8 @@ const BrokerGrid: React.FC = () => {
             label="Email"
             type="email"
             fullWidth
+            size="small"
+
             value={formData.email}
             onChange={handleChange}
           />
@@ -144,6 +146,7 @@ const BrokerGrid: React.FC = () => {
             name="firstName"
             label="First Name"
             type="text"
+            size="small"
             fullWidth
             value={formData.firstName}
             onChange={handleChange}
