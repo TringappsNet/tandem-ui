@@ -7,7 +7,6 @@ import { RootState } from '../Redux/reducers';
 import { AppDispatch } from '../Redux/store';
 import backgroundImage from './bg-login.png';
 import SnackbarComponent from '../Snackbar/Snackbar';
-import ErrorIcon from '@mui/icons-material/ReportProblem';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -133,8 +132,7 @@ const Login: React.FC = () => {
         message={snackbarMessage}
         onClose={handleSnackbarClose}
         severity={'error'}
-        icon={<ErrorIcon />}
-        style={{ backgroundColor: '#DE5242', color: '#FEF9FD' }}
+        style={{backgroundColor: '#DE5242', color: '#FEF9FD'}}
       />
     </div>
   );

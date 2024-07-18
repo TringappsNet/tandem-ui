@@ -41,7 +41,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
 
   useEffect(() => {
     if (description.trim() && !subject.trim()) {
-      setFormError('Please fill in the subject');
+      setFormError('Subject is required');
     } else if (description.trim()) {
       setFormError('');
     }
@@ -49,11 +49,11 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
 
   const validateForm = (): boolean => {
     if (!subject.trim()) {
-      setFormError('Please fill in the subject');
+      setFormError('Subject is required');
       return false;
     }
     if (!description.trim()) {
-      setFormError('Please fill in the description');
+      setFormError('Description is required');
       return false;
     }
     return true;
