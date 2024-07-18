@@ -371,11 +371,12 @@ const DealForm: React.FC<DealFormProps> = () => {
 
   return (
     <Dialog
-      maxWidth="xl"
+      maxWidth="md"
       sx={{
         '& .MuiDialog-paper': {
-          height: 'calc(100% - 70px)',
-          maxHeight: 530,
+          maxHeight:'calc(100vh - 90px)',
+          height:1,
+          width:1,
         }
       }}
       open={open}
