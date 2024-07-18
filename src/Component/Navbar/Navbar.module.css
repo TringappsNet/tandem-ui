@@ -101,7 +101,7 @@
 .roleType {
   font-size: 0.67rem;
   letter-spacing: 0.09rem;
-  color: rgb(224, 80, 80);
+  color: rgb(203 202 211);
   /* margin-left: 4rem; */
   text-align: center;
 }
@@ -195,6 +195,10 @@
   cursor: pointer;
   gap: 0.37rem;
   align-items: center;
+}
+
+.dropdownMenu button:last-child {
+  height: 40px;
 }
 
 .dropdownMenu button:hover {
