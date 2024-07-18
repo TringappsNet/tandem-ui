@@ -96,13 +96,23 @@
 }
 
 .cancel {
-  background-color: rgb(139, 139, 141);
-  color: #20252A;
-  border: none;
+    background-color: rgb(215 102 102);
+    color: white;
+    border: none;
+    height: 40px;
+    font-size: 14px;
+    width: 100px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .confirm {
   background: #00acac;
-  color: #20252A;
+  color: white;
   border: none;
+  height: 40px;
+  font-size: 14px;
+  width: 100px;
+  font-weight: bold;
+  text-transform: uppercase;
 }

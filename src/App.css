@@ -83,16 +83,10 @@
   color: rgb(1, 1, 1) !important;
 }
 
-.MuiDialogTitle-root+.MuiDialogContent-root {
-  padding: 30px 30px 10px 30px !important;
-}
-
 .MuiDataGrid-root .MuiDataGrid-container--top [role=row],
 .MuiDataGrid-root .MuiDataGrid-container--bottom [role=row] {
   background-color: #41454A !important;
 }
-
-
 
 .MuiDataGrid-toolbarContainer button.MuiButton-root {
   display: none;
@@ -122,7 +116,7 @@
 }
 
 .css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
-  background: linear-gradient(58deg, rgb(11 34 67) 0%, rgb(30 62 108) 35%, rgb(16 42 79) 100%);
+  background: linear-gradient(58deg, rgb(35 39 43) 0%, rgb(79 84 89) 35%, rgb(32 46 59) 100%);
 }
 
 .MuiDialogTitle-root+.MuiDialogContent-root {

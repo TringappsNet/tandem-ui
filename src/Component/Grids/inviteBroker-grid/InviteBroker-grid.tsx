@@ -249,7 +249,7 @@ const InviteBroker: React.FC = () => {
           width: '200px',
           position: 'relative',
           float: 'right',
-          backgroundColor: 'rgba(16 42 79)'
+          background: 'linear-gradient(58deg, rgb(35 39 43) 0%, rgb(45, 53, 60) 35%, rgb(32 46 59) 100%)'
         }}
         onClick={() => handleOpenPopup('SendInvite')}
       >
