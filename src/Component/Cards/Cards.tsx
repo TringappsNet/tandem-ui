@@ -13,6 +13,7 @@ import { AppDispatch } from '../Redux/store';
 import ConfirmationModal from '../AlertDialog/AlertDialog';
 import { setCurrentDeal } from '../Redux/slice/deal/currentDeal';
 import { Deal } from '../Interface/DealFormObject';
+import { fetchBrokerDeals } from '../Redux/slice/deal/dealsDataSlice';
 
 
 const Cards: React.FC = () => {
@@ -23,11 +24,13 @@ const Cards: React.FC = () => {
   const dealsData = useSelector((state: RootState) => state.deal.dealDetails);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [dealId, setDealId] = useState<number | null>(null);
+  const deal = useSelector((state: RootState) => state.dealData.deal);
 
   useEffect(() => {
     if (userdetails.isAdmin === true) {
       dispatch(fetchDealDetails());
     } else if (userdetails.isAdmin === false) {
+      dispatch(fetchBrokerDeals(userdetails.user?.id || 0))
       dispatch(fetchBrokerDealDetails(userdetails.user?.id || 0));
     }
   }, [dispatch, userdetails]);
@@ -86,6 +89,7 @@ const Cards: React.FC = () => {
 
   return (
     <>
+
       <div className={styles.filterContainer}>
         <input
           type="text"
@@ -105,6 +109,14 @@ const Cards: React.FC = () => {
           <option value="Completed">Completed</option>
         </select>
       </div>
+      {(!userdetails.isAdmin) && <div className={styles.tailscontainer}>
+        <p className={styles.totadeals}><span>TOTAL DEALS</span> <span>{deal.totalDeals}</span></p>
+        <p className={styles.delasopened}><span>DEALS STARTED</span><span>{deal.dealsOpened}</span></p>
+        <p className={styles.dealsinprogress}><span>DEALS IN PROGRESS</span><span>{deal.dealsInProgress}</span></p>
+        <p className={styles.dealsclosed}><span>DEALS COMPLETED</span><span>{deal.dealsClosed}</span></p>
+        <p className={styles.totalcommission}><span>TOTAL COMMISSION</span><span>{deal.totalCommission}</span></p>
+      </div>
+      }
       <div className={styles.cardList}>
         {filteredDeals.length > 0 ? (
           filteredDeals.map((deal: Deal) => (

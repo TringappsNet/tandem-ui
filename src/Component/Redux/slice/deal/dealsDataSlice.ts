@@ -80,5 +80,23 @@ export const fetchDeals = (): AppThunk<void> => async (dispatch: Dispatch) => {
     dispatch(fetchDealsFailure((error as Error).message));
   }
 };
+export const fetchBrokerDeals = (brokerId:number): AppThunk<void> => async (dispatch: Dispatch) => {
+  try {
+    dispatch(fetchDealsStart());
+    const response = await axiosInstance.get(`deals/assignedTo/${brokerId}`);
+    const deal: Deal = {
+      id: response.data.id,
+      totalDeals: response.data.totalDeals,
+      dealsOpened: response.data.dealsOpened,
+      dealsInProgress: response.data.dealsInProgress,
+      dealsClosed: response.data.dealsClosed,
+      totalCommission: response.data.totalCommission,
+    };
+    dispatch(fetchDealsSuccess(deal));
+  } catch (error) {
+    console.error('Error fetching deals:', error);
+    dispatch(fetchDealsFailure((error as Error).message));
+  }
+};
 
 export default mainSlice.reducer;

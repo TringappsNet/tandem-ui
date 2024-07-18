@@ -196,10 +196,6 @@
   align-items: center;
 }
 
-.dropdownMenu button:last-child {
-  height: 40px;
-}
-
 .dropdownMenu button:hover {
   background-color: #545b63;
 }
