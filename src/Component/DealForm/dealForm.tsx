@@ -21,8 +21,6 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
-  // StepIcon, 
-  // colors,
 } from '@mui/material';
 import styles from './dealForm.module.css';
 import { RootState } from '../Redux/reducers';
@@ -35,7 +33,6 @@ import {
 import { fetchSites } from '../Redux/slice/site/siteSlice';
 
 import { fetchBrokers } from '../Redux/slice/broker/brokerSlice';
-// import { purple } from '@mui/material/colors';
 
 const steps = [
   {
@@ -84,11 +81,7 @@ const DealForm: React.FC<DealFormProps> = () => {
   const sites = useSelector((state: RootState) => state.site.sites);
   const brokers = useSelector((state: RootState) => state.broker.brokers);
   const deals = useSelector((state: RootState) => state.deal.dealDetails);
-  // const isAdmin = useSelector((state: RootState) => state.auth.isAdmin);
-  // const user = useSelector((state: RootState) => state.auth.user);
-
   const [activeStep, setActiveStep] = useState(currentDeal?.activeStep || 0);
-
   const [formData, setFormData] = useState<Deal>({
 
     id: currentDeal?.id || null,
@@ -151,8 +144,6 @@ const DealForm: React.FC<DealFormProps> = () => {
         [name]: value,
       }));
     }
-
-    console.log(`Changed ${name} to:`, value); // For debugging
 
   };
 
