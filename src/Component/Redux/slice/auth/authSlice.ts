@@ -74,7 +74,7 @@ export const login = createAsyncThunk(
         const { session, user } = data;
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('session', JSON.stringify(session));
-        localStorage.setItem('accessToken', data.session.token); // Fixed accessToken storage
+        localStorage.setItem('accessToken', data.session.token); 
         return { user, session };
       } else {
         return rejectWithValue(data.message);
@@ -108,7 +108,7 @@ const authSlice = createSlice({
       state.isAdmin = false;
       localStorage.removeItem('user');
       localStorage.removeItem('session');
-      localStorage.removeItem('accessToken'); // Clear accessToken on logout
+      localStorage.removeItem('accessToken'); 
     },
   },
   extraReducers: (builder) => {
