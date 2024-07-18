@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import { axiosInstance } from '../../AxiosInterceptor/AxiosInterceptor';
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 
