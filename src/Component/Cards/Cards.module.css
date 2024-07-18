@@ -5,9 +5,9 @@
   margin: 30px 0;
 }
 
-<<<<<<< Updated upstream
 .card {
-  background-color: #14324c !important;
+  background: linear-gradient(58deg, rgb(35 39 43) 0%, rgb(45, 53, 60) 35%, rgb(32 46 59) 100%);
+  /* background-image: linear-gradient(to top, rgb(45, 53, 60) 20%, #2f2f2f 100%); */
   border: 1px solid #272727;
   box-shadow: 0 2px 10px rgba(26, 22, 62, 0.2);
   border-radius: 4px;
@@ -18,25 +18,8 @@
   transition: transform 0.3s;
   gap: 8px 0;
   color: rgba(173, 181, 189, 1) !important;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Open Sans",sans-serif;
 }
-=======
-  .card {
-    background: linear-gradient(58deg, rgb(35 39 43) 0%, rgb(45, 53, 60) 35%, rgb(32 46 59) 100%);
-    /* background-image: linear-gradient(to top, rgb(45, 53, 60) 20%, #2f2f2f 100%); */
-    border: 1px solid #272727;
-    box-shadow: 0 2px 10px rgba(26, 22, 62, 0.2);
-    border-radius: 4px;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    width: 270px;
-    transition: transform 0.3s;
-    gap: 8px 0;
-    color: rgba(173, 181, 189, 1) !important;
-    font-family: "Open Sans",sans-serif;
-  }
->>>>>>> Stashed changes
 
 .card:hover {
   transform: translateY(-10px);
