@@ -48,6 +48,12 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
       setErrorMessage('Please enter your new password.');
       return;
     }
+    
+    if (!validatePassword(newPassword)) {
+      dispatch(clearResponse());
+      setErrorMessage('New password must contain atleast 1 special character, 1 number, and 1 uppercase letter.');
+      return;
+    }
 
     if (!confirmPassword) {
       setErrorMessage('Please confirm your password.');
@@ -58,12 +64,6 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
     if (newPassword !== confirmPassword) {
       dispatch(clearResponse());
       setErrorMessage('Passwords do not match.');
-      return;
-    }
-
-    if (!validatePassword(newPassword)) {
-      dispatch(clearResponse());
-      setErrorMessage('Password must contain at least 1 special character, 1 number, and 1 uppercase letter.');
       return;
     }
 

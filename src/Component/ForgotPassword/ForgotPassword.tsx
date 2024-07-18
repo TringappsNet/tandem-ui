@@ -19,7 +19,7 @@ const ForgotPassword: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const { loading, successMessage } = useSelector(
+  const { loading, successMessage, errorMessage  } = useSelector(
     (state: RootState) => state.forgotPassword
   );
 
@@ -33,8 +33,12 @@ const ForgotPassword: React.FC = () => {
         navigate('/login');
       }, 3000);
       return () => clearTimeout(timer);
+    } else if (errorMessage) {
+      setSnackbarMessage(errorMessage);
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
     }
-  }, [successMessage, dispatch, navigate]);
+  }, [successMessage, errorMessage, dispatch, navigate]);
 
   // useEffect(() => {
   //   if (statusCode === 404) {
@@ -72,6 +76,7 @@ const ForgotPassword: React.FC = () => {
   };
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
+    dispatch(clearState());
   };
 
   return (
