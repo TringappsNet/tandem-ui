@@ -23,12 +23,13 @@ const SnackbarComponent: React.FC<SnackbarProps> = ({
     backgroundColor: '#ffffff3b',
     borderRadius: '50%',
     display: 'flex',
-    textAlign: 'center',
-    justifyContent: 'center',
+    alignItems:'center',
+    justifyContent:'center',
+    textAlign:'center',
     fontSize: '18px',
-    padding: '3px',
     height: '30px',
-    width: '30px'
+    width: '30px',
+    color:'white',
   };
 
   const IconComponent = severity === 'error' ? ErrorIcon : CheckCircleIcon;

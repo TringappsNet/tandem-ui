@@ -95,8 +95,8 @@ background-color: #41454A !important;
   display: none;
 }
 
-.MuiSvgIcon-root {
-  color: rgb(5, 5, 5);
+.css-i4bv87-MuiSvgIcon-root {
+  color: rgb(0, 0, 0) !important;
 }
 
 .css-c6bojz {
@@ -137,7 +137,7 @@ background-color: #41454A !important;
   padding: 13px 0px !important;
 }
 .css-1vooibu-MuiSvgIcon-root{
-  margin-top: 3.2px !important;
+  margin-bottom: 2.5px;
 }
 
 .css-17o1yue-MuiPaper-root-MuiAlert-root{
@@ -147,8 +147,8 @@ background-color: #41454A !important;
 .css-bdhsul-MuiTypography-root-MuiDialogTitle-root  {
   padding: 0 19px !important;
 }
-
 .css-ptiqhd-MuiSvgIcon-root{
   margin:5px !important;
   font-size: 1rem !important;
+  color: white!important;
 }
