@@ -171,6 +171,13 @@
   line-height: 21px;
 }
 
+.section input:focus {
+
+  background-color: #495057;
+  color: #f3f3f3;
+}
+
+
 #root {
   min-height: 100vh;
 }
@@ -202,6 +209,10 @@
   font-size: .875rem;
 }
 
+.forgotPassword:hover {
+  color: #f3f3f3;
+}
+
 .loginbtn {
   margin-top: 1.5rem;
   width: 100%;
@@ -215,7 +226,7 @@
 }
 
 .loginbtn:hover {
-  background: #008181;
+  background: #0c5858;
   color: white;
 }
 

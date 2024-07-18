@@ -10,14 +10,26 @@ html {
 }
 
 .headerLine {
-  height: 45px;
+  height: 51px;
   background-color: #20252A;
-  }
+}
 
 .body {
   padding: 2rem;
 
 }
+
+
+.loginBackground {
+  background-image: url('./bg-login.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .contactsContainer {
   display: flex;
   justify-content: center;
@@ -26,7 +38,7 @@ html {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 0px;
-  padding: 5rem;
+  padding: 6rem;
   height: 500px;
   gap: 1rem;
 
@@ -40,8 +52,9 @@ html {
 }
 
 .mailImage {
-  max-width: 78%;
-  max-height: 100%;
+  max-width: 96%;
+  padding-right: 20px;
+  max-height: 282px;
   object-fit: contain;
 }
 
@@ -54,11 +67,12 @@ html {
 .support {
   color: white;
   padding: 0.5rem;
+  padding-top: 12px;
   font-size: 24px;
-  margin-left: 15px;
+  margin-left: 410px;
   text-align: left;
   font-family: 'Open Sans', sans-serif;
-  width: 100%;
+  width: 300px;
   height: 59px;
 }
 
@@ -74,7 +88,7 @@ html {
   padding: 0.5rem;
   border: 1px solid #ccc;
   background-color: #f2f2f4;
-  border-radius: 10px;
+  border-radius: 8px;
   width: 344px;
   font-size: 1rem;
   font-family: 'Public Sans', sans-serif;
@@ -82,9 +96,9 @@ html {
 
 .formGroup input:focus,
 .formGroup textarea:focus {
-  border-color: #3e18be;
+  border-color: #acaab4;
   outline: none;
-  box-shadow: 0 0 5px rgba(45, 12, 150, 0.5);
+  box-shadow: 0 0 5px rgba(130, 127, 139, 0.5);
 }
 
 .fadeOut {
@@ -118,13 +132,13 @@ html {
 }
 
 .sendButton {
-  background: linear-gradient(90deg, #342333 5%, #3f293c 45%);
+  background: #00acac;
   color: rgb(255, 255, 255);
   border: none;
   padding: 0.5rem;
   font-size: 18px;
   font-weight: bolder;
-  border-radius: 42px;
+  border-radius: 8px;
   cursor: pointer;
   margin-top: 20px;
   width: 100%;
@@ -143,7 +157,8 @@ html {
 }
 
 .sendButton:hover {
-  background: linear-gradient(45deg, rgb(2, 49, 88) 0%, rgb(5, 36, 84) 100%);
+  background: #008181;
+  /* background: linear-gradient(45deg, rgb(2, 49, 88) 0%, rgb(5, 36, 84) 100%); */
   color: white;
 }
 
