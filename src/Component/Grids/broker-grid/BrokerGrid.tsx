@@ -1,5 +1,4 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
-import { TextField, Dialog, DialogContent, DialogTitle } from '@mui/material';
 import { axiosInstance } from '../../AxiosInterceptor/AxiosInterceptor';
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 
@@ -18,9 +17,6 @@ interface User {
   zipcode: string;
   isActive: boolean;
   roleId: number;
-}
-
-interface BrokerData extends Omit<User, 'roleId'> {
   fullName: string;
   totalDeals: number;
   dealsOpened: number;
@@ -30,29 +26,15 @@ interface BrokerData extends Omit<User, 'roleId'> {
   roleName: string;
 }
 
+
 const config = {
   getUrl: '/brokers',
 };
 
 const BrokerGrid: React.FC = () => {
-  const [rows, setRows] = useState<BrokerData[]>([]);
-  const [open, setOpen] = useState<boolean>(false);
-  const [formData, setFormData] = useState<User>({
-    id: 0,
-    email: '',
-    firstName: '',
-    lastName: '',
-    mobile: '',
-    address: '',
-    city: '',
-    state: '',
-    country: '',
-    zipcode: '',
-    isActive: true,
-    roleId: 1,
-  });
+  const [rows, setRows] = useState<User[]>([]);
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
-    pageSize: 3,
+    pageSize: 100,
     page: 0,
   });
 
@@ -66,7 +48,6 @@ const BrokerGrid: React.FC = () => {
       const brokers = response.data.map((broker: any) => {
         const fullName = `${broker.user.firstName} ${broker.user.lastName}`;
         const roleName = broker.roleId === 1 ? 'Admin' : 'Broker';
-
         return {
           id: broker.user.id,
           email: broker.user.email,
@@ -87,19 +68,13 @@ const BrokerGrid: React.FC = () => {
           totalCommission: broker.totalCommission,
           roleName: roleName,
         };
-      });
+      }
+    );
 
       setRows(brokers);
     } catch (error) {
       console.error('Error fetching broker names:', error);
     }
-  };
-
-  const handleClose = () => setOpen(false);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
   };
 
   const columns: GridColDef[] = [
@@ -116,7 +91,6 @@ const BrokerGrid: React.FC = () => {
   return (
     <div>
       <FullGrid
-        className=""
         sx={{
           height: 'calc(100vh - 15rem)',
         }}
@@ -125,97 +99,6 @@ const BrokerGrid: React.FC = () => {
         paginationModel={paginationModel}
         setPaginationModel={setPaginationModel}
       />
-
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{formData.id ? 'Edit User' : 'Add User'}</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            name="email"
-            label="Email"
-            type="email"
-            fullWidth
-            size="small"
-
-            value={formData.email}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            name="firstName"
-            label="First Name"
-            type="text"
-            size="small"
-            fullWidth
-            value={formData.firstName}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            name="lastName"
-            label="Last Name"
-            type="text"
-            fullWidth
-            value={formData.lastName}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            name="mobile"
-            label="Mobile"
-            type="text"
-            fullWidth
-            value={formData.mobile}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            name="address"
-            label="Address"
-            type="text"
-            fullWidth
-            value={formData.address}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            name="city"
-            label="City"
-            type="text"
-            fullWidth
-            value={formData.city}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            name="state"
-            label="State"
-            type="text"
-            fullWidth
-            value={formData.state}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            name="country"
-            label="Country"
-            type="text"
-            fullWidth
-            value={formData.country}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            name="zipcode"
-            label="Zipcode"
-            type="text"
-            fullWidth
-            value={formData.zipcode}
-            onChange={handleChange}
-          />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
