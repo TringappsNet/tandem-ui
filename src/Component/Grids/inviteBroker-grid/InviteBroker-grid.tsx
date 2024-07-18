@@ -16,7 +16,6 @@ import {
   fetchBrokers,
   addBroker,
   updateBroker,
-  deleteBroker,
   setSnackbarOpen,
   setActiveBroker,
 } from '../../Redux/slice/user/userSlice';
