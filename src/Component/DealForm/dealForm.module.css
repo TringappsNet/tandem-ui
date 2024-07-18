@@ -6,7 +6,7 @@
 
 .dealcontainer {
   width: 100%;
-  height: calc(100px - 40px);
+  height: calc(100px - 20px);
   /* Adjust this to fit the available viewport height */
 }
 
