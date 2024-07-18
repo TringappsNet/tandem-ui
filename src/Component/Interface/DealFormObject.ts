@@ -16,5 +16,4 @@ export interface Deal {
   updatedBy: number;
   isNew: boolean;
   updatedAt?: string;
-
 }
