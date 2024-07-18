@@ -6,6 +6,22 @@
   background: linear-gradient(60deg, rgb(23, 38, 58) 0%, rgb(22, 32, 50) 35%, rgb(19, 32, 51) 100%);
 }
 
+/* Tiles Progress Bar */
+.css-eglki6-MuiLinearProgress-root {
+  position: relative;
+  bottom: 7px !important; 
+  overflow: hidden;
+  display: block;
+  height: 2px !important;
+  border-radius: 2px;
+  background-color: rgb(0, 0, 0) !important;
+}
+
+.css-5xe99f-MuiLinearProgress-bar1 {
+  background-color: rgb(255, 255, 255) !important;
+
+}
+
 .MuiDataGrid-withBorderColor {
   /* background-color: #20252a; */
   color: #ffffff;

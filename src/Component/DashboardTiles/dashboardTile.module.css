@@ -39,7 +39,7 @@
 .container {
   background-color: rgb(0, 0, 0);
   border-radius: 2px; 
-  width: 100%; /* Adjust to 100% to take full available width */
+  width: 100%; 
   position: relative;
   bottom: 10px;
 }
