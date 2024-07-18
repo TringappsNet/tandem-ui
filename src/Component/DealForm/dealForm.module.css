@@ -6,7 +6,7 @@
 
 .dealcontainer {
   width: 100%;
-  height: calc(100px - 40px);
+  height: calc(100px - 20px);
   /* Adjust this to fit the available viewport height */
 }
 
@@ -23,4 +23,8 @@
   margin-bottom: 15px;
 
   /* margin-left: 184px; */
+}
+
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
+  color: #505a63;
 }

@@ -371,12 +371,12 @@ const DealForm: React.FC<DealFormProps> = () => {
 
   return (
     <Dialog
-      fullScreen
+      maxWidth="md"
       sx={{
-        margin: '30px 200px',
         '& .MuiDialog-paper': {
-          height: 'calc(100% - 60px)',
-          maxHeight: 'none',
+          maxHeight:'calc(100vh - 90px)',
+          height:1,
+          width:1,
         }
       }}
       open={open}
@@ -385,11 +385,10 @@ const DealForm: React.FC<DealFormProps> = () => {
         dispatchFormDataOnClose();
         dispatch(clearCurrentDeal());
       }}
-      className={styles.popupmain}
     >
       <DialogTitle
         sx={{
-          background: 'linear-gradient(58deg, rgb(11 34 67) 0%, rgb(30 62 108) 35%, rgb(16 42 79) 100%);',
+          background: 'linear-gradient(58deg, rgb(35 39 43) 0%, rgb(79 84 89) 35%, rgb(32 46 59) 100%);',
           color: 'white',
           height: '44px',
           padding: '6px 24px',
@@ -433,10 +432,9 @@ const DealForm: React.FC<DealFormProps> = () => {
       <DialogContent sx={{
         display: 'flex',
         flexDirection: 'column',
-        height: 'calc(100% - 44px)', // Subtracting the height of DialogTitle
-        overflow: 'hidden'
       }}>
-        <div className={styles.dealcontainer} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>          <Box
+        <div className={styles.dealcontainer} style={{ display: 'flex', flexDirection: 'column', height: '100%', width:"100%" }}>          
+          <Box
           sx={{
             width: 1,
             marginTop: '3rem',

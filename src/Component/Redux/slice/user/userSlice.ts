@@ -4,7 +4,12 @@ import { axiosInstance } from '../../../AxiosInterceptor/AxiosInterceptor';
 import { RootState } from '../../reducers';
 import { ThunkAction } from 'redux-thunk';
 
-interface Site {
+interface SetActiveBroker {
+  isActive: Boolean;
+}
+
+
+interface Users {
   id: number;
   email: string;
   firstName: string;
@@ -19,8 +24,9 @@ interface Site {
 }
 
 interface InviteBrokerState {
-  brokers: Site[];
+  brokers: Users[];
   loading: boolean;
+  isActive: Boolean
   error: string | null;
   snackbarMessage: string | null;
   snackbarOpen: boolean;
@@ -28,12 +34,13 @@ interface InviteBrokerState {
 
 const initialState: InviteBrokerState = {
   brokers: [],
+  isActive: true,
   loading: false,
   error: null,
   snackbarMessage: null,
   snackbarOpen: false,
 };
-
+ 
 const inviteBrokerSlice = createSlice({
   name: 'inviteBroker',
   initialState,
@@ -42,7 +49,7 @@ const inviteBrokerSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    fetchBrokersSuccess: (state, action: PayloadAction<Site[]>) => {
+    fetchBrokersSuccess: (state, action: PayloadAction<Users[]>) => {
       state.brokers = action.payload;
       state.loading = false;
       state.error = null;
@@ -51,12 +58,12 @@ const inviteBrokerSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    addBrokerSuccess: (state, action: PayloadAction<Site>) => {
+    addBrokerSuccess: (state, action: PayloadAction<Users>) => {
       state.brokers.push(action.payload);
       state.loading = false;
       state.error = null;
     },
-    updateBrokerSuccess: (state, action: PayloadAction<Site>) => {
+    updateBrokerSuccess: (state, action: PayloadAction<Users>) => {
       const index = state.brokers.findIndex(
         (broker) => broker.id === action.payload.id
       );
@@ -73,6 +80,17 @@ const inviteBrokerSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+    setActiveBrokerSuccess: (state, action: PayloadAction<{ updatedBrokerData: Users; message: string }>) => {
+      state.loading = false;
+      state.error = null;
+      const index = state.brokers.findIndex((broker) => broker.id === action.payload.updatedBrokerData.id);
+      if (index !== -1) {
+        state.brokers[index] = action.payload.updatedBrokerData;
+      }
+      state.snackbarMessage = action.payload.message;
+      state.snackbarOpen = true;
+    },
+    
     setSnackbarMessage: (state, action: PayloadAction<string>) => {
       state.snackbarMessage = action.payload;
     },
@@ -91,6 +109,7 @@ export const {
   deleteBrokerSuccess,
   setSnackbarMessage,
   setSnackbarOpen,
+  setActiveBrokerSuccess,
 } = inviteBrokerSlice.actions;
 
 export default inviteBrokerSlice.reducer;
@@ -108,7 +127,7 @@ export const fetchBrokers = (): ThunkAction<void, RootState, unknown, Action<str
   }
 };
 
-export const addBroker = (broker: Site): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
+export const addBroker = (broker: Users): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
   try {
     const response = await axiosInstance.post('/brokers/all-users/', broker);
     dispatch(addBrokerSuccess(response.data));
@@ -122,7 +141,7 @@ export const addBroker = (broker: Site): ThunkAction<void, RootState, unknown, A
   }
 };
 
-export const updateBroker = (broker: Site): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
+export const updateBroker = (broker: Users): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
   try {
     const response = await axiosInstance.put(`/brokers/broker/${broker.id}`, broker);
     dispatch(updateBrokerSuccess(response.data));
@@ -150,12 +169,10 @@ export const deleteBroker = (id: number): ThunkAction<void, RootState, unknown, 
   }
 };
 
-export const inactiveBroker = (id: number): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
+export const setActiveBroker = (id: number, setActiveBroker: SetActiveBroker): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
   try {
-    await axiosInstance.delete(`/brokers/broker/${id}`);
-    dispatch(deleteBrokerSuccess(id));
-    dispatch(setSnackbarMessage('Broker deleted successfully'));
-    dispatch(setSnackbarOpen(true));
+    const response = await axiosInstance.put(`/brokers/set-active-broker/${id}`, setActiveBroker);
+    dispatch(setActiveBrokerSuccess(response.data));
   } catch (error) {
     const errorMessage = (error as any).response?.data?.message || (error as Error).message;
     dispatch(fetchBrokersFailure(errorMessage));

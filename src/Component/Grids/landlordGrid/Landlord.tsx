@@ -20,11 +20,12 @@ import {
 import styles from './landlord-grid.module.css';
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 import FullGrid from '../parentGrid/parent-grid';
-import { MdEdit, MdDelete } from 'react-icons/md';
 import ConfirmationModal from '../../AlertDialog/AlertDialog';
 import CloseIcon from '@mui/icons-material/Close';
 import { RootState } from '../../Redux/reducers';
 import SnackbarComponent from '../../Snackbar/Snackbar';
+import { FiEdit, FiTrash } from 'react-icons/fi';
+
 
 interface Landlord {
   id: number;
@@ -157,12 +158,12 @@ const LandlordGrid: React.FC = () => {
       width: 100,
       renderCell: (params) => (
         <>
-          <MdEdit
-            style={{ color: 'blue', marginRight: 28, cursor: 'pointer' }}
+          <FiEdit
+            style={{marginRight: 28, cursor: 'pointer' }}
             onClick={() => handleEdit(params.row.id)}
           />
-          <MdDelete
-            style={{ color: 'red', cursor: 'pointer' }}
+          <FiTrash
+            style={{ cursor: 'pointer' }}
             onClick={() => handleDelete(params.row.id)}
           />
         </>
@@ -276,8 +277,8 @@ const LandlordGrid: React.FC = () => {
         confirmVariant="danger"
       />
 
-      <Dialog open={open} onClose={handleClose} maxWidth="xs">
-        <DialogTitle style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff' }}>
+      <Dialog open={open} onClose={handleClose} sx={{width:1}}>
+        <DialogTitle style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff',textTransform:'uppercase' }}>
           {formData.id ? 'Edit Landlord' : 'Add Landlord'}
 
           <IconButton

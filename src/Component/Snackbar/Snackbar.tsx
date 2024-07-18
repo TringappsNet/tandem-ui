@@ -3,6 +3,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert, { AlertProps } from '@mui/material/Alert';
 import ErrorIcon from '@mui/icons-material/ReportProblem';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import styles from './snackbar.module.css';
 
 interface SnackbarProps {
   open: boolean;
@@ -47,7 +48,7 @@ const SnackbarComponent: React.FC<SnackbarProps> = ({
       onClose={onClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
     >
-      <Alert {...alertProps} icon={<div style={iconStyle}><IconComponent fontSize="inherit" /></div>} >
+      <Alert {...alertProps} icon={<div style={iconStyle}><IconComponent className={styles.icon}/></div>} >
         {message}
       </Alert>
     </Snackbar>

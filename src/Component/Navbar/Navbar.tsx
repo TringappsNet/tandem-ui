@@ -4,7 +4,7 @@ import styles from './Navbar.module.css';
 import SendInvite from '../SendInvite/SendInvite';
 import Reset from '../ResetPassword/ResetPassword';
 import CloseIcon from '@mui/icons-material/Close';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import LandlordGrid from '../Grids/landlordGrid/Landlord';
 import SiteGrid from '../Grids/SiteGrid/SiteGrid';
 import InviteBroker from '../Grids/inviteBroker-grid/InviteBroker-grid';
@@ -46,15 +46,14 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const deals = useSelector((state: RootState) => state.deal.dealDetails);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<string>('dashboard');
-  const [selectedComponent, setSelectedComponent] = useState<string | null>(
-    null
-  );
+  const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
+  const [availableSites, setAvailableSites] = useState<any[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
-
+  const location = useLocation();
   const navigate = useNavigate();
   const dealFormOpen = useSelector((state: RootState) => state.dealForm.open);
   const profileOpen = useSelector((state: RootState) => state.profile.open);
@@ -65,6 +64,13 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   useEffect(() => {
     dispatch(fetchSites());
   }, [dispatch]);
+
+  useEffect(() => {
+    const filteredSites = sites.filter((site) =>
+      !deals.some((deal) => deal.propertyName === `${site.addressline1}, ${site.addressline2}`)
+    );
+    setAvailableSites(filteredSites);
+  }, [sites, deals, dispatch]);
 
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
@@ -113,16 +119,21 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+
+
   const handleRoute = (route: string) => {
     if (route === 'site') {
       navigate('/site');
       setActivePage('site');
+      localStorage.setItem('activePage', 'site');
     } else if (route === 'landlord') {
       navigate('/landlord');
       setActivePage('landlord');
+      localStorage.setItem('activePage', 'landlord');
     } else if (route === 'invitebroker') {
       navigate('/invitebroker');
       setActivePage('invitebroker');
+      localStorage.setItem('activePage', 'invitebroker');
     }
   };
 
@@ -141,7 +152,38 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     };
   }, []);
 
+
+  useEffect(() => {
+    const pathname = location.pathname;
+    let currentPage = 'dashboard';
+
+    if (pathname.includes('/site')) {
+      currentPage = 'site';
+    } else if (pathname.includes('/landlord')) {
+      currentPage = 'landlord';
+    } else if (pathname.includes('/invitebroker')) {
+      currentPage = 'invitebroker';
+    } else if (pathname.includes('/cards')) {
+      currentPage = 'deals';
+    }
+
+    setActivePage(currentPage);
+    localStorage.setItem('activePage', currentPage);
+  }, [location]);
+
+
+
+
+  useEffect(() => {
+    const storedActivePage = localStorage.getItem('activePage');
+    if (storedActivePage) {
+      setActivePage(storedActivePage);
+    }
+  }, []);
+
   const handlelogoclick = () => {
+    setActivePage('dashboard');
+    localStorage.setItem('activePage', 'dashboard');
     navigate('/dashboard');
   };
 
@@ -150,19 +192,12 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   };
   const handleDealsClick = () => {
     handleCards();
+    localStorage.setItem('activePage', 'deals');
     setActivePage('deals');
   };
 
   const handleCreateDealClick = () => {
-    const availableSites = sites.filter(
-      (site) =>
-        !deals.some(
-          (deal) =>
-            deal.propertyName === `${site.addressline1}, ${site.addressline2}`
-        )
-    );
-
-    if (availableSites.length === 0) {
+      if (availableSites.length === 0) {
       setSnackbarMessage(
         'Unable to create deal, properties are either assigned or unavailable !'
       );
@@ -191,33 +226,25 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             <>
               <p
                 onClick={handleDealsClick}
-                className={`${styles.navItem} ${
-                  activePage === 'deals' ? styles.active : ''
-                }`}
+                className={`${styles.navItem} ${activePage === 'deals' ? styles.active : ''}`}
               >
                 DEALS
               </p>
               <p
                 onClick={() => handleRoute('site')}
-                className={`${styles.navItem} ${
-                  activePage === 'site' ? styles.active : ''
-                }`}
+                className={`${styles.navItem} ${activePage === 'site' ? styles.active : ''}`}
               >
                 PROPERTY
               </p>
               <p
                 onClick={() => handleRoute('landlord')}
-                className={`${styles.navItem} ${
-                  activePage === 'landlord' ? styles.active : ''
-                }`}
+                className={`${styles.navItem} ${activePage === 'landlord' ? styles.active : ''}`}
               >
                 LANDLORD
               </p>
               <p
                 onClick={() => handleRoute('invitebroker')}
-                className={`${styles.navItem} ${
-                  activePage === 'invitebroker' ? styles.active : ''
-                }`}
+                className={`${styles.navItem} ${activePage === 'invitebroker' ? styles.active : ''}`}
               >
                 BROKERDETAILS
               </p>
@@ -252,8 +279,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               <p>
                 {userdetails
                   ? userdetails.user?.firstName[0] +
-                    '' +
-                    userdetails.user?.lastName[0]
+                  '' +
+                  userdetails.user?.lastName[0]
                   : 'G'}
               </p>
             </div>
@@ -271,7 +298,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                 )}
                 <button onClick={() => handleOpenPopup('Reset')}>
                   <RiLockPasswordLine className={styles.icons} />
-                  Reset
+                  Reset password
                 </button>
                 <button onClick={() => handleOpenPopup('Support')}>
                   <BiSupport className={styles.icons} /> Contact us

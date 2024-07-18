@@ -16,11 +16,12 @@ import {
   fetchBrokers,
   addBroker,
   updateBroker,
-  deleteBroker,
   setSnackbarOpen,
+  setActiveBroker,
 } from '../../Redux/slice/user/userSlice';
 import FullGrid from '../parentGrid/parent-grid';
-import { MdEdit, MdDelete } from 'react-icons/md';
+import { FiEdit } from 'react-icons/fi';
+import { MdDoNotDisturb } from "react-icons/md";
 import ConfirmationModal from '../../AlertDialog/AlertDialog';
 import SendInvite from '../../SendInvite/SendInvite';
 import {
@@ -48,8 +49,8 @@ interface Site {
 
 const InviteBroker: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
-  const [deleteId, setDeleteId] = useState<number>(0);
+  const [deleteConfirmation, setDeactivateConfiramtion] = useState<boolean>(false);
+  const [deleteId, setDeactivateId] = useState<number>(0);
   const [formErrors, setFormErrors] = useState<Partial<Site>>({});
   const dispatch = useDispatch<AppDispatch>();
   const [openPopup, setOpenPopup] = useState<boolean>(false);
@@ -146,7 +147,7 @@ const InviteBroker: React.FC = () => {
   };
 
   const cancelDelete = () => {
-    setDeleteConfirmation(false);
+    setDeactivateConfiramtion(false);
   };
 
   const handleAdd = () => {
@@ -171,14 +172,15 @@ const InviteBroker: React.FC = () => {
     }
   };
 
-  const handleDelete = (id: number) => {
-    setDeleteConfirmation(true);
-    setDeleteId(id);
+  const handleDeactivate = (id: number) => {
+    setDeactivateConfiramtion(true);
+    setDeactivateId(id);
   };
 
-  const handleConfirmDelete = () => {
-    dispatch(deleteBroker(deleteId));
-    setDeleteConfirmation(false);
+  const handleConfirmDeactivate = () => {
+    const payload = {isActive: false}
+    dispatch(setActiveBroker(deleteId, payload));
+    setDeactivateConfiramtion(false);
   };
 
   const handleOpenPopup = (componentName: string) => {
@@ -204,9 +206,9 @@ const InviteBroker: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: 'email', headerName: 'email', width: 180 },
     { field: 'firstName', headerName: 'firstName', width: 140 },
     { field: 'lastName', headerName: 'lastName', width: 120 },
+    { field: 'email', headerName: 'email', width: 180 },
     { field: 'mobile', headerName: 'mobile', width: 150 },
     { field: 'address', headerName: 'address', width: 160 },
     { field: 'city', headerName: 'City', width: 140 },
@@ -219,13 +221,13 @@ const InviteBroker: React.FC = () => {
       width: 130,
       renderCell: (params) => (
         <>
-          <MdEdit
-            style={{ color: 'blue', marginRight: 8, cursor: 'pointer' }}
+          <FiEdit
+            style={{ marginRight: 28, cursor: 'pointer' }}
             onClick={() => handleEdit(params.row.id)}
           />
-          <MdDelete
-            style={{ color: 'red', cursor: 'pointer' }}
-            onClick={() => handleDelete(params.row.id)}
+          <MdDoNotDisturb
+            style={{ cursor: 'pointer' }}
+            onClick={() => handleDeactivate(params.row.id)}
           />
         </>
       ),
@@ -292,17 +294,17 @@ const InviteBroker: React.FC = () => {
       <ConfirmationModal
         show={deleteConfirmation}
         onHide={cancelDelete}
-        onConfirm={handleConfirmDelete}
-        title="Delete Row"
-        message="Are you sure you want to delete this row?"
+        onConfirm={handleConfirmDeactivate}
+        title="Deactivate User"
+        message="Are you sure you want to deactivatete this user?"
         cancelText="Cancel"
-        confirmText="Delete"
+        confirmText="Deactivate"
         cancelVariant="secondary"
         confirmVariant="danger"
       />
 
-      <Dialog open={open} onClose={handleClose} maxWidth="xs">
-        <DialogTitle className="dialogtitle" style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff' }}>
+      <Dialog open={open} onClose={handleClose} sx={{width:1}}>
+        <DialogTitle className="dialogtitle" style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff',textTransform:'uppercase' }}>
           {formData.id ? 'Edit Broker Details' : 'Add Property'}
 
           <IconButton
@@ -318,19 +320,7 @@ const InviteBroker: React.FC = () => {
           </IconButton>
         </DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            name="email"
-            label="email"
-            type="text"
-            size='small'
-            fullWidth
-            value={formData.email}
-            onChange={handleChange}
-            error={!!formErrors.email}
-            helperText={formErrors.email}
-          />
+          
           <TextField
             margin="dense"
             name="firstName"
@@ -354,6 +344,19 @@ const InviteBroker: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.lastName}
             helperText={formErrors.lastName}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            name="email"
+            label="email"
+            type="text"
+            size='small'
+            fullWidth
+            value={formData.email}
+            onChange={handleChange}
+            error={!!formErrors.email}
+            helperText={formErrors.email}
           />
           <TextField
             margin="dense"
