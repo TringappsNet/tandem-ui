@@ -4,7 +4,7 @@
 .navbarcontainer {
   width: 100%;
   height: 50px;
-  background: linear-gradient(58deg, rgb(11 34 67) 0%, rgb(30 62 108) 35%, rgb(16 42 79) 100%);
+  background: linear-gradient(58deg, rgb(35 39 43) 0%, rgb(45, 53, 60) 35%, rgb(32 46 59) 100%);
   display: flex;
   color: #fff;
   justify-content: space-between;
@@ -73,11 +73,12 @@
 
 .rightheadersection .createdeal {
   cursor: pointer;
-  border: 1px solid #39404f !important;
-  background-color: #b42727;
-  padding: 6px 12px;
+  border: 1px solid rgb(35 39 43) !important;
+  background-color: rgb(73 84 94);
+  padding: 8px 12px;
   border-radius: 5px;
-  font-size: 0.69rem;
+  font-size: 12px;
+  font-weight: bold;
   align-items: center;
   margin-right: 15px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
@@ -106,7 +107,7 @@
 }
 
 .rightheadersection .createdeal:hover {
-  background-color: #1d2a3a;
+  background-color: rgb(63 69 75);
 
   /* background-color: #221a79; */
 }
@@ -145,11 +146,11 @@
   display: block;
   position: absolute;
   top: 59.7px;
-  right: 0;
-  width: 178px;
-  height: 167px;
+  right: -12px;
+  width: 200px;
+  height: 188px;
   /* background-color: #191c24; */
-  background: linear-gradient(90deg, rgb(31, 46, 68) 0%, rgb(33, 51, 76) 35%, rgb(44, 57, 77) 100%) !important;
+  background: linear-gradient(58deg, rgb(61 67 73) 0%, rgb(61 68 73) 35%, rgb(66 74 81) 100%) !important;
   border: 1px solid #39404f !important;
   color: white;
   /* border: 1px solid #ccc; */
@@ -184,6 +185,7 @@
 .dropdownMenu button {
   display: flex;
   width: 100%;
+  height:34px;
   background: none;
   border: none;
   padding: 5px 20px;
@@ -196,12 +198,7 @@
 }
 
 .dropdownMenu button:hover {
-  background-color: #1d2a3a;
-  color: #fff;
-  border-radius: 5px;
-  padding: 5px 20px;
-  /* margin: 0 3px; */
-  width: 96%;
+  background-color: #545b63;
 }
 
 .saveclose {
@@ -232,5 +229,5 @@
   left: 0;
   width: 100%;
   height: 0.7px;
-  background-color: #6b6b6c;
+  background-color: #e4dede;
 }
