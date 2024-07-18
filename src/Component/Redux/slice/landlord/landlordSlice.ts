@@ -105,8 +105,6 @@ export const fetchLandlords =
       } catch (error) {
         const errorMessage = (error as any).response?.data?.message || (error as Error).message;
         dispatch(fetchLandlordsFailure(errorMessage));
-        // dispatch(setSnackbarMessage(errorMessage));
-        // dispatch(setSnackbarOpen(true));
       }
     };
 
