@@ -109,14 +109,53 @@ const Cards: React.FC = () => {
           <option value="Completed">Completed</option>
         </select>
       </div>
-      {(!userdetails.isAdmin) && <div className={styles.tailscontainer}>
-        <p className={styles.totadeals}><span>TOTAL DEALS</span> <span>{deal.totalDeals}</span></p>
-        <p className={styles.delasopened}><span>DEALS STARTED</span><span>{deal.dealsOpened}</span></p>
-        <p className={styles.dealsinprogress}><span>DEALS IN PROGRESS</span><span>{deal.dealsInProgress}</span></p>
-        <p className={styles.dealsclosed}><span>DEALS COMPLETED</span><span>{deal.dealsClosed}</span></p>
-        <p className={styles.totalcommission}><span>TOTAL COMMISSION</span><span>{deal.totalCommission}</span></p>
-      </div>
-      }
+      {/* Another Styling Tiles for broker  */}
+      {/* {(userdetails.isAdmin) &&
+        <div className={styles.tailscontainer}>
+          <p className={styles.totadeals}><span>TOTALDEALS</span> <span>{deal.totalDeals}</span></p>
+          <p className={styles.delasopened}><span>DEALSSTARTED</span><span>{deal.dealsOpened}</span></p>
+          <p className={styles.dealsinprogress}><span>DEALSINPROGRESS</span><span>{deal.dealsInProgress}</span></p>
+          <p className={styles.dealsclosed}><span>DEALSCOMPLETED</span><span>{deal.dealsClosed}</span></p>
+          <p className={styles.totalcommission}><span>TOTALCOMMISSION</span><span>{deal.totalCommission}</span></p>
+        </div>
+      } */}
+      {(!userdetails.isAdmin) && 
+      <div className={styles.tagsContainer}>
+        <span className={styles.tag}>
+          <p className={styles.totalDeals}>TOTAL DEALS:</p>
+          <p className={styles.deals}>
+            <p className={styles.totalDeal}>{deal.totalDeals}</p>
+          </p>
+        </span>
+
+        <span className={styles.tag}>
+          <p className={styles.totalDeals}>DEALS OPENED</p>
+          <p className={styles.deals}>
+            <p className={styles.totalDeal}>{deal.dealsOpened}</p>
+          </p>
+        </span>
+
+        <span className={styles.tag}>
+          <p className={styles.totalDeals}>DEALS IN PROGRESS</p>
+          <p className={styles.deals}>
+            <p className={styles.totalDeal}>{deal.dealsInProgress}</p>
+          </p>
+        </span>
+
+        <span className={styles.tag}>
+          <p className={styles.totalDeals}>DEALS CLOSED</p>
+          <p className={styles.deals}>
+            <p className={styles.totalDeal}>{deal.dealsClosed}</p>
+          </p>
+        </span>
+
+        <span className={styles.tag}>
+          <p className={styles.totalDeals}>TOTAL COMMISSION</p>
+          <p className={styles.deals}>
+            <p className={styles.totalDeal}>${deal.totalCommission}</p>
+          </p>
+        </span>
+      </div>}
       <div className={styles.cardList}>
         {filteredDeals.length > 0 ? (
           filteredDeals.map((deal: Deal) => (

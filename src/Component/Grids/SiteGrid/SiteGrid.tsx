@@ -358,7 +358,7 @@ const SiteGrid: React.FC = () => {
             helperText={formErrors.zipcode}
           />
         </DialogContent>
-        <DialogActions sx={{ paddingTop: 2, paddingBottom: 2, paddingRight: 2 }}>
+        <DialogActions sx={{ paddingBottom: 2, paddingRight:2 }}>
           <Button
             onClick={handleClose}
             size='small'

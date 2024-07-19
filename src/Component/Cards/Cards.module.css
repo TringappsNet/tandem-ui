@@ -13,13 +13,12 @@
   align-items: center;
   justify-content: space-evenly;
   background-color: black;
-  color: white;
   border-radius: .4rem;
   flex-grow: 1 1 auto;
   min-width: 100px;
   font-size: .8rem;
   font-family: 'Opens Sans', sans-serif !important;
-  color: rgba(255, 255, 255, .7);
+  color: rgba(255, 255, 255);
   letter-spacing: .12rem;
   gap: 2rem;
   padding: .6rem;
@@ -264,4 +263,126 @@
 .filterSelect {
   background-color: #dee2e6;
   color: rgb(110, 112, 114) !important;
+}
+
+
+
+.tagsContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: .5rem;
+  width: 100%;
+  margin-top: 1rem;
+  justify-content: space-around;
+}
+
+.tag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+  color: #ffffff;
+  height: 50px;
+  border-radius: 4px;
+  color: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  flex: 1 1 auto; 
+  min-width: 150px;
+}
+
+.totalDeal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 600;
+  font-family: sans-serif !important;
+  letter-spacing: 1px;
+}
+
+.totalDeals {
+  font-family: 'Opens Sans', sans-serif !important;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255);
+}
+
+.tag:nth-child(1) {
+  background-color: #00ACAC;
+  background-image: url('../../assests/tiles/globe.png');
+  background-size: 20%;
+  background-repeat: no-repeat;
+  background-position: 5px;
+}
+
+.tag:hover:nth-child(1) {
+  background-color: #00ACAC;
+}
+
+.tag:nth-child(2) {
+  background-color: #348fe2;
+  background-image: url('../../assests/tiles/open-folder.png');
+  background-size:  17%;
+  background-repeat: no-repeat;
+  background-position: 5px;
+}
+
+.tag:hover:nth-child(2) {
+  background-color: #348fe2;
+}
+
+.tag:nth-child(3) {
+  background-color: #8753de;
+  background-image: url('../../assests/tiles/hour-glass.png');
+  background-size: 16%;
+  background-repeat: no-repeat;
+  background-position: 1px;
+}
+
+.tag:hover:nth-child(3) {
+  background-color: #8753de;
+}
+
+.tag:nth-child(4) {
+  background-color: #20252a;
+  background-image: url('../../assests/tiles/box.png');
+  background-size:  20%;
+  background-repeat: no-repeat;
+  background-position: 5px;
+
+}
+
+.tag:hover:nth-child(4) {
+  background-color: #20252a;
+}
+
+.tag:nth-child(5) {
+  background-color: #5b4a43;
+  background-image: url('../../assests/tiles/dollar.png');
+  background-size: 10%;
+  background-position: 5px;
+  background-repeat: no-repeat;
+}
+
+.tag:hover:nth-child(5) {
+  background-color: #5b4a43;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+  .tag {
+    flex: 1 1 18%;
+  }
+}
+
+@media (max-width: 768px) {
+  .tag {
+    flex: 1 1 45%;
+  }
+}
+
+@media (max-width: 480px) {
+  .tag {
+    flex: 1 1 100%;
+  }
 }
