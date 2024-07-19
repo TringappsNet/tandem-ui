@@ -121,22 +121,47 @@ const InviteBroker: React.FC = () => {
     let valid = true;
     const errors: Partial<Site> = {};
 
+    if (!formData.firstName) {
+      errors.firstName = 'First Name is required';
+      valid = false;
+    }
+
+    if (!formData.lastName) {
+      errors.lastName = 'Last Name is required';
+      valid = false;
+    }
+
     if (!formData.email) {
       errors.email = 'Email is required';
       valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = 'Invalid email format';
+      valid = false;
     }
+
+    if (!formData.mobile) {
+      errors.mobile = 'Mobile Number is required';
+      valid = false;
+    } else if (!/^\d{10}$/.test(formData.mobile)) {
+      errors.mobile = 'Mobile Number must be 10 digits';
+      valid = false;
+    }
+
     if (!formData.city) {
       errors.city = 'City is required';
       valid = false;
     }
+
     if (!formData.state) {
       errors.state = 'State is required';
       valid = false;
     }
+
     if (!formData.country) {
       errors.country = 'Country is required';
       valid = false;
     }
+
     if (!formData.zipcode) {
       errors.zipcode = 'Zipcode is required';
       valid = false;
@@ -374,7 +399,7 @@ const InviteBroker: React.FC = () => {
             margin="dense"
             name="state"
             label="state"
-            type="number"
+            type="text"
             size='small'
             fullWidth
             value={formData.state}
@@ -419,7 +444,7 @@ const InviteBroker: React.FC = () => {
             helperText={formErrors.zipcode}
           />
         </DialogContent>
-        <DialogActions sx={{ paddingTop: 2, paddingBottom: 2, paddingRight: 2 }}>
+        <DialogActions sx={{paddingBottom: 2, paddingRight: 2 }}>
           <Button
             onClick={handleClose}
             size='small'

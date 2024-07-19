@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 describe('Navbar', () => {
   const links = [
     { disabled: false, name: 'DEALS', href: '/cards' },
-    { disabled: false, name: 'SITE', href: '/site' },
+    { disabled: false, name: 'Property', href: '/property' },
     { disabled: false, name: 'LANDLORD', href: '/landlord' },
   ];
 

@@ -258,8 +258,8 @@ const DealForm: React.FC<DealFormProps> = () => {
             onChange={handleChange}
             margin="normal"
             size="small"
-            
-            sx={{ width: 300, cursor:'pointer' }}
+
+            sx={{ width: 300, cursor: 'pointer' }}
             InputLabelProps={{
               shrink: true,
             }}
@@ -374,9 +374,9 @@ const DealForm: React.FC<DealFormProps> = () => {
       maxWidth="md"
       sx={{
         '& .MuiDialog-paper': {
-          maxHeight:'calc(100vh - 90px)',
-          height:1,
-          width:1,
+          maxHeight: 'calc(100vh - 90px)',
+          height: 1,
+          width: 1,
         }
       }}
       open={open}
@@ -433,92 +433,92 @@ const DealForm: React.FC<DealFormProps> = () => {
         display: 'flex',
         flexDirection: 'column',
       }}>
-        <div className={styles.dealcontainer} style={{ display: 'flex', flexDirection: 'column', height: '100%', width:"100%" }}>          
-          <Box
-          sx={{
-            width: 1,
-            marginTop: '3rem',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-          }}
-        >
-          <Stepper
-            activeStep={activeStep}
-            alternativeLabel
-            connector={<StepConnector />}
-            sx={{ width: 1 }}
-          >
-            {steps.map((step, index) => (
-              <Step key={index} sx={{ width: 1 }}
-              >
-                <StepLabel>{step.label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
+        <div className={styles.dealcontainer} style={{ display: 'flex', flexDirection: 'column', height: '100%', width: "100%" }}>
           <Box
             sx={{
-              width: '100%',
-              marginTop: '10px', // Add 20px gap here
+              width: 1,
+              marginTop: '3rem',
               display: 'flex',
               flexDirection: 'column',
-              padding: '30px',
+              alignItems: 'flex-start',
             }}
           >
-            {activeStep < steps.length - 1 ? (
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  textTransform: 'capitalize'
-                }}
-              >
-                {steps[activeStep].fields.map((field, index) =>
-                  renderField(field, index)
-                )}
-              </Box>
-            ) : (
-              renderSummary()
-            )}
-            {activeStep === steps.length - 1 ? (
-              <Box sx={{ mt: 4, textAlign: 'center' }}>
-                <Typography variant="h5" sx={{ color: 'green' }}>
-                  {/* Deal is Completed */}
-                </Typography>
-              </Box>
-            ) : (
-              <Box>
+            <Stepper
+              activeStep={activeStep}
+              alternativeLabel
+              connector={<StepConnector />}
+              sx={{ width: 1 }}
+            >
+              {steps.map((step, index) => (
+                <Step key={index} sx={{ width: 1 }}
+                >
+                  <StepLabel>{step.label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            <Box
+              sx={{
+                width: '100%',
+                marginTop: '10px', // Add 20px gap here
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '30px',
+              }}
+            >
+              {activeStep < steps.length - 1 ? (
                 <Box
                   sx={{
                     display: 'flex',
-                    justifyContent: 'space-between',
-                    width: '100%',
-                    marginTop:3
+                    flexDirection: 'column',
+                    textTransform: 'capitalize'
                   }}
                 >
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={saveFormData}
-                    sx={{ width: 100}}
-                    disabled={!isFormValid()}
-                  >
-                    Save
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    sx={{ width: 100 }}
-                    disabled={!saveSuccess || !isFormValid()}
-                  >
-                    {activeStep === steps.length - 2 ? 'Finish' : 'Next'}
-                  </Button>
+                  {steps[activeStep].fields.map((field, index) =>
+                    renderField(field, index)
+                  )}
                 </Box>
-              </Box>
-            )}
+              ) : (
+                renderSummary()
+              )}
+              {activeStep === steps.length - 1 ? (
+                <Box sx={{ mt: 4, textAlign: 'center' }}>
+                  <Typography variant="h5" sx={{ color: 'green' }}>
+                    {/* Deal is Completed */}
+                  </Typography>
+                </Box>
+              ) : (
+                <Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      width: '100%',
+                      marginTop: 3
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={saveFormData}
+                      sx={{ width: 100 }}
+                      disabled={!isFormValid()}
+                    >
+                      Save
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      sx={{ width: 100 }}
+                      disabled={!saveSuccess || !isFormValid()}
+                    >
+                      {activeStep === steps.length - 2 ? 'Finish' : 'Next'}
+                    </Button>
+                  </Box>
+                </Box>
+              )}
+            </Box>
           </Box>
-        </Box>
         </div>
       </DialogContent>
     </Dialog>

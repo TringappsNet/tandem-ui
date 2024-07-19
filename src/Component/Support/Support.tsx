@@ -129,6 +129,8 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
             <label htmlFor="subject">Subject:</label>
             <input
               type="text"
+              role="presentation"
+              autoComplete='off'
               autoFocus
               placeholder="Enter your subject"
               id="subject"

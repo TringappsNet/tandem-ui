@@ -30,6 +30,7 @@ import { BiSupport } from "react-icons/bi";
 import { IoLogOutOutline } from 'react-icons/io5';
 import SnackbarComponent from '../Snackbar/Snackbar';
 import { fetchSites } from '../Redux/slice/site/siteSlice';
+import { fetchDealDetails } from '../Redux/slice/deal/dealSlice';
 interface NavbarProps {
   links: {
     disabled: boolean | undefined;
@@ -63,6 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
 
   useEffect(() => {
     dispatch(fetchSites());
+    dispatch(fetchDealDetails())
   }, [dispatch]);
 
   useEffect(() => {
@@ -122,10 +124,10 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
 
 
   const handleRoute = (route: string) => {
-    if (route === 'site') {
-      navigate('/site');
-      setActivePage('site');
-      localStorage.setItem('activePage', 'site');
+    if (route === 'property') {
+      navigate('/property');
+      setActivePage('property');
+      localStorage.setItem('activePage', 'property');
     } else if (route === 'landlord') {
       navigate('/landlord');
       setActivePage('landlord');
@@ -157,13 +159,13 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     const pathname = location.pathname;
     let currentPage = 'dashboard';
 
-    if (pathname.includes('/site')) {
-      currentPage = 'site';
+    if (pathname.includes('/property')) {
+      currentPage = 'property';
     } else if (pathname.includes('/landlord')) {
       currentPage = 'landlord';
     } else if (pathname.includes('/invitebroker')) {
       currentPage = 'invitebroker';
-    } else if (pathname.includes('/cards')) {
+    } else if (pathname.includes('/deals')) {
       currentPage = 'deals';
     }
 
@@ -188,7 +190,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   };
 
   const handleCards = () => {
-    navigate('/cards');
+    navigate('/deals');
   };
   const handleDealsClick = () => {
     handleCards();
@@ -232,8 +234,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                 DEALS
               </p>
               <p
-                onClick={() => handleRoute('site')}
-                className={`${styles.navItem} ${activePage === 'site' ? styles.active : ''}`}
+                onClick={() => handleRoute('property')}
+                className={`${styles.navItem} ${activePage === 'property' ? styles.active : ''}`}
               >
                 PROPERTY
               </p>
@@ -367,7 +369,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               </Box>
             )}
 
-            {selectedComponent === 'Site' && (
+            {selectedComponent === 'property' && (
               <Box
                 sx={{
                   padding: 1,
