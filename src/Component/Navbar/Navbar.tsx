@@ -42,7 +42,8 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const dispatch = useDispatch<AppDispatch>();
   const userdetails = useSelector((state: RootState) => state.auth);
-  const filteredSites = useSelector(
+  const sites = useSelector((state: RootState) => state.site.sites);
+  const availableSites = useSelector(
     (state: RootState) => state.site.filteredSites
   );
   const deals = useSelector((state: RootState) => state.deal.dealDetails);
@@ -64,17 +65,17 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const resetOpen = useSelector((state: RootState) => state.reset.open);
   const supportOpen = useSelector((state: RootState) => state.contact.open);
 
-  useEffect(() => {
-    dispatch(setFilteredSites(sites));
-  }, [dispatch]);
-
-  const sites = filteredSites.filter(
+  const filteredSites = sites.filter(
     (site) =>
       !deals.some(
         (deal) =>
           deal.propertyName === `${site.addressline1}, ${site.addressline2}`
       )
   );
+
+  useEffect(() => {
+    dispatch(setFilteredSites(filteredSites));
+  }, [dispatch, filteredSites]);
 
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
@@ -196,7 +197,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   };
 
   const handleCreateDealClick = () => {
-    if (filteredSites.length === 0) {
+    if (availableSites.length === 0) {
       setSnackbarMessage(
         'Unable to create deal, properties are either assigned or unavailable !'
       );
