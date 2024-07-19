@@ -5,8 +5,8 @@ import BrokerGrid from '../Grids/broker-grid/BrokerGrid';
 import { fetchDeals } from '../Redux/slice/deal/dealsDataSlice';
 import { RootState } from '../Redux/reducers';
 import { AppDispatch } from '../Redux/store';
-import { fetchSites } from '../Redux/slice/site/siteSlice';
 import LinearProgress from '@mui/material/LinearProgress';
+import { fetchDealDetails } from '../Redux/slice/deal/dealSlice';
 
 const Main: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,7 +22,7 @@ const Main: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchDeals());
-    dispatch(fetchSites());
+    dispatch(fetchDealDetails());
   }, [dispatch]);
 
   const sevenDaysAgo = new Date();
@@ -30,23 +30,24 @@ const Main: React.FC = () => {
 
   const dealsCreatedLast7Days = deals.filter((deal) => {
     if (!deal.createdAt) return false;
-    const createdAt = new Date(deal.dealStartDate);
+    const createdAt = new Date(deal.createdAt);
     return createdAt >= sevenDaysAgo;
   });
+
   const dealsOpenedLast7Days = deals.filter((deal) => {
-    if (!deal.createdAt) return false;
+    if (!deal.updatedAt) return false;
     if (deal.activeStep > 1 && deal.activeStep < 7) {
-      const dealStartDate = new Date(deal.dealStartDate);
-      return dealStartDate >= sevenDaysAgo;
+      const updatedAt = new Date(deal.updatedAt);
+      return updatedAt >= sevenDaysAgo;
     }
     return false;
   });
 
   const dealsClosedLast7Days = deals.filter((deal) => {
     if (deal.activeStep === 7) {
-      if (!deal.createdAt) return false;
-      const createdAt = new Date(deal.createdAt);
-      return createdAt >= sevenDaysAgo;
+      if (!deal.updatedAt) return false;
+      const updatedAt = new Date(deal.updatedAt);
+      return updatedAt >= sevenDaysAgo;
     }
     return false;
   });
@@ -67,6 +68,10 @@ const Main: React.FC = () => {
           <p className={styles.deals}>
             <p className={styles.totalDeal}>{dealData.totalDeals}</p>
           </p>
+          <LinearProgress variant="determinate" value={100} />
+          <p className={styles.add_content}>
+            Deals created to date!
+          </p>
         </span>
 
         <span className={styles.tag}>
@@ -76,7 +81,7 @@ const Main: React.FC = () => {
           </p>
           <LinearProgress variant="determinate" value={dealsOpenedPercentage} />
           <p className={styles.add_content}>
-            Deals created last week ({dealsCreatedLast7Days.length})
+            Deals created in last seven days ({dealsCreatedLast7Days.length})
           </p>
         </span>
 
@@ -90,7 +95,7 @@ const Main: React.FC = () => {
             value={dealsInProgressPercentage}
           />
           <p className={styles.add_content}>
-            Deals pending from last week ({dealsOpenedLast7Days.length})
+            Deals pending from last seven days ({dealsOpenedLast7Days.length})
           </p>
         </span>
 
@@ -101,7 +106,7 @@ const Main: React.FC = () => {
           </p>
           <LinearProgress variant="determinate" value={dealsClosedPercentage} />
           <p className={styles.add_content}>
-            Deals closed last week ({dealsClosedLast7Days.length})
+            Deals closed in last seven days ({dealsClosedLast7Days.length})
           </p>
         </span>
 
