@@ -85,15 +85,20 @@
 }
 .stepsinfo {
   display: flex;
-  font-size: 12px;
+  font-size: 1.2rem;
   gap: 3px;
   align-items: center;
   justify-content: flex-end;
+  cursor: pointer;
 }
 
 .stepsinfo span {
-  cursor: pointer;
+  font-size: 12px;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
+
 .card .line {
   border: 1px solid #adb5bd;
   ;

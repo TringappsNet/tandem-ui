@@ -131,7 +131,7 @@ const Cards: React.FC = () => {
       {(!userdetails.isAdmin) && (
         <div className={styles.tagsContainer}>
           <span className={styles.tag}>
-            <p className={styles.totalDeals}>TOTAL DEALS:</p>
+            <p className={styles.totalDeals}>TOTAL DEALS</p>
             <p className={styles.deals}>
               <p className={styles.totalDeal}>{deal.totalDeals}</p>
             </p>
@@ -193,13 +193,13 @@ const Cards: React.FC = () => {
                 <div className={styles.dealsteps}>
                   <div className={styles.nameHeader}>DEAL #{deal.id}</div>
                   {(deal.activeStep < 6 && (!userdetails.isAdmin)) && 
-                  <div className={styles.stepsinfo}>
+                  <div className={styles.stepsinfo} title='Next Milstone'>
                     <BiRightArrowCircle />
-                    <span title='Next Milstone'>{getLabelForActiveStep(deal.activeStep + 1)}</span>
+                    <span>{getLabelForActiveStep(deal.activeStep + 1)}</span>
                   </div>}
                   {(deal.activeStep > 6 && (!userdetails.isAdmin)) && 
-                  <div className={styles.stepsinfo}>
-                    <span>Potential Commission : ${deal.potentialCommission}</span>
+                  <div className={styles.stepsinfo} title='Deal Completed'>
+                    <span >Commission : $ {deal.potentialCommission}</span>
                   </div>}
                 </div>
 
