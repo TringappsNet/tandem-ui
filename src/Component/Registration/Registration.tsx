@@ -10,8 +10,6 @@ import backgroundImage from './bg-login.png';
 import SnackbarComponent from '../Snackbar/Snackbar';
 
 
-
-
 const Registration: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -363,6 +361,7 @@ const Registration: React.FC = () => {
                       type="text"
                       id="firstName"
                       placeholder="Enter your first name"
+                      autoComplete='new-password'
                       value={firstName}
                       ref={firstNameRef}
                       autoFocus
@@ -376,6 +375,7 @@ const Registration: React.FC = () => {
                     <input
                       type="text"
                       id="lastName"
+                      autoComplete='new-password'
                       placeholder="Enter your last name"
                       ref={lastNameRef}
                       value={lastName}
@@ -392,6 +392,7 @@ const Registration: React.FC = () => {
                       type="text"
                       id="address"
                       placeholder="Enter your address"
+                      autoComplete='new-password'
                       ref={addressRef}
                       value={address}
                       onChange={(e) => {
@@ -405,6 +406,7 @@ const Registration: React.FC = () => {
                     <input
                       type="number"
                       id="mobileNo"
+                      autoComplete='new-password'
                       placeholder="Enter your mobile number"
                       ref={mobileNoRef}
                       value={mobileNo}
@@ -420,6 +422,7 @@ const Registration: React.FC = () => {
                     <input
                       type="text"
                       id="city"
+                      autoComplete='new-password'
                       placeholder="Enter your city"
                       ref={cityRef}
                       value={city}
@@ -433,6 +436,7 @@ const Registration: React.FC = () => {
                     <input
                       type="text"
                       id="state"
+                      autoComplete='new-password'
                       placeholder="Enter your state"
                       ref={stateRef}
                       value={state}
@@ -448,6 +452,7 @@ const Registration: React.FC = () => {
                     <input
                       type="text"
                       id="country"
+                      autoComplete='new-password'
                       placeholder="Enter your country"
                       ref={countryRef}
                       value={country}

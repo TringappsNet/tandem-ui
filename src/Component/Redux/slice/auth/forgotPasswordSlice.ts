@@ -93,11 +93,11 @@ export const forgotPassword =
                 'You are not a registered user. Please register.'
               )
             );
-          } else if (status === 404 && data.message === 'User not found') {
+          } else if (status === 404 && data.message === 'The account associated with this user was not found') {
             dispatch(forgotPasswordFailure('User not found'));
           } else {
             dispatch(
-              forgotPasswordFailure('An error occurred. Please try again.')
+              forgotPasswordFailure('User not found.')
             );
           }
         } else {
