@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBrokersData } from '../../Redux/slice/broker/brokerDataSlice';
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 import FullGrid from '../parentGrid/parent-grid';
 import { RootState } from '../../Redux/reducers';
