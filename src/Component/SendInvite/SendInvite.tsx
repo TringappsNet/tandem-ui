@@ -100,73 +100,75 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
       {open && showInviteForm && (
         <div className={styles.formContainer}>
           <div className={styles.headerLine}>
-          <h2>Send Invite</h2>
+            <h2>Send Invite</h2>
           </div>
-          <div className= {styles.body}>
-          {responseMessage && (
-            <div
-              className={classNames(styles.responseMessage, {
-                [styles.success]: responseType === 'success',
-                [styles.error]: responseType === 'error',
-              })}
-            >
-              {responseMessage}
-            </div>
-          )}
-          {emailError && (
-                <div className={styles.emailerror}>
-                  {emailError}
-                </div>
-          )}
-          <form onSubmit={handleSendInvite} autoComplete="off" noValidate>
-            <div className={styles.formGroup}>
-              <label htmlFor="email">Email:</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Enter your email"
-                autoFocus
-                value={email}
-                onChange={handleEmailChange}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="roleId">Role:</label>
-              <div className={styles.selectWrapper}>
-                <select
-                  id="roleId"
-                  name="roleId"
-                  ref={selectRef}
-                  className={styles.customSelect}
-                  value={roleId ?? ''}
-                  onChange={(e) => setRoleId(Number(e.target.value))}
-                >
-                  <option value="" disabled>
-                    Select a role
-                  </option>
-                  {roles.map((role) => (
-                    <option key={role.id} value={role.id}>
-                      {role.roleName}
-                    </option>
-                  ))}
-                </select>
+          <div className={styles.body}>
+            {responseMessage && (
+              <div
+                className={classNames(styles.responseMessage, {
+                  [styles.success]: responseType === 'success',
+                  [styles.error]: responseType === 'error',
+                })}
+              >
+                {responseMessage}
               </div>
-            </div>
-            <button type="submit" disabled={isLoading || rolesLoading}>
-              {isLoading ? 'Sending Invite' : 'Send Invite'}
-            </button>
-          </form>
-          {(isLoading || rolesLoading) && (
-            <div className={styles.loaderContainer}>
-              <div className={styles.loader}></div>
-            </div>
-          )}
-          {rolesError && (
-            <div className={styles.error}>
-              Error loading roles: {rolesError}
-            </div>
-          )}
+            )}
+            {emailError && (
+              <div className={styles.emailerror}>
+                {emailError}
+              </div>
+            )}
+            <form onSubmit={handleSendInvite} autoComplete="off" noValidate>
+              <div className={styles.formGroup}>
+                <label htmlFor="email">Email:</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  role="presentation"
+                  autoComplete='off'
+                  placeholder="Enter your email"
+                  autoFocus
+                  value={email}
+                  onChange={handleEmailChange}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="roleId">Role:</label>
+                <div className={styles.selectWrapper}>
+                  <select
+                    id="roleId"
+                    name="roleId"
+                    ref={selectRef}
+                    className={styles.customSelect}
+                    value={roleId ?? ''}
+                    onChange={(e) => setRoleId(Number(e.target.value))}
+                  >
+                    <option value="" disabled>
+                      Select a role
+                    </option>
+                    {roles.map((role) => (
+                      <option key={role.id} value={role.id}>
+                        {role.roleName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <button type="submit" disabled={isLoading || rolesLoading}>
+                {isLoading ? 'Sending Invite' : 'Send Invite'}
+              </button>
+            </form>
+            {(isLoading || rolesLoading) && (
+              <div className={styles.loaderContainer}>
+                <div className={styles.loader}></div>
+              </div>
+            )}
+            {rolesError && (
+              <div className={styles.error}>
+                Error loading roles: {rolesError}
+              </div>
+            )}
           </div>
         </div>
       )}

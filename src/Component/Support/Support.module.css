@@ -69,7 +69,7 @@ html {
   padding: 0.5rem;
   padding-top: 12px;
   font-size: 24px;
-  margin-left: 410px;
+  margin-left: 480px;
   text-align: left;
   font-family: 'Open Sans', sans-serif;
   width: 300px;
@@ -85,11 +85,11 @@ html {
 
 .formGroup input,
 .formGroup textarea {
-  padding: 0.5rem;
+  padding: 0.8rem;
   border: 1px solid #ccc;
   background-color: #f2f2f4;
   border-radius: 8px;
-  width: 344px;
+  width: 500px;
   font-size: 1rem;
   font-family: 'Public Sans', sans-serif;
 }
