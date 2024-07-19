@@ -125,6 +125,8 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
                   type="email"
                   id="email"
                   name="email"
+                  role="presentation"
+                  autoComplete='off'
                   placeholder="Enter your email"
                   autoFocus
                   value={email}

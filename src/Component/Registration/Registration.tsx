@@ -361,7 +361,8 @@ const Registration: React.FC = () => {
                       type="text"
                       id="firstName"
                       placeholder="Enter your first name"
-                      autoComplete='new-password'
+                      role="presentation"
+                      autoComplete='off'
                       value={firstName}
                       ref={firstNameRef}
                       autoFocus
@@ -375,7 +376,8 @@ const Registration: React.FC = () => {
                     <input
                       type="text"
                       id="lastName"
-                      autoComplete='new-password'
+                      role="presentation"
+                      autoComplete='off'
                       placeholder="Enter your last name"
                       ref={lastNameRef}
                       value={lastName}
@@ -392,7 +394,8 @@ const Registration: React.FC = () => {
                       type="text"
                       id="address"
                       placeholder="Enter your address"
-                      autoComplete='new-password'
+                      role="presentation"
+                      autoComplete='off'
                       ref={addressRef}
                       value={address}
                       onChange={(e) => {
@@ -406,7 +409,8 @@ const Registration: React.FC = () => {
                     <input
                       type="number"
                       id="mobileNo"
-                      autoComplete='new-password'
+                      role="presentation"
+                      autoComplete='off'
                       placeholder="Enter your mobile number"
                       ref={mobileNoRef}
                       value={mobileNo}
@@ -422,7 +426,8 @@ const Registration: React.FC = () => {
                     <input
                       type="text"
                       id="city"
-                      autoComplete='new-password'
+                      role="presentation"
+                      autoComplete='off'
                       placeholder="Enter your city"
                       ref={cityRef}
                       value={city}
@@ -436,7 +441,8 @@ const Registration: React.FC = () => {
                     <input
                       type="text"
                       id="state"
-                      autoComplete='new-password'
+                      role="presentation"
+                      autoComplete='off'
                       placeholder="Enter your state"
                       ref={stateRef}
                       value={state}
@@ -452,7 +458,8 @@ const Registration: React.FC = () => {
                     <input
                       type="text"
                       id="country"
-                      autoComplete='new-password'
+                      role="presentation"
+                      autoComplete='off'
                       placeholder="Enter your country"
                       ref={countryRef}
                       value={country}
@@ -467,6 +474,8 @@ const Registration: React.FC = () => {
                       type="number"
                       id="zipcode"
                       placeholder="Enter your zipcode"
+                      role="presentation"
+                      autoComplete='off'
                       ref={zipcodeRef}
                       value={zipcode}
                       onChange={(e) => {
