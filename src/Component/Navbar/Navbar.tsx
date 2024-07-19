@@ -42,13 +42,15 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const dispatch = useDispatch<AppDispatch>();
   const userdetails = useSelector((state: RootState) => state.auth);
-  const sites = useSelector(
+  const filteredSites = useSelector(
     (state: RootState) => state.site.filteredSites
   );
   const deals = useSelector((state: RootState) => state.deal.dealDetails);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<string>('dashboard');
-  const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
+  const [selectedComponent, setSelectedComponent] = useState<string | null>(
+    null
+  );
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -61,7 +63,12 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const inviteOpen = useSelector((state: RootState) => state.sendInvite.open);
   const resetOpen = useSelector((state: RootState) => state.reset.open);
   const supportOpen = useSelector((state: RootState) => state.contact.open);
-  const filteredSites = sites.filter(
+
+  useEffect(() => {
+    dispatch(setFilteredSites(sites));
+  }, [dispatch]);
+
+  const sites = filteredSites.filter(
     (site) =>
       !deals.some(
         (deal) =>
@@ -69,11 +76,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       )
   );
 
-  useEffect(() => {
-    dispatch(setFilteredSites(filteredSites));
-  }, [dispatch, filteredSites]);
-
-     const handleOpenPopup = (componentName: string) => {
+  const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
     setOpenPopup(true);
 
@@ -193,7 +196,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   };
 
   const handleCreateDealClick = () => {
-    if (sites.length === 0) {
+    if (filteredSites.length === 0) {
       setSnackbarMessage(
         'Unable to create deal, properties are either assigned or unavailable !'
       );
