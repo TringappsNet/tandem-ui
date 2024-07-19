@@ -59,22 +59,16 @@
 
 .container {
   padding: 2.5rem 2.5rem;
-  /* background-color: #f0f3f7; */
-  /* background-color: #ebedf0e3; */
-  background-color: #dddddd;
-  /* background: rgb(59, 73, 116);
-  background: linear-gradient(90deg, rgba(59, 73, 116, 1) 0%, rgba(45, 53, 60, 1) 100%); */
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-shadow-color: #f1f5f9;
-  --tw-shadow: var(--tw-shadow-colored);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  background-color: #F5F5F5;
+  border: 1px solid #E0E0E0;
   border-radius: 0.5rem;
   width: 120%;
   max-width: 1200px;
   box-sizing: border-box;
   max-height: 650px;
+  box-shadow:
+    0 0 2px rgba(219, 221, 222, 0.1),
+    0 0 0 1px rgba(219, 221, 222, 0.1);
 }
 
 .mainCard {

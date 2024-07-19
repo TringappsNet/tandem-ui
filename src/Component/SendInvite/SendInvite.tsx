@@ -51,6 +51,15 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
     console.log('Roles in send invite:', roles);
   }, [roles]);
 
+  useEffect(() => {
+    if (open) {
+      setEmail('');
+      setEmailError('');
+      setRoleId(null);
+      dispatch(resetResponse());
+    }
+  }, [open, dispatch]);
+
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -62,6 +71,7 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
       setEmailError('');
     }
   };
+
   const handleSendInvite = async (e: React.FormEvent) => {
     e.preventDefault();
 
