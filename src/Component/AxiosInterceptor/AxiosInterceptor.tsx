@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
 
   // baseURL: "http://localhost:3008/api",
   // baseURL: 'http://192.168.1.223:3008/api', 
-  baseURL: 'http://43.205.44.92:3008/', 
+  baseURL: 'http://43.205.44.92/api', 
 
 });
 
