@@ -150,6 +150,8 @@ html {
   align-items: center;
   padding: 0.5rem;
   border-bottom: 1px solid #e9ecef;
+  text-transform: none !important;
+
 }
 
 .profileItem:last-child {

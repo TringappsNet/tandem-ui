@@ -64,7 +64,7 @@ const Main: React.FC = () => {
       </p>
       <div className={styles.tagsContainer}>
         <span className={styles.tag}>
-          <p className={styles.totalDeals}>TOTAL DEALS:</p>
+          <p className={styles.totalDeals}>TOTAL DEALS</p>
           <p className={styles.deals}>
             <p className={styles.totalDeal}>{dealData.totalDeals}</p>
           </p>
