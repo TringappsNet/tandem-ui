@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.651d035c.css",
-    "main.js": "/static/js/main.5b4e6aa2.js",
+    "main.css": "/static/css/main.1ae2ad4f.css",
+    "main.js": "/static/js/main.59512904.js",
     "static/js/453.461595e8.chunk.js": "/static/js/453.461595e8.chunk.js",
     "static/media/bg-login.png": "/static/media/bg-login.a5ad9be47bf9a0253018.png",
-    "static/media/mail.png": "/static/media/mail.8bf8fd9890a9aa221cf7.png",
+    "static/media/mail.png": "/static/media/mail.e82e41cf4b78fbaa840d.png",
     "static/media/globe.png": "/static/media/globe.558ae3641ca99e790fb6.png",
     "static/media/public-sans-latin-400-normal.woff": "/static/media/public-sans-latin-400-normal.c49c54e2dace7c6c0d24.woff",
     "static/media/oswald-latin-400-normal.woff": "/static/media/oswald-latin-400-normal.fa6c4af7592d0435ccb7.woff",
@@ -25,12 +25,12 @@
     "static/media/public-sans-vietnamese-400-normal.woff2": "/static/media/public-sans-vietnamese-400-normal.cd61d3bcc45fcd8389b9.woff2",
     "static/media/oswald-vietnamese-400-normal.woff2": "/static/media/oswald-vietnamese-400-normal.a3465efd849ea2f438ef.woff2",
     "index.html": "/index.html",
-    "main.651d035c.css.map": "/static/css/main.651d035c.css.map",
-    "main.5b4e6aa2.js.map": "/static/js/main.5b4e6aa2.js.map",
+    "main.1ae2ad4f.css.map": "/static/css/main.1ae2ad4f.css.map",
+    "main.59512904.js.map": "/static/js/main.59512904.js.map",
     "453.461595e8.chunk.js.map": "/static/js/453.461595e8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.651d035c.css",
-    "static/js/main.5b4e6aa2.js"
+    "static/css/main.1ae2ad4f.css",
+    "static/js/main.59512904.js"
   ]
 }
