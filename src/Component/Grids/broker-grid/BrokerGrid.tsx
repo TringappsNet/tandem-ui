@@ -78,7 +78,7 @@ const BrokerGrid: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: 'fullName', headerName: 'Name', width: 170 },
+    { field: 'fullName', headerName: 'Tandem Users', width: 170 },
     { field: 'roleName', headerName: 'Role', width: 130 },
     { field: 'mobile', headerName: 'Mobile', width: 150 },
     { field: 'totalDeals', headerName: 'Total Deals', width: 150 },

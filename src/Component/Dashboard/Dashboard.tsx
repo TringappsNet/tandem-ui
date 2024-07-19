@@ -19,7 +19,7 @@ const Dashboard: React.FC = () => {
   }
 
   const links = [
-    { name: 'Site', href: '/dashboard/site', disabled: true },
+    { name: 'Property', href: '/dashboard/property', disabled: true },
     { name: 'Landlord', href: '/dashboard/landlord', disabled: true },
     { name: 'Cards', href: '/dashboard/cards', disabled: true },
     { name: 'InviteBroker', href: '/dashboard/invitebroker', disabled: true },
@@ -31,19 +31,19 @@ const Dashboard: React.FC = () => {
       <div className={styles.mainContent}>
         <Routes>
           {user && !user.isAdmin ? (
-            <Route path="/" element={<Navigate to="/cards" />} />
+            <Route path="/" element={<Navigate to="/deals" />} />
           ) : (
             <Route path="/" element={<Main />} />
           )}
-          <Route path="/cards" element={<Cards />} />
+          <Route path="/deals" element={<Cards />} />
           {user && user.isAdmin && (
             <>
-              <Route path="/site" element={<SiteGrid />} />
+              <Route path="/property" element={<SiteGrid />} />
               <Route path="/landlord" element={<LandlordGrid />} />
               <Route path="/invitebroker" element={<InviteBrokerGrid />} />
             </>
           )}
-          <Route path="*" element={<Navigate to="/dashboard/cards" />} />
+          <Route path="*" element={<Navigate to="/dashboard" />} />
         </Routes>
       </div>
     </div>
