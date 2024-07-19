@@ -13,9 +13,12 @@ const Main: React.FC = () => {
   const userdetails = useSelector((state: RootState) => state.auth.user);
   const deals = useSelector((state: RootState) => state.deal.dealDetails);
   const dealData = useSelector((state: RootState) => state.dealData.deal);
-  const dealsOpenedPercentage = (dealData.dealsOpened / dealData.totalDeals) * 100;
-  const dealsInProgressPercentage = (dealData.dealsInProgress / dealData.totalDeals) * 100;
-  const dealsClosedPercentage = (dealData.dealsClosed / dealData.totalDeals) * 100;
+  const dealsOpenedPercentage =
+    (dealData.dealsOpened / dealData.totalDeals) * 100;
+  const dealsInProgressPercentage =
+    (dealData.dealsInProgress / dealData.totalDeals) * 100;
+  const dealsClosedPercentage =
+    (dealData.dealsClosed / dealData.totalDeals) * 100;
 
   useEffect(() => {
     dispatch(fetchDeals());
@@ -32,17 +35,21 @@ const Main: React.FC = () => {
   });
   const dealsOpenedLast7Days = deals.filter((deal) => {
     if (!deal.createdAt) return false;
-    if (deal.activeStep > 1 && deal.activeStep < 7){
-    const dealStartDate = new Date(deal.dealStartDate);
-    return dealStartDate >= sevenDaysAgo;
-  }});
-  const dealsClosedLast7Days = deals.filter((deal) => {
-    if (deal.activeStep === 7){
-    if (!deal.createdAt) return false;
-    const createdAt = new Date(deal.createdAt);
-    return createdAt >= sevenDaysAgo;
-  }});
+    if (deal.activeStep > 1 && deal.activeStep < 7) {
+      const dealStartDate = new Date(deal.dealStartDate);
+      return dealStartDate >= sevenDaysAgo;
+    }
+    return false;
+  });
 
+  const dealsClosedLast7Days = deals.filter((deal) => {
+    if (deal.activeStep === 7) {
+      if (!deal.createdAt) return false;
+      const createdAt = new Date(deal.createdAt);
+      return createdAt >= sevenDaysAgo;
+    }
+    return false;
+  });
 
   return (
     <>
@@ -68,7 +75,9 @@ const Main: React.FC = () => {
             <p className={styles.totalDeal}>{dealData.dealsOpened}</p>
           </p>
           <LinearProgress variant="determinate" value={dealsOpenedPercentage} />
-          <p className={styles.add_content}>Deals created last week ({dealsCreatedLast7Days.length})</p>
+          <p className={styles.add_content}>
+            Deals created last week ({dealsCreatedLast7Days.length})
+          </p>
         </span>
 
         <span className={styles.tag}>
@@ -76,8 +85,13 @@ const Main: React.FC = () => {
           <p className={styles.deals}>
             <p className={styles.totalDeal}>{dealData.dealsInProgress}</p>
           </p>
-          <LinearProgress variant="determinate" value={dealsInProgressPercentage} />
-          <p className={styles.add_content}>Deals pending from last week ({dealsOpenedLast7Days.length})</p>
+          <LinearProgress
+            variant="determinate"
+            value={dealsInProgressPercentage}
+          />
+          <p className={styles.add_content}>
+            Deals pending from last week ({dealsOpenedLast7Days.length})
+          </p>
         </span>
 
         <span className={styles.tag}>
@@ -86,7 +100,9 @@ const Main: React.FC = () => {
             <p className={styles.totalDeal}>{dealData.dealsClosed}</p>
           </p>
           <LinearProgress variant="determinate" value={dealsClosedPercentage} />
-          <p className={styles.add_content}>Deals closed last week ({dealsClosedLast7Days.length})</p>
+          <p className={styles.add_content}>
+            Deals closed last week ({dealsClosedLast7Days.length})
+          </p>
         </span>
 
         <span className={styles.tag}>
@@ -95,7 +111,6 @@ const Main: React.FC = () => {
             <p className={styles.totalDeal}>${dealData.totalCommission}</p>
           </p>
         </span>
-
       </div>
       <div>
         <BrokerGrid />
