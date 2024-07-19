@@ -29,7 +29,7 @@ import { RiLockPasswordLine } from 'react-icons/ri';
 import { BiSupport } from 'react-icons/bi';
 import { IoLogOutOutline } from 'react-icons/io5';
 import SnackbarComponent from '../Snackbar/Snackbar';
-import { fetchSites, setFilteredSites } from '../Redux/slice/site/siteSlice';
+import { setFilteredSites } from '../Redux/slice/site/siteSlice';
 interface NavbarProps {
   links: {
     disabled: boolean | undefined;
@@ -42,15 +42,13 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const dispatch = useDispatch<AppDispatch>();
   const userdetails = useSelector((state: RootState) => state.auth);
-  const filteredSites = useSelector(
+  const sites = useSelector(
     (state: RootState) => state.site.filteredSites
   );
   const deals = useSelector((state: RootState) => state.deal.dealDetails);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<string>('dashboard');
-  const [selectedComponent, setSelectedComponent] = useState<string | null>(
-    null
-  );
+  const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -63,22 +61,19 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const inviteOpen = useSelector((state: RootState) => state.sendInvite.open);
   const resetOpen = useSelector((state: RootState) => state.reset.open);
   const supportOpen = useSelector((state: RootState) => state.contact.open);
+  const filteredSites = sites.filter(
+    (site) =>
+      !deals.some(
+        (deal) =>
+          deal.propertyName === `${site.addressline1}, ${site.addressline2}`
+      )
+  );
 
   useEffect(() => {
-    dispatch(fetchSites());
-    dispatch(setFilteredSites(sites));
+    dispatch(setFilteredSites(filteredSites));
+  }, [dispatch, filteredSites]);
 
-  }, [dispatch]);
-
-    const sites = filteredSites.filter(
-      (site) =>
-        !deals.some(
-          (deal) =>
-            deal.propertyName === `${site.addressline1}, ${site.addressline2}`
-        )
-    );
-
-  const handleOpenPopup = (componentName: string) => {
+     const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
     setOpenPopup(true);
 
@@ -198,7 +193,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   };
 
   const handleCreateDealClick = () => {
-    if (filteredSites.length === 0) {
+    if (sites.length === 0) {
       setSnackbarMessage(
         'Unable to create deal, properties are either assigned or unavailable !'
       );
