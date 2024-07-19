@@ -95,7 +95,7 @@ const ForgotPassword: React.FC = () => {
           </div>
 
           <div className={styles.formContainer}>
-            <p className={styles.reset}>Reset your password here</p>
+            <p className={styles.reset}>Enter your email to receive a password reset link</p>
 
             <form className={styles.loginsection} onSubmit={handleSubmit} noValidate>
               <div className={styles.inputGroup}>
