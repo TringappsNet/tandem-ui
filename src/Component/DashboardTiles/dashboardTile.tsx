@@ -5,8 +5,8 @@ import BrokerGrid from '../Grids/broker-grid/BrokerGrid';
 import { fetchDeals } from '../Redux/slice/deal/dealsDataSlice';
 import { RootState } from '../Redux/reducers';
 import { AppDispatch } from '../Redux/store';
-import { fetchSites } from '../Redux/slice/site/siteSlice';
 import LinearProgress from '@mui/material/LinearProgress';
+import { fetchDealDetails } from '../Redux/slice/deal/dealSlice';
 
 const Main: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,7 +22,7 @@ const Main: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchDeals());
-    dispatch(fetchSites());
+    dispatch(fetchDealDetails());
   }, [dispatch]);
 
   const sevenDaysAgo = new Date();
