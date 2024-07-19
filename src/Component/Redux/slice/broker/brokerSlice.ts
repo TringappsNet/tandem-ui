@@ -67,14 +67,37 @@ export const { fetchBrokersStart, fetchBrokersSuccess, fetchBrokersFailure } =
 
 export default brokerSlice.reducer;
 
-export const fetchBrokers =
-  (): AppThunk<void> => async (dispatch: Dispatch) => {
-    try {
-      dispatch(fetchBrokersStart());
-      const response = await axiosInstance.get('/brokers/all-users');
-      dispatch(fetchBrokersSuccess(response.data));
-    } catch (error) {
-      console.error('Error fetching brokers:', error);
-      dispatch(fetchBrokersFailure((error as Error).message));
-    }
-  };
+export const fetchBrokers = (): AppThunk<void> => async (dispatch: Dispatch) => {
+  try {
+    dispatch(fetchBrokersStart());
+    const response = await axiosInstance.get('/brokers');
+    const brokers = response.data.map((broker: any) => {
+      const fullName = `${broker.user.firstName} ${broker.user.lastName}`;
+      const roleName = broker.roleId === 1 ? 'Admin' : 'Broker';
+      return {
+        id: broker.user.id,
+        email: broker.user.email,
+        fullName: fullName,
+        firstName: broker.user.firstName,
+        lastName: broker.user.lastName,
+        mobile: broker.user.mobile,
+        address: broker.user.address,
+        city: broker.user.city,
+        state: broker.user.state,
+        country: broker.user.country,
+        zipcode: broker.user.zipcode,
+        isActive: broker.user.isActive,
+        totalDeals: broker.totalDeals,
+        dealsOpened: broker.dealsOpened,
+        dealsInProgress: broker.dealsInProgress,
+        dealsClosed: broker.dealsClosed,
+        totalCommission: broker.totalCommission,
+        roleName: roleName,
+      };
+    });
+    dispatch(fetchBrokersSuccess(brokers));
+  } catch (error) {
+    console.error('Error fetching brokers:', error);
+    dispatch(fetchBrokersFailure((error as Error).message));
+  }
+};

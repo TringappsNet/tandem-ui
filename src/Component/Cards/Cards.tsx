@@ -36,6 +36,7 @@ const Cards: React.FC = () => {
     }
   }, [dispatch, userdetails]);
 
+
   const editDealForm = (deal: Deal) => {
     dispatch(setCurrentDeal(deal));
     dispatch(openDealForm());
