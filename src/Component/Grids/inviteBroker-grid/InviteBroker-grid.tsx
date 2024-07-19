@@ -59,6 +59,7 @@ const InviteBroker: React.FC = () => {
     null
   );
   const brokers = useSelector((state: RootState) => state.inviteBroker.brokers);
+  const brokersData = useSelector((state: RootState) => state.broker.brokers);
   const [formData, setFormData] = useState<Site>({
     id: 0,
     email: '',
