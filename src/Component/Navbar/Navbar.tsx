@@ -30,6 +30,7 @@ import { BiSupport } from "react-icons/bi";
 import { IoLogOutOutline } from 'react-icons/io5';
 import SnackbarComponent from '../Snackbar/Snackbar';
 import { fetchSites } from '../Redux/slice/site/siteSlice';
+import { fetchDealDetails } from '../Redux/slice/deal/dealSlice';
 interface NavbarProps {
   links: {
     disabled: boolean | undefined;
@@ -63,6 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
 
   useEffect(() => {
     dispatch(fetchSites());
+    dispatch(fetchDealDetails())
   }, [dispatch]);
 
   useEffect(() => {
