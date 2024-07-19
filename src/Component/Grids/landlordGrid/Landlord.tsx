@@ -159,7 +159,7 @@ const LandlordGrid: React.FC = () => {
       renderCell: (params) => (
         <>
           <FiEdit
-            style={{marginRight: 28, cursor: 'pointer' }}
+            style={{ marginRight: 28, cursor: 'pointer' }}
             onClick={() => handleEdit(params.row.id)}
           />
           <FiTrash
@@ -248,7 +248,7 @@ const LandlordGrid: React.FC = () => {
           width: '200px',
           position: 'relative',
           float: 'right',
-          background:'linear-gradient(58deg, rgb(35 39 43) 0%, rgb(45, 53, 60) 35%, rgb(32 46 59) 100%)'
+          background: 'linear-gradient(58deg, rgb(35 39 43) 0%, rgb(45, 53, 60) 35%, rgb(32 46 59) 100%)'
         }}
         onClick={() => handleEditNew(true)}
       >
@@ -277,8 +277,8 @@ const LandlordGrid: React.FC = () => {
         confirmVariant="danger"
       />
 
-      <Dialog open={open} onClose={handleClose} sx={{width:1}}>
-        <DialogTitle style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff',textTransform:'uppercase' }}>
+      <Dialog open={open} onClose={handleClose} sx={{ width: 1 }}>
+        <DialogTitle style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff', textTransform: 'uppercase' }}>
           {formData.id ? 'Edit Landlord' : 'Add Landlord'}
 
           <IconButton
@@ -287,7 +287,7 @@ const LandlordGrid: React.FC = () => {
               handleClose();
             }}
             sx={{
-              padding:0
+              padding: 0
             }}
           >
             <CloseIcon sx={{ color: '#fff' }} />
@@ -306,7 +306,7 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.name}
             helperText={formErrors.name}
-            autoComplete="off"
+            autoComplete="new-password"
           />
           <TextField
             margin="dense"
@@ -319,7 +319,7 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.phoneNumber}
             helperText={formErrors.phoneNumber}
-            autoComplete="off"
+            autoComplete="new-password"
           />
           <TextField
             margin="dense"
@@ -332,7 +332,7 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.email}
             helperText={formErrors.email}
-            autoComplete="off"
+            autoComplete="new-password"
           />
           <TextField
             margin="dense"
@@ -345,7 +345,7 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.address1}
             helperText={formErrors.address1}
-            autoComplete="off"
+            autoComplete="new-password"
           />
           <TextField
             margin="dense"
@@ -358,7 +358,7 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.address2}
             helperText={formErrors.address2}
-            autoComplete="off"
+            autoComplete="new-password"
           />
           <TextField
             margin="dense"
@@ -371,7 +371,7 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.city}
             helperText={formErrors.city}
-            autoComplete="off"
+            autoComplete="new-password"
           />
           <TextField
             margin="dense"
@@ -384,7 +384,7 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.state}
             helperText={formErrors.state}
-            autoComplete="off"
+            autoComplete="new-password"
           />
           <TextField
             margin="dense"
@@ -397,7 +397,7 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.country}
             helperText={formErrors.country}
-            autoComplete="off"
+            autoComplete="new-password"
           />
           <TextField
             margin="dense"
@@ -410,10 +410,10 @@ const LandlordGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.zipcode}
             helperText={formErrors.zipcode}
-            autoComplete="off"
+            autoComplete="new-password"
           />
         </DialogContent>
-        <DialogActions sx={{ paddingTop: 2, paddingBottom: 2, paddingRight:2}}>
+        <DialogActions sx={{ paddingTop: 2, paddingBottom: 2, paddingRight: 2 }}>
           <Button
             onClick={handleClose}
             size='small'
