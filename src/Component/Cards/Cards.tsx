@@ -14,7 +14,8 @@ import ConfirmationModal from '../AlertDialog/AlertDialog';
 import { setCurrentDeal } from '../Redux/slice/deal/currentDeal';
 import { Deal } from '../Interface/DealFormObject';
 import { fetchBrokerDeals } from '../Redux/slice/deal/dealsDataSlice';
-
+import ProgressSteps from '../Progress/ProgressSteps';
+import { BiRightArrowCircle } from 'react-icons/bi';
 
 const Cards: React.FC = () => {
   const userdetails = useSelector((state: RootState) => state.auth);
@@ -30,10 +31,11 @@ const Cards: React.FC = () => {
     if (userdetails.isAdmin === true) {
       dispatch(fetchDealDetails());
     } else if (userdetails.isAdmin === false) {
-      dispatch(fetchBrokerDeals(userdetails.user?.id || 0))
+      dispatch(fetchBrokerDeals(userdetails.user?.id || 0));
       dispatch(fetchBrokerDealDetails(userdetails.user?.id || 0));
     }
   }, [dispatch, userdetails]);
+
 
   const editDealForm = (deal: Deal) => {
     dispatch(setCurrentDeal(deal));
@@ -87,9 +89,25 @@ const Cards: React.FC = () => {
     return matchesSearch && matchesStatus && deal.id !== null;
   });
 
+  const events = [
+    { label: 'Deal Start' },
+    { label: 'Proposal' },
+    { label: 'LOI Execute' },
+    { label: 'Lease Signed' },
+    { label: 'Notice to Proceed' },
+    { label: 'Commercial Operation' },
+    { label: 'Potential Commission Date' },
+  ];
+
+  const getLabelForActiveStep = (activeStep: number) => {
+    if (activeStep >= 1 && activeStep <= events.length) {
+      return events[activeStep - 1].label;
+    }
+    return '';
+  };
+
   return (
     <>
-
       <div className={styles.filterContainer}>
         <input
           type="text"
@@ -110,52 +128,44 @@ const Cards: React.FC = () => {
         </select>
       </div>
       {/* Another Styling Tiles for broker  */}
-      {/* {(userdetails.isAdmin) &&
-        <div className={styles.tailscontainer}>
-          <p className={styles.totadeals}><span>TOTALDEALS</span> <span>{deal.totalDeals}</span></p>
-          <p className={styles.delasopened}><span>DEALSSTARTED</span><span>{deal.dealsOpened}</span></p>
-          <p className={styles.dealsinprogress}><span>DEALSINPROGRESS</span><span>{deal.dealsInProgress}</span></p>
-          <p className={styles.dealsclosed}><span>DEALSCOMPLETED</span><span>{deal.dealsClosed}</span></p>
-          <p className={styles.totalcommission}><span>TOTALCOMMISSION</span><span>{deal.totalCommission}</span></p>
+      {(!userdetails.isAdmin) && (
+        <div className={styles.tagsContainer}>
+          <span className={styles.tag}>
+            <p className={styles.totalDeals}>TOTAL DEALS:</p>
+            <p className={styles.deals}>
+              <p className={styles.totalDeal}>{deal.totalDeals}</p>
+            </p>
+          </span>
+
+          <span className={styles.tag}>
+            <p className={styles.totalDeals}>DEALS OPENED</p>
+            <p className={styles.deals}>
+              <p className={styles.totalDeal}>{deal.dealsOpened}</p>
+            </p>
+          </span>
+
+          <span className={styles.tag}>
+            <p className={styles.totalDeals}>DEALS IN PROGRESS</p>
+            <p className={styles.deals}>
+              <p className={styles.totalDeal}>{deal.dealsInProgress}</p>
+            </p>
+          </span>
+
+          <span className={styles.tag}>
+            <p className={styles.totalDeals}>DEALS CLOSED</p>
+            <p className={styles.deals}>
+              <p className={styles.totalDeal}>{deal.dealsClosed}</p>
+            </p>
+          </span>
+
+          <span className={styles.tag}>
+            <p className={styles.totalDeals}>TOTAL COMMISSION</p>
+            <p className={styles.deals}>
+              <p className={styles.totalDeal}>${deal.totalCommission}</p>
+            </p>
+          </span>
         </div>
-      } */}
-      {(!userdetails.isAdmin) && 
-      <div className={styles.tagsContainer}>
-        <span className={styles.tag}>
-          <p className={styles.totalDeals}>TOTAL DEALS:</p>
-          <p className={styles.deals}>
-            <p className={styles.totalDeal}>{deal.totalDeals}</p>
-          </p>
-        </span>
-
-        <span className={styles.tag}>
-          <p className={styles.totalDeals}>DEALS OPENED</p>
-          <p className={styles.deals}>
-            <p className={styles.totalDeal}>{deal.dealsOpened}</p>
-          </p>
-        </span>
-
-        <span className={styles.tag}>
-          <p className={styles.totalDeals}>DEALS IN PROGRESS</p>
-          <p className={styles.deals}>
-            <p className={styles.totalDeal}>{deal.dealsInProgress}</p>
-          </p>
-        </span>
-
-        <span className={styles.tag}>
-          <p className={styles.totalDeals}>DEALS CLOSED</p>
-          <p className={styles.deals}>
-            <p className={styles.totalDeal}>{deal.dealsClosed}</p>
-          </p>
-        </span>
-
-        <span className={styles.tag}>
-          <p className={styles.totalDeals}>TOTAL COMMISSION</p>
-          <p className={styles.deals}>
-            <p className={styles.totalDeal}>${deal.totalCommission}</p>
-          </p>
-        </span>
-      </div>}
+      )}
       <div className={styles.cardList}>
         {filteredDeals.length > 0 ? (
           filteredDeals.map((deal: Deal) => (
@@ -178,15 +188,21 @@ const Cards: React.FC = () => {
                   <div className={styles.nameHeader}>
                     <div className={styles.name}>{deal.propertyName}</div>
                   </div>
-
-                  {/* {userdetails?.roleId === 2 && (
-                    <div className={styles.hide}>
-                      <FiEdit onClick={() => editDealForm(deal)} />
-                    </div>
-                  )} */}
                 </div>
                 <hr className={styles.line} />
-                <div className={styles.nameHeader}>DEAL #{deal.id}</div>
+                <div className={styles.dealsteps}>
+                  <div className={styles.nameHeader}>DEAL #{deal.id}</div>
+                  {(deal.activeStep < 6 && (!userdetails.isAdmin)) && 
+                  <div className={styles.stepsinfo}>
+                    <BiRightArrowCircle />
+                    <span title='Next Milstone'>{getLabelForActiveStep(deal.activeStep + 1)}</span>
+                  </div>}
+                  {(deal.activeStep > 6 && (!userdetails.isAdmin)) && 
+                  <div className={styles.stepsinfo}>
+                    <span>Potential Commission : ${deal.potentialCommission}</span>
+                  </div>}
+                </div>
+
               </div>
               <div className={styles.statusLine}>
                 <div className={styles.statuscontainer}>
@@ -197,6 +213,7 @@ const Cards: React.FC = () => {
                   >
                     {deal.status}
                   </div>
+                  <ProgressSteps steps={7} activeStep={deal.activeStep} />
                 </div>
               </div>
               <div className={styles.statusLine}>

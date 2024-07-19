@@ -1,0 +1,26 @@
+.progressContainer {
+    display: flex;
+    gap: 1px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .progressCircle {
+    width: 8px;
+    height: 4px;
+    /* border-radius: 50%; */
+    background-color: #ccc; 
+  }
+  
+  .progressCircle.active {
+    background-color: rgba(144, 202, 75, 1); 
+  }
+
+  .progressCircle.inprogress{
+    background-color: rgba(245, 156, 26, 1); 
+
+  }
+  .progressCircle.complete {
+    background-color: rgba(144, 202, 75, 1); 
+  }
+  

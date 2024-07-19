@@ -30,7 +30,8 @@ import { BiSupport } from "react-icons/bi";
 import { IoLogOutOutline } from 'react-icons/io5';
 import SnackbarComponent from '../Snackbar/Snackbar';
 import { fetchSites } from '../Redux/slice/site/siteSlice';
-import { fetchDealDetails } from '../Redux/slice/deal/dealSlice';
+import { fetchBrokerDealDetails, fetchDealDetails } from '../Redux/slice/deal/dealSlice';
+import { fetchBrokerDeals } from '../Redux/slice/deal/dealsDataSlice';
 interface NavbarProps {
   links: {
     disabled: boolean | undefined;
@@ -64,8 +65,17 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
 
   useEffect(() => {
     dispatch(fetchSites());
-    dispatch(fetchDealDetails())
   }, [dispatch]);
+
+  useEffect(() => {
+    if (userdetails.isAdmin === true) {
+      dispatch(fetchDealDetails());
+    }else{
+      dispatch(fetchBrokerDeals(userdetails.user?.id || 0))
+      dispatch(fetchBrokerDealDetails(userdetails.user?.id || 0));
+    }
+  }, [dispatch, userdetails]);
+
 
   useEffect(() => {
     const filteredSites = sites.filter((site) =>

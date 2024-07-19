@@ -78,6 +78,22 @@
   margin-bottom: 0.3rem;
 }
 
+.dealsteps{
+  display: flex;
+  font-size: 14px;
+  flex-direction: column;
+}
+.stepsinfo {
+  display: flex;
+  font-size: 12px;
+  gap: 3px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.stepsinfo span {
+  cursor: pointer;
+}
 .card .line {
   border: 1px solid #adb5bd;
   ;
@@ -120,7 +136,8 @@
   display: flex;
   align-items: center;
   align-content: center;
-  gap: 0.47rem;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .nameHeader {
