@@ -2,11 +2,12 @@
   height: 100px;
 }
 
-.btncancel{
+.btncancel {
   background-color: rgb(146, 146, 146) !important;
   font-family: 'Public Sans' !important;
 
 }
+
 .btnadded {
   background-color: rgb(66 71 78) !important;
   opacity: .98;

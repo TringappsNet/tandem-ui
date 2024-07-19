@@ -11,16 +11,45 @@ import LinearProgress from '@mui/material/LinearProgress';
 const Main: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const userdetails = useSelector((state: RootState) => state.auth.user);
-  const deal = useSelector((state: RootState) => state.dealData.deal);
-  const dealsOpenedPercentage = (deal.dealsOpened / deal.totalDeals) * 100;
+  const deals = useSelector((state: RootState) => state.deal.dealDetails);
+  const dealData = useSelector((state: RootState) => state.dealData.deal);
+  const dealsOpenedPercentage =
+    (dealData.dealsOpened / dealData.totalDeals) * 100;
   const dealsInProgressPercentage =
-    (deal.dealsInProgress / deal.totalDeals) * 100;
-  const dealsClosedPercentage = (deal.dealsClosed / deal.totalDeals) * 100;
+    (dealData.dealsInProgress / dealData.totalDeals) * 100;
+  const dealsClosedPercentage =
+    (dealData.dealsClosed / dealData.totalDeals) * 100;
 
   useEffect(() => {
     dispatch(fetchDeals());
     dispatch(fetchSites());
   }, [dispatch]);
+
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+  const dealsCreatedLast7Days = deals.filter((deal) => {
+    if (!deal.createdAt) return false;
+    const createdAt = new Date(deal.dealStartDate);
+    return createdAt >= sevenDaysAgo;
+  });
+  const dealsOpenedLast7Days = deals.filter((deal) => {
+    if (!deal.createdAt) return false;
+    if (deal.activeStep > 1 && deal.activeStep < 7) {
+      const dealStartDate = new Date(deal.dealStartDate);
+      return dealStartDate >= sevenDaysAgo;
+    }
+    return false;
+  });
+
+  const dealsClosedLast7Days = deals.filter((deal) => {
+    if (deal.activeStep === 7) {
+      if (!deal.createdAt) return false;
+      const createdAt = new Date(deal.createdAt);
+      return createdAt >= sevenDaysAgo;
+    }
+    return false;
+  });
 
   return (
     <>
@@ -36,45 +65,51 @@ const Main: React.FC = () => {
         <span className={styles.tag}>
           <p className={styles.totalDeals}>TOTAL DEALS:</p>
           <p className={styles.deals}>
-            <p className={styles.totalDeal}>{deal.totalDeals}</p>
+            <p className={styles.totalDeal}>{dealData.totalDeals}</p>
           </p>
-          <p className={styles.add_content}>Better than last week (40.5%)</p>
         </span>
 
         <span className={styles.tag}>
           <p className={styles.totalDeals}>DEALS OPENED</p>
           <p className={styles.deals}>
-            <p className={styles.totalDeal}>{deal.dealsOpened}</p>
+            <p className={styles.totalDeal}>{dealData.dealsOpened}</p>
           </p>
           <LinearProgress variant="determinate" value={dealsOpenedPercentage} />
-          <p className={styles.add_content}>Better than last week (40.5%)</p>
+          <p className={styles.add_content}>
+            Deals created last week ({dealsCreatedLast7Days.length})
+          </p>
         </span>
 
         <span className={styles.tag}>
           <p className={styles.totalDeals}>DEALS IN PROGRESS</p>
           <p className={styles.deals}>
-            <p className={styles.totalDeal}>{deal.dealsInProgress}</p>
+            <p className={styles.totalDeal}>{dealData.dealsInProgress}</p>
           </p>
-          <LinearProgress variant="determinate" value={dealsInProgressPercentage} />
-
-          <p className={styles.add_content}>Better than last week (40.5%)</p>
+          <LinearProgress
+            variant="determinate"
+            value={dealsInProgressPercentage}
+          />
+          <p className={styles.add_content}>
+            Deals pending from last week ({dealsOpenedLast7Days.length})
+          </p>
         </span>
 
         <span className={styles.tag}>
           <p className={styles.totalDeals}>DEALS CLOSED</p>
           <p className={styles.deals}>
-            <p className={styles.totalDeal}>{deal.dealsClosed}</p>
+            <p className={styles.totalDeal}>{dealData.dealsClosed}</p>
           </p>
-          <LinearProgress variant="determinate" value={dealsClosedPercentage  } />
-          <p className={styles.add_content}>Better than last week (40.5%)</p>
+          <LinearProgress variant="determinate" value={dealsClosedPercentage} />
+          <p className={styles.add_content}>
+            Deals closed last week ({dealsClosedLast7Days.length})
+          </p>
         </span>
 
         <span className={styles.tag}>
           <p className={styles.totalDeals}>TOTAL COMMISSION</p>
           <p className={styles.deals}>
-            <p className={styles.totalDeal}>${deal.totalCommission}</p>
+            <p className={styles.totalDeal}>${dealData.totalCommission}</p>
           </p>
-          <p className={styles.add_content}>Better than last week (40.5%)</p>
         </span>
       </div>
       <div>

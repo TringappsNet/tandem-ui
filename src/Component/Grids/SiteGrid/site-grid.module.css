@@ -5,6 +5,7 @@
 .css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
   background: #262262 !important;
 }
+
 .css-knqc4i-MuiDialogActions-root {
   border-top: 1px solid grey !important;
 }
@@ -13,11 +14,12 @@
   height: 50px !important;
 }
 
-.btncancel{
+.btncancel {
   background-color: rgb(146, 146, 146) !important;
   font-family: 'Public Sans' !important;
 
 }
+
 .btnadded {
   background-color: rgb(66 71 78) !important;
   opacity: .98;

@@ -19,7 +19,7 @@ import {
 } from '../../Redux/slice/site/siteSlice';
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 import FullGrid from '..//parentGrid/parent-grid';
-import { FiEdit, FiTrash } from 'react-icons/fi';import ConfirmationModal from '../../AlertDialog/AlertDialog';
+import { FiEdit, FiTrash } from 'react-icons/fi'; import ConfirmationModal from '../../AlertDialog/AlertDialog';
 import CloseIcon from '@mui/icons-material/Close';
 import './site-grid.module.css';
 import { RootState } from '../../Redux/reducers';
@@ -233,7 +233,7 @@ const SiteGrid: React.FC = () => {
           width: '200px',
           position: 'relative',
           float: 'right',
-          background:'linear-gradient(58deg, rgb(35, 39, 43) 0%, rgb(45, 53, 60) 35%, rgb(32, 46, 59) 100%)'
+          background: 'linear-gradient(58deg, rgb(35, 39, 43) 0%, rgb(45, 53, 60) 35%, rgb(32, 46, 59) 100%)'
         }}
         onClick={() => handleEditNew(true)}
       >
@@ -262,8 +262,8 @@ const SiteGrid: React.FC = () => {
         confirmVariant="danger"
       />
 
-      <Dialog open={open} onClose={handleClose}  sx={{width:1}}>
-        <DialogTitle className="dialogtitle" style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff',textTransform:'uppercase'}}>
+      <Dialog open={open} onClose={handleClose} sx={{ width: 1 }}>
+        <DialogTitle className="dialogtitle" style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff', textTransform: 'uppercase' }}>
           {formData.id ? 'Edit Property' : 'Add Property'}
           <IconButton
             aria-label="close"
@@ -271,7 +271,7 @@ const SiteGrid: React.FC = () => {
               handleClose();
             }}
             sx={{
-              padding:0
+              padding: 0
             }}
           >
             <CloseIcon sx={{ color: '#fff' }} />
@@ -285,6 +285,7 @@ const SiteGrid: React.FC = () => {
             label="addressline1"
             type="text"
             size="small"
+            autoComplete="new-password"
             fullWidth
             value={formData.addressline1}
             onChange={handleChange}
@@ -296,6 +297,7 @@ const SiteGrid: React.FC = () => {
             name="addressline2"
             label="addressline2"
             type="text"
+            autoComplete="new-password"
             size="small"
             fullWidth
             value={formData.addressline2}
@@ -308,6 +310,7 @@ const SiteGrid: React.FC = () => {
             name="state"
             label="state"
             type="text"
+            autoComplete="new-password"
             size="small"
             fullWidth
             value={formData.state}
@@ -319,6 +322,7 @@ const SiteGrid: React.FC = () => {
             margin="dense"
             name="city"
             label="City"
+            autoComplete="new-password"
             type="text"
             size="small"
             fullWidth
@@ -333,6 +337,7 @@ const SiteGrid: React.FC = () => {
             label="Country"
             type="text"
             size="small"
+            autoComplete="new-password"
             fullWidth
             value={formData.country}
             onChange={handleChange}
@@ -345,6 +350,7 @@ const SiteGrid: React.FC = () => {
             label="Zipcode"
             type="number"
             size="small"
+            autoComplete="new-password"
             fullWidth
             value={formData.zipcode}
             onChange={handleChange}

@@ -19,6 +19,8 @@ interface Site {
 
 interface SiteState {
   sites: Site[];
+  filteredSites:Site[],
+
   loading: boolean;
   error: string | null;
   snackbarMessage: string | null;
@@ -27,6 +29,7 @@ interface SiteState {
 
 const initialState: SiteState = {
   sites: [],
+  filteredSites: [],
   loading: false,
   error: null,
   snackbarMessage: null,
@@ -76,6 +79,9 @@ const siteSlice = createSlice({
     setSnackbarOpen: (state, action: PayloadAction<boolean>) => {
       state.snackbarOpen = action.payload;
     },
+    setFilteredSites: (state, action: PayloadAction<Site[]>) => {
+      state.filteredSites = action.payload;
+    },
   },
 });
 
@@ -88,6 +94,7 @@ export const {
   deleteSiteSuccess,
   setSnackbarMessage,
   setSnackbarOpen,
+  setFilteredSites,
 } = siteSlice.actions;
 
 export default siteSlice.reducer;
