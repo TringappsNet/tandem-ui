@@ -328,7 +328,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                 {event.label}:
               </Typography>
               <Typography textAlign="center">
-                {event.date ? new Date(event.date).toLocaleDateString() : 'N/A'}
+                {event.date ? new Date(event.date).toLocaleDateString() : 'Yet to Complete'}
               </Typography>
             </Box>
           ))}
@@ -356,7 +356,7 @@ const DealForm: React.FC<DealFormProps> = () => {
               Potential Commission:
             </Typography>
             <Typography textAlign="center" fontWeight="bolder" variant="h6" color="#262262">
-              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : 'N/A'}
+              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : 'Yet to Complete'}
             </Typography>
           </Box>
         </Box>

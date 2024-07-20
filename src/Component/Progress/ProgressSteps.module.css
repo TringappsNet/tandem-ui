@@ -1,6 +1,6 @@
 .progressContainer {
     display: flex;
-    gap: 1px;
+    gap: .05rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
