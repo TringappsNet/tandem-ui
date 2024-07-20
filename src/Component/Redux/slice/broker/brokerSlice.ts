@@ -23,8 +23,16 @@ interface Broker {
   country: string;
   zipcode: string;
   isAdmin: boolean;
+  isActive: boolean;
   lastModifiedBy: number;
   name: string;
+  fullName: string;
+  totalDeals: number;
+  dealsOpened: number;
+  dealsInProgress: number;
+  dealsClosed: number;
+  totalCommission: number;
+  roleName: string;
 }
 
 interface BrokerState {
@@ -87,6 +95,7 @@ export const fetchBrokers = (): AppThunk<void> => async (dispatch: Dispatch) => 
         country: broker.user.country,
         zipcode: broker.user.zipcode,
         isActive: broker.user.isActive,
+        isAdmin: broker.user.isAdmin,
         totalDeals: broker.totalDeals,
         dealsOpened: broker.dealsOpened,
         dealsInProgress: broker.dealsInProgress,
