@@ -234,7 +234,7 @@ const InviteBroker: React.FC = () => {
     { field: 'firstName', headerName: 'firstName', width: 140 },
     { field: 'lastName', headerName: 'lastName', width: 120 },
     { field: 'email', headerName: 'email', width: 180 },
-    { field: 'role', headerName: 'role', width: 120},
+    // { field: 'role', headerName: 'role', width: 120},
     { field: 'mobile', headerName: 'mobile', width: 150 },
     { field: 'address', headerName: 'address', width: 160 },
     { field: 'city', headerName: 'City', width: 140 },

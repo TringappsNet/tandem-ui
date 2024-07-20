@@ -104,17 +104,28 @@
   background-color: #41454A !important;
 }
 
-.MuiDataGrid-toolbarContainer button.MuiButton-root {
+/* .MuiDataGrid-toolbarContainer button.MuiButton-root {
   display: none;
-}
+} */
 
+.MuiDataGrid-toolbarContainer  {
+  flex-direction: row-reverse !important;
+  padding-right: 30px !important;
+}
+.css-1knaqv7-MuiButtonBase-root-MuiButton-root {
+  background-color: #a13d65 !important;
+  color: #fff !important;
+  line-height: unset !important;
+}
+.css-y6rp3m-MuiButton-startIcon>*:nth-of-type(1) {
+color: #fff !important;
+}
 .MuiSvgIcon-root {
   color: rgb(0, 0, 0);
 }
 
 .css-c6bojz {
   color: white !important;
-
 }
 
 .css-i4bv87-MuiSvgIcon-root {

@@ -24,14 +24,12 @@ import {
 } from '@mui/material';
 import styles from './dealForm.module.css';
 import { RootState } from '../Redux/reducers';
-
 import { AppDispatch } from '../Redux/store/index';
 import {
   clearCurrentDeal,
   setCurrentDeal,
 } from '../Redux/slice/deal/currentDeal';
 import { fetchSites } from '../Redux/slice/site/siteSlice';
-
 import { fetchBrokers } from '../Redux/slice/broker/brokerSlice';
 
 const steps = [
@@ -65,7 +63,6 @@ const steps = [
     ],
   },
   { label: 'Completed', fields: [] },
-
 ];
 
 interface DealFormProps {
@@ -77,13 +74,13 @@ const DealForm: React.FC<DealFormProps> = () => {
   const currentDeal = useSelector(
     (state: RootState) => state.currentDeal.currentDeal
   );
+  const userdetails = useSelector((state: RootState) => state.auth);
   const open = useSelector((state: RootState) => state.dealForm.open);
   const sites = useSelector((state: RootState) => state.site.sites);
   const brokers = useSelector((state: RootState) => state.broker.brokers);
   const deals = useSelector((state: RootState) => state.deal.dealDetails);
   const [activeStep, setActiveStep] = useState(currentDeal?.activeStep || 0);
   const [formData, setFormData] = useState<Deal>({
-
     id: currentDeal?.id || null,
     brokerName: currentDeal?.brokerName || '',
     propertyName: currentDeal?.propertyName || '',
@@ -104,13 +101,13 @@ const DealForm: React.FC<DealFormProps> = () => {
   const [userId, setUserId] = useState<number | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
-
-
   useEffect(() => {
-    dispatch(fetchBrokers());
-    dispatch(fetchSites());
-    dispatch(fetchDealDetails());
-  }, [dispatch]);
+    if (userdetails.isAdmin) {
+      dispatch(fetchBrokers());
+      dispatch(fetchSites());
+      dispatch(fetchDealDetails());
+    }
+  }, [dispatch, userdetails.isAdmin]);
 
   useEffect(() => {
     if (brokers.length > 0) {
@@ -144,7 +141,6 @@ const DealForm: React.FC<DealFormProps> = () => {
         [name]: value,
       }));
     }
-
   };
 
   const saveFormData = () => {
@@ -213,7 +209,7 @@ const DealForm: React.FC<DealFormProps> = () => {
           >
             {label === 'brokerName'
               ? brokers
-                .filter(broker => !broker.isAdmin)
+                .filter((broker) => !broker.isAdmin)
                 .map((broker, idx) => (
                   <MenuItem key={idx} value={broker.name}>
                     {broker.name}
@@ -258,7 +254,6 @@ const DealForm: React.FC<DealFormProps> = () => {
             onChange={handleChange}
             margin="normal"
             size="small"
-
             sx={{ width: 300, cursor: 'pointer' }}
             InputLabelProps={{
               shrink: true,
@@ -443,6 +438,7 @@ const DealForm: React.FC<DealFormProps> = () => {
               alignItems: 'flex-start',
             }}
           >
+            {(userdetails.isAdmin) && 
             <Stepper
               activeStep={activeStep}
               alternativeLabel
@@ -455,7 +451,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                   <StepLabel>{step.label}</StepLabel>
                 </Step>
               ))}
-            </Stepper>
+            </Stepper>}
             <Box
               sx={{
                 width: '100%',
