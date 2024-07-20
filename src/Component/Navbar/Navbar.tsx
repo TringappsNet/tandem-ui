@@ -16,6 +16,7 @@ import Support from '../Support/Support';
 import DealForm from '../DealForm/dealForm';
 import ConfirmationModal from '../AlertDialog/AlertDialog';
 import { openDealForm } from '../Redux/slice/deal/dealFormSlice';
+import { logoutUser } from '../Redux/slice/auth/authSlice';
 import {
   closeSendInvite,
   openSendInvite,
@@ -70,7 +71,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   useEffect(() => {
     if (userdetails.isAdmin === true) {
       dispatch(fetchDealDetails());
-    }else{
+    } else {
       dispatch(fetchBrokerDeals(userdetails.user?.id || 0))
       dispatch(fetchBrokerDealDetails(userdetails.user?.id || 0));
     }
@@ -83,7 +84,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     );
     setAvailableSites(filteredSites);
   }, [sites, deals]);
-  
+
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
     setOpenPopup(true);
@@ -118,10 +119,17 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     setShowLogoutConfirmation(true);
   };
 
-  const handleLogoutConfirm = () => {
-    localStorage.clear();
-    navigate('/login');
-    setShowLogoutConfirmation(false);
+  const handleLogoutConfirm = async () => {
+    try {
+      await dispatch(logoutUser()).unwrap();
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      setSnackbarMessage('Logout failed. Please try again.');
+      setSnackbarOpen(true);
+    } finally {
+      setShowLogoutConfirmation(false);
+    }
   };
 
   const handleLogoutCancel = () => {
@@ -209,8 +217,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   };
 
   const handleCreateDealClick = () => {
-      if (availableSites.length === 0) {
-        
+    if (availableSites.length === 0) {
+
       setSnackbarMessage(
         'Unable to create deal, properties are either assigned or unavailable !'
       );
