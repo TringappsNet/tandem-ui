@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Cards.module.css';
-import { FiEdit, FiTrash } from 'react-icons/fi';
+import { FiEdit, FiTrash, FiEye } from 'react-icons/fi';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../Redux/reducers';
 import {
@@ -36,9 +36,14 @@ const Cards: React.FC = () => {
     }
   }, [dispatch, userdetails]);
 
-
   const editDealForm = (deal: Deal) => {
     dispatch(setCurrentDeal(deal));
+    dispatch(openDealForm());
+  };
+
+  const viewDealForm = (deal: Deal) => {
+    const updatedDeal = { ...deal, activeStep: 7 };
+    dispatch(setCurrentDeal(updatedDeal));
     dispatch(openDealForm());
   };
 
@@ -170,20 +175,30 @@ const Cards: React.FC = () => {
         {filteredDeals.length > 0 ? (
           filteredDeals.map((deal: Deal) => (
             <div key={deal.id} className={styles.card}>
-              <div>
-                {userdetails.isAdmin && (
-                  <div className={styles.icons}>
-                    <div className={styles.hide}>
-                      <FiEdit
-                        onClick={() => editDealForm(deal)}
-                        className={styles.editHide}
-                      />
-                    </div>
-                    <FiTrash
-                      onClick={() => deal.id !== null && handleDelete(deal.id)}
+
+              {userdetails.isAdmin && (
+                <div className={styles.icons}>
+                  <div className={styles.hide}>
+                    <FiEdit
+                      onClick={() => editDealForm(deal)}
+                      className={styles.editHide}
                     />
                   </div>
-                )}
+                  {(deal.status === 'Started' || deal.status === 'In-Progress') &&
+                  <FiTrash
+                    onClick={() => deal.id !== null && handleDelete(deal.id)}
+                  />}
+                  {(!userdetails.isAdmin) && (
+                    <FiEye onClick={() => viewDealForm(deal)} />)}
+
+                </div>
+              )}
+              {(!userdetails.isAdmin) && (
+                <div className={styles.icons} title='Summary Details'>
+                  <FiEye onClick={() => viewDealForm(deal)} />
+                </div>
+              )}
+              <div className={styles.insidecardcontainer}>
                 <div className={styles.cardTitle}>
                   <div className={styles.nameHeader}>
                     <div className={styles.name}>{deal.propertyName}</div>
@@ -192,18 +207,17 @@ const Cards: React.FC = () => {
                 <hr className={styles.line} />
                 <div className={styles.dealsteps}>
                   <div className={styles.nameHeader}>DEAL #{deal.id}</div>
-                  {(deal.activeStep < 6 && (!userdetails.isAdmin)) && 
-                  <div className={styles.stepsinfo} title='Next Milstone'>
-                    <BiRightArrowCircle />
-                    <span>{getLabelForActiveStep(deal.activeStep + 1)}</span>
-                  </div>}
-                  {(deal.activeStep > 6 && (!userdetails.isAdmin)) && 
-                  <div className={styles.stepsinfo} title='Deal Completed'>
-                    <span >Commission : $ {deal.potentialCommission}</span>
-                  </div>}
+                  {(deal.activeStep < 6 && (!userdetails.isAdmin)) &&
+                    <div className={styles.stepsinfo} title='Next Milstone'>
+                      <BiRightArrowCircle />
+                      <span>{getLabelForActiveStep(deal.activeStep + 1)}</span>
+                    </div>}
+                  {(deal.activeStep > 6 && (!userdetails.isAdmin)) &&
+                    <div className={styles.stepsinfo} title='Deal Completed'>
+                      <span >Commission : $ {deal.potentialCommission}</span>
+                    </div>}
                 </div>
 
-              </div>
               <div className={styles.statusLine}>
                 <div className={styles.statuscontainer}>
                   <div
@@ -238,6 +252,7 @@ const Cards: React.FC = () => {
                   )}`}
                 />
               </div>
+            </div>
             </div>
           ))
         ) : (

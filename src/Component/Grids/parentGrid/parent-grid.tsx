@@ -54,21 +54,19 @@ const FullGrid: React.FC<FullGridProps> = ({
             onPaginationModelChange={setPaginationModel}
             rowHeight={40}
             columnHeaderHeight={39}
-            disableColumnFilter
+            disableColumnFilter={true}  // Ensure filtering is enabled
             disableColumnMenu
             hideFooter
+            disableColumnSelector
+            disableDensitySelector
             hideFooterPagination
             hideFooterSelectedRowCount
             getRowClassName={(params) => (params.indexRelativeToCurrentPage % 2 === 0 ? styles.evenRow : styles.oddRow)}
             slots={{ toolbar: GridToolbar }}
             slotProps={{
               toolbar: {
-                sx: {
-                  backgroundColor: '#dee2e6',
-                  color: 'black',
-                },
                 showQuickFilter: true,
-                quickFilterProps: { debounceMs: 500 },
+                printOptions: { disableToolbarButton: true }
               },
             }}
           />
