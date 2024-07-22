@@ -122,7 +122,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const handleLogoutConfirm = async () => {
     try {
       await dispatch(logoutUser()).unwrap();
-      navigate('/login');
+      navigate('/login'); 
     } catch (error) {
       console.error('Logout failed:', error);
       setSnackbarMessage('Logout failed. Please try again.');
