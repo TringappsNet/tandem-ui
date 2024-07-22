@@ -184,9 +184,10 @@ const Cards: React.FC = () => {
                       className={styles.editHide}
                     />
                   </div>
+                  {(deal.status === 'Started' || deal.status === 'In-Progress') &&
                   <FiTrash
                     onClick={() => deal.id !== null && handleDelete(deal.id)}
-                  />
+                  />}
                   {(!userdetails.isAdmin) && (
                     <FiEye onClick={() => viewDealForm(deal)} />)}
 

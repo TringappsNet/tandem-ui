@@ -13,7 +13,7 @@
   padding: 15px;
   display: flex;
   flex-direction: column;
-  width: 270px;
+  width: 260px;
   transition: transform 0.3s;
   color: rgba(173, 181, 189, 1) !important;
   font-family: "Open Sans", sans-serif;
@@ -97,7 +97,7 @@
 .insidecardcontainer{
   display: flex;
   flex-direction: column;
-  gap: .33rem;
+  gap: .39rem;
 
 }
 
