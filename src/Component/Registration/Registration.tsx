@@ -14,7 +14,8 @@ const Registration: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { registering } = useSelector((state: RootState) => state.register);
-
+  const [hasValidToken, setHasValidToken] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [firstName, setFirstname] = useState('');
   const [lastName, setLastname] = useState('');
   const [mobileNo, setMobileno] = useState('');
@@ -47,8 +48,23 @@ const Registration: React.FC = () => {
     const token = urlParams.get('inviteToken');
     if (token) {
       setInviteToken(token);
+      setHasValidToken(true);
+    } else {
+      navigate('/');
     }
-  }, []);
+    setIsLoading(false);
+  }, [navigate]);
+
+  if (isLoading) {
+    return <div>Loading , Please wait</div>;
+  }
+
+
+
+  if (!hasValidToken) {
+    return null;
+  }
+
 
   const validatefirstName = (name: string): string => {
     const namePattern = /^[a-zA-Z\s]+$/;

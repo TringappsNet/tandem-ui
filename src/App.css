@@ -9,7 +9,7 @@
 /* Tiles Progress Bar */
 .css-eglki6-MuiLinearProgress-root, .css-7p5u54 {
   position: relative;
-  bottom: 7px !important; 
+  bottom: 7px !important;
   overflow: hidden;
   display: block;
   height: 2px !important;
@@ -25,6 +25,7 @@
 .MuiDataGrid-withBorderColor {
   /* background-color: #20252a; */
   color: #ffffff;
+  background-color: #2d353c;
 }
 
 
@@ -181,6 +182,7 @@ color: #fff !important;
 .css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
   padding: 0 19px !important;
 }
+
 .MuiDataGrid-main {
     -webkit-box-flex: 1;
     -webkit-flex-grow: 1;
@@ -192,5 +194,9 @@ color: #fff !important;
 }
   
 .MuiDialogTitle-root+.css-ypiqx9-MuiDialogContent-root, .css-1ty026z{
+  padding: 20px 24px !important;
+}
+
+.css-ypiqx9-MuiDialogContent-root {
   padding: 20px 24px !important;
 }
