@@ -77,9 +77,7 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
             setSnackbarMessage('Your session is invalid or expired');
             localStorage.clear();
             setSnackbarOpen(true);
-            setTimeout(() => {
               navigate('/login');
-            }, 3000);
           }
           return Promise.reject(error);
         }

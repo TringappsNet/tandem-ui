@@ -185,10 +185,10 @@ const SiteGrid: React.FC = () => {
   const columns: GridColDef[] = [
     { field: 'addressline1', headerName: 'AddressLine1', width: 220 },
     { field: 'addressline2', headerName: 'AddressLine2', width: 220 },
-    { field: 'state', headerName: 'State', width: 240 },
     { field: 'city', headerName: 'City', width: 220 },
-    { field: 'zipcode', headerName: 'Zipcode', width: 210 },
+    { field: 'state', headerName: 'State', width: 240 },
     { field: 'country', headerName: 'Country', width: 210 },
+    { field: 'zipcode', headerName: 'Zipcode', width: 210 },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -307,19 +307,6 @@ const SiteGrid: React.FC = () => {
           />
           <TextField
             margin="dense"
-            name="state"
-            label="state"
-            type="text"
-            autoComplete="new-password"
-            size="small"
-            fullWidth
-            value={formData.state}
-            onChange={handleChange}
-            error={!!formErrors.state}
-            helperText={formErrors.state}
-          />
-          <TextField
-            margin="dense"
             name="city"
             label="City"
             autoComplete="new-password"
@@ -333,6 +320,20 @@ const SiteGrid: React.FC = () => {
           />
           <TextField
             margin="dense"
+            name="state"
+            label="state"
+            type="text"
+            autoComplete="new-password"
+            size="small"
+            fullWidth
+            value={formData.state}
+            onChange={handleChange}
+            error={!!formErrors.state}
+            helperText={formErrors.state}
+          />
+          
+          <TextField
+            margin="dense"
             name="country"
             label="Country"
             type="text"
@@ -344,6 +345,7 @@ const SiteGrid: React.FC = () => {
             error={!!formErrors.country}
             helperText={formErrors.country}
           />
+          
           <TextField
             margin="dense"
             name="zipcode"
