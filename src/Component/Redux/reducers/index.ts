@@ -16,8 +16,9 @@ import inviteBrokerReducer from '../slice/user/userSlice';
 import landlordReducer from '../slice/landlord/landlordSlice';
 import siteReducer from '../slice/site/siteSlice';
 import dealDataReducer from '../slice/deal/dealsDataSlice';
+import { LOGOUT } from '../actionTypes';
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   auth: authReducer,
   register: registerReducer,
   reset: resetReducer,
@@ -36,6 +37,13 @@ const rootReducer = combineReducers({
   site: siteReducer,
   dealData: dealDataReducer,
 });
+
+const rootReducer = (state: ReturnType<typeof appReducer> | undefined, action: any) => {
+  if (action.type === LOGOUT) {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
 
 export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;
