@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePassword, validateResetToken } from '../Redux/slice/auth/changePasswordSlice';
+import { changePassword } from '../Redux/slice/auth/changePasswordSlice';
 import styles from './ChangePassword.module.css';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '../Redux/store';
 import { RootState } from '../Redux/reducers';
 import backgroundImage from './bg-login.png';
 import SnackbarComponent from '../Snackbar/Snackbar';
 
+
+
+
 const ChangePassword: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const dispatch: AppDispatch = useDispatch();
-  const { isLoading, responseMessage, responseType, isTokenValid } = useSelector(
+  const { isLoading, responseMessage, responseType } = useSelector(
     (state: RootState) => state.changePassword
   );
 
@@ -23,25 +25,9 @@ const ChangePassword: React.FC = () => {
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<'error' | 'success'>('error');
 
-  const resetToken = new URLSearchParams(location.search).get('resetToken');
-
-  if (disableState === false) { }
-
-  useEffect(() => {
-    if (resetToken) {
-      dispatch(validateResetToken({ resetToken }));
-    } else {
-      navigate('/forgotpassword');
-    }
-  }, [resetToken, dispatch, navigate]);
-
-  useEffect(() => {
-    if (isTokenValid === false) {
-      navigate('/forgotpassword');
-    }
-  }, [isTokenValid, navigate]);
-
   const validatePassword = (password: string): string => {
+    if (!disableState === false) {
+    }
     const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
     const numberPattern = /\d/g;
     if (password.trim() === '') {
@@ -49,13 +35,13 @@ const ChangePassword: React.FC = () => {
       return '';
     } else if (password.length < 8) {
       setDisableState(false);
-      return 'Password should contain at least 8 characters.';
+      return 'Password should contain atleast 8 characters.';
     } else if (!specialCharPattern.test(password)) {
       setDisableState(false);
-      return 'Password should contain at least one special character.';
+      return 'Password should contain atleast one special character.';
     } else if ((password.match(numberPattern) || []).length < 2) {
       setDisableState(false);
-      return 'Password should contain at least two numerical digits.';
+      return 'Password should contain atleast two numerical digits.';
     } else {
       setDisableState(true);
       return '';
@@ -69,7 +55,7 @@ const ChangePassword: React.FC = () => {
       handleSnackbarOpen('Please enter your new password', 'error');
       return;
     }
-
+    
     const passwordError = validatePassword(password);
 
     if (passwordError) {
@@ -101,7 +87,6 @@ const ChangePassword: React.FC = () => {
     setter(e.target.value);
     handleSnackbarClose();
   };
-
   const handleSnackbarOpen = (message: string, severity: 'error' | 'success') => {
     setSnackbarMessage(message);
     setSnackbarSeverity(severity);
@@ -111,19 +96,17 @@ const ChangePassword: React.FC = () => {
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
-
-  useEffect(() => {
+  React.useEffect(() => {
     if (responseMessage) {
       handleSnackbarOpen(responseMessage, responseType === 'success' ? 'success' : 'error');
 
       if (responseType === 'success') {
         setTimeout(() => {
           navigate('/login');
-        }, 5000);
+        }, 5000); 
       }
     }
   }, [responseMessage, responseType, navigate]);
-
   return (
     <div className={styles.loginBackground} style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className={styles.card}>
@@ -139,11 +122,14 @@ const ChangePassword: React.FC = () => {
             <p style={{ color: 'rgb(122, 123, 125)' }}>Forgot Password</p>
           </div>
           <div className={styles.formContainer}>
+
             <p className={styles.reset}>
-              Your new password should be distinct from any of your prior passwords
+              Your new password should be distinct from any of your prior
+              passwords
             </p>
+
             <form className={styles.loginsection} onSubmit={handleSubmit}>
-              <SnackbarComponent
+            <SnackbarComponent
                 open={snackbarOpen}
                 message={snackbarMessage}
                 onClose={handleSnackbarClose}

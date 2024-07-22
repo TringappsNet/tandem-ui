@@ -5,14 +5,12 @@ interface ChangePasswordState {
   isLoading: boolean;
   responseMessage: string;
   responseType: string;
-  isTokenValid: boolean | null;
 }
 
 const initialState: ChangePasswordState = {
   isLoading: false,
   responseMessage: '',
   responseType: '',
-  isTokenValid: null,
 };
 
 export const changePassword = createAsyncThunk(
@@ -22,30 +20,15 @@ export const changePassword = createAsyncThunk(
       const response = await axiosInstance.post('auth/change-password', {
         newPassword,
       });
-
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
         error.response.data.message ||
-        'Failed to change password. Please try again.'
+          'Failed to change password. Please try again.'
       );
     }
   }
 );
-
-export const validateResetToken = createAsyncThunk(
-  'changePassword/validateResetToken',
-  async ({ resetToken }: { resetToken: string }, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.post('/api/validateResetToken', { resetToken });
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response.data.message);
-    }
-  }
-);
-
 
 const changePasswordSlice = createSlice({
   name: 'changePassword',
