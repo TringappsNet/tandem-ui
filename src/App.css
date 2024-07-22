@@ -25,7 +25,6 @@
 .MuiDataGrid-withBorderColor {
   /* background-color: #20252a; */
   color: #ffffff;
-  background-color: #2d353c;
 }
 
 
@@ -194,9 +193,5 @@ color: #fff !important;
 }
   
 .MuiDialogTitle-root+.css-ypiqx9-MuiDialogContent-root, .css-1ty026z{
-  padding: 20px 24px !important;
-}
-
-.css-ypiqx9-MuiDialogContent-root {
   padding: 20px 24px !important;
 }
