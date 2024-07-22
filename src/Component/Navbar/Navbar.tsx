@@ -33,6 +33,7 @@ import SnackbarComponent from '../Snackbar/Snackbar';
 import { fetchSites } from '../Redux/slice/site/siteSlice';
 import { fetchBrokerDealDetails, fetchDealDetails } from '../Redux/slice/deal/dealSlice';
 import { fetchBrokerDeals } from '../Redux/slice/deal/dealsDataSlice';
+import { LOGOUT } from '../Redux/actionTypes';
 interface NavbarProps {
   links: {
     disabled: boolean | undefined;
