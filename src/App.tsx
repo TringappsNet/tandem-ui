@@ -17,6 +17,17 @@ import './App.css';
 import { Provider } from 'react-redux';
 import store from './Component/Redux/store/index';
 
+
+const RegistrationRoute: React.FC<{ element: React.ReactElement }> = ({ element }) => {
+  const hasInviteToken = new URLSearchParams(window.location.search).get('inviteToken');
+  return hasInviteToken ? element : <Navigate to="/" replace />;
+};
+
+const ChangePassowrdRoute: React.FC<{ element: React.ReactElement }> = ({ element }) => {
+  const hasInviteToken = new URLSearchParams(window.location.search).get('resetToken');
+  return hasInviteToken ? element : <Navigate to="/" replace />;
+};
+
 const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(
     localStorage.getItem('accessToken')
@@ -42,9 +53,18 @@ const App: React.FC = () => {
               path="/"
               element={accessToken ? <Navigate to="/dashboard" /> : <Login />}
             />
-            <Route path="/registerform" element={<Registration />} />
+            <Route
+              path="/registerform"
+              element={
+                <RegistrationRoute element={<Registration />} />
+              }
+            />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
-            <Route path="/change" element={<ChangePassword />} />
+            <Route path="/change"
+              element={
+                <ChangePassowrdRoute element={<ChangePassword />} />
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
