@@ -23,6 +23,11 @@ const RegistrationRoute: React.FC<{ element: React.ReactElement }> = ({ element 
   return hasInviteToken ? element : <Navigate to="/" replace />;
 };
 
+const ChangePassowrdRoute: React.FC<{ element: React.ReactElement }> = ({ element }) => {
+  const hasInviteToken = new URLSearchParams(window.location.search).get('resetToken');
+  return hasInviteToken ? element : <Navigate to="/" replace />;
+};
+
 const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(
     localStorage.getItem('accessToken')
@@ -55,7 +60,11 @@ const App: React.FC = () => {
               }
             />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
-            <Route path="/change" element={<ChangePassword />} />
+            <Route path="/change"
+              element={
+                <ChangePassowrdRoute element={<ChangePassword />} />
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
