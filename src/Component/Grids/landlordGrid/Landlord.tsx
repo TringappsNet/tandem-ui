@@ -58,10 +58,7 @@ const LandlordGrid: React.FC = () => {
     zipcode: '',
     isNew: true,
   });
-  const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
-    pageSize: 12,
-    page: 0,
-  });
+ 
   const [formErrors, setFormErrors] = useState<Partial<Landlord>>({});
   const dispatch = useDispatch<AppDispatch>();
   const landlords = useSelector((state: RootState) => state.landlord.landlords);
@@ -71,6 +68,10 @@ const LandlordGrid: React.FC = () => {
   const snackbarMessage = useSelector(
     (state: RootState) => state.landlord.snackbarMessage
   );
+  const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
+    pageSize: landlords.length,
+    page: 0,
+  });
 
   useEffect(() => {
     dispatch(fetchLandlords());

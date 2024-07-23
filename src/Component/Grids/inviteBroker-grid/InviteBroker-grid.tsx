@@ -74,7 +74,7 @@ const InviteBroker: React.FC = () => {
   });
 
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
-    pageSize: 12,
+    pageSize: brokers.length ,
     page: 0,
   });
 

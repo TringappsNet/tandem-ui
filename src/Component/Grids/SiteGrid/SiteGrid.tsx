@@ -66,7 +66,7 @@ const SiteGrid: React.FC = () => {
   });
 
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
-    pageSize: 12,
+    pageSize: sites.length,
     page: 0,
   });
 
