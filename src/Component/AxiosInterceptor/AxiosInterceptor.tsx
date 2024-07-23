@@ -6,7 +6,7 @@ import styles from './AxiosInterceptor.module.css';
 
 const axiosInstance = axios.create({
   
-  baseURL: 'http://43.205.44.92/api',
+  baseURL: 'http://portal.tandeminf.com/api',
 
 });
 
