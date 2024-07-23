@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosInstance } from '../../../AxiosInterceptor/AxiosInterceptor';
+import { RootState } from '../../reducers';
 
 interface User {
   roleId: number;
@@ -74,7 +75,7 @@ export const login = createAsyncThunk(
         const { session, user } = data;
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('session', JSON.stringify(session));
-        localStorage.setItem('accessToken', data.session.token); 
+        localStorage.setItem('accessToken', data.session.token);
         return { user, session };
       } else {
         return rejectWithValue(data.message);
@@ -84,6 +85,24 @@ export const login = createAsyncThunk(
         return rejectWithValue(error.response.data.message);
       }
       return rejectWithValue('Something went wrong. Please try again later.');
+    }
+  }
+);
+
+export const logoutUser = createAsyncThunk(
+  'auth/logout',
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const state = getState() as RootState;
+      const sessionToken = state.auth.session?.token;
+
+      if (sessionToken) {
+        await axiosInstance.post('/auth/logout', { sessionToken });
+      }
+
+      return;
+    } catch (error: any) {
+      return rejectWithValue('Logout failed. Please try again.');
     }
   }
 );
@@ -108,7 +127,7 @@ const authSlice = createSlice({
       state.isAdmin = false;
       localStorage.removeItem('user');
       localStorage.removeItem('session');
-      localStorage.removeItem('accessToken'); 
+      localStorage.removeItem('accessToken');
     },
   },
   extraReducers: (builder) => {
@@ -129,6 +148,17 @@ const authSlice = createSlice({
       )
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.user = null;
+        state.session = null;
+        state.isAdmin = false;
+        localStorage.removeItem('user');
+        localStorage.removeItem('session');
+        localStorage.removeItem('accessToken');
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
         state.error = action.payload as string;
       });
   },

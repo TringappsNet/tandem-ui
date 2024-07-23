@@ -9,7 +9,7 @@
 /* Tiles Progress Bar */
 .css-eglki6-MuiLinearProgress-root, .css-7p5u54 {
   position: relative;
-  bottom: 7px !important; 
+  bottom: 7px !important;
   overflow: hidden;
   display: block;
   height: 2px !important;
@@ -181,6 +181,7 @@ color: #fff !important;
 .css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
   padding: 0 19px !important;
 }
+
 .MuiDataGrid-main {
     -webkit-box-flex: 1;
     -webkit-flex-grow: 1;

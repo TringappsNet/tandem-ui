@@ -74,7 +74,7 @@ const InviteBroker: React.FC = () => {
   });
 
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
-    pageSize: 12,
+    pageSize: brokers.length ,
     page: 0,
   });
 
@@ -203,7 +203,7 @@ const InviteBroker: React.FC = () => {
   };
 
   const handleConfirmDeactivate = () => {
-    const payload = {isActive: false}
+    const payload = { isActive: false }
     dispatch(setActiveBroker(deleteId, payload));
     setDeactivateConfiramtion(false);
   };
@@ -234,13 +234,13 @@ const InviteBroker: React.FC = () => {
     { field: 'firstName', headerName: 'firstName', width: 140 },
     { field: 'lastName', headerName: 'lastName', width: 120 },
     { field: 'email', headerName: 'email', width: 180 },
-    // { field: 'role', headerName: 'role', width: 120},
+    // { field: 'roleName', headerName: 'Role', width: 120 },
     { field: 'mobile', headerName: 'mobile', width: 150 },
     { field: 'address', headerName: 'address', width: 160 },
     { field: 'city', headerName: 'City', width: 140 },
     { field: 'state', headerName: 'state', width: 140 },
     { field: 'zipcode', headerName: 'Zipcode', width: 140 },
-    { field: 'country', headerName: 'Country', width: 150 },
+    { field: 'country', headerName: 'Country', width: 140 },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -329,8 +329,8 @@ const InviteBroker: React.FC = () => {
         confirmVariant="danger"
       />
 
-      <Dialog open={open} onClose={handleClose} sx={{width:1}}>
-        <DialogTitle className="dialogtitle" style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff',textTransform:'uppercase' }}>
+      <Dialog open={open} onClose={handleClose} sx={{ width: 1 }}>
+        <DialogTitle className="dialogtitle" style={{ height: 50, fontSize: '1rem', letterSpacing: '3px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff', textTransform: 'uppercase' }}>
           {formData.id ? 'Edit Broker Details' : 'Add Property'}
 
           <IconButton
@@ -346,7 +346,7 @@ const InviteBroker: React.FC = () => {
           </IconButton>
         </DialogTitle>
         <DialogContent>
-          
+
           <TextField
             margin="dense"
             name="firstName"
@@ -445,7 +445,7 @@ const InviteBroker: React.FC = () => {
             helperText={formErrors.zipcode}
           />
         </DialogContent>
-        <DialogActions sx={{paddingBottom: 2, paddingRight: 2 }}>
+        <DialogActions sx={{ paddingBottom: 2, paddingRight: 2 }}>
           <Button
             onClick={handleClose}
             size='small'
