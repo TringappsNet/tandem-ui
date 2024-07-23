@@ -6,9 +6,9 @@ import styles from './AxiosInterceptor.module.css';
 
 const axiosInstance = axios.create({
 
-  baseURL: "http://localhost:3008/api",
+  // baseURL: "http://localhost:3008/api",
   // baseURL: 'http://192.168.1.47:3008/api',
-  // baseURL: 'http://43.205.44.92/api',
+  baseURL: 'http://43.205.44.92/api',
 
 });
 
