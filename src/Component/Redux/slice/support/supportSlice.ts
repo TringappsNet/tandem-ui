@@ -4,7 +4,12 @@ import { axiosInstance } from '../../../AxiosInterceptor/AxiosInterceptor';
 interface TicketData {
   ticketSubject: string;
   ticketDescription: string;
-  senderId: number;
+}
+
+interface TicketDatas {
+  ticketSubject: string;
+  ticketDescription: string;
+  emails: string[]; // Array of email addresses
 }
 
 interface SupportState {
@@ -21,6 +26,7 @@ const initialState: SupportState = {
   open: false,
 };
 
+// Async thunk for raising a ticket
 export const raiseTicket = createAsyncThunk(
   'support/raiseTicket',
   async (ticketData: TicketData, { rejectWithValue }) => {
@@ -32,6 +38,22 @@ export const raiseTicket = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue('Failed to raise ticket. Please try again.');
+    }
+  }
+);
+
+// Async thunk for sending promotional emails
+export const sendPromotionalEmails = createAsyncThunk(
+  'support/sendPromotionalEmails',
+  async (ticketData: TicketDatas, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        '/support/promotional-emails',
+        ticketData
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue('Failed to send promotional emails. Please try again.');
     }
   }
 );
@@ -65,6 +87,19 @@ const supportSlice = createSlice({
         state.successMessage = 'Ticket raised successfully!';
       })
       .addCase(raiseTicket.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(sendPromotionalEmails.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.successMessage = null;
+      })
+      .addCase(sendPromotionalEmails.fulfilled, (state) => {
+        state.isLoading = false;
+        state.successMessage = 'Promotional emails sent successfully!';
+      })
+      .addCase(sendPromotionalEmails.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });

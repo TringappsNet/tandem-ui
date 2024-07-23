@@ -327,8 +327,8 @@ const DealForm: React.FC<DealFormProps> = () => {
               <Typography variant="subtitle1" fontWeight="bold" textAlign="center">
                 {event.label}:
               </Typography>
-              <Typography textAlign="center">
-                {event.date ? new Date(event.date).toLocaleDateString() : 'Yet to Complete'}
+              <Typography textAlign="center" >
+                {event.date ? new Date(event.date).toLocaleDateString() : <span style={{color:'grey'}}>Yet to Complete</span>}
               </Typography>
             </Box>
           ))}
@@ -356,7 +356,7 @@ const DealForm: React.FC<DealFormProps> = () => {
               Potential Commission:
             </Typography>
             <Typography textAlign="center" fontWeight="bolder" variant="h6" color="#262262">
-              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : 'Yet to Complete'}
+              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : <span style={{color:'#5a577c'}}>Yet to Complete</span>}
             </Typography>
           </Box>
         </Box>

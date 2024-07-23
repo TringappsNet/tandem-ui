@@ -322,7 +322,9 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                   Reset password
                 </button>
                 <button onClick={() => handleOpenPopup('Support')}>
-                  <BiSupport className={styles.icons} /> Contact us
+                  <BiSupport className={styles.icons} /> 
+                  {userdetails.isAdmin &&  <span>Email Campaign</span> }
+                  {(!userdetails.isAdmin) &&  <span>Contact us</span> }
                 </button>
                 <button onClick={handleLogoutClick}>
                   <IoLogOutOutline className={styles.icons} />
