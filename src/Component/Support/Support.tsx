@@ -1,37 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Autocomplete, TextField, Chip, Checkbox, FormControlLabel } from '@mui/material';
 import styles from './Support.module.css';
-// import { closeSupport } from '../Redux/slice/support/supportSlice';
 import { AppDispatch } from '../Redux/store';
 import mailImage from './mail.png';
 import backgroundImage from './bg-login.png';
 import { RootState } from '../Redux/reducers';
 import {
   raiseTicket,
+  sendPromotionalEmails,
   clearMessages,
   supportState,
 } from '../Redux/slice/support/supportSlice';
-
-
-
+import { fetchBrokers } from '../Redux/slice/user/userSlice';
 
 interface SupportProps {
   onCloseDialog: () => void;
 }
 
 const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
+  const userdetails = useSelector((state: RootState) => state.auth);
   const [subject, setSubject] = useState('');
   const [description, setDescription] = useState('');
+  const [selectedEmails, setSelectedEmails] = useState<string[]>([]);
+  const [selectAll, setSelectAll] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [formError, setFormError] = useState('');
   const { isLoading, error, successMessage } = useSelector(
     (state: RootState) => state.contact
   );
   const user = useSelector((state: RootState) => state.auth.user);
-
-  const navigate = useNavigate();
+  const allUsers = useSelector((state: RootState) => state.inviteBroker.brokers);
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(fetchBrokers());
+  }, [dispatch]);
 
   useEffect(() => {
     if (subject.trim()) {
@@ -77,7 +83,28 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
       senderId: user.id,
     };
 
-    dispatch(raiseTicket(ticketData));
+    const ticketDatas = {
+      ticketSubject: subject,
+      ticketDescription: description,
+      emails: selectedEmails,
+    };
+
+    if (userdetails.isAdmin) {
+      dispatch(sendPromotionalEmails(ticketDatas));
+    } else {
+      dispatch(raiseTicket(ticketData));
+    }
+  };
+
+  const handleSelectAllChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = event.target;
+    setSelectAll(checked);
+    if (checked) {
+      const allEmails = allUsers.map(user => user.email);
+      setSelectedEmails(allEmails);
+    } else {
+      setSelectedEmails([]);
+    }
   };
 
   useEffect(() => {
@@ -101,9 +128,10 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
   }
 
   return (
-    <div >
+    <div>
       <div className={styles.headerLine}>
-        <h2 className={styles.support}>Contact Us!</h2>
+        {userdetails.isAdmin && <h2 className={styles.support}>Email Campaign</h2>}
+        {(!userdetails.isAdmin) && <h2 className={styles.support}>Contact Us!</h2>}
       </div>
       <div className={styles.contactsContainer} style={{ backgroundImage: `url(${backgroundImage})` }}>
         <div className={styles.imageContainer}>
@@ -126,10 +154,51 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
             </div>
           )}
           <div className={styles.formGroup}>
+            {userdetails.isAdmin && (
+              <>
+                <div style={{textTransform:'unset'}}>
+                  <label htmlFor="emails">Select Email Users:</label>
+                  <Autocomplete
+                    multiple
+                    className={styles.multipleemails}
+                    id="emails"
+                    options={allUsers.map(user => user.email)}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="outlined" placeholder="Select users to send email" sx={{color:'red'}} />
+                    )}
+                    value={selectedEmails}
+                    onChange={(event, newValue) => setSelectedEmails(newValue)}
+                    isOptionEqualToValue={(option, value) => option === value}
+                    renderTags={(values, getTagProps) =>
+                      values.map((value: string, index: number) => (
+                        <Chip
+                          label={value}
+                          {...getTagProps({ index })}
+                          key={index}
+                          sx={{ fontSize: '.7rem', textTransform:'none' }}
+                          color="info"
+                          size="small"
+                        />
+                      ))
+                    }
+                  />
+                </div>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectAll}
+                      onChange={handleSelectAllChange}
+                      color="primary"
+                    />
+                  }
+                  label="Check this to send email to all"
+                  className={styles.selectAllCheckbox}
+                />
+              </>
+            )}
             <label htmlFor="subject">Subject:</label>
             <input
               type="text"
-              role="presentation"
               autoComplete='off'
               autoFocus
               placeholder="Enter your subject"
@@ -145,11 +214,12 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
               id="description"
               name="description"
               placeholder="Add your Comments"
-              rows={8}
+              rows={5}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
+
           <button
             type="submit"
             disabled={isLoading}

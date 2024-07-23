@@ -5,9 +5,8 @@ import { RootState } from '../../reducers';
 import { ThunkAction } from 'redux-thunk';
 
 interface SetActiveBroker {
-  isActive: Boolean;
+  isActive: boolean;
 }
-
 
 interface Users {
   id: number;
@@ -26,7 +25,7 @@ interface Users {
 interface InviteBrokerState {
   brokers: Users[];
   loading: boolean;
-  isActive: Boolean
+  isActive: boolean;
   error: string | null;
   snackbarMessage: string | null;
   snackbarOpen: boolean;
@@ -40,7 +39,7 @@ const initialState: InviteBrokerState = {
   snackbarMessage: null,
   snackbarOpen: false,
 };
- 
+
 const inviteBrokerSlice = createSlice({
   name: 'inviteBroker',
   initialState,
@@ -57,40 +56,43 @@ const inviteBrokerSlice = createSlice({
     fetchBrokersFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
+      state.snackbarMessage = action.payload;
+      state.snackbarOpen = true;
     },
     addBrokerSuccess: (state, action: PayloadAction<Users>) => {
       state.brokers.push(action.payload);
       state.loading = false;
       state.error = null;
+      state.snackbarMessage = 'Broker added successfully';
+      state.snackbarOpen = true;
     },
     updateBrokerSuccess: (state, action: PayloadAction<Users>) => {
-      const index = state.brokers.findIndex(
-        (broker) => broker.id === action.payload.id
-      );
+      const index = state.brokers.findIndex(broker => broker.id === action.payload.id);
       if (index !== -1) {
         state.brokers[index] = action.payload;
       }
       state.loading = false;
       state.error = null;
+      state.snackbarMessage = 'Broker updated successfully';
+      state.snackbarOpen = true;
     },
     deleteBrokerSuccess: (state, action: PayloadAction<number>) => {
-      state.brokers = state.brokers.filter(
-        (broker) => broker.id !== action.payload
-      );
+      state.brokers = state.brokers.filter(broker => broker.id !== action.payload);
       state.loading = false;
       state.error = null;
+      state.snackbarMessage = 'Broker deleted successfully';
+      state.snackbarOpen = true;
     },
     setActiveBrokerSuccess: (state, action: PayloadAction<{ updatedBrokerData: Users; message: string }>) => {
-      state.loading = false;
-      state.error = null;
-      const index = state.brokers.findIndex((broker) => broker.id === action.payload.updatedBrokerData.id);
+      const index = state.brokers.findIndex(broker => broker.id === action.payload.updatedBrokerData.id);
       if (index !== -1) {
         state.brokers[index] = action.payload.updatedBrokerData;
       }
+      state.loading = false;
+      state.error = null;
       state.snackbarMessage = action.payload.message;
       state.snackbarOpen = true;
     },
-    
     setSnackbarMessage: (state, action: PayloadAction<string>) => {
       state.snackbarMessage = action.payload;
     },
@@ -117,41 +119,31 @@ export default inviteBrokerSlice.reducer;
 export const fetchBrokers = (): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
   try {
     dispatch(fetchBrokersStart());
-    const response = await axiosInstance.get('/brokers/all-users');
+    const response = await axiosInstance.get<Users[]>('/brokers/all-users');
     dispatch(fetchBrokersSuccess(response.data));
   } catch (error) {
     const errorMessage = (error as any).response?.data?.message || (error as Error).message;
     dispatch(fetchBrokersFailure(errorMessage));
-    dispatch(setSnackbarMessage(errorMessage));
-    dispatch(setSnackbarOpen(true));
   }
 };
 
 export const addBroker = (broker: Users): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
   try {
-    const response = await axiosInstance.post('/brokers/all-users/', broker);
+    const response = await axiosInstance.post<Users>('/brokers/all-users/', broker);
     dispatch(addBrokerSuccess(response.data));
-    dispatch(setSnackbarMessage('Broker added successfully'));
-    dispatch(setSnackbarOpen(true));
   } catch (error) {
     const errorMessage = (error as any).response?.data?.message || (error as Error).message;
     dispatch(fetchBrokersFailure(errorMessage));
-    dispatch(setSnackbarMessage(errorMessage));
-    dispatch(setSnackbarOpen(true));
   }
 };
 
 export const updateBroker = (broker: Users): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
   try {
-    const response = await axiosInstance.put(`/brokers/broker/${broker.id}`, broker);
+    const response = await axiosInstance.put<Users>(`/brokers/broker/${broker.id}`, broker);
     dispatch(updateBrokerSuccess(response.data));
-    dispatch(setSnackbarMessage('Broker updated successfully'));
-    dispatch(setSnackbarOpen(true));
   } catch (error) {
     const errorMessage = (error as any).response?.data?.message || (error as Error).message;
     dispatch(fetchBrokersFailure(errorMessage));
-    dispatch(setSnackbarMessage(errorMessage));
-    dispatch(setSnackbarOpen(true));
   }
 };
 
@@ -159,24 +151,18 @@ export const deleteBroker = (id: number): ThunkAction<void, RootState, unknown, 
   try {
     await axiosInstance.delete(`/brokers/broker/${id}`);
     dispatch(deleteBrokerSuccess(id));
-    dispatch(setSnackbarMessage('Broker deleted successfully'));
-    dispatch(setSnackbarOpen(true));
   } catch (error) {
     const errorMessage = (error as any).response?.data?.message || (error as Error).message;
     dispatch(fetchBrokersFailure(errorMessage));
-    dispatch(setSnackbarMessage(errorMessage));
-    dispatch(setSnackbarOpen(true));
   }
 };
 
 export const setActiveBroker = (id: number, setActiveBroker: SetActiveBroker): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch: Dispatch) => {
   try {
-    const response = await axiosInstance.put(`/brokers/set-active-broker/${id}`, setActiveBroker);
+    const response = await axiosInstance.put<{ updatedBrokerData: Users; message: string }>(`/brokers/set-active-broker/${id}`, setActiveBroker);
     dispatch(setActiveBrokerSuccess(response.data));
   } catch (error) {
     const errorMessage = (error as any).response?.data?.message || (error as Error).message;
     dispatch(fetchBrokersFailure(errorMessage));
-    dispatch(setSnackbarMessage(errorMessage));
-    dispatch(setSnackbarOpen(true));
   }
 };
