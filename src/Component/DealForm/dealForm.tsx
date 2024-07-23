@@ -244,6 +244,7 @@ const DealForm: React.FC<DealFormProps> = () => {
         return (
           <TextField
             key={index}
+            autoComplete='off'
             type="date"
             label={label}
             name={label}
@@ -267,6 +268,7 @@ const DealForm: React.FC<DealFormProps> = () => {
             type="text"
             label={label}
             name={label}
+            autoComplete='off'
             value={formData[label as keyof Deal] || ''}
             onChange={handleChange}
             margin="normal"

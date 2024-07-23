@@ -14,7 +14,6 @@ import { AppDispatch } from '../Redux/store';
 import {
   fetchRoles,
   selectRolesLoading,
-  selectRolesError,
 } from '../Redux/slice/role/rolesSlice';
 
 interface SendInviteProps {
@@ -27,7 +26,6 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
   const open = useSelector((state: RootState) => state.sendInvite.open);
   const roles = useSelector((state: RootState) => state.roles.roles);
   const rolesLoading = useSelector(selectRolesLoading);
-  const rolesError = useSelector(selectRolesError);
   const isLoading = useSelector(
     (state: RootState) => state.sendInvite.isLoading
   );
@@ -172,11 +170,6 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
             {(isLoading || rolesLoading) && (
               <div className={styles.loaderContainer}>
                 <div className={styles.loader}></div>
-              </div>
-            )}
-            {rolesError && (
-              <div className={styles.error}>
-                Error loading roles: {rolesError}
               </div>
             )}
           </div>
