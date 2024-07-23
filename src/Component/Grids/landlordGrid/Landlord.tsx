@@ -77,6 +77,10 @@ const LandlordGrid: React.FC = () => {
     dispatch(fetchLandlords());
   }, [dispatch]);
 
+  useEffect(() => {
+    setPaginationModel(prev => ({...prev,pageSize: landlords.length}));
+  }, [landlords]);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 

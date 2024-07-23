@@ -89,6 +89,10 @@ const InviteBroker: React.FC = () => {
     dispatch(fetchBrokers());
   }, [dispatch]);
 
+  useEffect(() => {
+    setPaginationModel(prev => ({...prev,pageSize: brokers.length}));
+  }, [brokers]);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);

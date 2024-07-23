@@ -74,6 +74,10 @@ const SiteGrid: React.FC = () => {
     dispatch(fetchSites());
   }, [dispatch]);
 
+  useEffect(() => {
+    setPaginationModel(prev => ({...prev,pageSize: sites.length}));
+  }, [sites]);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
