@@ -62,7 +62,6 @@ const dealSlice = createSlice({
         state.dealDetails.push(action.payload);
       }
       console.log("Updated/Added deal:", action.payload);
-
     },
     updateDealField: (
       state,
@@ -79,7 +78,6 @@ const dealSlice = createSlice({
         (deal[action.payload.field] as string | number | boolean | null) =
           action.payload.value;
         console.log(`Updated field ${action.payload.field} for deal ${action.payload.id}:`, deal);
-
       }
     },
     setActiveStep: (state, action: PayloadAction<number>) => {
@@ -110,73 +108,87 @@ export const {
 
 export default dealSlice.reducer;
 
-export const fetchDealDetails =
-  (): AppThunk<void> => async (dispatch: Dispatch) => {
-    try {
-      dispatch(fetchDealDetailsStart());
-      const response = await axiosInstance.get(`/deals`);
+export const fetchDealDetails = (): AppThunk<void> => async (dispatch: Dispatch) => {
+  try {
+    dispatch(fetchDealDetailsStart());
+    const response = await axiosInstance.get(`/deals`);
+    if (response.data && Array.isArray(response.data)) {
       dispatch(fetchDealDetailsSuccess(response.data));
-    } catch (error) {
-      console.error('Error fetching deal details:', error);
-      dispatch(fetchDealDetailsFailure((error as Error).message));
+    } else {
+      dispatch(fetchDealDetailsFailure('No deals found.'));
     }
-  };
+  } catch (error) {
+    console.error('Error fetching deal details:', error);
+    dispatch(fetchDealDetailsFailure('Error fetching deal details.'));
+  }
+};
 
-export const fetchBrokerDealDetails =
-  (brokerId: number): AppThunk<void> =>
-    async (dispatch: Dispatch) => {
-      try {
-        dispatch(fetchDealDetailsStart());
-        const response = await axiosInstance.get(`deals/assignedTo/${brokerId}`);
-        dispatch(fetchDealDetailsSuccess(response.data.deals));
-      } catch (error) {
-        console.error('Error fetching broker deal details:', error);
-        dispatch(fetchDealDetailsFailure((error as Error).message));
-      }
-    };
+export const fetchBrokerDealDetails = (brokerId: number): AppThunk<void> => async (dispatch: Dispatch) => {
+  try {
+    dispatch(fetchDealDetailsStart());
+    const response = await axiosInstance.get(`deals/assignedTo/${brokerId}`);
+    if (response.data && Array.isArray(response.data.deals)) {
+      dispatch(fetchDealDetailsSuccess(response.data.deals));
+    } 
+    else if (response.status === 404 && (!response.data)){
+      dispatch(fetchDealDetailsFailure('No deals found for this broker.'));
+    }
+    else if (response.status === 404 && response.data.response.error === 'Not Found'){
+      return dispatch(fetchDealDetailsFailure('No deals found for this broker.'));
+    }
+    else {
+      dispatch(fetchDealDetailsFailure('No deals found for this broker.'));
+    }
+  } catch (error :any) {
+    console.error('Error fetching broker deal details:', error);
+    dispatch(fetchDealDetailsFailure('Error fetching broker deal details.'));
+  }
+};
 
-export const deleteDeal =
-  (dealId: number): AppThunk<void> =>
-    async (dispatch: Dispatch) => {
-      try {
-        dispatch(fetchDealDetailsStart());
-        await axiosInstance.delete(`/deals/deal/${dealId}`);
-        dispatch(deleteDealSuccess(dealId));
-      } catch (error) {
-        console.error('Error deleting deal:', error);
-        dispatch(fetchDealDetailsFailure((error as Error).message));
-      }
-    };
+export const deleteDeal = (dealId: number): AppThunk<void> => async (dispatch: Dispatch) => {
+  try {
+    dispatch(fetchDealDetailsStart());
+    const response = await axiosInstance.delete(`/deals/deal/${dealId}`);
+    if (response.status === 200) {
+      dispatch(deleteDealSuccess(dealId));
+    } else {
+      dispatch(fetchDealDetailsFailure('Error deleting deal.'));
+    }
+  } catch (error) {
+    console.error('Error deleting deal:', error);
+    dispatch(fetchDealDetailsFailure('Error deleting deal.'));
+  }
+};
 
-export const createNewDeal =
-  (dealData: Deal): AppThunk<void> =>
-    async (dispatch) => {
-      try {
-        dispatch(setCurrentDeal(dealData));
-        const response = await axiosInstance.post('/deals/deal', dealData);
-        dispatch(setDealDetails(response.data));
-        dispatch(clearCurrentDeal());
-      } catch (error) {
-        console.error('Error creating new deal:', error);
-        dispatch(fetchDealDetailsFailure((error as Error).message));
-      }
-    };
+export const createNewDeal = (dealData: Deal): AppThunk<void> => async (dispatch) => {
+  try {
+    dispatch(setCurrentDeal(dealData));
+    const response = await axiosInstance.post('/deals/deal', dealData);
+    if (response.data) {
+      dispatch(setDealDetails(response.data));
+      dispatch(clearCurrentDeal());
+    } else {
+      dispatch(fetchDealDetailsFailure('Error creating new deal.'));
+    }
+  } catch (error) {
+    console.error('Error creating new deal:', error);
+    dispatch(fetchDealDetailsFailure('Error creating new deal.'));
+  }
+};
 
-export const updateDealDetails =
-  (dealData: Deal): AppThunk<void> =>
-    async (dispatch) => {
-      try {
-        dispatch(setCurrentDeal(dealData));
-        const response = await axiosInstance.put(
-          `/deals/deal/${dealData.id}`,
-          dealData
-        );
-        dispatch(setDealDetails(response.data));
-        dispatch(clearCurrentDeal());
-        console.log("Updated deal details:", response.data);
-
-      } catch (error) {
-        console.error('Error updating deal details:', error);
-        dispatch(fetchDealDetailsFailure((error as Error).message));
-      }
-    };
+export const updateDealDetails = (dealData: Deal): AppThunk<void> => async (dispatch) => {
+  try {
+    dispatch(setCurrentDeal(dealData));
+    const response = await axiosInstance.put(`/deals/deal/${dealData.id}`, dealData);
+    if (response.data) {
+      dispatch(setDealDetails(response.data));
+      dispatch(clearCurrentDeal());
+      console.log("Updated deal details:", response.data);
+    } else {
+      dispatch(fetchDealDetailsFailure('Error updating deal details.'));
+    }
+  } catch (error) {
+    console.error('Error updating deal details:', error);
+    dispatch(fetchDealDetailsFailure('Error updating deal details.'));
+  }
+};

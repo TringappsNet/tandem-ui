@@ -326,17 +326,32 @@ const DealForm: React.FC<DealFormProps> = () => {
                 height: '60px',
               }}
             >
-              <Typography variant="subtitle1" fontWeight="bold" textAlign="center">
-                {event.label}:
-              </Typography>
-              <Typography textAlign="center" >
-                {event.date ? new Date(event.date).toLocaleDateString() : <span style={{color:'grey'}}>Yet to Complete</span>}
-              </Typography>
+              {event.date ? (
+                <>
+                  <Typography variant="subtitle1" fontWeight="bold" textAlign="center" >
+                    {event.label}:
+                  </Typography><Typography textAlign="center">
+                    {event.date ? new Date(event.date).toLocaleDateString() : <span style={{ color: '#b3b3b3bb' }}>Yet to Complete</span>}
+                  </Typography>
+                </>
+              )
+                : (
+                  <>
+                  <Typography variant="subtitle1" fontWeight="bold" textAlign="center" style={{ color: '#b3b3b3bb' }} >
+                    {event.label}:
+                  </Typography><Typography textAlign="center">
+                    {event.date ? new Date(event.date).toLocaleDateString() : <span style={{ color: '#b3b3b3bb' }}>Yet to Complete</span>}
+                  </Typography>
+                </>
+                )
+}
+
+
             </Box>
           ))}
           <Box
             sx={{
-              border: '2px solid #262262',
+              border: '2px solid #26226299',
               borderRadius: '4px',
               padding: '10px',
               width: 'calc(33.33% - 10px)',
@@ -354,12 +369,26 @@ const DealForm: React.FC<DealFormProps> = () => {
               },
             }}
           >
-            <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262">
+            {formData.potentialCommission ? 
+            <>
+              <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262">
               Potential Commission:
             </Typography>
             <Typography textAlign="center" fontWeight="bolder" variant="h6" color="#262262">
-              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : <span style={{color:'#5a577c'}}>Yet to Complete</span>}
+              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : <span style={{ color: '#5a577c' }}>Yet to Complete</span>}
+            </Typography> 
+            </>
+            :
+            <>
+            <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262"  style={{ color: '#5a577c88' }}>
+              Potential Commission:
             </Typography>
+            <Typography textAlign="center" fontWeight="bolder" variant="h6" color="#262262">
+              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : <span style={{ color: '#5a577c88' }}>Yet to Complete</span>}
+            </Typography>
+            </>
+            }
+            
           </Box>
         </Box>
       </div>
@@ -379,8 +408,11 @@ const DealForm: React.FC<DealFormProps> = () => {
       open={open}
       onClose={() => {
         dispatch(closeDealForm());
-        dispatchFormDataOnClose();
-        dispatch(clearCurrentDeal());
+        if (userdetails.isAdmin) {
+          dispatchFormDataOnClose();
+          dispatch(clearCurrentDeal());
+        }
+
       }}
     >
       <DialogTitle
@@ -400,8 +432,10 @@ const DealForm: React.FC<DealFormProps> = () => {
           aria-label="close"
           onClick={() => {
             dispatch(closeDealForm());
-            dispatchFormDataOnClose();
-            dispatch(clearCurrentDeal());
+            if (userdetails.isAdmin) {
+              dispatchFormDataOnClose();
+              dispatch(clearCurrentDeal());
+            }
           }}
           sx={{
             position: 'absolute',
@@ -440,20 +474,20 @@ const DealForm: React.FC<DealFormProps> = () => {
               alignItems: 'flex-start',
             }}
           >
-            {(userdetails.isAdmin) && 
-            <Stepper
-              activeStep={activeStep}
-              alternativeLabel
-              connector={<StepConnector />}
-              sx={{ width: 1 }}
-            >
-              {steps.map((step, index) => (
-                <Step key={index} sx={{ width: 1 }}
-                >
-                  <StepLabel>{step.label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>}
+            {(userdetails.isAdmin) &&
+              <Stepper
+                activeStep={activeStep}
+                alternativeLabel
+                connector={<StepConnector />}
+                sx={{ width: 1 }}
+              >
+                {steps.map((step, index) => (
+                  <Step key={index} sx={{ width: 1 }}
+                  >
+                    <StepLabel>{step.label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>}
             <Box
               sx={{
                 width: '100%',

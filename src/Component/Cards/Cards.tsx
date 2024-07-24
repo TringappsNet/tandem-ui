@@ -41,6 +41,15 @@ const Cards: React.FC = () => {
     dispatch(openDealForm());
   };
 
+  const viewoption = (deal: Deal) => {
+    if(!userdetails.isAdmin || deal.status === 'Completed'){
+      viewDealForm(deal)
+    }
+    else {
+      return;
+    }
+  };
+
   const viewDealForm = (deal: Deal) => {
     const updatedDeal = { ...deal, activeStep: 7 };
     dispatch(setCurrentDeal(updatedDeal));
@@ -174,21 +183,23 @@ const Cards: React.FC = () => {
       <div className={styles.cardList}>
         {filteredDeals.length > 0 ? (
           filteredDeals.map((deal: Deal) => (
-            <div key={deal.id} className={styles.card}>
+            <div key={deal.id} className={styles.card} onClick={() => viewoption(deal)}>
 
               {userdetails.isAdmin && (
                 <div className={styles.icons}>
                   <div className={styles.hide}>
-                    <FiEdit
-                      onClick={() => editDealForm(deal)}
-                      className={styles.editHide}
-                    />
+                    {(deal.status === 'Started' || deal.status === 'In-Progress') &&
+                  <FiEdit
+                  onClick={() => editDealForm(deal)}
+                  className={styles.editHide}
+                />}
+                    
                   </div>
                   {(deal.status === 'Started' || deal.status === 'In-Progress') &&
                   <FiTrash
                     onClick={() => deal.id !== null && handleDelete(deal.id)}
                   />}
-                  {(!userdetails.isAdmin) && (
+                  {(userdetails.isAdmin && deal.status=== 'Completed') && (
                     <FiEye onClick={() => viewDealForm(deal)} />)}
 
                 </div>

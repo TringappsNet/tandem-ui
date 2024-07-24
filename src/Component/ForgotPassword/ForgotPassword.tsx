@@ -9,6 +9,7 @@ import {
 import { RootState } from '../Redux/reducers';
 import backgroundImage from './bg-login.png';
 import { AppDispatch } from '../Redux/store';
+import logo from '../../assests/tandemlogo/tandem_logo.png'
 import SnackbarComponent from '../Snackbar/Snackbar';
 
 const ForgotPassword: React.FC = () => {
@@ -85,7 +86,7 @@ const ForgotPassword: React.FC = () => {
         <div className={styles.section}>
           <div className={styles.header}>
             <img
-              src="https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0"
+              src={logo}
               alt="Tandem Logo"
             />
             <h2 className={styles.name}>TANDEM INFRASTRUCTURE</h2>

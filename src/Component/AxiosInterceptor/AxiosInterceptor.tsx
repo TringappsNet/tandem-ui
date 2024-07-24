@@ -2,12 +2,10 @@ import React, { useLayoutEffect, ReactNode, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SnackbarComponent from '../Snackbar/Snackbar';
-import styles from './AxiosInterceptor.module.css';
 
 const axiosInstance = axios.create({
-  
-  baseURL: 'http://portal.tandeminf.com/api',
-
+  // baseURL: 'http://portal.tandeminf.com/api',
+  baseURL: 'http://192.168.1.77:3008/api',
 });
 
 const getQueryParam = (param: string): string | null => {
@@ -20,7 +18,6 @@ interface AxiosInterceptorProps {
 }
 
 const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const navigate = useNavigate();
@@ -32,50 +29,53 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
     const addInterceptors = () => {
       requestInterceptor = axiosInstance.interceptors.request.use(
         (config) => {
-          setIsLoading(true);
-          const user = JSON.parse(localStorage.getItem('user') || '{}');
-          const session = JSON.parse(localStorage.getItem('session') || '{}');
-          const userId = user.id;
-          const token = session.token;
-          const resetToken = getQueryParam('resetToken');
+          try {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const session = JSON.parse(localStorage.getItem('session') || '{}');
+            const userId = user.id;
+            const token = session.token;
+            const resetToken = getQueryParam('resetToken');
 
-          if (userId && token) {
-            config.headers['user-id'] = userId;
-            config.headers['access-token'] = token;
+            if (userId && token) {
+              config.headers['user-id'] = userId;
+              config.headers['access-token'] = token;
+            }
+
+            if (resetToken) {
+              config.headers['resetToken'] = resetToken;
+            }
+          } catch (error) {
+            console.error('Error in request interceptor:', error);
           }
-
-          if (resetToken) {
-            config.headers['resetToken'] = resetToken;
-          }
-
           return config;
         },
         (error) => {
-          setIsLoading(false);
           return Promise.reject(error);
         }
       );
+
       responseInterceptor = axiosInstance.interceptors.response.use(
         (response) => {
-          setIsLoading(false);
           return response;
         },
         (error) => {
-          setIsLoading(false);
+          try {
+            const config = error.config;
+            const requiresAuth =
+              config.headers['user-id'] && config.headers['access-token'];
 
-          const config = error.config;
-          const requiresAuth =
-            config.headers['user-id'] && config.headers['access-token'];
-
-          if (
-            requiresAuth &&
-            error.response &&
-            (error.response.status === 401 || error.response.status === 403)
-          ) {
-            setSnackbarMessage('Your session is invalid or expired');
-            localStorage.clear();
-            setSnackbarOpen(true);
+            if (
+              requiresAuth &&
+              error.response &&
+              (error.response.status === 401 || error.response.status === 403)
+            ) {
+              setSnackbarMessage('Your session is invalid or expired');
+              localStorage.clear();
+              setSnackbarOpen(true);
               navigate('/login');
+            }
+          } catch (interceptorError) {
+            console.error('Error in response interceptor:', interceptorError);
           }
           return Promise.reject(error);
         }
@@ -101,11 +101,6 @@ const AxiosInterceptor: React.FC<AxiosInterceptorProps> = ({ children }) => {
 
   return (
     <>
-      {isLoading && (
-        <div className={styles.loaderContainer}>
-          <div className={styles.loader}></div>
-        </div>
-      )}
       <SnackbarComponent
         open={snackbarOpen}
         message={snackbarMessage}

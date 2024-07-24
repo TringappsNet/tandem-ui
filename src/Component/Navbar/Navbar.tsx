@@ -32,6 +32,7 @@ import { IoLogOutOutline } from 'react-icons/io5';
 import SnackbarComponent from '../Snackbar/Snackbar';
 import { fetchSites } from '../Redux/slice/site/siteSlice';
 import { fetchBrokerDealDetails, fetchDealDetails } from '../Redux/slice/deal/dealSlice';
+import logo from '../../assests/tandemlogo/tandem_logo.png'
 import { fetchBrokerDeals } from '../Redux/slice/deal/dealsDataSlice';
 interface NavbarProps {
   links: {
@@ -238,7 +239,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         <div className={styles.headersection}>
           <div className={styles.header} onClick={handlelogoclick}>
             <img
-              src="https://static.wixstatic.com/media/de20d1_c11a5e3e27554cde9ed8e2312c36095b~mv2.webp/v1/fill/w_90,h_90,al_c,lg_1,q_80,enc_auto/Logo%20Transparency%20-%20Icon.webp0"
+              src={logo}
               alt="Tandem Logo"
             />
             <h3>TANDEM INFRASTRUCTURE</h3>
