@@ -66,8 +66,10 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const supportOpen = useSelector((state: RootState) => state.contact.open);
 
   useEffect(() => {
-    dispatch(fetchSites());
-  }, [dispatch]);
+    if (userdetails.isAdmin) {
+      dispatch(fetchSites());
+    }
+  }, [dispatch,userdetails]);
 
   useEffect(() => {
     if (userdetails.isAdmin === true) {
@@ -80,11 +82,14 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
 
 
   useEffect(() => {
-    const filteredSites = sites.filter((site) =>
-      !deals.some((deal) => deal.propertyName === `${site.addressline1}, ${site.addressline2}`)
-    );
-    setAvailableSites(filteredSites);
-  }, [sites, deals]);
+    if (userdetails.isAdmin) {
+      const filteredSites = sites.filter((site) =>
+        !deals.some((deal) => deal.propertyName === `${site.addressline1}, ${site.addressline2}`)
+      );
+      setAvailableSites(filteredSites);
+    }
+
+  }, [sites, deals,userdetails]);
 
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
@@ -123,7 +128,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const handleLogoutConfirm = async () => {
     try {
       await dispatch(logoutUser()).unwrap();
-      navigate('/login'); 
+      navigate('/login');
     } catch (error) {
       console.error('Logout failed:', error);
       setSnackbarMessage('Logout failed. Please try again.');
@@ -323,9 +328,9 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                   Reset password
                 </button>
                 <button onClick={() => handleOpenPopup('Support')}>
-                  <BiSupport className={styles.icons} /> 
-                  {userdetails.isAdmin &&  <span>Email Campaign</span> }
-                  {(!userdetails.isAdmin) &&  <span>Contact us</span> }
+                  <BiSupport className={styles.icons} />
+                  {userdetails.isAdmin && <span>Email Campaign</span>}
+                  {(!userdetails.isAdmin) && <span>Contact us</span>}
                 </button>
                 <button onClick={handleLogoutClick}>
                   <IoLogOutOutline className={styles.icons} />

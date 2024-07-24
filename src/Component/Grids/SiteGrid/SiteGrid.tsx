@@ -197,6 +197,7 @@ const SiteGrid: React.FC = () => {
       field: 'actions',
       headerName: 'Actions',
       width: 130,
+      disableExport: true,
       renderCell: (params) => (
         <>
           <FiEdit

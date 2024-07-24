@@ -209,7 +209,7 @@ const DealForm: React.FC<DealFormProps> = () => {
           >
             {label === 'brokerName'
               ? brokers
-                .filter((broker) => !broker.isAdmin)
+                .filter((broker) => !broker.isAdmin && broker.isActive)
                 .map((broker, idx) => (
                   <MenuItem key={idx} value={broker.name}>
                     {broker.name}
@@ -456,7 +456,7 @@ const DealForm: React.FC<DealFormProps> = () => {
               cursor: 'pointer',
             }}
           >
-            Save/Close
+            {userdetails.isAdmin ? 'Save/Close' : 'Close'}
           </button>
         </IconButton>
       </DialogTitle>

@@ -16,7 +16,6 @@ import inviteBrokerReducer from '../slice/user/userSlice';
 import landlordReducer from '../slice/landlord/landlordSlice';
 import siteReducer from '../slice/site/siteSlice';
 import dealDataReducer from '../slice/deal/dealsDataSlice';
-import { LOGOUT } from '../actionTypes';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -39,8 +38,8 @@ const appReducer = combineReducers({
 });
 
 const rootReducer = (state: ReturnType<typeof appReducer> | undefined, action: any) => {
-  if (action.type === LOGOUT) {
-    state = undefined;
+  if (action.type === 'auth/logout/fulfilled') {
+    return appReducer(undefined, action)
   }
   return appReducer(state, action);
 };

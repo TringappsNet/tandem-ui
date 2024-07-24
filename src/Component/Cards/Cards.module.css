@@ -1,3 +1,12 @@
+.welcome {
+  display: block;
+  width: 100%;
+  font-size: 19px !important;
+  color: #2D353C;
+  margin-bottom: .9rem;
+  font-weight: bolder;
+}
+
 .cardList {
   display: flex;
   flex-wrap: wrap;

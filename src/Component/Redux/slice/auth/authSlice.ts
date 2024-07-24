@@ -98,6 +98,7 @@ export const logoutUser = createAsyncThunk(
 
       if (sessionToken) {
         await axiosInstance.post('/auth/logout', { sessionToken });
+        localStorage.clear()
       }
 
       return;
@@ -128,6 +129,7 @@ const authSlice = createSlice({
       localStorage.removeItem('user');
       localStorage.removeItem('session');
       localStorage.removeItem('accessToken');
+      localStorage.clear();
     },
   },
   extraReducers: (builder) => {
@@ -157,6 +159,7 @@ const authSlice = createSlice({
         localStorage.removeItem('user');
         localStorage.removeItem('session');
         localStorage.removeItem('accessToken');
+        localStorage.clear();
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.error = action.payload as string;

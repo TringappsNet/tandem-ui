@@ -249,6 +249,7 @@ const InviteBroker: React.FC = () => {
       field: 'actions',
       headerName: 'Actions',
       width: 130,
+      disableExport: true,
       renderCell: (params) => (
         <>
           <FiEdit
@@ -382,6 +383,8 @@ const InviteBroker: React.FC = () => {
             label="email"
             type="text"
             size='small'
+            disabled
+            title='You cannot edit this Field'
             fullWidth
             value={formData.email}
             onChange={handleChange}

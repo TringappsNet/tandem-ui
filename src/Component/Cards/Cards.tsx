@@ -42,7 +42,7 @@ const Cards: React.FC = () => {
   };
 
   const viewoption = (deal: Deal) => {
-    if(!userdetails.isAdmin || deal.status === 'Completed'){
+    if (!userdetails.isAdmin || deal.status === 'Completed') {
       viewDealForm(deal)
     }
     else {
@@ -122,6 +122,15 @@ const Cards: React.FC = () => {
 
   return (
     <>
+    {(!userdetails.isAdmin) && 
+      <div className={styles.welcome}>
+        <div className={styles.welcomefade}>
+          Welcome,{' '}
+          {userdetails
+            ? `${userdetails.user?.firstName} ${userdetails.user?.lastName} !`
+            : 'Guest'}
+        </div>
+      </div>}
       <div className={styles.filterContainer}>
         <input
           type="text"
@@ -147,35 +156,35 @@ const Cards: React.FC = () => {
           <span className={styles.tag}>
             <p className={styles.totalDeals}>TOTAL DEALS</p>
             <p className={styles.deals}>
-              <p className={styles.totalDeal}>{deal.totalDeals}</p>
+              <p className={styles.totalDeal}>{deal.totalDeals ? deal.totalDeals : 0}</p>
             </p>
           </span>
 
           <span className={styles.tag}>
             <p className={styles.totalDeals}>DEALS OPENED</p>
             <p className={styles.deals}>
-              <p className={styles.totalDeal}>{deal.dealsOpened}</p>
+              <p className={styles.totalDeal}>{deal.dealsOpened ? deal.dealsOpened : 0}</p>
             </p>
           </span>
 
           <span className={styles.tag}>
             <p className={styles.totalDeals}>DEALS IN PROGRESS</p>
             <p className={styles.deals}>
-              <p className={styles.totalDeal}>{deal.dealsInProgress}</p>
+              <p className={styles.totalDeal}>{deal.dealsInProgress ? deal.dealsInProgress : 0}</p>
             </p>
           </span>
 
           <span className={styles.tag}>
             <p className={styles.totalDeals}>DEALS CLOSED</p>
             <p className={styles.deals}>
-              <p className={styles.totalDeal}>{deal.dealsClosed}</p>
+              <p className={styles.totalDeal}>{deal.dealsClosed ? deal.dealsClosed : 0}</p>
             </p>
           </span>
 
           <span className={styles.tag}>
             <p className={styles.totalDeals}>TOTAL COMMISSION</p>
             <p className={styles.deals}>
-              <p className={styles.totalDeal}>${deal.totalCommission}</p>
+              <p className={styles.totalDeal}>${deal.totalCommission ? deal.totalCommission : 0}</p>
             </p>
           </span>
         </div>
@@ -189,17 +198,17 @@ const Cards: React.FC = () => {
                 <div className={styles.icons}>
                   <div className={styles.hide}>
                     {(deal.status === 'Started' || deal.status === 'In-Progress') &&
-                  <FiEdit
-                  onClick={() => editDealForm(deal)}
-                  className={styles.editHide}
-                />}
-                    
+                      <FiEdit
+                        onClick={() => editDealForm(deal)}
+                        className={styles.editHide}
+                      />}
+
                   </div>
                   {(deal.status === 'Started' || deal.status === 'In-Progress') &&
-                  <FiTrash
-                    onClick={() => deal.id !== null && handleDelete(deal.id)}
-                  />}
-                  {(userdetails.isAdmin && deal.status=== 'Completed') && (
+                    <FiTrash
+                      onClick={() => deal.id !== null && handleDelete(deal.id)}
+                    />}
+                  {(userdetails.isAdmin && deal.status === 'Completed') && (
                     <FiEye onClick={() => viewDealForm(deal)} />)}
 
                 </div>
@@ -229,41 +238,41 @@ const Cards: React.FC = () => {
                     </div>}
                 </div>
 
-              <div className={styles.statusLine}>
-                <div className={styles.statuscontainer}>
-                  <div
-                    className={`${styles.statusButton} ${getStatusButtonClass(
+                <div className={styles.statusLine}>
+                  <div className={styles.statuscontainer}>
+                    <div
+                      className={`${styles.statusButton} ${getStatusButtonClass(
+                        deal.status
+                      )}`}
+                    >
+                      {deal.status}
+                    </div>
+                    <ProgressSteps steps={7} activeStep={deal.activeStep} />
+                  </div>
+                </div>
+                <div className={styles.statusLine}>
+                  <div className={styles.timestamp}>
+                    Last updated on: {deal.updatedAt?.split('T')[0] || 'Unknown'}
+                  </div>
+                  <div className={styles.circle} title={deal.brokerName}>
+                    {deal.brokerName && deal.brokerName.split(' ').length >= 2 ? (
+                      <p>
+                        {deal.brokerName.split(' ')[0][0]}
+                        {deal.brokerName.split(' ')[1][0]}
+                      </p>
+                    ) : (
+                      <p>NA</p>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <hr
+                    className={`${styles.statuslinecolor} ${getStatusButtonClass(
                       deal.status
                     )}`}
-                  >
-                    {deal.status}
-                  </div>
-                  <ProgressSteps steps={7} activeStep={deal.activeStep} />
+                  />
                 </div>
               </div>
-              <div className={styles.statusLine}>
-                <div className={styles.timestamp}>
-                  Last updated on: {deal.updatedAt?.split('T')[0] || 'Unknown'}
-                </div>
-                <div className={styles.circle} title={deal.brokerName}>
-                  {deal.brokerName && deal.brokerName.split(' ').length >= 2 ? (
-                    <p>
-                      {deal.brokerName.split(' ')[0][0]}
-                      {deal.brokerName.split(' ')[1][0]}
-                    </p>
-                  ) : (
-                    <p>NA</p>
-                  )}
-                </div>
-              </div>
-              <div>
-                <hr
-                  className={`${styles.statuslinecolor} ${getStatusButtonClass(
-                    deal.status
-                  )}`}
-                />
-              </div>
-            </div>
             </div>
           ))
         ) : (

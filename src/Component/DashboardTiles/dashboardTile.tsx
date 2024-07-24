@@ -54,14 +54,14 @@ const Main: React.FC = () => {
 
   return (
     <>
-      <p className={styles.welcome}>
+      <div className={styles.welcome}>
         <div className={styles.welcomefade}>
           Welcome,{' '}
           {userdetails
             ? `${userdetails.firstName} ${userdetails.lastName} !`
             : 'Guest'}
         </div>
-      </p>
+      </div>
       <div className={styles.tagsContainer}>
         <span className={styles.tag}>
           <p className={styles.totalDeals}>TOTAL DEALS</p>

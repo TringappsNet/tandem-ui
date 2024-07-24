@@ -160,6 +160,7 @@ const LandlordGrid: React.FC = () => {
     {
       field: 'actions',
       headerName: 'Actions',
+      disableExport: true,
       width: 100,
       renderCell: (params) => (
         <>
