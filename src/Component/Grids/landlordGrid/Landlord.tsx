@@ -189,8 +189,8 @@ const LandlordGrid: React.FC = () => {
     if (!formData.phoneNumber) {
       errors.phoneNumber = 'Phone Number is required';
       valid = false;
-    } else if (!/^\d{10}$/.test(formData.phoneNumber)) {
-      errors.phoneNumber = 'Phone Number must be 10 digits';
+    } else if (!/\d/.test(formData.phoneNumber)) {
+      errors.phoneNumber = 'Phone Number must be only digits';
       valid = false;
     }
 

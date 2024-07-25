@@ -149,8 +149,8 @@ const InviteBroker: React.FC = () => {
     if (!formData.mobile) {
       errors.mobile = 'Mobile Number is required';
       valid = false;
-    } else if (!/^\d{10}$/.test(formData.mobile)) {
-      errors.mobile = 'Mobile Number must be 10 digits';
+    } else if (!/\d/.test(formData.mobile)) {
+      errors.mobile = 'Mobile Number must be only digits';
       valid = false;
     }
     if (!formData.address) {
@@ -405,7 +405,7 @@ const InviteBroker: React.FC = () => {
             margin="dense"
             name="mobile"
             label="mobile"
-            type="text"
+            type="number"
             size='small'
             autoComplete='off'
             fullWidth
