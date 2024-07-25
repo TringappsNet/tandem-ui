@@ -58,6 +58,7 @@ const FullGrid: React.FC<FullGridProps> = ({
             disableColumnMenu
             hideFooter
             disableColumnSelector
+            disableRowSelectionOnClick
             disableDensitySelector
             hideFooterPagination
             hideFooterSelectedRowCount
@@ -66,7 +67,8 @@ const FullGrid: React.FC<FullGridProps> = ({
             slotProps={{
               toolbar: {
                 showQuickFilter: true,
-                printOptions: { disableToolbarButton: true }
+                printOptions: { disableToolbarButton: true },
+                csvOptions: { allColumns: true }
               },
             }}
           />

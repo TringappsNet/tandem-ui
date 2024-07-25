@@ -152,10 +152,13 @@ const Registration: React.FC = () => {
     } else if (zipcode === '') {
       return 'Zipcode is required';
     } else if (password === '') {
+      setDisableState(false);
       return 'Password is required';
     } else if (confirmpassword.trim() === '') {
+      setDisableState(false);
       return 'Please confirm your password.';
     } else if (password !== confirmpassword) {
+      setDisableState(false);
       return 'Passwords do not match.';
     } else {
       return '';
@@ -174,7 +177,7 @@ const Registration: React.FC = () => {
   };
 
   const validateMobileNo = (mobileNo: string): string => {
-    const mobileNoPattern = /^\d{10}$/;
+    const mobileNoPattern = /\d/;
     if (firstName === '') {
       return 'First name is required.';
     } else if (lastName === '') {
@@ -184,7 +187,7 @@ const Registration: React.FC = () => {
     } else if (mobileNo.trim() === '') {
       return 'Mobile number should not be empty.';
     } else if (!mobileNoPattern.test(mobileNo)) {
-      return 'Mobile number should be exactly 10';
+      return 'Mobile number should contain only integer.';
     } else {
       return '';
     }

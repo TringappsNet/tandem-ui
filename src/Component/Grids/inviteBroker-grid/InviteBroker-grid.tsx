@@ -39,6 +39,7 @@ interface Site {
   firstName: string;
   lastName: string;
   mobile: string;
+  address:string;
   city: string;
   state: string;
   country: string;
@@ -65,6 +66,7 @@ const InviteBroker: React.FC = () => {
     firstName: '',
     lastName: '',
     mobile: '',
+    address:'',
     city: '',
     state: '',
     country: '',
@@ -111,6 +113,7 @@ const InviteBroker: React.FC = () => {
       firstName: '',
       lastName: '',
       mobile: '',
+      address:'',
       city: '',
       state: '',
       country: '',
@@ -148,6 +151,10 @@ const InviteBroker: React.FC = () => {
       valid = false;
     } else if (!/^\d{10}$/.test(formData.mobile)) {
       errors.mobile = 'Mobile Number must be 10 digits';
+      valid = false;
+    }
+    if (!formData.address) {
+      errors.address = 'Address is required';
       valid = false;
     }
 
@@ -358,6 +365,7 @@ const InviteBroker: React.FC = () => {
             label="firstName"
             type="text"
             size='small'
+            autoComplete='off'
             fullWidth
             value={formData.firstName}
             onChange={handleChange}
@@ -370,6 +378,7 @@ const InviteBroker: React.FC = () => {
             label="lastName"
             type="text"
             size='small'
+            autoComplete='off'
             fullWidth
             value={formData.lastName}
             onChange={handleChange}
@@ -383,6 +392,7 @@ const InviteBroker: React.FC = () => {
             label="email"
             type="text"
             size='small'
+            autoComplete='off'
             disabled
             title='You cannot edit this Field'
             fullWidth
@@ -397,6 +407,7 @@ const InviteBroker: React.FC = () => {
             label="mobile"
             type="text"
             size='small'
+            autoComplete='off'
             fullWidth
             value={formData.mobile}
             onChange={handleChange}
@@ -405,10 +416,24 @@ const InviteBroker: React.FC = () => {
           />
           <TextField
             margin="dense"
+            name="address"
+            label="address"
+            type="text"
+            size='small'
+            autoComplete='off'
+            fullWidth
+            value={formData.address}
+            onChange={handleChange}
+            error={!!formErrors.lastName}
+            helperText={formErrors.lastName}
+          />
+          <TextField
+            margin="dense"
             name="state"
             label="state"
             type="text"
             size='small'
+            autoComplete='off'
             fullWidth
             value={formData.state}
             onChange={handleChange}
@@ -421,6 +446,7 @@ const InviteBroker: React.FC = () => {
             label="City"
             type="text"
             size='small'
+            autoComplete='off'
             fullWidth
             value={formData.city}
             onChange={handleChange}
@@ -433,6 +459,7 @@ const InviteBroker: React.FC = () => {
             label="Country"
             type="text"
             size='small'
+            autoComplete='off'
             fullWidth
             value={formData.country}
             onChange={handleChange}
@@ -445,6 +472,7 @@ const InviteBroker: React.FC = () => {
             label="Zipcode"
             type="number"
             size='small'
+            autoComplete='off'
             fullWidth
             value={formData.zipcode}
             onChange={handleChange}
