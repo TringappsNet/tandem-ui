@@ -62,7 +62,16 @@ const FullGrid: React.FC<FullGridProps> = ({
             disableDensitySelector
             hideFooterPagination
             hideFooterSelectedRowCount
-            getRowClassName={(params) => (params.indexRelativeToCurrentPage % 2 === 0 ? styles.evenRow : styles.oddRow)}
+            getRowClassName={(params) => {
+              if (params.row.isActive === false && (params.indexRelativeToCurrentPage % 2 === 0 || params.indexRelativeToCurrentPage % 2 !== 0)) {
+                return styles.specialRow;
+              }  else if (params.indexRelativeToCurrentPage % 2 === 0){
+                return styles.evenRow;
+              }
+              else {
+                return styles.oddRow;
+              }
+            }}
             slots={{ toolbar: GridToolbar }}
             slotProps={{
               toolbar: {

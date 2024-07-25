@@ -67,10 +67,14 @@
   width: auto;
 }
 
-.evenRow {
-  background-color: #f5f5f5 !important; /* Light grey for even rows */
+.specialRow{
+  color: #c1c1c1c5;
+  cursor: not-allowed !important;
+  pointer-events: none;
 }
-
-.oddRow {
-  background-color: #ffffff !important; /* White for odd rows */
+.evenRow, .specialRow {
+  background-color: #f5f5f5 !important; 
+}
+.oddRow, .specialRow {
+  background-color: #ffffff !important; 
 }
