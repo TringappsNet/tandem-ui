@@ -40,7 +40,7 @@ const SnackbarComponent: React.FC<SnackbarProps> = ({
   const alertProps: AlertProps = {
     onClose: onClose,
     severity: severity,
-    sx: { width: '700px', textAlign: 'center', ...style, padding: '0 10px'},
+    sx: { width: '700px', textAlign: 'center', ...style, padding: '0 10px',backgroundColor: severity === 'error' ? '#DE5242' : '#54B471'},
     action: (<IconButton  onClick={onClose}><CloseIcon className={styles.cross}/></IconButton>
     ),
   };
