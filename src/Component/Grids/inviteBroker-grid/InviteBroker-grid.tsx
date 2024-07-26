@@ -425,8 +425,8 @@ const InviteBroker: React.FC = () => {
             fullWidth
             value={formData.address}
             onChange={handleChange}
-            error={!!formErrors.lastName}
-            helperText={formErrors.lastName}
+            error={!!formErrors.address}
+            helperText={formErrors.address}
           />
           <TextField
             margin="dense"

@@ -128,7 +128,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
   }
 
   return (
-    <div>
+    <div className={styles.supportContainer}>
       <div className={styles.headerLine}>
         {userdetails.isAdmin && <h2 className={styles.support}>Email Campaign</h2>}
         {(!userdetails.isAdmin) && <h2 className={styles.support}>Contact Us!</h2>}
@@ -164,7 +164,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
                     id="emails"
                     options={allUsers.map(user => user.email)}
                     renderInput={(params) => (
-                      <TextField {...params} variant="outlined" placeholder="Select users to send email" sx={{color:'red'}} />
+                      <TextField {...params} variant="outlined" placeholder="Select users to send email" />
                     )}
                     value={selectedEmails}
                     onChange={(event, newValue) => setSelectedEmails(newValue)}
@@ -175,7 +175,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
                           label={value}
                           {...getTagProps({ index })}
                           key={index}
-                          sx={{ fontSize: '.7rem', textTransform:'none' }}
+                          sx={{ fontSize: '.6rem', textTransform:'none' }}
                           color="info"
                           size="small"
                         />

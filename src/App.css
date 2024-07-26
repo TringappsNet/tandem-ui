@@ -195,3 +195,11 @@ color: #fff !important;
 .MuiDialogTitle-root+.css-ypiqx9-MuiDialogContent-root, .css-1ty026z{
   padding: 20px 24px !important;
 }
+
+.css-i4bv87-MuiSvgIcon-root, .css-vubbuv {
+  height: 1.28rem !important;
+}
+
+.css-18i3v7t, .css-1fu2e3p-MuiPaper-root-MuiDialog-paper{
+  border-radius: 0 !important;
+}

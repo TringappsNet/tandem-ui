@@ -440,7 +440,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         onHide={handleLogoutCancel}
         onConfirm={handleLogoutConfirm}
         title="Confirm Logout"
-        message="Are you sure you want to logout!"
+        message="Are you sure you want to logout ?"
         cancelText="Cancel"
         confirmText="Logout"
         cancelVariant="secondary"

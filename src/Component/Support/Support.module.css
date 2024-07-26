@@ -1,24 +1,13 @@
-@import url('@fontsource/public-sans');
-@import url('@fontsource/oswald');
 
-body,
-html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
+.supportContainer {
+  width: 100%;
 }
-
 .headerLine {
-  height: 51px;
   background-color: rgb(40, 40, 43);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
-
-.body {
-  padding: 2rem;
-
-}
-
 
 .loginBackground {
   background-image: url('./bg-login.png');
@@ -35,13 +24,11 @@ html {
   justify-content: center;
   align-items: center;
   background-color: #DDE1E5;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 0px;
-  padding: 6rem;
+  padding: 3.5rem;
   height: 600px;
-  gap: 1rem;
 
+  padding-left:1rem;
+  gap: 1rem;
 }
 
 .imageContainer {
@@ -61,24 +48,20 @@ html {
 .formGroup {
   display: flex;
   flex-direction: column;
-  margin-bottom: .5rem;
+  margin-bottom: 1rem;
 }
 
 .support {
   color: white;
-  padding: 0.5rem;
-  padding-top: 12px;
   font-size: 24px;
-  margin-left: 480px;
-  text-align: left;
   font-family: 'Open Sans', sans-serif;
-  width: 300px;
-  height: 59px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
 }
 
 .formGroup label {
-  color: #20252a;
-  margin-bottom: 0.5rem;
   font-size: 18px;
   font-family: 'Public Sans', sans-serif;
 }
@@ -111,35 +94,14 @@ html {
   resize: vertical;
 }
 
-.supportName {
-  font-size: 25px;
-  font-family: 'Public Sans', sans-serif;
-  font-weight: bolder;
-  margin-bottom: 48px;
-  color: white;
-  text-align: center;
-}
-
-.iconsContainer {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.icon {
-  font-size: 2rem;
-  color: #262262;
-}
-
 .sendButton {
   background: #00acac;
   color: rgb(255, 255, 255);
   border: none;
-  padding: 0.5rem;
+  height: 2.2rem;
   font-size: 18px;
   font-weight: bolder;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
   margin-top: 20px;
   width: 100%;
@@ -159,7 +121,6 @@ html {
 
 .sendButton:hover {
   background: #008181;
-  /* background: linear-gradient(45deg, rgb(2, 49, 88) 0%, rgb(5, 36, 84) 100%); */
   color: white;
 }
 
@@ -218,7 +179,7 @@ html {
 .multipleemails {
   width: 500px;
   height: 100%;
-  max-height: 70px;
+  max-height: 57px;
   overflow-y: scroll;
   font-size: .1rem;
   background-color: #f2f2f4 !important;
