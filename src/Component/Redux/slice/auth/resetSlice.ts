@@ -23,6 +23,7 @@ interface ResetPasswordPayload {
 
 interface RejectValue {
   message: string;
+  status: string;
 }
 
 export const resetPassword = createAsyncThunk<
@@ -40,14 +41,17 @@ export const resetPassword = createAsyncThunk<
       });
       return response.data;
     } catch (error: any) {
+      if(error.response.status === 404) {
+        return rejectWithValue({ message: 'Old password you provided is Incorrect.', status: 'failed'});
+      }
       if (
         error.response &&
         error.response.data &&
         error.response.data.message
       ) {
-        return rejectWithValue({ message: error.response.data.message });
+        return rejectWithValue({ message: error.response.data.message, status: 'failed'});
       }
-      return rejectWithValue({ message: 'Password reset failed.' });
+      return rejectWithValue({ message: 'Password reset failed.', status: 'failed' });
     }
   }
 );
@@ -62,6 +66,7 @@ const resetSlice = createSlice({
     },
     resetState: () => initialState,
     openReset: (state) => {
+      state.responseMessage = '';
       state.open = true;
     },
     closeReset: (state) => {

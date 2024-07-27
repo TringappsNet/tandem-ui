@@ -58,7 +58,7 @@ const LandlordGrid: React.FC = () => {
     zipcode: '',
     isNew: true,
   });
- 
+
   const [formErrors, setFormErrors] = useState<Partial<Landlord>>({});
   const dispatch = useDispatch<AppDispatch>();
   const landlords = useSelector((state: RootState) => state.landlord.landlords);
@@ -78,7 +78,7 @@ const LandlordGrid: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    setPaginationModel(prev => ({...prev,pageSize: landlords.length}));
+    setPaginationModel(prev => ({ ...prev, pageSize: landlords.length }));
   }, [landlords]);
 
   const handleOpen = () => setOpen(true);
@@ -191,6 +191,9 @@ const LandlordGrid: React.FC = () => {
       valid = false;
     } else if (!/\d/.test(formData.phoneNumber)) {
       errors.phoneNumber = 'Phone Number must be only digits';
+      valid = false;
+    } else if (formData.phoneNumber.length > 15) {
+      errors.phoneNumber = 'Mobile Number length should not exceed 15 digits';
       valid = false;
     }
 
@@ -419,7 +422,7 @@ const LandlordGrid: React.FC = () => {
             autoComplete="new-password"
           />
         </DialogContent>
-        <DialogActions sx={{ paddingBottom: 2, paddingRight:2}}>
+        <DialogActions sx={{ paddingBottom: 2, paddingRight: 2 }}>
           <Button
             onClick={handleClose}
             size='small'

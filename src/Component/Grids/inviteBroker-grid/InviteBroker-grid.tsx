@@ -152,6 +152,9 @@ const InviteBroker: React.FC = () => {
     } else if (!/\d/.test(formData.mobile)) {
       errors.mobile = 'Mobile Number must be only digits';
       valid = false;
+    }  else if (formData.mobile.length > 15){
+      errors.mobile = 'Mobile Number length should not exceed 15 digits';
+      valid = false;
     }
     if (!formData.address) {
       errors.address = 'Address is required';

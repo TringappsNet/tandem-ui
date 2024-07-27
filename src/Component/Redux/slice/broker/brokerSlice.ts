@@ -63,6 +63,11 @@ const brokerSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+    fetchBrokerSuccess: (state, action: PayloadAction<Broker[]>) => {
+      state.brokers = action.payload;
+      state.loading = false;
+      state.error = null;
+    },
     fetchBrokersFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
@@ -70,7 +75,7 @@ const brokerSlice = createSlice({
   },
 });
 
-export const { fetchBrokersStart, fetchBrokersSuccess, fetchBrokersFailure } =
+export const { fetchBrokersStart, fetchBrokersSuccess, fetchBrokersFailure, fetchBrokerSuccess } =
   brokerSlice.actions;
 
 export default brokerSlice.reducer;
@@ -108,5 +113,46 @@ export const fetchBrokers = (): AppThunk<void> => async (dispatch: Dispatch) => 
   } catch (error) {
     console.error('Error fetching brokers:', error);
     dispatch(fetchBrokersFailure((error as Error).message));
+  }
+};
+
+export const fetchBrokerUserDetails = (brokerId: number): AppThunk<void> => async (dispatch: Dispatch) => {
+  try {
+    dispatch(fetchBrokersStart());
+    const response = await axiosInstance.get(`brokers/brokerwithdeals/${brokerId}`);
+    
+    if (response.status === 200 && response.data) {
+      const broker = response.data;
+      const roleName = broker.roleId === 1 ? 'Admin' : 'Broker';
+      const userDetails: any = {
+        id: broker.user.id,
+        email: broker.user.email,
+        firstName: broker.user.firstName,
+        lastName: broker.user.lastName,
+        mobile: broker.user.mobile,
+        address: broker.user.address,
+        city: broker.user.city,
+        state: broker.user.state,
+        country: broker.user.country,
+        zipcode: broker.user.zipcode,
+        isActive: broker.user.isActive,
+        isAdmin: broker.user.isAdmin,
+        totalDeals: broker.totalDeals,
+        dealsOpened: broker.dealsOpened,
+        dealsInProgress: broker.dealsInProgress,
+        dealsClosed: broker.dealsClosed,
+        totalCommission: broker.totalCommission,
+        roleName: roleName,
+      };
+
+      dispatch(fetchBrokerSuccess(userDetails));
+    } else if (response.status === 404 && response.data?.response?.error === 'Not Found') {
+      dispatch(fetchBrokersFailure('No deals found for this broker.'));
+    } else {
+      dispatch(fetchBrokersFailure('No deals found for this broker.'));
+    }
+  } catch (error: any) {
+    console.error('Error fetching broker deal details:', error);
+    dispatch(fetchBrokersFailure('Error fetching broker deal details.'));
   }
 };

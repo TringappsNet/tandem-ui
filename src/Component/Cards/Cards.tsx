@@ -16,6 +16,7 @@ import { Deal } from '../Interface/DealFormObject';
 import { fetchBrokerDeals } from '../Redux/slice/deal/dealsDataSlice';
 import ProgressSteps from '../Progress/ProgressSteps';
 import { BiRightArrowCircle } from 'react-icons/bi';
+import { fetchBrokers, fetchBrokerUserDetails } from '../Redux/slice/broker/brokerSlice';
 
 const Cards: React.FC = () => {
   const userdetails = useSelector((state: RootState) => state.auth);
@@ -26,13 +27,17 @@ const Cards: React.FC = () => {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [dealId, setDealId] = useState<number | null>(null);
   const deal = useSelector((state: RootState) => state.dealData.deal);
+  const brokerdetails: any = useSelector((state: RootState) => state.broker.brokers);
 
   useEffect(() => {
     if (userdetails.isAdmin === true) {
       dispatch(fetchDealDetails());
+      dispatch(fetchBrokers());
+
     } else if (userdetails.isAdmin === false) {
       dispatch(fetchBrokerDeals(userdetails.user?.id || 0));
       dispatch(fetchBrokerDealDetails(userdetails.user?.id || 0));
+      dispatch(fetchBrokerUserDetails(userdetails.user?.id || 0));
     }
   }, [dispatch, userdetails]);
 
@@ -76,6 +81,8 @@ const Cards: React.FC = () => {
     }
   };
 
+
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
@@ -93,12 +100,59 @@ const Cards: React.FC = () => {
     setDeleteConfirmation(true);
   };
 
-  const filteredDeals = dealsData.filter((deal: Deal) => {
+  const getBrokerInitials = (brokerId: number | undefined) => {
+    if (userdetails.isAdmin) {
+      const broker = brokerdetails.find((broker: any) => broker.id === brokerId);
+      if (broker) {
+        const names = broker.fullName.split(' ');
+        if (names.length >= 2) {
+          return `${names[0][0]}${names[1][0]}`;
+        }
+        return names[0][0];
+      }
+    } else {
+      // Assuming brokerdetails is a single broker object if the user is a broker
+      const broker = brokerdetails;
+      if (broker && broker.id === brokerId) {
+        const fullName = `${broker.firstName} ${broker.lastName}`
+        const names = fullName.split(' ');
+        if (names.length >= 2) {
+          return `${names[0][0]}${names[1][0]}`;
+        }
+        return names[0][0];
+      }
+    }
+    return 'NA';
+  };
+  
+
+  const getBrokerFullName = (brokerId: number | undefined) => {
+    if (userdetails.isAdmin) {
+      const broker = brokerdetails.find((broker: any) => broker.id === brokerId);
+      if (broker) {
+        return broker.fullName || 'NA';
+      }
+      return 'NA';
+    } else {
+      // Assuming brokerdetails is a single broker object if the user is a broker
+      const broker = brokerdetails;
+      if (broker && broker.id === brokerId) {
+        const fullName = `${broker.firstName} ${broker.lastName}`
+        return fullName || 'NA';
+      }
+      return 'NA';
+    }
+  };
+
+
+  const filteredDeals = dealsData.filter((deal: any) => {
     const matchesSearch =
       deal.brokerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       deal.propertyName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       deal.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      deal.id?.toString().includes(searchTerm);
+      deal.id?.toString().includes(searchTerm) ||
+      getBrokerFullName(deal.brokerId).toLowerCase().includes(searchTerm.toLowerCase()) ||
+      getBrokerInitials(deal.brokerId).toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus ? deal.status === filterStatus : true;
     return matchesSearch && matchesStatus && deal.id !== null;
   });
@@ -122,15 +176,15 @@ const Cards: React.FC = () => {
 
   return (
     <>
-    {(!userdetails.isAdmin) && 
-      <div className={styles.welcome}>
-        <div className={styles.welcomefade}>
-          Welcome,{' '}
-          {userdetails
-            ? `${userdetails.user?.firstName} ${userdetails.user?.lastName} !`
-            : 'Guest'}
-        </div>
-      </div>}
+      {(!userdetails.isAdmin) &&
+        <div className={styles.welcome}>
+          <div className={styles.welcomefade}>
+            Welcome,{' '}
+            {userdetails
+              ? `${userdetails.user?.firstName} ${userdetails.user?.lastName} !`
+              : 'Guest'}
+          </div>
+        </div>}
       <div className={styles.filterContainer}>
         <input
           type="text"
@@ -191,7 +245,7 @@ const Cards: React.FC = () => {
       )}
       <div className={styles.cardList}>
         {filteredDeals.length > 0 ? (
-          filteredDeals.map((deal: Deal) => (
+          filteredDeals.map((deal: any) => (
             <div key={deal.id} className={styles.card} onClick={() => viewoption(deal)}>
 
               {userdetails.isAdmin && (
@@ -254,15 +308,8 @@ const Cards: React.FC = () => {
                   <div className={styles.timestamp}>
                     Last updated on: {deal.updatedAt?.split('T')[0] || 'Unknown'}
                   </div>
-                  <div className={styles.circle} title={deal.brokerName}>
-                    {deal.brokerName && deal.brokerName.split(' ').length >= 2 ? (
-                      <p>
-                        {deal.brokerName.split(' ')[0][0]}
-                        {deal.brokerName.split(' ')[1][0]}
-                      </p>
-                    ) : (
-                      <p>NA</p>
-                    )}
+                  <div className={styles.circle} title={getBrokerFullName(deal.brokerId)}>
+                    <p>{getBrokerInitials(deal.brokerId)}</p>
                   </div>
                 </div>
                 <div>

@@ -10,6 +10,19 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+const disableConsole = (): void => {
+  if (process.env.NODE_ENV === 'production') {
+    console.log = (): void => {};
+    console.warn = (): void => {};
+    console.error = (): void => {};
+    console.info = (): void => {};
+    console.debug = (): void => {};
+  }
+};
+
+disableConsole();
+
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>

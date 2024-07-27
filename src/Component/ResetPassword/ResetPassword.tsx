@@ -48,7 +48,7 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
       setErrorMessage('Please enter your new password.');
       return;
     }
-    
+
     if (!validatePassword(newPassword)) {
       dispatch(clearResponse());
       setErrorMessage('New password must contain atleast 1 special character, 1 number, and 1 uppercase letter.');
@@ -72,7 +72,7 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
   };
 
   useEffect(() => {
-    if (status === 'succeeded' || status === 'failed') {
+    if (status === 'succeeded') {
       setTimeout(() => {
         setShowResetForm(false);
         setOldPassword('');
@@ -82,68 +82,72 @@ const Reset: React.FC<ResetProps> = ({ onCloseDialog }) => {
         dispatch(resetState());
       }, 1000);
     }
+    else if (status === 'failed') {
+      setShowResetForm(true);
+      setErrorMessage('');
+    }
   }, [status, onCloseDialog, dispatch]);
 
   return (
     <>
       {showResetForm && (
         <div className={styles.formContainer}>
-         <div className={styles.headerLine}>
-          <h2>Reset Password</h2>
-         </div>
-         <div className= {styles.body}>
+          <div className={styles.headerLine}>
+            <h2>Reset Password</h2>
+          </div>
+          <div className={styles.body}>
 
-          {errorMessage && (
-            <div className={styles.error}>{errorMessage}</div>
-          )}
-          {responseMessage && (
-            <div className={styles[responseType]}>{responseMessage}</div>
-          )}
-          <form onSubmit={handleResetPassword} noValidate>
-            <div className={styles.formGroup}>
-              <label htmlFor="oldPassword">Old Password:</label>
-              <input
-                type="password"
-                id="oldPassword"
-                autoFocus 
-                value={oldPassword}
-                placeholder="Enter your old password"
-                onChange={(e) => {
-                  setOldPassword(e.target.value);
-                  setErrorMessage('');
-                }}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="newPassword">New Password:</label>
-              <input
-                type="password"
-                id="newPassword"
-                value={newPassword}
-                placeholder="Enter your new password"
-                onChange={(e) => {
-                  setNewPassword(e.target.value);
-                  setErrorMessage('');
-                }}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="confirmPassword">Confirm New Password:</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                value={confirmPassword}
-                placeholder="Confirm your password"
-                onChange={(e) => {
-                  setConfirmPassword(e.target.value);
-                  setErrorMessage('');
-                }}
-              />
-            </div>
-            <button type="submit">Reset Password</button>
-          </form>
+            {errorMessage && (
+              <div className={styles.error}>{errorMessage}</div>
+            )}
+            {responseMessage && (
+              <div className={styles[responseType]}>{responseMessage}</div>
+            )}
+            <form onSubmit={handleResetPassword} noValidate>
+              <div className={styles.formGroup}>
+                <label htmlFor="oldPassword">Old Password:</label>
+                <input
+                  type="password"
+                  id="oldPassword"
+                  autoFocus
+                  value={oldPassword}
+                  placeholder="Enter your old password"
+                  onChange={(e) => {
+                    setOldPassword(e.target.value);
+                    setErrorMessage('');
+                  }}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="newPassword">New Password:</label>
+                <input
+                  type="password"
+                  id="newPassword"
+                  value={newPassword}
+                  placeholder="Enter your new password"
+                  onChange={(e) => {
+                    setNewPassword(e.target.value);
+                    setErrorMessage('');
+                  }}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="confirmPassword">Confirm New Password:</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  placeholder="Confirm your password"
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    setErrorMessage('');
+                  }}
+                />
+              </div>
+              <button type="submit">Reset Password</button>
+            </form>
+          </div>
         </div>
-      </div>
       )}
     </>
   );

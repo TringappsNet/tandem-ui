@@ -3,6 +3,7 @@ import { useDispatch as useReduxDispatch } from 'react-redux';
 import rootReducer, { RootState } from '../reducers';
 
 const store = configureStore({
+  devTools: process.env.NODE_ENV !== 'production',
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

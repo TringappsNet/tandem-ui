@@ -185,7 +185,9 @@ const Registration: React.FC = () => {
       return 'Address is required.';
     } else if (mobileNo.trim() === '') {
       return 'Mobile number should not be empty.';
-    } else if (!mobileNoPattern.test(mobileNo)) {
+    } else if (mobileNo.length > 15){
+      return 'Mobile Number length should not exceed 15 digits';
+    }else if (!mobileNoPattern.test(mobileNo)) {
       return 'Mobile number should contain only integer.';
     } else {
       return '';
