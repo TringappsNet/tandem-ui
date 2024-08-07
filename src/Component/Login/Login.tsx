@@ -5,9 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../Redux/slice/auth/authSlice';
 import { RootState } from '../Redux/reducers';
 import { AppDispatch } from '../Redux/store';
-import backgroundImage from './bg-login.png';
 import SnackbarComponent from '../Snackbar/Snackbar';
-import logo from '../../assests/tandemlogo/tandem_logo.png'
+import logo from '../../assests/tandemlogo/tandem_logo.png';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -56,9 +55,9 @@ const Login: React.FC = () => {
         if (login.fulfilled.match(result)) {
           navigate('/dashboard');
         } else {
-          const error:any = result.payload
+          const error:any = result.payload;
           setSnackbarMessage(error);
-          setSnackbarOpen(true);;
+          setSnackbarOpen(true);
         }
       });
     }
@@ -69,57 +68,54 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className={styles.loginBackground} style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <div className={styles.loginBackground}>
       <div className={styles.card}>
-        <div className={styles.section}>
-
-          <div className={styles.header}>
-            <img
-              className={styles.logo}
-              src={logo}
-              alt="Tandem Logo"
-            />
-            <h2 className={styles.name}>TANDEM INFRASTRUCTURE</h2>
+        <div className={styles.leftSide}>
+          <h1>Stay Connected.<br/>Stay Informed.</h1>
+        </div>
+        <div className={styles.rightSide}>
+          <div className={styles.headerlogo}>
+          <img className={styles.logo} src={logo} alt="Tandem Logo" />
+          <h2 className={styles.name}>TANDEM INFRASTRUCTURE <br /><span>REFERRAL PORTAL LOGIN</span></h2>
           </div>
-          <p style={{ color: 'rgb(127, 129, 133)' }}>Sign in to TANDEM</p>
-
-          <div className={styles.formContainer}>
-            <form className={styles.loginsection} onSubmit={handleSubmit}>
-              <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="username">
-                  Email ID
-                </label>
-                <input
-                  id="username"
-                  placeholder="Enter email"
-                  value={email}
-                  autoFocus
-                  onChange={handleEmailChange}
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="password">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  placeholder="Enter password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                />
-              </div>
-              <Link to="/forgotpassword" className={styles.forgotPassword}>
-                Forgot password?
-              </Link>
-              <button
-                className={styles.loginbtn}
-                type="submit"
-                disabled={loading}
-              >
-                {loading ? 'Signing In...' : 'Sign in'}
-              </button>
-            </form>
+        
+          <form className={styles.loginForm} onSubmit={handleSubmit}>
+            <div className={styles.inputGroup}>
+              <label className={styles.label} htmlFor="email">
+                Email Address
+              </label>
+              <input
+                id="email"
+                placeholder="Enter email"
+                value={email}
+                autoComplete='off'
+                autoFocus
+                onChange={handleEmailChange}
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <label className={styles.label} htmlFor="password">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                placeholder="Enter password"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+            </div>
+            <Link to="/forgotpassword" className={styles.forgotPassword}>
+              Forgot password?
+            </Link>
+            <button
+              className={styles.loginbtn}
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? 'Signing In...' : 'Sign in'}
+            </button>
+          </form>
           </div>
 
           {loading && (
@@ -127,7 +123,6 @@ const Login: React.FC = () => {
               <div className={styles.loader}></div>
             </div>
           )}
-        </div>
       </div>
       <SnackbarComponent
         open={snackbarOpen}

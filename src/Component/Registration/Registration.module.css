@@ -48,7 +48,7 @@
 
 
 .loginBackground {
-  background-image: url('./bg-login.png');
+  /* background-image: url('./bg-login.png'); */
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100vh;
@@ -57,11 +57,12 @@
   align-items: center;
   padding: 1rem;
   overflow-y: scroll;
+  background-color: rgb(240 241 247);
 }
 
 .container {
   padding: 2.5rem 2.5rem;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   border: 1px solid #E0E0E0;
   border-radius: 0.5rem;
   width: 120%;
@@ -208,7 +209,7 @@ h4 {
 }
 
 .buttoncls[type='submit'] {
-  background-color: #00acac;
+  background-color: #3D91C1;
   color: #fff;
   margin-top: 2px;
   height: 45px !important;
@@ -242,16 +243,7 @@ h4 {
 }
 
 .buttoncls[type='submit']:hover {
-  background-color: #008181;
-}
-
-.buttoncls[type='submit']:hover:before {
-  width: 200%;
-  height: 200%;
-}
-
-.buttoncls[type='submit']:active {
-  transform: scale(0.95);
+  background-color: #5799c0;
 }
 
 @media (max-width: 768px) {
@@ -283,10 +275,11 @@ h4 {
   align-items: center;
   margin-bottom: 11px;
   margin-right: 20px;
+  justify-content: center;
 }
 
 .companyName {
-  font-size: 20px;
+  font-size: 17px;
   font-family: 'Public Sans', sans-serif;
   color: #20252A;
   font-weight: bolder;
@@ -294,7 +287,7 @@ h4 {
 }
 
 .formTitle {
-  font-size: 1.25rem;
+  font-size: 1.15rem !important;
   font-weight: 600;
 }
 
