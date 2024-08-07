@@ -48,6 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const userdetails = useSelector((state: RootState) => state.auth);
   const sites = useSelector((state: RootState) => state.site.sites);
   const deals = useSelector((state: RootState) => state.deal.dealDetails);
+  const brokersname = useSelector((state: RootState) => state.broker.brokers);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<string>('dashboard');
   const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
@@ -222,11 +223,15 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     setActivePage('deals');
   };
 
+  const brokerAvailable = brokersname.filter((broker:any)=>{
+    return broker.isAdmin === false && broker.isActive === true;
+  })
+
   const handleCreateDealClick = () => {
-    if (availableSites.length === 0) {
+    if (availableSites.length === 0 || brokerAvailable.length === 0) {
 
       setSnackbarMessage(
-        'Unable to create deal, properties are either assigned or unavailable !'
+        'Unable to create deal, properties and brokers are either assigned or unavailable !'
       );
       setSnackbarOpen(true);
     } else {

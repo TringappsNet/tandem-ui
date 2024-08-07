@@ -19,6 +19,7 @@ import {
   setSnackbarOpen,
   setActiveBroker,
 } from '../../Redux/slice/user/userSlice';
+import {fetchBrokers as fetchingbrokerdetails} from '../../Redux/slice/broker/brokerSlice' 
 import FullGrid from '../parentGrid/parent-grid';
 import { FiEdit } from 'react-icons/fi';
 import { MdDoNotDisturb } from "react-icons/md";
@@ -216,6 +217,7 @@ const InviteBroker: React.FC = () => {
     const payload = { isActive: false }
     dispatch(setActiveBroker(deleteId, payload));
     setDeactivateConfiramtion(false);
+    dispatch(fetchingbrokerdetails());
   };
 
   const handleOpenPopup = (componentName: string) => {
