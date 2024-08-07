@@ -7,7 +7,6 @@ import {
   clearState,
 } from '../Redux/slice/auth/forgotPasswordSlice';
 import { RootState } from '../Redux/reducers';
-import backgroundImage from './bg-login.png';
 import { AppDispatch } from '../Redux/store';
 import logo from '../../assests/tandemlogo/tandem_logo.png'
 import SnackbarComponent from '../Snackbar/Snackbar';
@@ -81,7 +80,7 @@ const ForgotPassword: React.FC = () => {
   };
 
   return (
-    <div className={styles.loginBackground} style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <div className={styles.loginBackground}>
       <div className={styles.card}>
         <div className={styles.section}>
           <div className={styles.header}>
@@ -92,7 +91,7 @@ const ForgotPassword: React.FC = () => {
             <h2 className={styles.name}>TANDEM INFRASTRUCTURE</h2>
           </div>
           <div className={styles.headingsection}>
-            <p style={{ color: 'rgb(136, 137, 140)' }}>Forgot Password</p>
+            <p>Forgot Password</p>
           </div>
 
           <div className={styles.formContainer}>
@@ -101,7 +100,7 @@ const ForgotPassword: React.FC = () => {
             <form className={styles.loginsection} onSubmit={handleSubmit} noValidate>
               <div className={styles.inputGroup}>
                 <label className={styles.label} htmlFor="username">
-                  Email ID
+                  Email Address
                 </label>
                 <input
                   id="username"
@@ -109,6 +108,7 @@ const ForgotPassword: React.FC = () => {
                   placeholder="Enter email"
                   value={email}
                   autoFocus
+                  autoComplete='off'
                   onChange={handleEmailChange}
                 />
               </div>

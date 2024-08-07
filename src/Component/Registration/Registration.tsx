@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '../Redux/store';
 import { RootState } from '../Redux/reducers';
 import SnackbarComponent from '../Snackbar/Snackbar';
+import Input from 'react-phone-number-input/input'
+
+
 
 
 const Registration: React.FC = () => {
@@ -16,12 +19,12 @@ const Registration: React.FC = () => {
   const [hasValidToken, setHasValidToken] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [firstName, setFirstname] = useState('');
+  const [emailId, setEmailId] = useState('');
   const [lastName, setLastname] = useState('');
   const [mobileNo, setMobileno] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [country, setCountry] = useState('');
   const [zipcode, setZipcode] = useState('');
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmpassword] = useState('');
@@ -34,10 +37,8 @@ const Registration: React.FC = () => {
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const addressRef = useRef<HTMLInputElement>(null);
-  const mobileNoRef = useRef<HTMLInputElement>(null);
   const cityRef = useRef<HTMLInputElement>(null);
   const stateRef = useRef<HTMLInputElement>(null);
-  const countryRef = useRef<HTMLInputElement>(null);
   const zipcodeRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
@@ -45,8 +46,10 @@ const Registration: React.FC = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('inviteToken');
-    if (token) {
+    const emailId = urlParams.get('email');
+    if (token && emailId) {
       setInviteToken(token);
+      setEmailId(emailId);
       setHasValidToken(true);
     } else {
       navigate('/');
@@ -108,9 +111,7 @@ const Registration: React.FC = () => {
       return 'City is required';
     } else if (state === '') {
       return 'State is required';
-    } else if (country === '') {
-      return 'Country is required';
-    } else if (zipcode === '') {
+    }else if (zipcode === '') {
       return 'Zipcode is required';
     } else if (password.trim() === '') {
       setDisableState(false);
@@ -130,34 +131,31 @@ const Registration: React.FC = () => {
     }
   };
 
+  const validatePasswordStrength = (password: string) => {
+    const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
+    const numberPattern = /\d/g;
+    if (password.trim() === '') {
+      return 'Password is required.';
+    } else if (password.length < 8) {
+      return 'Password should contain at least 8 characters.';
+    } else if (!specialCharPattern.test(password)) {
+      return 'Password should contain at least one special character.';
+    } else if ((password.match(numberPattern) || []).length < 2) {
+      return 'Password should contain at least two numerical digits.';
+    } else {
+      return '';
+    }
+  }
+  
   const validateConfirmpassword = (
     password: string,
     confirmpassword: string
   ): string => {
-    if (firstName === '') {
-      return 'First name is required.';
-    } else if (lastName === '') {
-      return 'Last name is required.';
-    } else if (address === '') {
-      return 'Address is required.';
-    } else if (mobileNo === '') {
-      return 'Mobile number is required';
-    } else if (city === '') {
-      return 'City is required';
-    } else if (state === '') {
-      return 'State is required';
-    } else if (country === '') {
-      return 'Country is required';
-    } else if (zipcode === '') {
-      return 'Zipcode is required';
-    } else if (password === '') {
-      setDisableState(false);
+    if (password === '') {
       return 'Password is required';
     } else if (confirmpassword.trim() === '') {
-      setDisableState(false);
       return 'Please confirm your password.';
     } else if (password !== confirmpassword) {
-      setDisableState(false);
       return 'Passwords do not match.';
     } else {
       return '';
@@ -185,9 +183,9 @@ const Registration: React.FC = () => {
       return 'Address is required.';
     } else if (mobileNo.trim() === '') {
       return 'Mobile number should not be empty.';
-    } else if (mobileNo.length > 15){
+    } else if (mobileNo.length > 15) {
       return 'Mobile Number length should not exceed 15 digits';
-    }else if (!mobileNoPattern.test(mobileNo)) {
+    } else if (!mobileNoPattern.test(mobileNo)) {
       return 'Mobile number should contain only integer.';
     } else {
       return '';
@@ -224,23 +222,23 @@ const Registration: React.FC = () => {
     }
   };
 
-  const validateCountry = (country: string): string => {
-    if (firstName === '') {
-      return 'First name is required.';
-    } else if (lastName === '') {
-      return 'Last name is required.';
-    } else if (address === '') {
-      return 'Address is required.';
-    } else if (mobileNo === '') {
-      return 'Mobile number is required';
-    } else if (city === '') {
-      return 'City is required';
-    } else if (state === '') {
-      return 'State is required';
-    } else {
-      return '';
-    }
-  };
+  // const validateCountry = (country: string): string => {
+  //   if (firstName === '') {
+  //     return 'First name is required.';
+  //   } else if (lastName === '') {
+  //     return 'Last name is required.';
+  //   } else if (address === '') {
+  //     return 'Address is required.';
+  //   } else if (mobileNo === '') {
+  //     return 'Mobile number is required';
+  //   } else if (city === '') {
+  //     return 'City is required';
+  //   } else if (state === '') {
+  //     return 'State is required';
+  //   } else {
+  //     return '';
+  //   }
+  // };
 
   const validateZipcode = (zipcode: string): string => {
     if (firstName === '') {
@@ -255,8 +253,6 @@ const Registration: React.FC = () => {
       return 'City is required';
     } else if (state === '') {
       return 'State is required';
-    } else if (country === '') {
-      return 'Country is required';
     } else if (zipcode.trim() === '') {
       return 'Zipcode is required.';
     } else {
@@ -268,37 +264,38 @@ const Registration: React.FC = () => {
     const firstNameError = validatefirstName(firstName);
     const lastNameError = validatelastName(lastName);
     const mobileNoError = validateMobileNo(mobileNo);
-    const passwordError = validatePassword(password);
     const addressError = validateAddress(address);
-    const confirmpasswordError = validateConfirmpassword(
-      password,
-      confirmpassword
-    );
     const zipcodeError = validateZipcode(zipcode);
     const cityError = validateCity(city);
     const stateError = validateState(state);
-    const countryError = validateCountry(country);
+    // const countryError = validateCountry(country);
+
+    const passwordError = validatePassword(password);
+    const confirmpasswordError = validateConfirmpassword(password, confirmpassword);
 
     const errors = [
       firstNameError,
       lastNameError,
       mobileNoError,
-      passwordError,
       addressError,
-      confirmpasswordError,
       zipcodeError,
       cityError,
       stateError,
-      countryError,
     ].filter((error) => error);
 
-    if (errors.length > 0) {
+    if (passwordError || confirmpasswordError) {
+      // Set password errors inline
+      setSnackbarMessage(passwordError || confirmpasswordError);
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+    } else if (errors.length > 0) {
+      // Set other errors to snackbar
       setSnackbarMessage(errors[0]);
       setSnackbarSeverity('error');
       setSnackbarOpen(true);
     }
 
-    return errors.length === 0;
+    return errors.length === 0 && !passwordError && !confirmpasswordError;
   };
 
   const handleSubmit = async (e: any) => {
@@ -312,11 +309,10 @@ const Registration: React.FC = () => {
       registerUser({
         firstName,
         lastName,
-        mobileNo,
+        mobileNo : handleMobileChange(mobileNo),
         address,
         city,
         state,
-        country,
         zipcode,
         password,
         inviteToken,
@@ -335,7 +331,6 @@ const Registration: React.FC = () => {
       setAddress('');
       setCity('');
       setState('');
-      setCountry('');
       setZipcode('');
       setPassword('');
       setConfirmpassword('');
@@ -354,6 +349,15 @@ const Registration: React.FC = () => {
     }
   };
 
+  const stripCountryCode = (phoneNumber :any) => {
+    return phoneNumber.startsWith("+1") ? phoneNumber.slice(2) : phoneNumber;
+  };
+
+  const handleMobileChange = (value:any) => {
+    const strippedValue = stripCountryCode(value || '');
+    return strippedValue;
+  };
+
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
@@ -369,7 +373,7 @@ const Registration: React.FC = () => {
                 alt="Tandem Infrastructure Logo"
                 className={styles.logo}
               />
-              <h1 className={styles.companyName}>TANDEM INFRASTRUCTURE</h1>
+              <h1 className={styles.companyName}>TANDEM INFRASTRUCTURE REFERRAL PORTAL REGISTRATION</h1>
             </div>
             <h4 className={styles.formTitle}>REGISTER HERE</h4>
             <div className={styles.formContainer}>
@@ -425,18 +429,12 @@ const Registration: React.FC = () => {
                   </div>
 
                   <div className={styles.formGroup}>
-                    <label htmlFor="mobileNo">Mobile No</label>
-                    <input
-                      type="number"
-                      id="mobileNo"
-                      role="presentation"
-                      autoComplete='off'
-                      placeholder="Enter your mobile number"
-                      ref={mobileNoRef}
+                    <label htmlFor="mobileNo">Mobile Number</label>
+                    <Input
+                      defaultCountry="US"
+                      placeholder="Enter phone number"
                       value={mobileNo}
-                      onChange={(e) => {
-                        setMobileno(e.target.value);
-                      }}
+                      onChange={(value: any) => setMobileno(value || '')}
                     />
                   </div>
                 </div>
@@ -474,22 +472,20 @@ const Registration: React.FC = () => {
                 </div>
                 <div className={styles.formRow}>
                   <div className={styles.formGroup}>
-                    <label htmlFor="country">Country</label>
+                    <label htmlFor="email">Email Address</label>
                     <input
-                      type="text"
-                      id="country"
+                    title='You cannot edit this filed'
+                      type="email"
+                      id="email"
                       role="presentation"
                       autoComplete='off'
-                      placeholder="Enter your country"
-                      ref={countryRef}
-                      value={country}
-                      onChange={(e) => {
-                        setCountry(e.target.value);
-                      }}
+                      value={emailId}
+                      disabled
+                      style={{cursor:'not-allowed'}}
                     />
                   </div>
                   <div className={styles.formGroup}>
-                    <label htmlFor="zipcode">Zipcode</label>
+                    <label htmlFor="zipcode">Zip Code</label>
                     <input
                       type="number"
                       id="zipcode"
@@ -517,6 +513,7 @@ const Registration: React.FC = () => {
                         setPassword(e.target.value);
                       }}
                     />
+                    {password && <p className={styles.error}>{validatePasswordStrength(password)}</p>}
                   </div>
                   <div className={styles.formGroup}>
                     <label htmlFor="confirmPassword">Confirm Password</label>
@@ -531,6 +528,7 @@ const Registration: React.FC = () => {
                         setConfirmpassword(e.target.value);
                       }}
                     />
+                    {confirmpassword && <p className={styles.error}>{validateConfirmpassword(password, confirmpassword)}</p>}
                   </div>
                 </div>
                 <div className={styles.buttonContainer}>

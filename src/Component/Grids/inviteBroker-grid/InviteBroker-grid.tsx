@@ -171,10 +171,6 @@ const InviteBroker: React.FC = () => {
       valid = false;
     }
 
-    if (!formData.country) {
-      errors.country = 'Country is required';
-      valid = false;
-    }
 
     if (!formData.zipcode) {
       errors.zipcode = 'Zipcode is required';
@@ -254,7 +250,7 @@ const InviteBroker: React.FC = () => {
     { field: 'city', headerName: 'City', width: 140 },
     { field: 'state', headerName: 'state', width: 140 },
     { field: 'zipcode', headerName: 'Zipcode', width: 100 },
-    { field: 'country', headerName: 'Country', width: 120 },
+    // { field: 'country', headerName: 'Country', width: 120 },
     { field: 'isActive', headerName: 'isActive', width: 90 },
     {
       field: 'actions',
@@ -457,7 +453,7 @@ const InviteBroker: React.FC = () => {
             error={!!formErrors.city}
             helperText={formErrors.city}
           />
-          <TextField
+          {/* <TextField
             margin="dense"
             name="country"
             label="Country"
@@ -469,7 +465,7 @@ const InviteBroker: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.country}
             helperText={formErrors.country}
-          />
+          /> */}
           <TextField
             margin="dense"
             name="zipcode"
