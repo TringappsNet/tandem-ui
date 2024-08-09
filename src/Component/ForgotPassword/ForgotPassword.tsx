@@ -82,7 +82,6 @@ const ForgotPassword: React.FC = () => {
   return (
     <div className={styles.loginBackground}>
       <div className={styles.curveUpper}></div>
-      {/* <div className={styles.curveLower}></div> */}
 
       <div className={styles.container}>
         <div className={styles.header}>
@@ -117,7 +116,7 @@ const ForgotPassword: React.FC = () => {
                 </button>
               </form>
               <div className={styles.rememberpwd}>
-                <p style={{ color: 'rgb(150, 151, 153)' }}>Remember Password?</p>
+                <p>Remember Password?</p>
                 <Link to="/" className={styles.clickHereLink}>Click here</Link>
               </div>
             </div>
