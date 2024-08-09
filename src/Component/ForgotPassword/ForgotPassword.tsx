@@ -19,7 +19,7 @@ const ForgotPassword: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const { loading, successMessage, errorMessage  } = useSelector(
+  const { loading, successMessage, errorMessage } = useSelector(
     (state: RootState) => state.forgotPassword
   );
 
@@ -81,53 +81,52 @@ const ForgotPassword: React.FC = () => {
 
   return (
     <div className={styles.loginBackground}>
-      <div className={styles.card}>
-        <div className={styles.section}>
-          <div className={styles.header}>
-            <img
-              src={logo}
-              alt="Tandem Logo"
-            />
-            <h2 className={styles.name}>TANDEM INFRASTRUCTURE</h2>
-          </div>
-          <div className={styles.headingsection}>
-            <p>Forgot Password</p>
-          </div>
+      <div className={styles.curveUpper}></div>
+      {/* <div className={styles.curveLower}></div> */}
 
-          <div className={styles.formContainer}>
-            <p className={styles.reset}>Enter your email to receive a password reset link</p>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <img src={logo} alt="Tandem Logo" />
+          <h2 className={styles.name}>TANDEM INFRASTRUCTURE</h2>
+        </div>
 
-            <form className={styles.loginsection} onSubmit={handleSubmit} noValidate>
-              <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="username">
-                  Email Address
-                </label>
-                <input
-                  id="username"
-                  type="email"
-                  placeholder="Enter email"
-                  value={email}
-                  autoFocus
-                  autoComplete='off'
-                  onChange={handleEmailChange}
-                />
+        <div className={styles.card}>
+          <div className={styles.section}>
+            <div className={styles.headingsection}>
+              <h2>Forgot Password</h2>
+            </div>
+
+            <div className={styles.formContainer}>
+              <p className={styles.reset}>Enter your email to receive a password reset link</p>
+
+              <form className={styles.loginsection} onSubmit={handleSubmit} noValidate>
+                <div className={styles.inputGroup}>
+                  <input
+                    id="username"
+                    type="email"
+                    placeholder="Enter Your Email Address"
+                    value={email}
+                    autoFocus
+                    autoComplete="off"
+                    onChange={handleEmailChange}
+                  />
+                </div>
+
+                <button className={styles.loginbtn} type="submit" disabled={loading}>
+                  {loading ? 'Sending...' : 'Send Reset Link'}
+                </button>
+              </form>
+              <div className={styles.rememberpwd}>
+                <p style={{ color: 'rgb(150, 151, 153)' }}>Remember Password?</p>
+                <Link to="/" className={styles.clickHereLink}>Click here</Link>
               </div>
-
-              <button
-                className={styles.loginbtn}
-                type="submit"
-                disabled={loading}
-              >
-                {loading ? 'Sending...' : 'Send Reset Link'}
-              </button>
-            </form>
-            <div className={styles.rememberpwd}>
-              <p style={{ color: 'rgb(150, 151, 153)' }}>Remember Password?</p>
-              <Link to="/" className={styles.clickHereLink}>Click here</Link>
             </div>
           </div>
         </div>
       </div>
+
+
+
       <SnackbarComponent
         open={snackbarOpen}
         message={snackbarMessage}

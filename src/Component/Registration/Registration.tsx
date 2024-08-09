@@ -111,7 +111,7 @@ const Registration: React.FC = () => {
       return 'City is required';
     } else if (state === '') {
       return 'State is required';
-    }else if (zipcode === '') {
+    } else if (zipcode === '') {
       return 'Zipcode is required';
     } else if (password.trim() === '') {
       setDisableState(false);
@@ -146,7 +146,7 @@ const Registration: React.FC = () => {
       return '';
     }
   }
-  
+
   const validateConfirmpassword = (
     password: string,
     confirmpassword: string
@@ -309,7 +309,7 @@ const Registration: React.FC = () => {
       registerUser({
         firstName,
         lastName,
-        mobileNo : handleMobileChange(mobileNo),
+        mobileNo: handleMobileChange(mobileNo),
         address,
         city,
         state,
@@ -349,11 +349,11 @@ const Registration: React.FC = () => {
     }
   };
 
-  const stripCountryCode = (phoneNumber :any) => {
+  const stripCountryCode = (phoneNumber: any) => {
     return phoneNumber.startsWith("+1") ? phoneNumber.slice(2) : phoneNumber;
   };
 
-  const handleMobileChange = (value:any) => {
+  const handleMobileChange = (value: any) => {
     const strippedValue = stripCountryCode(value || '');
     return strippedValue;
   };
@@ -364,6 +364,7 @@ const Registration: React.FC = () => {
 
   return (
     <div className={styles.loginBackground}>
+      <div className={styles.curveUpper}></div>
       <div className={styles.backgroundContainer}>
         <div className={styles.container}>
           <div className={styles.registrationContainer}>
@@ -474,14 +475,14 @@ const Registration: React.FC = () => {
                   <div className={styles.formGroup}>
                     <label htmlFor="email">Email Address</label>
                     <input
-                    title='You cannot edit this filed'
+                      title='You cannot edit this filed'
                       type="email"
                       id="email"
                       role="presentation"
                       autoComplete='off'
                       value={emailId}
                       disabled
-                      style={{cursor:'not-allowed'}}
+                      style={{ cursor: 'not-allowed' }}
                     />
                   </div>
                   <div className={styles.formGroup}>
