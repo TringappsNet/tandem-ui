@@ -5,7 +5,6 @@ import styles from './ChangePassword.module.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AppDispatch } from '../Redux/store';
 import { RootState } from '../Redux/reducers';
-import backgroundImage from './bg-login.png';
 import SnackbarComponent from '../Snackbar/Snackbar';
 import logo from '../../assests/tandemlogo/tandem_logo.png'
 

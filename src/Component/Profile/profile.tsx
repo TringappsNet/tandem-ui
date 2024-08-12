@@ -8,7 +8,7 @@ import {
 } from '../Redux/slice/role/rolesSlice';
 import styles from './profile.module.css';
 import { RootState } from '../Redux/reducers';
-import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaGlobe, FaFlag, FaMapPin, FaRobot } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaFlag, FaMapPin, FaRobot } from 'react-icons/fa';
 
 interface ProfileItem {
   label: string;
