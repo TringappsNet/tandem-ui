@@ -25,6 +25,7 @@ import './site-grid.module.css';
 import { RootState } from '../../Redux/reducers';
 import SnackbarComponent from '../../Snackbar/Snackbar';
 import styles from './site-grid.module.css'
+import { fetchBrokers } from '../../Redux/slice/broker/brokerSlice';
 
 interface Site {
   id: number;
@@ -72,6 +73,7 @@ const SiteGrid: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchSites());
+    dispatch(fetchBrokers());
   }, [dispatch]);
 
   useEffect(() => {

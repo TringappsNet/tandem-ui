@@ -25,6 +25,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { RootState } from '../../Redux/reducers';
 import SnackbarComponent from '../../Snackbar/Snackbar';
 import { FiEdit, FiTrash } from 'react-icons/fi';
+import { fetchBrokers } from '../../Redux/slice/broker/brokerSlice';
 
 
 interface Landlord {
@@ -75,6 +76,7 @@ const LandlordGrid: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchLandlords());
+    dispatch(fetchBrokers());
   }, [dispatch]);
 
   useEffect(() => {

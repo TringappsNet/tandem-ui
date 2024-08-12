@@ -28,7 +28,6 @@ const Registration: React.FC = () => {
   const [zipcode, setZipcode] = useState('');
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmpassword] = useState('');
-  const [disableState, setDisableState] = useState(false);
   const [inviteToken, setInviteToken] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -114,19 +113,14 @@ const Registration: React.FC = () => {
     } else if (zipcode === '') {
       return 'Zipcode is required';
     } else if (password.trim() === '') {
-      setDisableState(false);
       return 'Password is required.';
     } else if (password.length < 8) {
-      setDisableState(false);
       return 'Password should contain atleast 8 characters.';
     } else if (!specialCharPattern.test(password)) {
-      setDisableState(false);
       return 'Password should contain at least one special character.';
     } else if ((password.match(numberPattern) || []).length < 2) {
-      setDisableState(false);
       return 'Password should contain at least two numerical digits.';
     } else {
-      setDisableState(true);
       return '';
     }
   };
@@ -334,7 +328,6 @@ const Registration: React.FC = () => {
       setZipcode('');
       setPassword('');
       setConfirmpassword('');
-      setDisableState(false);
       setInviteToken('');
       setTimeout(() => {
         navigate('/login');
@@ -522,7 +515,6 @@ const Registration: React.FC = () => {
                       type="password"
                       id="confirmPassword"
                       placeholder="Confirm your password"
-                      disabled={disableState}
                       ref={confirmPasswordRef}
                       value={confirmpassword}
                       onChange={(e) => {
