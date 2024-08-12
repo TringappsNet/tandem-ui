@@ -127,23 +127,23 @@ const ChangePassword: React.FC = () => {
   }, [responseMessage, responseType, navigate]);
 
   return (
-    <div className={styles.loginBackground} style={{ backgroundImage: `url(${backgroundImage})` }}>
-      <div className={styles.card}>
-        <div className={styles.section}>
-          <div className={styles.header}>
-            <img
-              src={logo}
-              alt="Tandem Logo"
-            />
-            <h2>TANDEM INFRASTRUCTURE</h2>
-          </div>
-          <div className={styles.headingsection}>
-            <p style={{ color: 'rgb(122, 123, 125)' }}>Forgot Password</p>
-          </div>
-          <div className={styles.formContainer}>
+    <div className={styles.loginBackground}>
+      <div className={styles.curveUpper}></div>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <img src={logo} alt="Tandem Logo" />
+          <h2 className={styles.name}>TANDEM INFRASTRUCTURE</h2>
+        </div>
+        <div className={styles.card}>
+          <div className={styles.section}>
+            <div className={styles.headingsection}>
+              <h2>Forgot Password</h2>
+            </div>
             <p className={styles.reset}>
               Your new password should be distinct from any of your prior passwords
             </p>
+          </div>
+          <div className={styles.formContainer}>
             <form className={styles.loginsection} onSubmit={handleSubmit}>
               <SnackbarComponent
                 open={snackbarOpen}
@@ -186,6 +186,7 @@ const ChangePassword: React.FC = () => {
             </form>
           </div>
         </div>
+
       </div>
     </div>
   );

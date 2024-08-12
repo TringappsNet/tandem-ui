@@ -45,7 +45,7 @@ const Profile: React.FC<ProfileProps> = () => {
         { label: 'Email', value: user.email, icon: <FaEnvelope /> },
         { label: 'Mobile', value: user.mobile, icon: <FaPhone /> },
         { label: 'Address', value: user.address, icon: <FaMapMarkerAlt /> },
-        { label: 'Country', value: user.country, icon: <FaGlobe /> },
+        // { label: 'Country', value: user.country, icon: <FaGlobe /> },
         { label: 'State', value: user.state, icon: <FaFlag /> },
         { label: 'Zipcode', value: user.zipcode, icon: <FaMapPin /> },
       ];
