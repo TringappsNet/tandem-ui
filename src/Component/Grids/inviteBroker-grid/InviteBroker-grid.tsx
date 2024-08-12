@@ -90,6 +90,7 @@ const InviteBroker: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchBrokers());
+    dispatch(fetchingbrokerdetails());
   }, [dispatch]);
 
   useEffect(() => {

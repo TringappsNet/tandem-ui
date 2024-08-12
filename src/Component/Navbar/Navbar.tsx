@@ -34,6 +34,7 @@ import { fetchSites } from '../Redux/slice/site/siteSlice';
 import { fetchBrokerDealDetails, fetchDealDetails } from '../Redux/slice/deal/dealSlice';
 import logo from '../../assests/tandemlogo/tandem_logo.png'
 import { fetchBrokerDeals } from '../Redux/slice/deal/dealsDataSlice';
+import { fetchBrokers } from '../Redux/slice/broker/brokerSlice';
 interface NavbarProps {
   links: {
     disabled: boolean | undefined;
@@ -69,6 +70,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   useEffect(() => {
     if (userdetails.isAdmin) {
       dispatch(fetchSites());
+      dispatch(fetchBrokers());
     }
   }, [dispatch,userdetails]);
 
