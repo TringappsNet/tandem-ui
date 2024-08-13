@@ -8,9 +8,8 @@ import { AppDispatch } from '../Redux/store';
 import { RootState } from '../Redux/reducers';
 import SnackbarComponent from '../Snackbar/Snackbar';
 import Input from 'react-phone-number-input/input'
-
-
-
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const Registration: React.FC = () => {
   const navigate = useNavigate();
@@ -32,6 +31,7 @@ const Registration: React.FC = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<'error' | 'success'>('error');
+  const [strength, setStrength] = useState(0);
 
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
@@ -65,6 +65,34 @@ const Registration: React.FC = () => {
   if (!hasValidToken) {
     return null;
   }
+
+  const getColor = () => {
+    switch (strength) {
+      case 1: return '#ff4d4d !important'; // Weak
+      case 2: return '#ff751a !important'; // Fair
+      case 3: return '#ffd633 !important'; // Good
+      case 4: return '#b3ff66 !important'; // Strong
+      case 5: return '#00a100 !important'; // Very Strong
+      default: return '#e0e0e0  !important'; // Default color for no password
+    }
+  };
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+    evaluatePasswordStrength(newPassword);
+  };
+  const evaluatePasswordStrength = (password: string) => {
+    let strength = 0;
+
+    if (password.length >= 8) strength += 1;
+    if (/[A-Z]/.test(password)) strength += 1;
+    if (/[a-z]/.test(password)) strength += 1;
+    if (/[0-9]/.test(password)) strength += 1;
+    if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+    setStrength(strength);
+  };
+
 
 
   const validatefirstName = (name: string): string => {
@@ -118,6 +146,8 @@ const Registration: React.FC = () => {
       return 'Password should contain atleast 8 characters.';
     } else if (!specialCharPattern.test(password)) {
       return 'Password should contain at least one special character.';
+    } else if (/[A-Z]/.test(password)) {
+      return 'Password should contain atleast one uppercase.';
     } else if ((password.match(numberPattern) || []).length < 2) {
       return 'Password should contain at least two numerical digits.';
     } else {
@@ -128,6 +158,7 @@ const Registration: React.FC = () => {
   const validatePasswordStrength = (password: string) => {
     const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
     const numberPattern = /\d/g;
+    const upperCharPattern = /[A-Z]/;
     if (password.trim() === '') {
       return 'Password is required.';
     } else if (password.length < 8) {
@@ -136,6 +167,8 @@ const Registration: React.FC = () => {
       return 'Password should contain at least one special character.';
     } else if ((password.match(numberPattern) || []).length < 2) {
       return 'Password should contain at least two numerical digits.';
+    }  else if (!upperCharPattern.test(password)) {
+      return 'Password should contain atleast one uppercase.';
     } else {
       return '';
     }
@@ -503,10 +536,25 @@ const Registration: React.FC = () => {
                       placeholder="Enter your password"
                       ref={passwordRef}
                       value={password}
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                      }}
+                      onChange={handlePasswordChange}
                     />
+                    {/* <p>Your password should contain m inimum length of 8 and includes toLowerCase uppercase and one special character</p> */}
+                    {password &&
+                      <Box sx={{ width: '100%' }}>
+                        <LinearProgress
+                          variant="determinate"
+                          value={(strength / 5) * 100}
+                          sx={{
+                            height: '5px',
+                            marginTop: '8px',
+                            borderRadius: '5px',
+                            backgroundColor: '#e0e0e0',
+                            '& .MuiLinearProgress-bar': {
+                              backgroundColor: getColor(),
+                            },
+                          }}
+                        />
+                      </Box>}
                     {password && <p className={styles.error}>{validatePasswordStrength(password)}</p>}
                   </div>
                   <div className={styles.formGroup}>

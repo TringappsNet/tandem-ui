@@ -27,6 +27,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
   const [selectAll, setSelectAll] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [formError, setFormError] = useState('');
+  const [isDefault, setIsDefault] = useState(false);
   const { isLoading, error, successMessage } = useSelector(
     (state: RootState) => state.contact
   );
@@ -87,6 +88,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
       ticketSubject: subject,
       ticketDescription: description,
       emails: selectedEmails,
+      isDefault,
     };
 
     if (userdetails.isAdmin) {
@@ -156,7 +158,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
           <div className={styles.formGroup}>
             {userdetails.isAdmin && (
               <>
-                <div style={{textTransform:'unset'}}>
+                <div style={{textTransform:'none'}}>
                   <label htmlFor="emails">Select Email Users:</label>
                   <Autocomplete
                     multiple
@@ -184,6 +186,9 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
                   />
                 </div>
                 <FormControlLabel
+                sx={{
+                  textTransform:'none !important'
+                }}
                   control={
                     <Checkbox
                       checked={selectAll}
@@ -192,6 +197,20 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
                     />
                   }
                   label="Check this to send email to all"
+                  className={styles.selectAllCheckbox}
+                />
+                <FormControlLabel
+                sx={{
+                  textTransform:'none !important'
+                }}
+                  control={
+                    <Checkbox
+                      checked={isDefault}
+                      onChange={(e) => setIsDefault(e.target.checked)}
+                      color="secondary"
+                    />
+                  }
+                  label="Check this to send additional templates"
                   className={styles.selectAllCheckbox}
                 />
               </>

@@ -268,8 +268,8 @@ const Cards: React.FC = () => {
                 </div>
               )}
               {(!userdetails.isAdmin) && (
-                <div className={styles.icons} title='Summary Details'>
-                  <FiEye onClick={() => viewDealForm(deal)} />
+                <div className={styles.icons} title='Click here to see the detail summary of individual deal'>
+                  <div className={styles.brokerview} onClick={() => viewDealForm(deal)} >Click here to view details <span>{'>'}</span></div>
                 </div>
               )}
               <div className={styles.insidecardcontainer}>
