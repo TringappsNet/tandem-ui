@@ -146,8 +146,6 @@ const Registration: React.FC = () => {
       return 'Password should contain atleast 8 characters.';
     } else if (!specialCharPattern.test(password)) {
       return 'Password should contain at least one special character.';
-    } else if (/[A-Z]/.test(password)) {
-      return 'Password should contain atleast one uppercase.';
     } else if ((password.match(numberPattern) || []).length < 2) {
       return 'Password should contain at least two numerical digits.';
     } else {
