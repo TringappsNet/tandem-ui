@@ -37,8 +37,10 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchBrokers());
-  }, [dispatch]);
+    if (userdetails.isAdmin) {
+      dispatch(fetchBrokers());
+    }
+  }, [dispatch,userdetails]);
 
   useEffect(() => {
     if (subject.trim()) {
@@ -158,7 +160,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
           <div className={styles.formGroup}>
             {userdetails.isAdmin && (
               <>
-                <div style={{textTransform:'none'}}>
+                <div style={{ textTransform: 'none' }}>
                   <label htmlFor="emails">Select Email Users:</label>
                   <Autocomplete
                     multiple
@@ -177,7 +179,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
                           label={value}
                           {...getTagProps({ index })}
                           key={index}
-                          sx={{ fontSize: '.6rem', textTransform:'none' }}
+                          sx={{ fontSize: '.6rem', textTransform: 'none' }}
                           color="info"
                           size="small"
                         />
@@ -186,9 +188,9 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
                   />
                 </div>
                 <FormControlLabel
-                sx={{
-                  textTransform:'none !important'
-                }}
+                  sx={{
+                    textTransform: 'none !important'
+                  }}
                   control={
                     <Checkbox
                       checked={selectAll}
@@ -200,9 +202,9 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
                   className={styles.selectAllCheckbox}
                 />
                 <FormControlLabel
-                sx={{
-                  textTransform:'none !important'
-                }}
+                  sx={{
+                    textTransform: 'none !important'
+                  }}
                   control={
                     <Checkbox
                       checked={isDefault}
