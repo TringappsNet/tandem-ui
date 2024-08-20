@@ -147,11 +147,13 @@ const DealForm: React.FC<DealFormProps> = () => {
     const status = getStatus(activeStep);
     const brokerId =
       brokers.find((broker) => broker.name === formData.brokerName)?.id || null;
+    const propertyId = sites.find((sites)=> `${sites.addressline1}, ${sites.addressline2}` === formData.propertyName)?.id || null ;
     const payload = {
       ...formData,
       activeStep: activeStep + 1,
       status,
       brokerId,
+      propertyId,
       createdBy: userId || 0,
       updatedBy: userId || 0,
     };
