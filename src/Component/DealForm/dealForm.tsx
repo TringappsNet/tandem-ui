@@ -147,11 +147,13 @@ const DealForm: React.FC<DealFormProps> = () => {
     const status = getStatus(activeStep);
     const brokerId =
       brokers.find((broker) => broker.name === formData.brokerName)?.id || null;
+    const propertyId = sites.find((sites)=> `${sites.addressline1}, ${sites.addressline2}` === formData.propertyName)?.id || null ;
     const payload = {
       ...formData,
       activeStep: activeStep + 1,
       status,
       brokerId,
+      propertyId,
       createdBy: userId || 0,
       updatedBy: userId || 0,
     };
@@ -203,7 +205,7 @@ const DealForm: React.FC<DealFormProps> = () => {
             name={label}
             value={formData[label as keyof Deal] || ''}
             onChange={handleChange}
-            sx={{ width: 300 }}
+            sx={{ width: 1, maxWidth: 300 }}
             margin="normal"
             size="small"
           >
@@ -255,7 +257,7 @@ const DealForm: React.FC<DealFormProps> = () => {
             onChange={handleChange}
             margin="normal"
             size="small"
-            sx={{ width: 300, cursor: 'pointer' }}
+            sx={{ width: 1, maxWidth: 300, cursor: 'pointer' }}
             InputLabelProps={{
               shrink: true,
             }}
@@ -273,7 +275,7 @@ const DealForm: React.FC<DealFormProps> = () => {
             onChange={handleChange}
             margin="normal"
             size="small"
-            sx={{ width: 300 }}
+            sx={{ width: 1, maxWidth: 300 }}
           />
         );
       default:
@@ -305,10 +307,14 @@ const DealForm: React.FC<DealFormProps> = () => {
 
     return (
       <div className={styles.summaryContainer}>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h5" gutterBottom sx={{ marginTop: '20px' }}>
           <div className={styles.summary}>Summary of the deal</div>
         </Typography>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>
+        <Box sx={{
+          display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', '@media (max-width:763px)': {
+            flexDirection: 'column',
+          }
+        }}>
           {events.map((event, index) => (
             <Box
               key={index}
@@ -324,11 +330,15 @@ const DealForm: React.FC<DealFormProps> = () => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 height: '60px',
+                '@media (max-width:763px)': {
+                  width: 1,
+                  height: '3.3rem',
+                }
               }}
             >
               {event.date ? (
                 <>
-                  <Typography variant="subtitle1" fontWeight="bold" textAlign="center" >
+                  <Typography variant="subtitle1" fontWeight="bold" textAlign="center" className={styles.summarytext} >
                     {event.label}:
                   </Typography><Typography textAlign="center">
                     {event.date ? new Date(event.date).toLocaleDateString() : <span style={{ color: '#b3b3b3bb' }}>Yet to Complete</span>}
@@ -337,14 +347,14 @@ const DealForm: React.FC<DealFormProps> = () => {
               )
                 : (
                   <>
-                  <Typography variant="subtitle1" fontWeight="bold" textAlign="center" style={{ color: '#b3b3b3bb' }} >
-                    {event.label}:
-                  </Typography><Typography textAlign="center">
-                    {event.date ? new Date(event.date).toLocaleDateString() : <span style={{ color: '#b3b3b3bb' }}>Yet to Complete</span>}
-                  </Typography>
-                </>
+                    <Typography variant="subtitle1" fontWeight="bold" textAlign="center" style={{ color: '#b3b3b3bb' }} >
+                      {event.label}:
+                    </Typography><Typography textAlign="center">
+                      {event.date ? new Date(event.date).toLocaleDateString() : <span style={{ color: '#b3b3b3bb' }}>Yet to Complete</span>}
+                    </Typography>
+                  </>
                 )
-}
+              }
 
 
             </Box>
@@ -367,28 +377,32 @@ const DealForm: React.FC<DealFormProps> = () => {
                 transform: 'scale(1.02)',
                 boxShadow: '0 6px 12px rgba(38, 34, 98, 0.3)',
               },
+              '@media (max-width:763px)': {
+                width: 1,
+                height: '3.3rem'
+              }
             }}
           >
-            {formData.potentialCommission ? 
-            <>
-              <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262">
-              Potential Commission:
-            </Typography>
-            <Typography textAlign="center" fontWeight="bolder" variant="h6" color="#262262">
-              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : <span style={{ color: '#5a577c' }}>Yet to Complete</span>}
-            </Typography> 
-            </>
-            :
-            <>
-            <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262"  style={{ color: '#5a577c88' }}>
-              Potential Commission:
-            </Typography>
-            <Typography textAlign="center" fontWeight="bolder" variant="h6" color="#262262">
-              {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : <span style={{ color: '#5a577c88' }}>Yet to Complete</span>}
-            </Typography>
-            </>
+            {formData.potentialCommission ?
+              <>
+                <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262">
+                  Potential Commission:
+                </Typography>
+                <Typography textAlign="center" fontWeight="bolder" variant="h6" color="#262262">
+                  {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : <span style={{ color: '#5a577c' }}>Yet to Complete</span>}
+                </Typography>
+              </>
+              :
+              <>
+                <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262" style={{ color: '#5a577c88' }}>
+                  Potential Commission:
+                </Typography>
+                <Typography textAlign="center" fontWeight="bolder" variant="h6" color="#262262">
+                  {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : <span style={{ color: '#5a577c88' }}>Yet to Complete</span>}
+                </Typography>
+              </>
             }
-            
+
           </Box>
         </Box>
       </div>
@@ -464,22 +478,27 @@ const DealForm: React.FC<DealFormProps> = () => {
         display: 'flex',
         flexDirection: 'column',
       }}>
-        <div className={styles.dealcontainer} style={{ display: 'flex', flexDirection: 'column', height: '100%', width: "100%" }}>
+        <div className={styles.dealcontainer} style={{ display: 'flex', flexDirection: 'column', height: '100%', width: "100%", flexWrap: 'wrap' }}>
           <Box
             sx={{
               width: 1,
-              marginTop: '3rem',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'flex-start',
             }}
           >
             {(userdetails.isAdmin) &&
-              <Stepper
+              <Stepper orientation="horizontal"
                 activeStep={activeStep}
                 alternativeLabel
                 connector={<StepConnector />}
-                sx={{ width: 1 }}
+                sx={{
+                  width: 1,
+                  marginTop: '3rem',
+                  '@media (max-width:763px)': {
+                    overflow: 'scroll',
+                  }
+                }}
               >
                 {steps.map((step, index) => (
                   <Step key={index} sx={{ width: 1 }}
@@ -491,10 +510,13 @@ const DealForm: React.FC<DealFormProps> = () => {
             <Box
               sx={{
                 width: '100%',
-                marginTop: '10px', // Add 20px gap here
+                marginTop: '10px',
                 display: 'flex',
                 flexDirection: 'column',
                 padding: '30px',
+                '@media (max-width: 767px)': {
+                  padding: 0,
+                }
               }}
             >
               {activeStep < steps.length - 1 ? (
@@ -502,7 +524,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                   sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    textTransform: 'capitalize'
+                    textTransform: 'capitalize',
                   }}
                 >
                   {steps[activeStep].fields.map((field, index) =>

@@ -6,6 +6,7 @@ import { ThunkAction } from 'redux-thunk';
 
 interface Site {
   id: number;
+  landlordId: number,
   addressline1: string;
   addressline2: string;
   city: string;

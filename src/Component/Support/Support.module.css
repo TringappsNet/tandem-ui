@@ -1,7 +1,7 @@
-
 .supportContainer {
   width: 100%;
 }
+
 .headerLine {
   background-color: rgb(40, 40, 43);
   position: sticky;
@@ -9,25 +9,14 @@
   z-index: 10;
 }
 
-.loginBackground {
-  background-image: url('./bg-login.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .contactsContainer {
   display: flex;
+  flex-direction: column; /* Changed to column for better stacking on small screens */
   justify-content: center;
   align-items: center;
   background-color: #DDE1E5;
-  padding: 3.5rem;
-  height: 580px;
-
-  padding-left:1rem;
+  padding: 2rem;
+  min-height: 580px;
   gap: 1rem;
 }
 
@@ -39,9 +28,8 @@
 }
 
 .mailImage {
-  max-width: 96%;
-  padding-right: 20px;
-  max-height: 282px;
+  max-width: 90%; /* Reduced for better fit on smaller screens */
+  max-height: 200px; /* Adjusted for smaller screens */
   object-fit: contain;
 }
 
@@ -49,6 +37,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  width: 100%; /* Full width on small screens */
 }
 
 .support {
@@ -58,11 +47,11 @@
   height: 50px;
   display: flex;
   align-items: center;
-  margin-left: 2rem;
+  margin-left: 1rem; /* Reduced margin for smaller screens */
 }
 
 .formGroup label {
-  font-size: 18px;
+  font-size: 16px; /* Adjusted font size for better readability on small screens */
   font-family: 'Public Sans', sans-serif;
 }
 
@@ -72,8 +61,7 @@
   border: 1px solid #ccc;
   background-color: #f2f2f4;
   border-radius: 8px;
-  width: 500px;
-  overflow: scroll;
+  width: 100%; /* Full width on small screens */
   font-size: 1rem;
   font-family: 'Public Sans', sans-serif;
 }
@@ -85,11 +73,6 @@
   box-shadow: 0 0 5px rgba(130, 127, 139, 0.5);
 }
 
-.fadeOut {
-  opacity: 0;
-  transition: opacity 0.5s ease-out;
-}
-
 .formGroup textarea {
   resize: vertical;
 }
@@ -99,7 +82,7 @@
   color: rgb(255, 255, 255);
   border: none;
   height: 2.2rem;
-  font-size: 18px;
+  font-size: 16px; /* Adjusted font size */
   font-weight: bolder;
   border-radius: 5px;
   cursor: pointer;
@@ -146,22 +129,11 @@
   animation: spin 1s linear infinite;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 .messageBox {
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 15px;
   font-family: 'Public Sans', sans-serif;
-  text-transform: none !important;
 }
 
 .successBox {
@@ -177,15 +149,75 @@
 }
 
 .multipleemails {
-  width: 500px;
-  height: 100%;
+  width: 100%;
   max-height: 57px;
   overflow-y: scroll;
-  font-size: .1rem;
   background-color: #f2f2f4 !important;
 }
 
 .multipleemails input {
-  border:none !important;
+  border: none !important;
   background-color: unset !important;
 }
+
+/* Responsive styles */
+@media (min-width: 768px) {
+  .contactsContainer {
+    flex-direction: row;
+    padding: 3.5rem;
+    gap: 2rem;
+  }
+
+  .formGroup {
+    width: 500px;
+  }
+
+  .mailImage {
+    max-width: 96%;
+    max-height: 282px;
+  }
+}
+
+@media (max-width: 767px) {
+  .contactsContainer {
+    padding: 2rem;
+    gap: 1rem;
+  }
+
+  .formGroup input,
+  .formGroup textarea,
+  .multipleemails {
+    width: 100%;
+  }
+
+  .support {
+    font-size: 20px;
+  }
+
+  .sendButton {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contactsContainer {
+    padding: 2rem 1rem;
+    padding-top: .2rem;
+    gap: 0.5rem;
+    display: block;
+    min-height: unset;
+  }
+
+  .formGroup label {
+    font-size: 14px;
+  }
+
+  .sendButton {
+    font-size: 14px;
+  }
+
+  .mailImage {
+    max-height: 100px;
+  }
+}
+

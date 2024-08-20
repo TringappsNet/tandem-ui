@@ -12,7 +12,6 @@
 
 .summaryContainer {
   margin-top: -20px;
-  /* Lift the summary content up */
 }
 
 .summary {
@@ -21,10 +20,14 @@
   color: rgb(31, 11, 51);
   font-family: 'Public Sans', sans-serif !important;
   margin-bottom: 15px;
-
-  /* margin-left: 184px; */
 }
 
 .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
   color: #505a63;
+}
+
+@media (max-width:763px) {
+  .summary {
+    font-size: medium;
+  }
 }

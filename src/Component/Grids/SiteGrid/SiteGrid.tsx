@@ -16,6 +16,7 @@ import {
   updateSite,
   deleteSite,
   setSnackbarOpen,
+  setSnackbarMessage,
 } from '../../Redux/slice/site/siteSlice';
 import { GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 import FullGrid from '..//parentGrid/parent-grid';
@@ -26,9 +27,15 @@ import { RootState } from '../../Redux/reducers';
 import SnackbarComponent from '../../Snackbar/Snackbar';
 import styles from './site-grid.module.css'
 import { fetchBrokers } from '../../Redux/slice/broker/brokerSlice';
+import { fetchLandlords } from '../../Redux/slice/landlord/landlordSlice';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 interface Site {
   id: number;
+  landlordId: number;
   addressline1: string;
   addressline2: string;
   city: string;
@@ -47,6 +54,7 @@ const SiteGrid: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const sites = useSelector((state: RootState) => state.site.sites);
   const userdetails = useSelector((state: RootState) => state.auth.user);
+  const landlorddetails = useSelector((state: RootState) => state.landlord.landlords);
   const snackbarOpen = useSelector(
     (state: RootState) => state.site.snackbarOpen
   );
@@ -56,6 +64,7 @@ const SiteGrid: React.FC = () => {
 
   const [formData, setFormData] = useState<Site>({
     id: 0,
+    landlordId: 0,
     addressline1: '',
     addressline2: '',
     city: '',
@@ -74,10 +83,11 @@ const SiteGrid: React.FC = () => {
   useEffect(() => {
     dispatch(fetchSites());
     dispatch(fetchBrokers());
+    dispatch(fetchLandlords());
   }, [dispatch]);
 
   useEffect(() => {
-    setPaginationModel(prev => ({...prev,pageSize: sites.length}));
+    setPaginationModel(prev => ({ ...prev, pageSize: sites.length }));
   }, [sites]);
 
   const handleOpen = () => setOpen(true);
@@ -86,23 +96,35 @@ const SiteGrid: React.FC = () => {
     resetForm();
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<number>
+  ) => {
     const { name, value } = e.target;
-    if (name === 'address') {
+
+    if (name === 'address' && typeof value === 'string') {
       const [addressline1, addressline2] = value.split(', ');
       setFormData((prevFormData) => ({
         ...prevFormData,
         addressline1: addressline1 || '',
         addressline2: addressline2 || '',
       }));
+    } else if (name === 'landlordId') {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        landlordId: Number(value),
+      }));
     } else {
-      setFormData({ ...formData, [name]: value });
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
     }
   };
 
   const resetForm = () => {
     setFormData({
       id: 0,
+      landlordId: 0,
       addressline1: '',
       addressline2: '',
       city: '',
@@ -189,16 +211,27 @@ const SiteGrid: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: 'addressline1', headerName: 'AddressLine1', width: 220 },
-    { field: 'addressline2', headerName: 'AddressLine2', width: 220 },
-    { field: 'city', headerName: 'City', width: 220 },
-    { field: 'state', headerName: 'State', width: 240 },
-    { field: 'country', headerName: 'Country', width: 210 },
-    { field: 'zipcode', headerName: 'Zipcode', width: 210 },
+    {
+      field: 'landlordId',
+      headerName: 'Landlord Name',
+      width: 180,
+      valueGetter: (params) => {
+        const landlord = landlorddetails.find(
+          (landlord) => landlord.id === params
+        );
+        return landlord ? landlord.name : 'Unknown';
+      },
+    },
+    { field: 'addressline1', headerName: 'AddressLine1', width: 200 },
+    { field: 'addressline2', headerName: 'AddressLine2', width: 200 },
+    { field: 'city', headerName: 'City', width: 150 },
+    { field: 'state', headerName: 'State', width: 150 },
+    { field: 'country', headerName: 'Country', width: 150 },
+    { field: 'zipcode', headerName: 'Zipcode', width: 150 },
     {
       field: 'actions',
       headerName: 'Actions',
-      width: 130,
+      width: 150,
       disableExport: true,
       renderCell: (params) => (
         <>
@@ -216,7 +249,10 @@ const SiteGrid: React.FC = () => {
   ];
 
   const handleEditNew = (data: boolean) => {
-    if (data) {
+    if (landlorddetails.length === 0) {
+      dispatch(setSnackbarMessage('You cannot add property without lanlords'));
+      dispatch(setSnackbarOpen(true));
+    } else if (data) {
       resetForm();
       handleOpen();
     }
@@ -285,6 +321,27 @@ const SiteGrid: React.FC = () => {
           </IconButton>
         </DialogTitle>
         <DialogContent>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label" size="small">
+              Landlord Name
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              size="small"
+              name="landlordId"
+              value={formData.landlordId === 0 ? '' : formData.landlordId}
+              label="Landlord Name"
+              onChange={handleChange}
+            >
+              {landlorddetails.map((landlord) => (
+                <MenuItem key={landlord.id} value={landlord.id}>
+                  {landlord.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
           <TextField
             autoFocus
             margin="dense"
@@ -300,7 +357,6 @@ const SiteGrid: React.FC = () => {
             helperText={formErrors.addressline1}
             disabled={formData.id ? true : false}
             title={formData.id ? 'You cannot edit this field' : 'Enter you Details'}
-
           />
           <TextField
             margin="dense"
@@ -343,7 +399,7 @@ const SiteGrid: React.FC = () => {
             error={!!formErrors.state}
             helperText={formErrors.state}
           />
-          
+
           <TextField
             margin="dense"
             name="country"
@@ -357,7 +413,7 @@ const SiteGrid: React.FC = () => {
             error={!!formErrors.country}
             helperText={formErrors.country}
           />
-          
+
           <TextField
             margin="dense"
             name="zipcode"
@@ -372,7 +428,7 @@ const SiteGrid: React.FC = () => {
             helperText={formErrors.zipcode}
           />
         </DialogContent>
-        <DialogActions sx={{ paddingBottom: 2, paddingRight:2 }}>
+        <DialogActions sx={{ paddingBottom: 2, paddingRight: 2 }}>
           <Button
             onClick={handleClose}
             size='small'

@@ -3,7 +3,6 @@
   width: 100vw;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   background: linear-gradient(60deg, rgb(23, 38, 58) 0%, rgb(46, 70, 114) 35%, rgb(19, 32, 51) 100%);
 }
 

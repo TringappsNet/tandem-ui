@@ -15,17 +15,17 @@
 .headerLine {
   height: 55px;
   background-color: rgb(40, 40, 43);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .body {
   padding: 2rem;
-
 }
 
 .formContainer h2 {
-  margin-top: 16px;
-  margin-left: 181px;
-  text-align: left;
   color: #ffffff;
   font-size: 24px;
   font-family: "Open Sans", sans-serif;
@@ -182,4 +182,14 @@ label {
   border-top: 5px solid #262262;
   border-radius: 70%;
   animation: spin 1s linear infinite;
+}
+
+@media (max-width: 768px) {
+  .formContainer{
+    width: 100%;
+  }
+  .headerLine h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
 }

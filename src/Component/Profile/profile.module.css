@@ -50,7 +50,9 @@ html {
 }
 
 .avatarContainer {
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .avatar {
@@ -69,9 +71,8 @@ html {
 .userName {
   font-size: 23px;
   white-space: nowrap;
-  margin-left: 10px;
   font-weight: 500;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 /* .progressContainer {
@@ -220,5 +221,28 @@ html {
 
   .sidebar {
     width: 100%;
+    padding: 0;
+    display: none;
   }
+
+  .avatarContainer .userName {
+    margin: 0;
+  }
+
+  .tabButton.active {
+    color: #143636;
+    font-size: 20px;
+    padding: 0;
+    text-align: center;
+    font-weight: bolder;
+    width: 100%;
+  }
+  .mainContent{
+    padding: 1rem 0;
+  }
+  .value, .label, .icon{
+    font-size: .9rem;
+    text-wrap: wrap;
+  }
+
 }

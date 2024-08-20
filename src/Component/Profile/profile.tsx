@@ -67,19 +67,17 @@ const Profile: React.FC<ProfileProps> = () => {
 
   return (
     <div className={styles.container}>
-      {/* <div className={styles.header} style={{ backgroundImage: `url(${backgroundImage})` }}>
-        <h1>Profile</h1>
-      </div> */}
       <div className={styles.profileContainer}>
         <div className={styles.sidebar}>
           <div className={styles.avatarContainer}>
             <div className={styles.avatar}>
               <p>{profileData[0].value.toString().charAt(0)}</p>
             </div>
+            <h2 className={styles.userName}>{profileData[0].value}</h2>
+
           </div>
-          <h2 className={styles.userName}>{profileData[0].value}</h2>
-          <div className={styles.progressContainer}>
-          </div>
+          {/* <div className={styles.progressContainer}>
+          </div> */}
         </div>
         <div className={styles.mainContent}>
           <div className={styles.tabs}>
