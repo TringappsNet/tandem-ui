@@ -337,7 +337,7 @@ const InviteBroker: React.FC = () => {
         onHide={cancelDelete}
         onConfirm={handleConfirmDeactivate}
         title="Deactivate User"
-        message="Are you sure you want to deactivatete this user?"
+        message="Are you sure you want to deactivate this user?"
         cancelText="Cancel"
         confirmText="Deactivate"
         cancelVariant="secondary"

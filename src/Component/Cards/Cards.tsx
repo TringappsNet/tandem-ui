@@ -124,7 +124,7 @@ const Cards: React.FC = () => {
     }
     return 'NA';
   };
-  
+
 
   const getBrokerFullName = (brokerId: number | undefined) => {
     if (userdetails.isAdmin) {
@@ -243,88 +243,92 @@ const Cards: React.FC = () => {
           </span>
         </div>
       )}
-      <div className={styles.cardList}>
-        {filteredDeals.length > 0 ? (
-          filteredDeals.map((deal: any) => (
-            <div key={deal.id} className={styles.card} onClick={() => viewoption(deal)}>
+      <div className={styles.cardContainer}>
+        <div className={styles.cardList}>
 
-              {userdetails.isAdmin && (
-                <div className={styles.icons}>
-                  <div className={styles.hide}>
+          {filteredDeals.length > 0 ? (
+            filteredDeals.map((deal: any) => (
+              <div key={deal.id} className={styles.card} onClick={() => viewoption(deal)}>
+
+                {userdetails.isAdmin && (
+                  <div className={styles.icons}>
+                    <div className={styles.hide}>
+                      {(deal.status === 'Started' || deal.status === 'In-Progress') &&
+                        <FiEdit
+                          onClick={() => editDealForm(deal)}
+                          className={styles.editHide}
+                        />}
+
+                    </div>
                     {(deal.status === 'Started' || deal.status === 'In-Progress') &&
-                      <FiEdit
-                        onClick={() => editDealForm(deal)}
-                        className={styles.editHide}
+                      <FiTrash
+                        onClick={() => deal.id !== null && handleDelete(deal.id)}
                       />}
+                    {(userdetails.isAdmin && deal.status === 'Completed') && (
+                      <FiEye onClick={() => viewDealForm(deal)} />)}
 
                   </div>
-                  {(deal.status === 'Started' || deal.status === 'In-Progress') &&
-                    <FiTrash
-                      onClick={() => deal.id !== null && handleDelete(deal.id)}
-                    />}
-                  {(userdetails.isAdmin && deal.status === 'Completed') && (
-                    <FiEye onClick={() => viewDealForm(deal)} />)}
-
-                </div>
-              )}
-              {(!userdetails.isAdmin) && (
-                <div className={styles.icons} title='Click here to see the detail summary of individual deal'>
-                  <div className={styles.brokerview} onClick={() => viewDealForm(deal)} >Click here to view details <span>{'>'}</span></div>
-                </div>
-              )}
-              <div className={styles.insidecardcontainer}>
-                <div className={styles.cardTitle}>
-                  <div className={styles.nameHeader}>
-                    <div className={styles.name}>{deal.propertyName}</div>
+                )}
+                {(!userdetails.isAdmin) && (
+                  <div className={styles.icons} title='Click here to see the detail summary of individual deal'>
+                    <div className={styles.brokerview} onClick={() => viewDealForm(deal)} >Click here to view details <span>{'>'}</span></div>
                   </div>
-                </div>
-                <hr className={styles.line} />
-                <div className={styles.dealsteps}>
-                  <div className={styles.nameHeader}>DEAL #{deal.id}</div>
-                  {(deal.activeStep < 6 && (!userdetails.isAdmin)) &&
-                    <div className={styles.stepsinfo} title='Next Milstone'>
-                      <BiRightArrowCircle />
-                      <span>{getLabelForActiveStep(deal.activeStep + 1)}</span>
-                    </div>}
-                  {(deal.activeStep > 6 && (!userdetails.isAdmin)) &&
-                    <div className={styles.stepsinfo} title='Deal Completed'>
-                      <span >Commission : $ {deal.potentialCommission}</span>
-                    </div>}
-                </div>
+                )}
+                <div className={styles.insidecardcontainer}>
+                  <div className={styles.cardTitle}>
+                    <div className={styles.nameHeader}>
+                      <div className={styles.name}>{deal.propertyName}</div>
+                    </div>
+                  </div>
+                  <hr className={styles.line} />
+                  <div className={styles.dealsteps}>
+                    <div className={styles.nameHeader}>DEAL #{deal.id}</div>
+                    {(deal.activeStep < 6 && (!userdetails.isAdmin)) &&
+                      <div className={styles.stepsinfo} title='Next Milstone'>
+                        <BiRightArrowCircle />
+                        <span>{getLabelForActiveStep(deal.activeStep + 1)}</span>
+                      </div>}
+                    {(deal.activeStep > 6 && (!userdetails.isAdmin)) &&
+                      <div className={styles.stepsinfo} title='Deal Completed'>
+                        <span >Commission : $ {deal.potentialCommission}</span>
+                      </div>}
+                  </div>
 
-                <div className={styles.statusLine}>
-                  <div className={styles.statuscontainer}>
-                    <div
-                      className={`${styles.statusButton} ${getStatusButtonClass(
+                  <div className={styles.statusLine}>
+                    <div className={styles.statuscontainer}>
+                      <div
+                        className={`${styles.statusButton} ${getStatusButtonClass(
+                          deal.status
+                        )}`}
+                      >
+                        {deal.status}
+                      </div>
+                      <ProgressSteps steps={7} activeStep={deal.activeStep} />
+                    </div>
+                  </div>
+                  <div className={styles.statusLine}>
+                    <div className={styles.timestamp}>
+                      Last updated on: {deal.updatedAt?.split('T')[0] || 'Unknown'}
+                    </div>
+                    <div className={styles.circle} title={getBrokerFullName(deal.brokerId)}>
+                      <p>{getBrokerInitials(deal.brokerId)}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <hr
+                      className={`${styles.statuslinecolor} ${getStatusButtonClass(
                         deal.status
                       )}`}
-                    >
-                      {deal.status}
-                    </div>
-                    <ProgressSteps steps={7} activeStep={deal.activeStep} />
+                    />
                   </div>
-                </div>
-                <div className={styles.statusLine}>
-                  <div className={styles.timestamp}>
-                    Last updated on: {deal.updatedAt?.split('T')[0] || 'Unknown'}
-                  </div>
-                  <div className={styles.circle} title={getBrokerFullName(deal.brokerId)}>
-                    <p>{getBrokerInitials(deal.brokerId)}</p>
-                  </div>
-                </div>
-                <div>
-                  <hr
-                    className={`${styles.statuslinecolor} ${getStatusButtonClass(
-                      deal.status
-                    )}`}
-                  />
                 </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <div className={styles.noDealsFound}>No Deals Found</div>
-        )}
+            ))
+          ) : (
+            <div className={styles.noDealsFound}>No Deals Found</div>
+          )}
+
+        </div>
       </div>
       <ConfirmationModal
         show={deleteConfirmation}

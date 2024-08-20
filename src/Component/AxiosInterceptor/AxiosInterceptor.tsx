@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import SnackbarComponent from '../Snackbar/Snackbar';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://portal.tandeminf.com/api',
+  baseURL: 'http://192.168.1.77:3008/api',
 });
 
 const getQueryParam = (param: string): string | null => {

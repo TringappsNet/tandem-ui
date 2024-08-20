@@ -63,59 +63,76 @@ const Main: React.FC = () => {
         </div>
       </div>
       <div className={styles.tagsContainer}>
-        <span className={styles.tag}>
-          <p className={styles.totalDeals}>TOTAL DEALS</p>
-          <p className={styles.deals}>
+        <div className={styles.tag}>
+          <div className={styles.deals}>
+            <p className={styles.totalDeals}>TOTAL DEALS</p>
             <p className={styles.totalDeal}>{dealData.totalDeals}</p>
-          </p>
-          <LinearProgress variant="determinate" value={100} />
-          <p className={styles.add_content}>
-            Deals created to date!
-          </p>
-        </span>
+          </div>
+          <div className={styles.progressbar}>
+            <LinearProgress variant="determinate" value={100} />
+          </div>
+          <div className={styles.add_content}>
+            <p >
+              Deals created to date!
+            </p>
+          </div>
+        </div>
 
-        <span className={styles.tag}>
-          <p className={styles.totalDeals}>DEALS OPENED</p>
-          <p className={styles.deals}>
+        <div className={styles.tag}>
+          <div className={styles.deals}>
+            <p className={styles.totalDeals}>DEALS OPENED</p>
             <p className={styles.totalDeal}>{dealData.dealsOpened}</p>
-          </p>
-          <LinearProgress variant="determinate" value={dealsOpenedPercentage} />
-          <p className={styles.add_content}>
-            Deals created in last seven days ({dealsCreatedLast7Days.length})
-          </p>
-        </span>
+          </div>
+          <div>
+            <LinearProgress variant="determinate" value={dealsOpenedPercentage} />
+          </div>
+          <div>
+            <p className={styles.add_content}>
+              Deals created in last seven days ({dealsCreatedLast7Days.length})
+            </p>
+          </div>
+        </div>
 
-        <span className={styles.tag}>
-          <p className={styles.totalDeals}>DEALS IN PROGRESS</p>
-          <p className={styles.deals}>
+        <div className={styles.tag}>
+          <div className={styles.deals}>
+            <p className={styles.totalDeals}>DEALS IN PROGRESS</p>
             <p className={styles.totalDeal}>{dealData.dealsInProgress}</p>
-          </p>
-          <LinearProgress
-            variant="determinate"
-            value={dealsInProgressPercentage}
-          />
-          <p className={styles.add_content}>
-            Deals pending from last seven days ({dealsOpenedLast7Days.length})
-          </p>
-        </span>
+          </div>
+          <div>
+            <LinearProgress
+              variant="determinate"
+              value={dealsInProgressPercentage}
+            />
+          </div>
+          <div>
+            <p className={styles.add_content}>
+              Deals pending from last seven days ({dealsOpenedLast7Days.length})
+            </p>
+          </div>
+        </div>
 
-        <span className={styles.tag}>
-          <p className={styles.totalDeals}>DEALS CLOSED</p>
-          <p className={styles.deals}>
+        <div className={styles.tag}>
+          <div className={styles.deals}>
+            <p className={styles.totalDeals}>DEALS CLOSED</p>
             <p className={styles.totalDeal}>{dealData.dealsClosed}</p>
-          </p>
-          <LinearProgress variant="determinate" value={dealsClosedPercentage} />
-          <p className={styles.add_content}>
-            Deals closed in last seven days ({dealsClosedLast7Days.length})
-          </p>
-        </span>
+          </div>
+          <div>
+            <LinearProgress variant="determinate" value={dealsClosedPercentage} />
+          </div>
+          <div>
+            <p className={styles.add_content}>
+              Deals closed in last seven days ({dealsClosedLast7Days.length})
+            </p>
+          </div>
+        </div>
 
-        <span className={styles.tag}>
-          <p className={styles.totalDeals}>TOTAL COMMISSION</p>
-          <p className={styles.deals}>
+        <div className={styles.tag}>
+          <div className={styles.deals}>
+            <p className={styles.totalDeals}>TOTAL COMMISSION</p>
             <p className={styles.totalDeal}>${dealData.totalCommission}</p>
-          </p>
-        </span>
+          </div>
+        </div>
+
       </div>
       <div>
         <BrokerGrid />

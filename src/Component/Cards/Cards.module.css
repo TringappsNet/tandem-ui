@@ -7,6 +7,11 @@
   font-weight: bolder;
 }
 
+.cardContainer {
+  width: 100%;
+  padding: 0 20px;
+}
+
 .cardList {
   display: flex;
   flex-wrap: wrap;
@@ -39,11 +44,12 @@
   align-items: center;
 }
 
-.dealsteps{
+.dealsteps {
   display: flex;
   font-size: 14px;
   flex-direction: column;
 }
+
 .stepsinfo {
   display: flex;
   font-size: 1.2rem;
@@ -401,5 +407,43 @@
 @media (max-width: 480px) {
   .tag {
     flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .cardContainer {
+    width: 100%;
+    padding: 0;
+  }
+
+  .filterContainer {
+    height: 70px;
+  }
+
+  .filterContainer .searchInput {
+    width: 60%;
+    font-size: .7rem;
+  }
+
+  .filterContainer .filterSelect {
+    width: 40%;
+    font-size: .7rem;
+  }
+
+  .cardList {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cardList .card {
+    width: 90%;
+  }
+
+  .tagsContainer {
+    flex-wrap: wrap;
+  }
+
+  .tagsContainer > span {
+    height: 2rem;
   }
 }

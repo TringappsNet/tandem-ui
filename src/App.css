@@ -7,7 +7,8 @@
 }
 
 /* Tiles Progress Bar */
-.css-eglki6-MuiLinearProgress-root, .css-7p5u54 {
+.css-eglki6-MuiLinearProgress-root,
+.css-7p5u54 {
   position: relative;
   bottom: 7px !important;
   overflow: hidden;
@@ -17,7 +18,8 @@
   background-color: rgb(0, 0, 0) !important;
 }
 
-.css-5xe99f-MuiLinearProgress-bar1, .css-t752vm {
+.css-5xe99f-MuiLinearProgress-bar1,
+.css-t752vm {
   background-color: rgb(255, 255, 255) !important;
 
 }
@@ -109,18 +111,22 @@
   display: none;
 } */
 
-.MuiDataGrid-toolbarContainer  {
+.MuiDataGrid-toolbarContainer {
   flex-direction: row-reverse !important;
   padding-right: 30px !important;
 }
-.css-1knaqv7-MuiButtonBase-root-MuiButton-root, .css-1rtnrqa{
+
+.css-1knaqv7-MuiButtonBase-root-MuiButton-root,
+.css-1rtnrqa {
   background-color: #a13d65 !important;
   color: #fff !important;
   line-height: unset !important;
 }
+
 .MuiButton-startIcon>*:nth-of-type(1) {
-color: #fff !important;
+  color: #fff !important;
 }
+
 .MuiSvgIcon-root {
   color: rgb(0, 0, 0);
 }
@@ -129,7 +135,8 @@ color: #fff !important;
   color: rgb(0, 0, 0) !important;
 }
 
-.css-i4bv87-MuiSvgIcon-root, .css-vubbuv {
+.css-i4bv87-MuiSvgIcon-root,
+.css-vubbuv {
   color: rgb(128, 130, 132)
 }
 
@@ -143,7 +150,8 @@ color: #fff !important;
   color: white !important;
 }
 
-.css-bdhsul-MuiTypography-root-MuiDialogTitle-root, .css-ohyacs {
+.css-bdhsul-MuiTypography-root-MuiDialogTitle-root,
+.css-ohyacs {
   background: linear-gradient(58deg, rgb(35 39 43) 0%, rgb(79 84 89) 35%, rgb(32 46 59) 100%);
 }
 
@@ -152,14 +160,15 @@ color: #fff !important;
 }
 
 .MuiDialogContent-root {
-  overflow: auto !important;
+  overflow: hidden !important;
 }
 
 .MuiBox-root.cspgfmz {
   margin-bottom: 20px;
 }
 
-.css-nnua9j-MuiPaper-root-MuiAlert-root, .css-195rsoq {
+.css-nnua9j-MuiPaper-root-MuiAlert-root,
+.css-195rsoq {
   background-color: #DE5242 !important;
   color: #FEF9FD !important;
 }
@@ -173,7 +182,8 @@ color: #fff !important;
   margin-bottom: 2.5px;
 }
 
-.css-17o1yue-MuiPaper-root-MuiAlert-root,.css-195rsoq {
+.css-17o1yue-MuiPaper-root-MuiAlert-root,
+.css-195rsoq {
   background-color: #DE5242 !important;
   color: #FEF9FD !important;
 }
@@ -183,23 +193,48 @@ color: #fff !important;
 }
 
 .MuiDataGrid-main {
-    -webkit-box-flex: 1;
-    -webkit-flex-grow: 1;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid #cecece;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #cecece;
 }
-  
-.MuiDialogTitle-root+.css-ypiqx9-MuiDialogContent-root, .css-1ty026z{
+
+.MuiDialogTitle-root+.css-ypiqx9-MuiDialogContent-root,
+.css-1ty026z {
   padding: 20px 24px !important;
 }
 
-.css-i4bv87-MuiSvgIcon-root, .css-vubbuv {
+.css-i4bv87-MuiSvgIcon-root,
+.css-vubbuv {
   height: 1.28rem !important;
 }
 
-.css-18i3v7t, .css-1fu2e3p-MuiPaper-root-MuiDialog-paper{
+.css-18i3v7t,
+.css-1fu2e3p-MuiPaper-root-MuiDialog-paper {
   border-radius: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .MuiDataGrid-toolbarContainer {
+    padding-right: 1rem !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter,
+  .css-1klb8j8-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter, .css-ltd0iv {
+    width: 10rem !important;
+  }
+
+  .css-2rbg70-MuiPaper-root-MuiDialog-paper,
+  .css-1fu2e3p-MuiPaper-root-MuiDialog-paper, .css-hppdow, .css-18i3v7t {
+    width: 100% !important;
+    margin: 12px !important;
+  }
+
+  .MuiDialogContent-root {
+    overflow: auto !important;
+  }
 }

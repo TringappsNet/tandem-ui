@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, Icon, DialogTitle, Box } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import styles from './Navbar.module.css';
 import SendInvite from '../SendInvite/SendInvite';
 import Reset from '../ResetPassword/ResetPassword';
@@ -35,6 +36,7 @@ import { fetchBrokerDealDetails, fetchDealDetails } from '../Redux/slice/deal/de
 import logo from '../../assests/tandemlogo/tandem_logo.png'
 import { fetchBrokerDeals } from '../Redux/slice/deal/dealsDataSlice';
 import { fetchBrokers } from '../Redux/slice/broker/brokerSlice';
+
 interface NavbarProps {
   links: {
     disabled: boolean | undefined;
@@ -55,6 +57,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
   const [availableSites, setAvailableSites] = useState<any[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -72,7 +75,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       dispatch(fetchSites());
       dispatch(fetchBrokers());
     }
-  }, [dispatch,userdetails]);
+  }, [dispatch, userdetails]);
 
   useEffect(() => {
     if (userdetails.isAdmin === true) {
@@ -92,11 +95,13 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       setAvailableSites(filteredSites);
     }
 
-  }, [sites, deals,userdetails]);
+  }, [sites, deals, userdetails]);
 
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
+    setIsMobileMenuOpen(false); // Close the menu
     setOpenPopup(true);
+
 
     if (componentName === 'SendInvite') {
       dispatch(openSendInvite());
@@ -125,6 +130,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   };
 
   const handleLogoutClick = () => {
+    setIsMobileMenuOpen(false); // Close the menu
     setShowLogoutConfirmation(true);
   };
 
@@ -149,8 +155,13 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  // const handleMenuClose = () => {
+  //   setAnchorEl(null);
+  // };
 
   const handleRoute = (route: string) => {
+    // handleMenuClose();
+
     if (route === 'property') {
       navigate('/property');
       setActivePage('property');
@@ -163,6 +174,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       navigate('/invitebroker');
       setActivePage('invitebroker');
       localStorage.setItem('activePage', 'invitebroker');
+    } else if (route === 'deals') {
+      handleDealsClick();
     }
   };
 
@@ -225,15 +238,14 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     setActivePage('deals');
   };
 
-
   const handleCreateDealClick = () => {
     try {
-      const brokerAvailable = brokers.filter((broker:any)=>{
+      const brokerAvailable = brokers.filter((broker: any) => {
         return broker.isAdmin === false && broker.isActive === true;
       })
-  
+
       if (availableSites.length === 0 || brokerAvailable.length === 0) {
-  
+
         setSnackbarMessage(
           'Unable to create deal, properties and brokers are either assigned or unavailable !'
         );
@@ -241,13 +253,26 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       } else {
         dispatch(openDealForm());
       }
-    } catch (e) {
-      console.log(e)
+
+    } catch (error) {
+      console.error('Error opening deal form:', error);
+      setSnackbarMessage('Failed to open deal form. Please try again.');
+      setSnackbarOpen(true);
     }
   };
-
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
+  };
+
+  const handleMobileNavItemClick = (route: string) => {
+    handleRoute(route);
+    setIsMobileMenuOpen(false); // Close the menu
+  };
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleMobileMenuToggle = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
@@ -261,35 +286,33 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             />
             <h3>TANDEM INFRASTRUCTURE</h3>
           </div>
+
+          {/* Mobile Menu Toggle Button */}
+
+          <div className={styles.mobileMenuIcon} onClick={handleMobileMenuToggle}>
+            <MenuIcon />
+          </div>
+
+          {/* Desktop Links */}
           {userdetails.isAdmin && (
-            <>
-              <p
-                onClick={handleDealsClick}
-                className={`${styles.navItem} ${activePage === 'deals' ? styles.active : ''}`}
-              >
+            <div className={styles.desktopLinks}>
+              <p onClick={handleDealsClick} className={`${styles.navItem} ${activePage === 'deals' ? styles.active : ''}`}>
                 DEALS
               </p>
-              <p
-                onClick={() => handleRoute('property')}
-                className={`${styles.navItem} ${activePage === 'property' ? styles.active : ''}`}
-              >
+              <p onClick={() => handleRoute('property')} className={`${styles.navItem} ${activePage === 'property' ? styles.active : ''}`}>
                 PROPERTY
               </p>
-              <p
-                onClick={() => handleRoute('landlord')}
-                className={`${styles.navItem} ${activePage === 'landlord' ? styles.active : ''}`}
-              >
+              <p onClick={() => handleRoute('landlord')} className={`${styles.navItem} ${activePage === 'landlord' ? styles.active : ''}`}>
                 LANDLORD
               </p>
-              <p
-                onClick={() => handleRoute('invitebroker')}
-                className={`${styles.navItem} ${activePage === 'invitebroker' ? styles.active : ''}`}
-              >
-                BROKERDETAILS
+              <p onClick={() => handleRoute('invitebroker')} className={`${styles.navItem} ${activePage === 'invitebroker' ? styles.active : ''}`}>
+                BROKER DETAILS
               </p>
-            </>
+
+            </div>
           )}
         </div>
+
         <div className={styles.rightheadersection}>
           {userdetails.isAdmin && (
             <div className={styles.createdeal} onClick={handleCreateDealClick}>
@@ -323,7 +346,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                   : 'G'}
               </p>
             </div>
-            {isDropdownOpen && (
+            {(isDropdownOpen) && (
               <div className={styles.dropdownMenu}>
                 <button onClick={() => handleOpenPopup('Profile')}>
                   <CgProfile className={styles.icons} />
@@ -352,12 +375,50 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             )}
           </div>
         </div>
+
+        {(isMobileMenuOpen) && (
+          <div className={styles.mobileDropdown}>
+            <p onClick={() => handleOpenPopup('Profile')} className={styles.mobileNavItem}>
+              PROFILE
+            </p>
+            {userdetails.isAdmin &&
+              <>
+                <p onClick={() => handleMobileNavItemClick('deals')} className={styles.mobileNavItem}>
+                  DEALS
+                </p>
+                <p onClick={() => handleMobileNavItemClick('property')} className={styles.mobileNavItem}>
+                  PROPERTY
+                </p>
+                <p onClick={() => handleMobileNavItemClick('landlord')} className={styles.mobileNavItem}>
+                  LANDLORD
+                </p>
+                <p onClick={() => handleMobileNavItemClick('invitebroker')} className={styles.mobileNavItem}>
+                  BROKER DETAILS
+                </p>
+              </>
+            }
+
+            {userdetails.isAdmin && <p onClick={() => handleOpenPopup('SendInvite')} className={styles.mobileNavItem}>
+              Send Invite
+            </p>}
+            <p onClick={() => handleOpenPopup('Reset')} className={styles.mobileNavItem}>
+              Reset password
+            </p>
+            <p onClick={() => handleOpenPopup('Support')} className={styles.mobileNavItem}>
+              {userdetails.isAdmin && <span>Email Campaign</span>}
+              {(!userdetails.isAdmin) && <span>Contact us</span>}
+            </p>
+            <p onClick={handleLogoutClick} className={styles.mobileNavItem}>
+              Logout
+            </p>
+          </div>
+        )}
       </nav>
       {openPopup && selectedComponent && (
         <Dialog
           open={openPopup}
-          sx={{ padding: 0, margin: 0 }}
-          maxWidth="lg"
+          sx={{ padding: 0, margin: 0, width: 1 }}
+          maxWidth="xl"
           onClose={handleClosePopup}
         >
           <DialogTitle sx={{ padding: 0 }}>
@@ -376,7 +437,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
               <CloseIcon />
             </Icon>
           </DialogTitle>
-          <DialogContent sx={{ padding: 0 }}>
+          <DialogContent sx={{ padding: 0, width: 1 }}>
             {inviteOpen && selectedComponent === 'SendInvite' && (
               <SendInvite onCloseDialog={handleClosePopup} />
             )}
