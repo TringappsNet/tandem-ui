@@ -194,6 +194,7 @@
     border-right: none;
     border-bottom: 1px solid #E0E0E0;
     width: 100%;
+    border-radius: .5rem .5rem 0 0;
   }
 
   .rightSide {
@@ -225,5 +226,9 @@
 
   .name span {
     font-size: .8rem;
+  }
+
+  .leftSide::before {
+    border-radius: .5rem .5rem 0 0;
   }
 }
