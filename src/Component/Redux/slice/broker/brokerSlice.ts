@@ -31,7 +31,7 @@ interface Broker {
   dealsOpened: number;
   dealsInProgress: number;
   dealsClosed: number;
-  totalCommission: number;
+  totalPotentialCommission: number;
   roleName: string;
 }
 
@@ -105,7 +105,7 @@ export const fetchBrokers = (): AppThunk<void> => async (dispatch: Dispatch) => 
         dealsOpened: broker.dealsOpened,
         dealsInProgress: broker.dealsInProgress,
         dealsClosed: broker.dealsClosed,
-        totalCommission: broker.totalCommission,
+        totalPotentialCommission: broker.totalPotentialCommission,
         roleName: roleName,
       };
     });
@@ -141,7 +141,7 @@ export const fetchBrokerUserDetails = (brokerId: number): AppThunk<void> => asyn
         dealsOpened: broker.dealsOpened,
         dealsInProgress: broker.dealsInProgress,
         dealsClosed: broker.dealsClosed,
-        totalCommission: broker.totalCommission,
+        totalPotentialCommission: broker.totalPotentialCommission,
         roleName: roleName,
       };
 

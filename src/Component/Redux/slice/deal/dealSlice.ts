@@ -14,6 +14,7 @@ type AppThunk<ReturnType = void> = ThunkAction<
 >;
 
 interface DealState {
+  deals: any;
   activeStep: number;
   dealDetails: Deal[];
   loading: boolean;
@@ -25,6 +26,7 @@ const initialState: DealState = {
   dealDetails: [],
   loading: false,
   error: null,
+  deals: undefined
 };
 
 const dealSlice = createSlice({
@@ -42,7 +44,7 @@ const dealSlice = createSlice({
       state.error = null;
       console.log("Fetched deals:", state.dealDetails);
 
-      // console.log("Deal ID:", deal.id, "potentialCommissionDate:", deal.potentialCommissionDate);
+      // console.log("Deal ID:", deal.id, "finalCommissionDate:", deal.finalCommissionDate);
 
     },
     fetchDealDetailsFailure: (state, action: PayloadAction<string>) => {

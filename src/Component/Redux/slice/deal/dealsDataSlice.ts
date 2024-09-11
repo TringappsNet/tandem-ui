@@ -17,7 +17,7 @@ interface Deal {
   dealsOpened: number;
   dealsInProgress: number;
   dealsClosed: number;
-  totalCommission: number;
+  totalPotentialCommission: number;
 }
 
 interface MainState {
@@ -33,7 +33,7 @@ const initialState: MainState = {
     dealsOpened: 0,
     dealsInProgress: 0,
     dealsClosed: 0,
-    totalCommission: 0,
+    totalPotentialCommission: 0,
   },
   loading: false,
   error: null,
@@ -72,7 +72,7 @@ export const fetchDeals = (): AppThunk<void> => async (dispatch: Dispatch) => {
       dealsOpened: response.data.dealsOpened,
       dealsInProgress: response.data.dealsInProgress,
       dealsClosed: response.data.dealsClosed,
-      totalCommission: response.data.totalCommission,
+      totalPotentialCommission: response.data.totalPotentialCommission,
     };
     dispatch(fetchDealsSuccess(deal));
   } catch (error) {
@@ -90,7 +90,7 @@ export const fetchBrokerDeals = (brokerId:number): AppThunk<void> => async (disp
       dealsOpened: response.data.dealsOpened,
       dealsInProgress: response.data.dealsInProgress,
       dealsClosed: response.data.dealsClosed,
-      totalCommission: response.data.totalCommission,
+      totalPotentialCommission: response.data.totalPotentialCommission,
     };
     dispatch(fetchDealsSuccess(deal));
   } catch (error) {
