@@ -124,7 +124,7 @@ const Cards: React.FC = () => {
     }
     return 'NA';
   };
-  
+
 
   const getBrokerFullName = (brokerId: number | undefined) => {
     if (userdetails.isAdmin) {
@@ -238,7 +238,7 @@ const Cards: React.FC = () => {
           <span className={styles.tag}>
             <p className={styles.totalDeals}>TOTAL COMMISSION</p>
             <p className={styles.deals}>
-              <p className={styles.totalDeal}>${deal.totalCommission ? deal.totalCommission : 0}</p>
+              <p className={styles.totalDeal}>${deal.totalPotentialCommission ? deal.totalPotentialCommission : 0}</p>
             </p>
           </span>
         </div>
@@ -247,51 +247,51 @@ const Cards: React.FC = () => {
         <div className={styles.cardList}>
 
           {filteredDeals.length > 0 ? (
-            filteredDeals.map((deal: any) => (
-              <div key={deal.id} className={styles.card} onClick={() => viewoption(deal)}>
+            filteredDeals.map((deals: any) => (
+              <div key={deals.id} className={styles.card} onClick={() => viewoption(deals)}>
 
                 {userdetails.isAdmin && (
                   <div className={styles.icons}>
                     <div className={styles.hide}>
-                      {(deal.status === 'Started' || deal.status === 'In-Progress') &&
+                      {(deals.status === 'Started' || deals.status === 'In-Progress') &&
                         <FiEdit
-                          onClick={() => editDealForm(deal)}
+                          onClick={() => editDealForm(deals)}
                           className={styles.editHide}
                         />}
 
                     </div>
-                    {(deal.status === 'Started' || deal.status === 'In-Progress') &&
+                    {(deals.status === 'Started' || deals.status === 'In-Progress') &&
                       <FiTrash
-                        onClick={() => deal.id !== null && handleDelete(deal.id)}
+                        onClick={() => deals.id !== null && handleDelete(deals.id)}
                       />}
-                    {(userdetails.isAdmin && deal.status === 'Completed') && (
-                      <FiEye onClick={() => viewDealForm(deal)} />)}
+                    {(userdetails.isAdmin && deals.status === 'Completed') && (
+                      <FiEye onClick={() => viewDealForm(deals)} />)}
 
                   </div>
                 )}
                 {(!userdetails.isAdmin) && (
-                  <div className={styles.icons} title='Click here to see the detail summary of individual deal'>
-                    <div className={styles.brokerview} onClick={() => viewDealForm(deal)} >Click here to view details <span>{'>'}</span></div>
+                  <div className={styles.icons} title='Click here to see the detail summary of individual deals'>
+                    <div className={styles.brokerview} onClick={() => viewDealForm(deals)} >Click here to view details <span>{'>'}</span></div>
                   </div>
                 )}
                 <div className={styles.insidecardcontainer}>
                   <div className={styles.cardTitle}>
                     <div className={styles.nameHeader}>
-                      <div className={styles.name}>{`${deal.propertyId.addressline1}, ${deal.propertyId.addressline2}, ${deal.propertyId.state}, ${deal.propertyId.city} - ${deal.propertyId.zipcode}`}</div>
+                      <div className={styles.name}>{`${deals.propertyId.addressline1}, ${deals.propertyId.addressline2}, ${deals.propertyId.state}, ${deals.propertyId.city} - ${deals.propertyId.zipcode}`}</div>
                     </div>
                   </div>
                   <hr className={styles.line} />
                   <div className={styles.dealsteps}>
 
-                    <div className={styles.nameHeader}>DEAL #{deal.id}</div>
-                    {(deal.activeStep < 6 && (!userdetails.isAdmin)) &&
+                    <div className={styles.nameHeader}>deals #{deals.id}</div>
+                    {(deals.activeStep < 6 && (!userdetails.isAdmin)) &&
                       <div className={styles.stepsinfo} title='Next Milstone'>
                         <BiRightArrowCircle />
-                        <span>{getLabelForActiveStep(deal.activeStep + 1)}</span>
+                        <span>{getLabelForActiveStep(deals.activeStep + 1)}</span>
                       </div>}
-                    {(deal.activeStep > 6 && (!userdetails.isAdmin)) &&
-                      <div className={styles.stepsinfo} title='Deal Completed'>
-                        <span >Commission : $ {deal.potentialCommission}</span>
+                    {(deals.activeStep > 6 && (!userdetails.isAdmin)) &&
+                      <div className={styles.stepsinfo} title='deals Completed'>
+                        <span >Commission : $ {deals.proposalCommission + deals.loiExecuteCommission + deals.leaseSignedCommission + deals.noticeToProceedCommission + deals.commercialOperationCommission + deals.finalCommission}</span>
                       </div>}
                   </div>
 
@@ -299,26 +299,26 @@ const Cards: React.FC = () => {
                     <div className={styles.statuscontainer}>
                       <div
                         className={`${styles.statusButton} ${getStatusButtonClass(
-                          deal.status
+                          deals.status
                         )}`}
                       >
-                        {deal.status}
+                        {deals.status}
                       </div>
-                      <ProgressSteps steps={7} activeStep={deal.activeStep} />
+                      <ProgressSteps steps={7} activeStep={deals.activeStep} />
                     </div>
                   </div>
                   <div className={styles.statusLine}>
                     <div className={styles.timestamp}>
-                      Last updated on: {deal.updatedAt?.split('T')[0] || 'Unknown'}
+                      Last updated on: {deals.updatedAt?.split('T')[0] || 'Unknown'}
                     </div>
-                    <div className={styles.circle} title={getBrokerFullName(deal.brokerId)}>
-                      <p>{getBrokerInitials(deal.brokerId)}</p>
+                    <div className={styles.circle} title={getBrokerFullName(deals.brokerId)}>
+                      <p>{getBrokerInitials(deals.brokerId)}</p>
                     </div>
                   </div>
                   <div>
                     <hr
                       className={`${styles.statuslinecolor} ${getStatusButtonClass(
-                        deal.status
+                        deals.status
                       )}`}
                     />
                   </div>

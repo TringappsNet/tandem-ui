@@ -26,7 +26,7 @@ const BrokerGrid: React.FC = () => {
     { field: 'dealsOpened', headerName: 'Deals Opened', width: 150 },
     { field: 'dealsInProgress', headerName: 'Deals In-Progress', width: 170 },
     { field: 'dealsClosed', headerName: 'Deals Closed', width: 150 },
-    { field: 'totalCommission', headerName: 'Total Commission', width: 170 },
+    { field: 'totalPotentialCommission', headerName: 'Total Potential Commission', width: 170 },
   ];
 
   return (

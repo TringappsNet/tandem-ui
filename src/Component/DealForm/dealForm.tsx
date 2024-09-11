@@ -58,8 +58,8 @@ const steps = [
   {
     label: 'Potential Commission',
     fields: [
-      { type: 'date', label: 'potentialCommissionDate' },
-      { type: 'text', label: 'potentialCommission' },
+      { type: 'date', label: 'finalCommissionDate' },
+      { type: 'text', label: 'finalCommission' },
     ],
   },
   { label: 'Completed', fields: [] },
@@ -95,8 +95,8 @@ const DealForm: React.FC<DealFormProps> = () => {
     noticeToProceedCommission: currentDeal?.noticeToProceedCommission || 0,
     commercialOperationDate: currentDeal?.commercialOperationDate || '',
     commercialOperationCommission: currentDeal?.commercialOperationCommission || 0,
-    potentialCommissionDate: currentDeal?.potentialCommissionDate || '',
-    potentialCommission: currentDeal?.potentialCommission || 0,
+    finalCommissionDate: currentDeal?.finalCommissionDate || '',
+    finalCommission: currentDeal?.finalCommission || 0,
     status: currentDeal?.status || '',
     activeStep: currentDeal?.activeStep ?? 0,
     createdBy: currentDeal?.createdBy || 0,
@@ -308,16 +308,16 @@ const DealForm: React.FC<DealFormProps> = () => {
       { label: 'Lease Signed', date: formData.leaseSignedDate, commission: formData.leaseSignedCommission },
       { label: 'Notice to Proceed', date: formData.noticeToProceedDate, commission: formData.noticeToProceedCommission },
       { label: 'Commercial Operation', date: formData.commercialOperationDate, commission: formData.commercialOperationCommission },
-      { label: 'Potential Commission', date: formData.potentialCommissionDate, commission: formData.potentialCommission },
+      { label: 'Final Commission Date', date: formData.finalCommissionDate },
     ];
 
     // Calculate total commission (excluding potential commission)
-    const totalCommission = events
+    const totalPotentialCommission = events
       .filter(event => event.label !== 'Potential Commission' && event.commission)
       .reduce((sum, event) => sum + Number(event.commission), 0);
 
     // Calculate total commission including potential commission
-    const totalCommissionWithPotential = totalCommission + (formData.potentialCommission ? Number(formData.potentialCommission) : 0);
+    const totalCommissionWithPotential = totalPotentialCommission + (formData.finalCommission ? Number(formData.finalCommission) : 0);
 
     return (
       <div className={styles.summaryContainer}>
@@ -384,19 +384,19 @@ const DealForm: React.FC<DealFormProps> = () => {
               '@media (max-width:763px)': { width: 1 }
             }}
           >
-            {formData.potentialCommission ?
+            {formData.finalCommission ?
               <>
                 <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262">
-                  Final Potential Commission:
+                  Final Commission:
                 </Typography>
                 <Typography textAlign="center" fontWeight="bold" color="#262262">
-                  {`${new Date(formData.potentialCommissionDate).toLocaleDateString()} ($${formData.potentialCommission.toLocaleString()})`}
+                  {`$${formData.finalCommission.toLocaleString()}`}
                 </Typography>
               </>
               :
               <>
                 <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262" style={{ color: '#5a577c88' }}>
-                  Potential Commission:
+                  Final Commission:
                 </Typography>
                 <Typography textAlign="center" fontWeight="bolder" color="#262262">
                   <span style={{ color: '#5a577c88' }}>Yet to Complete</span>
@@ -428,7 +428,7 @@ const DealForm: React.FC<DealFormProps> = () => {
             }}
           >
             <Typography textAlign="center" color={totalCommissionWithPotential ? '#262262' : '#5a577c88'} sx={{ marginTop: '10px', fontWeight: 'bold',fontSize:'1.3rem' }}>
-              Total Commission : ${totalCommissionWithPotential.toLocaleString()}
+              Total Potential Commission : ${totalCommissionWithPotential.toLocaleString()}
             </Typography>
 
           </Box>

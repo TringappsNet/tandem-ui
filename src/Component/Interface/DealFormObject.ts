@@ -13,8 +13,8 @@ export interface Deal {
   noticeToProceedCommission: number;
   commercialOperationDate: string;
   commercialOperationCommission: number;
-  potentialCommissionDate: string;
-  potentialCommission: number;
+  finalCommissionDate: string;
+  finalCommission: number;
   status: string;
   activeStep: number;
   createdBy: number;

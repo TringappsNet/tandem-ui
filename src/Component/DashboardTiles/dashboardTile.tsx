@@ -129,7 +129,7 @@ const Main: React.FC = () => {
         <div className={styles.tag}>
           <div className={styles.deals}>
             <p className={styles.totalDeals}>TOTAL COMMISSION</p>
-            <p className={styles.totalDeal}>${dealData.totalCommission}</p>
+            <p className={styles.totalDeal}>${dealData.totalPotentialCommission}</p>
           </div>
         </div>
 
