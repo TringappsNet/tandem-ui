@@ -124,7 +124,7 @@ const Cards: React.FC = () => {
     }
     return 'NA';
   };
-
+  
 
   const getBrokerFullName = (brokerId: number | undefined) => {
     if (userdetails.isAdmin) {
@@ -277,11 +277,12 @@ const Cards: React.FC = () => {
                 <div className={styles.insidecardcontainer}>
                   <div className={styles.cardTitle}>
                     <div className={styles.nameHeader}>
-                      <div className={styles.name}>{deal.propertyName}</div>
+                      <div className={styles.name}>{`${deal.propertyId.addressline1}, ${deal.propertyId.addressline2}, ${deal.propertyId.state}, ${deal.propertyId.city} - ${deal.propertyId.zipcode}`}</div>
                     </div>
                   </div>
                   <hr className={styles.line} />
                   <div className={styles.dealsteps}>
+
                     <div className={styles.nameHeader}>DEAL #{deal.id}</div>
                     {(deal.activeStep < 6 && (!userdetails.isAdmin)) &&
                       <div className={styles.stepsinfo} title='Next Milstone'>

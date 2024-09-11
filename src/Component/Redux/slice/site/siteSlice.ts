@@ -20,7 +20,7 @@ interface Site {
 
 interface SiteState {
   sites: Site[];
-  filteredSites:Site[],
+  filteredSites: Site[],
 
   loading: boolean;
   error: string | null;
@@ -110,8 +110,19 @@ export const fetchSites =
       } catch (error) {
         const errorMessage = (error as any).response?.data?.message || (error as Error).message;
         dispatch(fetchSitesFailure(errorMessage));
-        // dispatch(setSnackbarMessage(errorMessage));
-        // dispatch(setSnackbarOpen(true));
+      }
+    };
+
+export const fetchSitesbyId =
+  (id: number): ThunkAction<void, RootState, unknown, Action<string>> =>
+    async (dispatch: Dispatch) => {
+      try {
+        dispatch(fetchSitesStart());
+        const response = await axiosInstance.get(`/sites/site/${id}`);
+        dispatch(fetchSitesSuccess(response.data));
+      } catch (error) {
+        const errorMessage = (error as any).response?.data?.message || (error as Error).message;
+        dispatch(fetchSitesFailure(errorMessage));
       }
     };
 
@@ -127,7 +138,7 @@ export const addSite =
         const errorMessage = (error as any).response?.data?.message || (error as Error).message;
         dispatch(fetchSitesFailure(errorMessage));
         dispatch(setSnackbarMessage(errorMessage));
-        dispatch(setSnackbarOpen(true));  
+        dispatch(setSnackbarOpen(true));
       }
     };
 

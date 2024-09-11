@@ -41,19 +41,19 @@ const steps = [
       { type: 'date', label: 'dealStartDate' },
     ],
   },
-  { label: 'Proposal', fields: [{ type: 'date', label: 'proposalDate' }] },
-  { label: 'LOI Execute', fields: [{ type: 'date', label: 'loiExecuteDate' }] },
+  { label: 'Proposal', fields: [{ type: 'date', label: 'proposalDate' }, { type: 'text', label: 'proposalCommission' }] },
+  { label: 'LOI Execute', fields: [{ type: 'date', label: 'loiExecuteDate' }, { type: 'text', label: 'loiExecuteCommission' }] },
   {
     label: 'Lease Signed',
-    fields: [{ type: 'date', label: 'leaseSignedDate' }],
+    fields: [{ type: 'date', label: 'leaseSignedDate' }, { type: 'text', label: 'leaseSignedCommission' }],
   },
   {
     label: 'Notice to Proceed',
-    fields: [{ type: 'date', label: 'noticeToProceedDate' }],
+    fields: [{ type: 'date', label: 'noticeToProceedDate' }, { type: 'text', label: 'noticeToProceedCommission' }],
   },
   {
     label: 'Commercial Operation',
-    fields: [{ type: 'date', label: 'commercialOperationDate' }],
+    fields: [{ type: 'date', label: 'commercialOperationDate' }, { type: 'text', label: 'commercialOperationCommission' }],
   },
   {
     label: 'Potential Commission',
@@ -86,10 +86,15 @@ const DealForm: React.FC<DealFormProps> = () => {
     propertyName: currentDeal?.propertyName || '',
     dealStartDate: currentDeal?.dealStartDate || '',
     proposalDate: currentDeal?.proposalDate || '',
+    proposalCommission: currentDeal?.proposalCommission || 0,
     loiExecuteDate: currentDeal?.loiExecuteDate || '',
+    loiExecuteCommission: currentDeal?.loiExecuteCommission || 0,
     leaseSignedDate: currentDeal?.leaseSignedDate || '',
+    leaseSignedCommission: currentDeal?.leaseSignedCommission || 0,
     noticeToProceedDate: currentDeal?.noticeToProceedDate || '',
+    noticeToProceedCommission: currentDeal?.noticeToProceedCommission || 0,
     commercialOperationDate: currentDeal?.commercialOperationDate || '',
+    commercialOperationCommission: currentDeal?.commercialOperationCommission || 0,
     potentialCommissionDate: currentDeal?.potentialCommissionDate || '',
     potentialCommission: currentDeal?.potentialCommission || 0,
     status: currentDeal?.status || '',
@@ -147,7 +152,7 @@ const DealForm: React.FC<DealFormProps> = () => {
     const status = getStatus(activeStep);
     const brokerId =
       brokers.find((broker) => broker.name === formData.brokerName)?.id || null;
-    const propertyId = sites.find((sites)=> `${sites.addressline1}, ${sites.addressline2}` === formData.propertyName)?.id || null ;
+    const propertyId = sites.find((sites) => `${sites.addressline1}, ${sites.addressline2}` === formData.propertyName)?.id || null;
     const payload = {
       ...formData,
       activeStep: activeStep + 1,
@@ -283,6 +288,7 @@ const DealForm: React.FC<DealFormProps> = () => {
     }
   };
 
+
   function isFormValid() {
     if (activeStep >= steps.length) return false;
     const currentFields = steps[activeStep]?.fields || [];
@@ -296,25 +302,37 @@ const DealForm: React.FC<DealFormProps> = () => {
 
   const renderSummary = () => {
     const events = [
-      { label: 'Deal Start', date: formData.dealStartDate },
-      { label: 'Proposal', date: formData.proposalDate },
-      { label: 'LOI Execute', date: formData.loiExecuteDate },
-      { label: 'Lease Signed', date: formData.leaseSignedDate },
-      { label: 'Notice to Proceed', date: formData.noticeToProceedDate },
-      { label: 'Commercial Operation', date: formData.commercialOperationDate },
-      { label: 'Potential Commission Date', date: formData.potentialCommissionDate },
+      { label: 'Deal Start', date: formData.dealStartDate, commission: null }, // No commission for Deal Start
+      { label: 'Proposal', date: formData.proposalDate, commission: formData.proposalCommission },
+      { label: 'LOI Execute', date: formData.loiExecuteDate, commission: formData.loiExecuteCommission },
+      { label: 'Lease Signed', date: formData.leaseSignedDate, commission: formData.leaseSignedCommission },
+      { label: 'Notice to Proceed', date: formData.noticeToProceedDate, commission: formData.noticeToProceedCommission },
+      { label: 'Commercial Operation', date: formData.commercialOperationDate, commission: formData.commercialOperationCommission },
+      { label: 'Potential Commission', date: formData.potentialCommissionDate, commission: formData.potentialCommission },
     ];
+
+    // Calculate total commission (excluding potential commission)
+    const totalCommission = events
+      .filter(event => event.label !== 'Potential Commission' && event.commission)
+      .reduce((sum, event) => sum + Number(event.commission), 0);
+
+    // Calculate total commission including potential commission
+    const totalCommissionWithPotential = totalCommission + (formData.potentialCommission ? Number(formData.potentialCommission) : 0);
 
     return (
       <div className={styles.summaryContainer}>
         <Typography variant="h5" gutterBottom sx={{ marginTop: '20px' }}>
           <div className={styles.summary}>Summary of the deal</div>
         </Typography>
-        <Box sx={{
-          display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', '@media (max-width:763px)': {
-            flexDirection: 'column',
-          }
-        }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 2,
+            justifyContent: 'center',
+            '@media (max-width:763px)': { flexDirection: 'column' }
+          }}
+        >
           {events.map((event, index) => (
             <Box
               key={index}
@@ -329,36 +347,22 @@ const DealForm: React.FC<DealFormProps> = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                height: '60px',
-                '@media (max-width:763px)': {
-                  width: 1,
-                  height: '3.3rem',
-                }
+                height: 'auto',
+                '@media (max-width:763px)': { width: 1 }
               }}
             >
-              {event.date ? (
-                <>
-                  <Typography variant="subtitle1" fontWeight="bold" textAlign="center" className={styles.summarytext} >
-                    {event.label}:
-                  </Typography><Typography textAlign="center">
-                    {event.date ? new Date(event.date).toLocaleDateString() : <span style={{ color: '#b3b3b3bb' }}>Yet to Complete</span>}
-                  </Typography>
-                </>
-              )
-                : (
-                  <>
-                    <Typography variant="subtitle1" fontWeight="bold" textAlign="center" style={{ color: '#b3b3b3bb' }} >
-                      {event.label}:
-                    </Typography><Typography textAlign="center">
-                      {event.date ? new Date(event.date).toLocaleDateString() : <span style={{ color: '#b3b3b3bb' }}>Yet to Complete</span>}
-                    </Typography>
-                  </>
-                )
-              }
-
-
+              <Typography variant="subtitle1" fontWeight="bold" textAlign="center" className={styles.summarytext} color={event.date ? '#000' : '#b3b3b3bb'}>
+                {event.label}:
+              </Typography>
+              <Typography textAlign="center">
+                {event.date ?
+                  `${new Date(event.date).toLocaleDateString()} ${event.commission ? `($${Number(event.commission).toLocaleString()})` : ''}`
+                  : <span style={{ color: '#b3b3b3bb' }}>Yet to Complete</span>
+                }
+              </Typography>
             </Box>
           ))}
+
           <Box
             sx={{
               border: '2px solid #26226299',
@@ -371,25 +375,22 @@ const DealForm: React.FC<DealFormProps> = () => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              height: '60px',
+              height: 'auto',
               transition: 'all 0.3s ease',
               '&:hover': {
                 transform: 'scale(1.02)',
                 boxShadow: '0 6px 12px rgba(38, 34, 98, 0.3)',
               },
-              '@media (max-width:763px)': {
-                width: 1,
-                height: '3.3rem'
-              }
+              '@media (max-width:763px)': { width: 1 }
             }}
           >
             {formData.potentialCommission ?
               <>
                 <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262">
-                  Potential Commission:
+                  Final Potential Commission:
                 </Typography>
-                <Typography textAlign="center" fontWeight="bolder" variant="h6" color="#262262">
-                  {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : <span style={{ color: '#5a577c' }}>Yet to Complete</span>}
+                <Typography textAlign="center" fontWeight="bold" color="#262262">
+                  {`${new Date(formData.potentialCommissionDate).toLocaleDateString()} ($${formData.potentialCommission.toLocaleString()})`}
                 </Typography>
               </>
               :
@@ -397,14 +398,50 @@ const DealForm: React.FC<DealFormProps> = () => {
                 <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262" style={{ color: '#5a577c88' }}>
                   Potential Commission:
                 </Typography>
-                <Typography textAlign="center" fontWeight="bolder" variant="h6" color="#262262">
-                  {formData.potentialCommission ? `$${formData.potentialCommission.toLocaleString()}` : <span style={{ color: '#5a577c88' }}>Yet to Complete</span>}
+                <Typography textAlign="center" fontWeight="bolder" color="#262262">
+                  <span style={{ color: '#5a577c88' }}>Yet to Complete</span>
                 </Typography>
               </>
             }
 
           </Box>
+          
+          <Box
+            sx={{
+              border: '2px solid #26226299',
+              borderRadius: '4px',
+              padding: '10px',
+              width: 'calc(66.66% - 10px)',
+              boxShadow: '0 4px 8px rgba(38, 34, 98, 0.2)',
+              backgroundColor: '#f0f0ff',
+              alignItems: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              height: 'auto',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                transform: 'scale(1.02)',
+                boxShadow: '0 6px 12px rgba(38, 34, 98, 0.3)',
+              },
+              '@media (max-width:763px)': { width: 1 }
+            }}
+          >
+            <Typography textAlign="center" color={totalCommissionWithPotential ? '#262262' : '#5a577c88'} sx={{ marginTop: '10px', fontWeight: 'bold',fontSize:'1.3rem' }}>
+              Total Commission : ${totalCommissionWithPotential.toLocaleString()}
+            </Typography>
+
+          </Box>
+
         </Box>
+
+        {formData.activeStep !== 7 && (
+          <Button sx={{
+            '@media (max-width:763px)': { marginTop: '1rem' }
+          }} variant="contained" color="primary" onClick={() => setActiveStep(formData.activeStep)}>
+            Back
+          </Button>
+        )}
       </div>
     );
   };
@@ -484,10 +521,11 @@ const DealForm: React.FC<DealFormProps> = () => {
               width: 1,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'flex-start',
+              alignItems: 'center',
+              gap: 2,
             }}
           >
-            {(userdetails.isAdmin) &&
+            {(userdetails.isAdmin && activeStep !== 7) &&
               <Stepper orientation="horizontal"
                 activeStep={activeStep}
                 alternativeLabel
@@ -510,12 +548,13 @@ const DealForm: React.FC<DealFormProps> = () => {
             <Box
               sx={{
                 width: '100%',
-                marginTop: '10px',
                 display: 'flex',
                 flexDirection: 'column',
                 padding: '30px',
+                paddingTop: 1,
                 '@media (max-width: 767px)': {
                   padding: 0,
+                  marginTop: 1
                 }
               }}
             >
@@ -572,6 +611,19 @@ const DealForm: React.FC<DealFormProps> = () => {
                 </Box>
               )}
             </Box>
+
+            {activeStep < steps.length - 1 &&
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setActiveStep(7)}
+                sx={{
+                  width: 150, textAlign: 'center',
+                  '@media (max-width:763px)': { width: 1 },
+                }}
+              >
+                View Summary
+              </Button>}
           </Box>
         </div>
       </DialogContent>

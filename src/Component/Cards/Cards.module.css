@@ -120,11 +120,12 @@
 .nameHeader {
   display: flex;
   flex-direction: column;
-  font-size: 14px;
+  font-size: 12px;
   gap: 0.5rem 0;
   letter-spacing: 0.06rem;
   font-family: "Open Sans", sans-serif;
-
+  text-transform: uppercase;
+  padding: .3rem .5rem 0;
 }
 
 .name {
