@@ -368,8 +368,6 @@ const SiteGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.addressline1}
             helperText={formErrors.addressline1}
-            disabled={formData.id ? true : false}
-            title={formData.id ? 'You cannot edit this field' : 'Enter you Details'}
           />
           <TextField
             margin="dense"
@@ -383,8 +381,6 @@ const SiteGrid: React.FC = () => {
             onChange={handleChange}
             error={!!formErrors.addressline2}
             helperText={formErrors.addressline2}
-            disabled={formData.id ? true : false}
-            title={formData.id ? 'You cannot edit this field' : 'Enter you Details'}
           />
           <TextField
             margin="dense"
