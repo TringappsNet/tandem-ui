@@ -7,7 +7,6 @@ import { RootState } from '../Redux/reducers';
 import { AppDispatch } from '../Redux/store';
 import SnackbarComponent from '../Snackbar/Snackbar';
 import logo from '../../assests/tandemlogo/tandem_logo.png';
-import { Padding } from '@mui/icons-material';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
