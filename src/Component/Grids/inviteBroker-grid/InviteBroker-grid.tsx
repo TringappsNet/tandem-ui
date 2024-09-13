@@ -261,16 +261,16 @@ const InviteBroker: React.FC = () => {
 
   const columns: GridColDef[] = [
     { field: 'firstName', headerName: 'firstName', width: 140 },
-    { field: 'lastName', headerName: 'lastName', width: 120 },
+    { field: 'lastName', headerName: 'lastName', width: 150 },
     { field: 'email', headerName: 'email', width: 250, },
     // { field: 'roleName', headerName: 'Role', width: 120 },
     { field: 'mobile', headerName: 'mobile', width: 150 },
-    { field: 'address', headerName: 'address', width: 160, flex:1 },
-    { field: 'city', headerName: 'City', width: 140, flex:1 },
-    { field: 'state', headerName: 'state', width: 140, flex:1 },
-    { field: 'zipcode', headerName: 'Zipcode', width: 100, flex:1 },
+    { field: 'address', headerName: 'address', width: 200, },
+    { field: 'city', headerName: 'City', width: 140, },
+    { field: 'state', headerName: 'state', width: 140, },
+    { field: 'zipcode', headerName: 'Zipcode', width: 100, },
     // { field: 'country', headerName: 'Country', width: 120 },
-    { field: 'isActive', headerName: 'isActive', width: 90, flex:1 },
+    { field: 'isActive', headerName: 'isActive', width: 90, },
     {
       field: 'actions',
       headerName: 'Actions',

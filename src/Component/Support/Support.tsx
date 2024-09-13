@@ -65,6 +65,11 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
       setFormError('Description is required');
       return false;
     }
+    if ((selectedEmails.length === 0)) {
+      setFormError('Emails are required');
+      return false;
+    }
+    setFormError('');
     return true;
   };
 

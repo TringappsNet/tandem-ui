@@ -460,6 +460,7 @@ const DealForm: React.FC<DealFormProps> = () => {
       sx={{
         '& .MuiDialog-paper': {
           width: 1,
+          height:'100%',
           '@media (max-width:763px)': {
             maxHeight: '68%'
           }
@@ -537,8 +538,7 @@ const DealForm: React.FC<DealFormProps> = () => {
             alignItems: 'center',
             justifyContent: 'center',
             gap: 4,
-            height: '100%',
-            paddingTop: '1.5rem'
+            paddingTop: '1.5rem',
           }}
         >
           {/* Stepper (Div 1) */}
@@ -574,6 +574,7 @@ const DealForm: React.FC<DealFormProps> = () => {
               '@media (max-width: 767px)': {
                 padding: 0,
                 marginTop: 1,
+                paddingX:0,
               },
             }}
           >
@@ -588,7 +589,9 @@ const DealForm: React.FC<DealFormProps> = () => {
 
           {/* Save/Next Buttons (Div 3) */}
           {activeStep < steps.length - 1 && (
-            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', paddingX: '30px','@media (max-width:763px)': {
+            padding:0
+          } }}>
               <Button
                 variant="contained"
                 color="primary"
@@ -612,7 +615,9 @@ const DealForm: React.FC<DealFormProps> = () => {
 
           {/* View Summary (Div 4) */}
           {activeStep < steps.length - 1 && (
-            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
+            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end',  paddingX: '30px','@media (max-width:763px)': {
+            padding:0
+          } }}>
               <Button
                 variant="contained"
                 color="primary"

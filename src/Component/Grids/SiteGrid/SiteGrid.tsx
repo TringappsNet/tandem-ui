@@ -183,7 +183,7 @@ const SiteGrid: React.FC = () => {
 
   const handleAdd = () => {
     if (validateForm()) {
-      const trimmedData = trimFormData(formData); 
+      const trimmedData = trimFormData(formData);
       dispatch(addSite(trimmedData));
       handleClose();
     }
@@ -202,7 +202,7 @@ const SiteGrid: React.FC = () => {
       const user_id = userdetails?.id;
 
       if (user_id) {
-        const trimmedData = trimFormData(formData); 
+        const trimmedData = trimFormData(formData);
         const updatedFormData = {
           ...trimmedData,
           updatedBy: user_id,
@@ -235,16 +235,16 @@ const SiteGrid: React.FC = () => {
         return landlord ? landlord.name : 'Unknown';
       },
     },
-    { field: 'addressline1', headerName: 'AddressLine1', flex: 1 },
-    { field: 'addressline2', headerName: 'AddressLine2', flex: 1 },
-    { field: 'city', headerName: 'City', flex: 1 },
-    { field: 'state', headerName: 'State', flex: 1 },
-    { field: 'country', headerName: 'Country', flex: 1 },
-    { field: 'zipcode', headerName: 'Zipcode', flex: 1 },
+    { field: 'addressline1', headerName: 'AddressLine1', width: 220 },
+    { field: 'addressline2', headerName: 'AddressLine2', width: 220 },
+    { field: 'city', headerName: 'City', width: 180 },
+    { field: 'state', headerName: 'State', width: 180 },
+    { field: 'country', headerName: 'Country', width: 180 },
+    { field: 'zipcode', headerName: 'Zipcode', width: 180 },
     {
       field: 'actions',
       headerName: 'Actions',
-      flex: 1,
+      width: 150,
       disableExport: true,
       renderCell: (params) => (
         <>
