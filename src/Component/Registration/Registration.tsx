@@ -329,17 +329,16 @@ const Registration: React.FC = () => {
     if (!handleValidation()) {
       return;
     }
-
     const resultAction = await dispatch(
       registerUser({
-        firstName,
-        lastName,
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
         mobileNo: handleMobileChange(mobileNo),
-        address,
-        city,
-        state,
-        zipcode,
-        password,
+        address: address.trim(),
+        city: city.trim(),
+        state: state.trim(),
+        zipcode: zipcode.trim(),
+        password: password.trim(),
         inviteToken,
       })
     );

@@ -4,12 +4,6 @@
   font-family: 'Public Sans';
 }
 
-.dealcontainer {
-  width: 100%;
-  height: calc(100px - 20px);
-  /* Adjust this to fit the available viewport height */
-}
-
 .summaryContainer {
   margin-top: -20px;
 }

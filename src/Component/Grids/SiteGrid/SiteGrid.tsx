@@ -96,6 +96,17 @@ const SiteGrid: React.FC = () => {
     resetForm();
   };
 
+  const trimFormData = (data: Site) => ({
+    ...data,
+    addressline1: data.addressline1.trim(),
+    addressline2: data.addressline2.trim(),
+    city: data.city.trim(),
+    state: data.state.trim(),
+    country: data.country.trim(),
+    zipcode: data.zipcode.trim(),
+  });
+
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<number>
   ) => {
@@ -172,7 +183,8 @@ const SiteGrid: React.FC = () => {
 
   const handleAdd = () => {
     if (validateForm()) {
-      dispatch(addSite(formData));
+      const trimmedData = trimFormData(formData); 
+      dispatch(addSite(trimmedData));
       handleClose();
     }
   };
@@ -190,8 +202,9 @@ const SiteGrid: React.FC = () => {
       const user_id = userdetails?.id;
 
       if (user_id) {
+        const trimmedData = trimFormData(formData); 
         const updatedFormData = {
-          ...formData,
+          ...trimmedData,
           updatedBy: user_id,
         };
 
@@ -222,16 +235,16 @@ const SiteGrid: React.FC = () => {
         return landlord ? landlord.name : 'Unknown';
       },
     },
-    { field: 'addressline1', headerName: 'AddressLine1', flex:1 },
-    { field: 'addressline2', headerName: 'AddressLine2', flex:1 },
-    { field: 'city', headerName: 'City', flex:1 },
-    { field: 'state', headerName: 'State', flex:1 },
-    { field: 'country', headerName: 'Country', flex:1 },
-    { field: 'zipcode', headerName: 'Zipcode', flex:1 },
+    { field: 'addressline1', headerName: 'AddressLine1', flex: 1 },
+    { field: 'addressline2', headerName: 'AddressLine2', flex: 1 },
+    { field: 'city', headerName: 'City', flex: 1 },
+    { field: 'state', headerName: 'State', flex: 1 },
+    { field: 'country', headerName: 'Country', flex: 1 },
+    { field: 'zipcode', headerName: 'Zipcode', flex: 1 },
     {
       field: 'actions',
       headerName: 'Actions',
-      flex:1,
+      flex: 1,
       disableExport: true,
       renderCell: (params) => (
         <>

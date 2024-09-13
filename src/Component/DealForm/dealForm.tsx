@@ -321,7 +321,7 @@ const DealForm: React.FC<DealFormProps> = () => {
 
     return (
       <div className={styles.summaryContainer}>
-        <Typography variant="h5" gutterBottom sx={{ marginTop: '20px' }}>
+        <Typography variant="h5" gutterBottom>
           <div className={styles.summary}>Summary of the deal</div>
         </Typography>
         <Box
@@ -330,7 +330,7 @@ const DealForm: React.FC<DealFormProps> = () => {
             flexWrap: 'wrap',
             gap: 2,
             justifyContent: 'center',
-            '@media (max-width:763px)': { flexDirection: 'column' }
+            '@media (max-width:763px)': { flexDirection: 'column' },
           }}
         >
           {events.map((event, index) => (
@@ -347,18 +347,26 @@ const DealForm: React.FC<DealFormProps> = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                height: 'auto',
-                '@media (max-width:763px)': { width: 1 }
+                '@media (max-width:763px)': { width: 1 },
               }}
             >
-              <Typography variant="subtitle1" fontWeight="bold" textAlign="center" className={styles.summarytext} color={event.date ? '#000' : '#b3b3b3bb'}>
+              <Typography
+                variant="subtitle1"
+                fontWeight="bold"
+                textAlign="center"
+                color={event.date ? '#000' : '#b3b3b3bb'}
+              >
                 {event.label}:
               </Typography>
               <Typography textAlign="center">
-                {event.date ?
-                  `${new Date(event.date).toLocaleDateString()} ${event.commission ? `($${Number(event.commission).toLocaleString()})` : ''}`
-                  : <span style={{ color: '#b3b3b3bb' }}>Yet to Complete</span>
-                }
+                {event.date ? (
+                  <>
+                    {new Date(event.date).toLocaleDateString()}{' '}
+                    {event.commission && `$${Number(event.commission).toLocaleString()}`}
+                  </>
+                ) : (
+                  <span style={{ color: '#b3b3b3bb' }}>Yet to Complete</span>
+                )}
               </Typography>
             </Box>
           ))}
@@ -375,37 +383,33 @@ const DealForm: React.FC<DealFormProps> = () => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              height: 'auto',
               transition: 'all 0.3s ease',
               '&:hover': {
                 transform: 'scale(1.02)',
                 boxShadow: '0 6px 12px rgba(38, 34, 98, 0.3)',
               },
-              '@media (max-width:763px)': { width: 1 }
+              '@media (max-width:763px)': { width: 1 },
             }}
           >
-            {formData.finalCommission ?
-              <>
-                <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262">
-                  Final Commission:
-                </Typography>
-                <Typography textAlign="center" fontWeight="bold" color="#262262">
-                  {`$${formData.finalCommission.toLocaleString()}`}
-                </Typography>
-              </>
-              :
-              <>
-                <Typography variant="subtitle1" fontWeight="bold" textAlign="center" color="#262262" style={{ color: '#5a577c88' }}>
-                  Final Commission:
-                </Typography>
-                <Typography textAlign="center" fontWeight="bolder" color="#262262">
-                  <span style={{ color: '#5a577c88' }}>Yet to Complete</span>
-                </Typography>
-              </>
-            }
-
+            <Typography
+              variant="subtitle1"
+              fontWeight="bold"
+              textAlign="center"
+              color={formData.finalCommission ? '#262262' : '#5a577c88'}
+            >
+              Final Commission:
+            </Typography>
+            <Typography
+              textAlign="center"
+              fontWeight="bold"
+              color={formData.finalCommission ? '#262262' : '#5a577c88'}
+            >
+              {formData.finalCommission
+                ? `$${formData.finalCommission.toLocaleString()}`
+                : 'Yet to Complete'}
+            </Typography>
           </Box>
-          
+
           <Box
             sx={{
               border: '2px solid #26226299',
@@ -418,27 +422,31 @@ const DealForm: React.FC<DealFormProps> = () => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              height: 'auto',
               transition: 'all 0.3s ease',
               '&:hover': {
                 transform: 'scale(1.02)',
                 boxShadow: '0 6px 12px rgba(38, 34, 98, 0.3)',
               },
-              '@media (max-width:763px)': { width: 1 }
+              '@media (max-width:763px)': { width: 1 },
             }}
           >
-            <Typography textAlign="center" color={totalCommissionWithPotential ? '#262262' : '#5a577c88'} sx={{ marginTop: '10px', fontWeight: 'bold',fontSize:'1.3rem' }}>
-              Total Potential Commission : ${totalCommissionWithPotential.toLocaleString()}
+            <Typography
+              textAlign="center"
+              color={totalCommissionWithPotential ? '#262262' : '#5a577c88'}
+              sx={{ marginTop: '10px', fontWeight: 'bold', fontSize: '1.3rem' }}
+            >
+              Total Potential Commission: ${totalCommissionWithPotential.toLocaleString()}
             </Typography>
-
           </Box>
-
         </Box>
 
         {formData.activeStep !== 7 && (
-          <Button sx={{
-            '@media (max-width:763px)': { marginTop: '1rem' }
-          }} variant="contained" color="primary" onClick={() => setActiveStep(formData.activeStep)}>
+          <Button
+            sx={{ '@media (max-width:763px)': { marginTop: '1rem' } }}
+            variant="contained"
+            color="primary"
+            onClick={() => setActiveStep(formData.activeStep)}
+          >
             Back
           </Button>
         )}
@@ -451,10 +459,11 @@ const DealForm: React.FC<DealFormProps> = () => {
       maxWidth="md"
       sx={{
         '& .MuiDialog-paper': {
-          maxHeight: 'calc(100vh - 90px)',
-          height: 1,
           width: 1,
-        }
+          '@media (max-width:763px)': {
+            maxHeight: '68%'
+          }
+        },
       }}
       open={open}
       onClose={() => {
@@ -463,19 +472,19 @@ const DealForm: React.FC<DealFormProps> = () => {
           dispatchFormDataOnClose();
           dispatch(clearCurrentDeal());
         }
-
       }}
     >
       <DialogTitle
         sx={{
-          background: 'linear-gradient(58deg, rgb(35 39 43) 0%, rgb(79 84 89) 35%, rgb(32 46 59) 100%);',
+          background:
+            'linear-gradient(58deg, rgb(35 39 43) 0%, rgb(79 84 89) 35%, rgb(32 46 59) 100%);',
           color: 'white',
           height: '44px',
           padding: '6px 24px',
           letterSpacing: '.18rem',
           fontSize: 15,
           display: 'flex',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         DEALFORM
@@ -511,124 +520,117 @@ const DealForm: React.FC<DealFormProps> = () => {
           </button>
         </IconButton>
       </DialogTitle>
-      <DialogContent sx={{
-        display: 'flex',
-        flexDirection: 'column',
-      }}>
-        <div className={styles.dealcontainer} style={{ display: 'flex', flexDirection: 'column', height: '100%', width: "100%", flexWrap: 'wrap' }}>
-          <Box
-            sx={{
-              width: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 2,
-            }}
-          >
-            {(userdetails.isAdmin && activeStep !== 7) &&
-              <Stepper orientation="horizontal"
+
+      {/* Main Content */}
+      <DialogContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '2rem'
+        }}
+      >
+        <Box
+          sx={{
+            width: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 4,
+            height: '100%',
+            paddingTop: '1.5rem'
+          }}
+        >
+          {/* Stepper (Div 1) */}
+          <Box sx={{ width: '100%' }}>
+            {(userdetails.isAdmin && activeStep !== 7) && (
+              <Stepper
+                orientation="horizontal"
                 activeStep={activeStep}
                 alternativeLabel
                 connector={<StepConnector />}
                 sx={{
-                  width: 1,
-                  marginTop: '3rem',
                   '@media (max-width:763px)': {
                     overflow: 'scroll',
-                  }
+                  },
                 }}
               >
                 {steps.map((step, index) => (
-                  <Step key={index} sx={{ width: 1 }}
-                  >
+                  <Step key={index}>
                     <StepLabel>{step.label}</StepLabel>
                   </Step>
                 ))}
-              </Stepper>}
-            <Box
-              sx={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                padding: '30px',
-                paddingTop: 1,
-                '@media (max-width: 767px)': {
-                  padding: 0,
-                  marginTop: 1
-                }
-              }}
-            >
-              {activeStep < steps.length - 1 ? (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    textTransform: 'capitalize',
-                  }}
-                >
-                  {steps[activeStep].fields.map((field, index) =>
-                    renderField(field, index)
-                  )}
-                </Box>
-              ) : (
-                renderSummary()
-              )}
-              {activeStep === steps.length - 1 ? (
-                <Box sx={{ mt: 4, textAlign: 'center' }}>
-                  <Typography variant="h5" sx={{ color: 'green' }}>
-                    {/* Deal is Completed */}
-                  </Typography>
-                </Box>
-              ) : (
-                <Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      width: '100%',
-                      marginTop: 3
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={saveFormData}
-                      sx={{ width: 100 }}
-                      disabled={!isFormValid()}
-                    >
-                      Save
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      sx={{ width: 100 }}
-                      disabled={!saveSuccess || !isFormValid()}
-                    >
-                      {activeStep === steps.length - 2 ? 'Finish' : 'Next'}
-                    </Button>
-                  </Box>
-                </Box>
-              )}
-            </Box>
+              </Stepper>
+            )}
+          </Box>
 
-            {activeStep < steps.length - 1 &&
+          {/* Input Fields (Div 2) */}
+          <Box
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              paddingX: '30px',
+              '@media (max-width: 767px)': {
+                padding: 0,
+                marginTop: 1,
+              },
+            }}
+          >
+            {activeStep < steps.length - 1 ? (
+              <Box sx={{ display: 'flex', flexDirection: 'column', textTransform: 'capitalize' }}>
+                {steps[activeStep].fields.map((field, index) => renderField(field, index))}
+              </Box>
+            ) : (
+              renderSummary()
+            )}
+          </Box>
+
+          {/* Save/Next Buttons (Div 3) */}
+          {activeStep < steps.length - 1 && (
+            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={saveFormData}
+                sx={{ width: 100 }}
+                disabled={!isFormValid()}
+              >
+                Save
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleNext}
+                sx={{ width: 100 }}
+                disabled={!saveSuccess || !isFormValid()}
+              >
+                {activeStep === steps.length - 2 ? 'Finish' : 'Next'}
+              </Button>
+            </Box>
+          )}
+
+          {/* View Summary (Div 4) */}
+          {activeStep < steps.length - 1 && (
+            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
               <Button
                 variant="contained"
                 color="primary"
                 onClick={() => setActiveStep(7)}
                 sx={{
-                  width: 150, textAlign: 'center',
+                  width: 150,
                   '@media (max-width:763px)': { width: 1 },
                 }}
               >
                 View Summary
-              </Button>}
-          </Box>
-        </div>
+              </Button>
+            </Box>
+          )}
+        </Box>
       </DialogContent>
     </Dialog>
   );
-};
+}
+
 
 export default DealForm;

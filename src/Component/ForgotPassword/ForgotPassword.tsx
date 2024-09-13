@@ -72,7 +72,7 @@ const ForgotPassword: React.FC = () => {
       setSnackbarOpen(true);
       return;
     }
-    dispatch(forgotPassword(email));
+    dispatch(forgotPassword(email.trim()));
   };
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
