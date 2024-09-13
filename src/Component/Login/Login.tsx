@@ -51,7 +51,7 @@ const Login: React.FC = () => {
     setSnackbarMessage('');
 
     if (validateForm()) {
-      dispatch(login({ email, password })).then((result) => {
+      dispatch(login({ email: email.trim(), password: password.trim() })).then((result) => {
         if (login.fulfilled.match(result)) {
           navigate('/dashboard');
         } else {

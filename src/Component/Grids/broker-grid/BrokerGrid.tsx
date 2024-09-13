@@ -19,14 +19,14 @@ const BrokerGrid: React.FC = () => {
   }, [dispatch]);
 
   const columns: GridColDef[] = [
-    { field: 'fullName', headerName: 'Tandem Users', width: 170 },
-    { field: 'roleName', headerName: 'Role', width: 130 },
-    { field: 'mobile', headerName: 'Mobile', width: 150 },
-    { field: 'totalDeals', headerName: 'Total Deals', width: 150 },
-    { field: 'dealsOpened', headerName: 'Deals Opened', width: 150 },
-    { field: 'dealsInProgress', headerName: 'Deals In-Progress', width: 170 },
-    { field: 'dealsClosed', headerName: 'Deals Closed', width: 150 },
-    { field: 'totalPotentialCommission', headerName: 'Total Potential Commission', width: 170 },
+    { field: 'fullName', headerName: 'Tandem Users', width: 200, align:'left', headerAlign:'center' },
+    { field: 'roleName', headerName: 'Role', width: 150, align:'center', headerAlign:'center' },
+    { field: 'mobile', headerName: 'Mobile', width: 150, align:'center', headerAlign:'center' },
+    { field: 'totalDeals', headerName: 'Total Deals', width: 170, align:'center', headerAlign:'center' },
+    { field: 'dealsOpened', headerName: 'Deals Opened', width: 170, align:'center', headerAlign:'center' },
+    { field: 'dealsInProgress', headerName: 'Deals In-Progress', width: 180, align:'center', headerAlign:'center'},
+    { field: 'dealsClosed', headerName: 'Deals Closed', width: 150, align:'center', headerAlign:'center' },
+    { field: 'totalPotentialCommission', headerName: 'Total Potential Commission', width: 250, align:'center', headerAlign:'center' },
   ];
 
   return (

@@ -40,7 +40,7 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
     if (userdetails.isAdmin) {
       dispatch(fetchBrokers());
     }
-  }, [dispatch,userdetails]);
+  }, [dispatch, userdetails]);
 
   useEffect(() => {
     if (subject.trim()) {
@@ -65,6 +65,11 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
       setFormError('Description is required');
       return false;
     }
+    if ((selectedEmails.length === 0)) {
+      setFormError('Emails are required');
+      return false;
+    }
+    setFormError('');
     return true;
   };
 
@@ -81,14 +86,14 @@ const Support: React.FC<SupportProps> = ({ onCloseDialog }) => {
     }
 
     const ticketData = {
-      ticketSubject: subject,
-      ticketDescription: description,
+      ticketSubject: subject.trim(),
+      ticketDescription: description.trim(),
       senderId: user.id,
     };
 
     const ticketDatas = {
-      ticketSubject: subject,
-      ticketDescription: description,
+      ticketSubject: subject.trim(),
+      ticketDescription: description.trim(),
       emails: selectedEmails,
       isDefault,
     };

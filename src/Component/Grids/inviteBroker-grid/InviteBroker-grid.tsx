@@ -19,7 +19,7 @@ import {
   setSnackbarOpen,
   setActiveBroker,
 } from '../../Redux/slice/user/userSlice';
-import {fetchBrokers as fetchingbrokerdetails} from '../../Redux/slice/broker/brokerSlice' 
+import { fetchBrokers as fetchingbrokerdetails } from '../../Redux/slice/broker/brokerSlice'
 import FullGrid from '../parentGrid/parent-grid';
 import { FiEdit } from 'react-icons/fi';
 import { MdDoNotDisturb } from "react-icons/md";
@@ -40,7 +40,7 @@ interface Site {
   firstName: string;
   lastName: string;
   mobile: string;
-  address:string;
+  address: string;
   city: string;
   state: string;
   country: string;
@@ -67,7 +67,7 @@ const InviteBroker: React.FC = () => {
     firstName: '',
     lastName: '',
     mobile: '',
-    address:'',
+    address: '',
     city: '',
     state: '',
     country: '',
@@ -77,7 +77,7 @@ const InviteBroker: React.FC = () => {
   });
 
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
-    pageSize: brokers.length ,
+    pageSize: brokers.length,
     page: 0,
   });
 
@@ -94,10 +94,24 @@ const InviteBroker: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    setPaginationModel(prev => ({...prev,pageSize: brokers.length}));
+    setPaginationModel(prev => ({ ...prev, pageSize: brokers.length }));
   }, [brokers]);
 
   const handleOpen = () => setOpen(true);
+
+  const trimFormData = (data: Site) => ({
+    ...data,
+    email: data.email.trim(),
+    firstName: data.firstName.trim(),
+    lastName: data.lastName.trim(),
+    mobile: data.mobile.trim(),
+    address: data.address.trim(),
+    city: data.city.trim(),
+    state: data.state.trim(),
+    country: data.country.trim(),
+    zipcode: data.zipcode.trim(),
+  });
+
   const handleClose = () => {
     setOpen(false);
     resetForm();
@@ -115,7 +129,7 @@ const InviteBroker: React.FC = () => {
       firstName: '',
       lastName: '',
       mobile: '',
-      address:'',
+      address: '',
       city: '',
       state: '',
       country: '',
@@ -154,7 +168,7 @@ const InviteBroker: React.FC = () => {
     } else if (!/\d/.test(formData.mobile)) {
       errors.mobile = 'Mobile Number must be only digits';
       valid = false;
-    }  else if (formData.mobile.length > 15){
+    } else if (formData.mobile.length > 15) {
       errors.mobile = 'Mobile Number length should not exceed 15 digits';
       valid = false;
     }
@@ -189,7 +203,8 @@ const InviteBroker: React.FC = () => {
 
   const handleAdd = () => {
     if (validateForm()) {
-      dispatch(addBroker(formData));
+      const trimmedData = trimFormData(formData);
+      dispatch(addBroker(trimmedData));
       handleClose();
     }
   };
@@ -204,7 +219,8 @@ const InviteBroker: React.FC = () => {
 
   const handleUpdate = () => {
     if (validateForm()) {
-      dispatch(updateBroker(formData));
+      const trimmedData = trimFormData(formData);
+      dispatch(updateBroker(trimmedData));
       handleClose();
     }
   };
@@ -245,16 +261,16 @@ const InviteBroker: React.FC = () => {
 
   const columns: GridColDef[] = [
     { field: 'firstName', headerName: 'firstName', width: 140 },
-    { field: 'lastName', headerName: 'lastName', width: 120 },
-    { field: 'email', headerName: 'email', width: 180 },
+    { field: 'lastName', headerName: 'lastName', width: 150 },
+    { field: 'email', headerName: 'email', width: 250, },
     // { field: 'roleName', headerName: 'Role', width: 120 },
     { field: 'mobile', headerName: 'mobile', width: 150 },
-    { field: 'address', headerName: 'address', width: 160 },
-    { field: 'city', headerName: 'City', width: 140 },
-    { field: 'state', headerName: 'state', width: 140 },
-    { field: 'zipcode', headerName: 'Zipcode', width: 100 },
+    { field: 'address', headerName: 'address', width: 200, },
+    { field: 'city', headerName: 'City', width: 140, },
+    { field: 'state', headerName: 'state', width: 140, },
+    { field: 'zipcode', headerName: 'Zipcode', width: 100, },
     // { field: 'country', headerName: 'Country', width: 120 },
-    { field: 'isActive', headerName: 'isActive', width: 90 },
+    { field: 'isActive', headerName: 'isActive', width: 90, },
     {
       field: 'actions',
       headerName: 'Actions',

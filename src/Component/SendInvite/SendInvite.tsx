@@ -89,7 +89,7 @@ const SendInvite: React.FC<SendInviteProps> = ({ onCloseDialog }) => {
       return;
     }
 
-    dispatch(sendInvite({ email, roleId })).then((action) => {
+    dispatch(sendInvite({ email: email.trim(), roleId })).then((action) => {
       if (action.type === 'sendInvite/sendInvite/fulfilled') {
         setTimeout(() => {
           dispatch(closeSendInvite());
