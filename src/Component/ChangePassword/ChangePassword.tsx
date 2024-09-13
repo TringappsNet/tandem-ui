@@ -30,7 +30,7 @@ const ChangePassword: React.FC = () => {
 
   useEffect(() => {
     if (resetToken) {
-      dispatch(validateResetToken({ resetToken: resetToken }));
+      dispatch(validateResetToken({ resetToken }));
     } else {
       navigate('/forgotpassword');
     }
@@ -88,7 +88,7 @@ const ChangePassword: React.FC = () => {
       return;
     }
 
-    dispatch(changePassword({ newPassword: password.trim() }));
+    dispatch(changePassword({ newPassword: password }));
 
     setTimeout(() => {
       navigate('/login');
