@@ -98,27 +98,12 @@ const LandlordGrid: React.FC = () => {
     }));
   };
 
-  const trimFormData = (data: Landlord) => ({
-    ...data,
-    name: data.name.trim(),
-    phoneNumber: data.phoneNumber.trim(),
-    email: data.email.trim(),
-    address1: data.address1.trim(),
-    address2: data.address2.trim(),
-    city: data.city.trim(),
-    state: data.state.trim(),
-    country: data.country.trim(),
-    zipcode: data.zipcode.trim(),
-  });
-
   const handleAdd = () => {
     if (validateForm()) {
-      const trimmedData = trimFormData(formData);
-      dispatch(addLandlord(trimmedData));
+      dispatch(addLandlord(formData));
       handleClose();
     }
   };
-
 
   const handleEdit = (id: number) => {
     const landlord = landlords.find((landlord) => landlord.id === id);
@@ -149,8 +134,7 @@ const LandlordGrid: React.FC = () => {
 
   const handleUpdate = () => {
     if (validateForm()) {
-      const trimmedData = trimFormData(formData);
-      dispatch(updateLandlord(trimmedData));
+      dispatch(updateLandlord(formData));
       handleClose();
     }
   };
