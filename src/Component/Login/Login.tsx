@@ -7,6 +7,7 @@ import { RootState } from '../Redux/reducers';
 import { AppDispatch } from '../Redux/store';
 import SnackbarComponent from '../Snackbar/Snackbar';
 import logo from '../../assests/tandemlogo/tandem_logo.png';
+import { Padding } from '@mui/icons-material';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -51,7 +52,7 @@ const Login: React.FC = () => {
     setSnackbarMessage('');
 
     if (validateForm()) {
-      dispatch(login({ email, password })).then((result) => {
+      dispatch(login({ email: email.trim(), password: password.trim() })).then((result) => {
         if (login.fulfilled.match(result)) {
           navigate('/dashboard');
         } else {

@@ -159,10 +159,6 @@
   text-transform: capitalize;
 }
 
-.MuiDialogContent-root {
-  overflow: hidden !important;
-}
-
 .MuiBox-root.cspgfmz {
   margin-bottom: 20px;
 }
