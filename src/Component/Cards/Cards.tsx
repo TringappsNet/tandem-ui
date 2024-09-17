@@ -277,7 +277,17 @@ const Cards: React.FC = () => {
                 <div className={styles.insidecardcontainer}>
                   <div className={styles.cardTitle}>
                     <div className={styles.nameHeader}>
-                      <div className={styles.name}>{`${deals.propertyId.addressline1}, ${deals.propertyId.addressline2}, ${deals.propertyId.state}, ${deals.propertyId.city} - ${deals.propertyId.zipcode}`}</div>
+                      <div className={styles.name}>
+                        {[
+                          deals.propertyId.addressline1,
+                          deals.propertyId.addressline2,
+                          deals.propertyId.city,
+                          deals.propertyId.state
+                        ]
+                          .filter(Boolean)
+                          .join(', ') + (deals.propertyId.zipcode ? ` - ${deals.propertyId.zipcode}` : '')}
+                      </div>
+
                     </div>
                   </div>
                   <hr className={styles.line} />

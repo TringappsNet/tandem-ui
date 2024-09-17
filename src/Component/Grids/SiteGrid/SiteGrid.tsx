@@ -263,7 +263,7 @@ const SiteGrid: React.FC = () => {
 
   const handleEditNew = (data: boolean) => {
     if (landlorddetails.length === 0) {
-      dispatch(setSnackbarMessage('You cannot add property without lanlords'));
+      dispatch(setSnackbarMessage('You cannot add a property without landlords. Please add landlords to proceed.'));
       dispatch(setSnackbarOpen(true));
     } else if (data) {
       resetForm();

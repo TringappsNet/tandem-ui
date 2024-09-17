@@ -247,7 +247,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       if (availableSites.length === 0 || brokerAvailable.length === 0) {
 
         setSnackbarMessage(
-          'Unable to create deal, properties and brokers are either assigned or unavailable !'
+          'Unable to create deal. Property is either unavailable or already assigned. Please create a new property to proceed'
         );
         setSnackbarOpen(true);
       } else {

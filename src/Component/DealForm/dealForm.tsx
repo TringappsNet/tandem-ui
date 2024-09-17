@@ -41,25 +41,25 @@ const steps = [
       { type: 'date', label: 'dealStartDate' },
     ],
   },
-  { label: 'Proposal', fields: [{ type: 'date', label: 'proposalDate' }, { type: 'text', label: 'proposalCommission' }] },
-  { label: 'LOI Execute', fields: [{ type: 'date', label: 'loiExecuteDate' }, { type: 'text', label: 'loiExecuteCommission' }] },
+  { label: 'Proposal', fields: [{ type: 'date', label: 'proposalDate' }, { type: 'number', label: 'proposalCommission' }] },
+  { label: 'LOI Execute', fields: [{ type: 'date', label: 'loiExecuteDate' }, { type: 'number', label: 'loiExecuteCommission' }] },
   {
     label: 'Lease Signed',
-    fields: [{ type: 'date', label: 'leaseSignedDate' }, { type: 'text', label: 'leaseSignedCommission' }],
+    fields: [{ type: 'date', label: 'leaseSignedDate' }, { type: 'number', label: 'leaseSignedCommission' }],
   },
   {
     label: 'Notice to Proceed',
-    fields: [{ type: 'date', label: 'noticeToProceedDate' }, { type: 'text', label: 'noticeToProceedCommission' }],
+    fields: [{ type: 'date', label: 'noticeToProceedDate' }, { type: 'number', label: 'noticeToProceedCommission' }],
   },
   {
     label: 'Commercial Operation',
-    fields: [{ type: 'date', label: 'commercialOperationDate' }, { type: 'text', label: 'commercialOperationCommission' }],
+    fields: [{ type: 'date', label: 'commercialOperationDate' }, { type: 'number', label: 'commercialOperationCommission' }],
   },
   {
     label: 'Potential Commission',
     fields: [
       { type: 'date', label: 'finalCommissionDate' },
-      { type: 'text', label: 'finalCommission' },
+      { type: 'number', label: 'finalCommission' },
     ],
   },
   { label: 'Completed', fields: [] },
@@ -158,7 +158,7 @@ const DealForm: React.FC<DealFormProps> = () => {
       activeStep: activeStep + 1,
       status,
       brokerId,
-      propertyId,
+      propertyId: { id: propertyId },
       createdBy: userId || 0,
       updatedBy: userId || 0,
     };
@@ -273,6 +273,22 @@ const DealForm: React.FC<DealFormProps> = () => {
           <TextField
             key={index}
             type="text"
+            label={label}
+            name={label}
+            autoComplete='off'
+            value={formData[label as keyof Deal] || ''}
+            onChange={handleChange}
+            margin="normal"
+            size="small"
+            sx={{ width: 1, maxWidth: 300 }}
+          />
+        );
+
+      case 'number':
+        return (
+          <TextField
+            key={index}
+            type="number"
             label={label}
             name={label}
             autoComplete='off'
@@ -460,7 +476,7 @@ const DealForm: React.FC<DealFormProps> = () => {
       sx={{
         '& .MuiDialog-paper': {
           width: 1,
-          height:'100%',
+          height: '100%',
           '@media (max-width:763px)': {
             maxHeight: '68%'
           }
@@ -574,7 +590,7 @@ const DealForm: React.FC<DealFormProps> = () => {
               '@media (max-width: 767px)': {
                 padding: 0,
                 marginTop: 1,
-                paddingX:0,
+                paddingX: 0,
               },
             }}
           >
@@ -589,9 +605,11 @@ const DealForm: React.FC<DealFormProps> = () => {
 
           {/* Save/Next Buttons (Div 3) */}
           {activeStep < steps.length - 1 && (
-            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', paddingX: '30px','@media (max-width:763px)': {
-            padding:0
-          } }}>
+            <Box sx={{
+              width: '100%', display: 'flex', justifyContent: 'space-between', paddingX: '30px', '@media (max-width:763px)': {
+                padding: 0
+              }
+            }}>
               <Button
                 variant="contained"
                 color="primary"
@@ -615,9 +633,11 @@ const DealForm: React.FC<DealFormProps> = () => {
 
           {/* View Summary (Div 4) */}
           {activeStep < steps.length - 1 && (
-            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end',  paddingX: '30px','@media (max-width:763px)': {
-            padding:0
-          } }}>
+            <Box sx={{
+              width: '100%', display: 'flex', justifyContent: 'flex-end', paddingX: '30px', '@media (max-width:763px)': {
+                padding: 0
+              }
+            }}>
               <Button
                 variant="contained"
                 color="primary"

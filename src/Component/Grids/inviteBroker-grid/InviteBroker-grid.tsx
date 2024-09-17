@@ -274,7 +274,7 @@ const InviteBroker: React.FC = () => {
     {
       field: 'actions',
       headerName: 'Actions',
-      width: 130,
+      width: 120,
       disableExport: true,
       renderCell: (params) => (
         <>
