@@ -49,15 +49,14 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const dispatch = useDispatch<AppDispatch>();
   const userdetails = useSelector((state: RootState) => state.auth);
-  const sites = useSelector((state: RootState) => state.site.sites);
-  const deals = useSelector((state: RootState) => state.deal.dealDetails);
-  const brokers = useSelector((state: RootState) => state.broker.brokers);
+  // const sites = useSelector((state: RootState) => state.site.sites);
+  // const deals = useSelector((state: RootState) => state.deal.dealDetails);
+  // const brokers = useSelector((state: RootState) => state.broker.brokers);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<string>('dashboard');
   const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
-  const [availableSites, setAvailableSites] = useState<any[]>([]);
+  // const [availableSites, setAvailableSites] = useState<any[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -87,15 +86,15 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   }, [dispatch, userdetails]);
 
 
-  useEffect(() => {
-    if (userdetails.isAdmin) {
-      const filteredSites = sites.filter((site) =>
-        !deals.some((deal) => deal.propertyName === `${site.addressline1}, ${site.addressline2}`)
-      );
-      setAvailableSites(filteredSites);
-    }
+  // useEffect(() => {
+  //   if (userdetails.isAdmin) {
+  //     const filteredSites = sites.filter((site) =>
+  //       !deals.some((deal) => deal.propertyName === `${site.addressline1}, ${site.addressline2}`)
+  //     );
+  //     setAvailableSites(filteredSites);
+  //   }
 
-  }, [sites, deals, userdetails]);
+  // }, [sites, deals, userdetails]);
 
   const handleOpenPopup = (componentName: string) => {
     setSelectedComponent(componentName);
@@ -162,7 +161,13 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const handleRoute = (route: string) => {
     // handleMenuClose();
 
-    if (route === 'property') {
+
+    if (route === 'home') {
+      navigate('/dashboard');
+      setActivePage('dashboard');
+      localStorage.setItem('activePage', 'dashboard');
+    }
+    else if (route === 'property') {
       navigate('/property');
       setActivePage('property');
       localStorage.setItem('activePage', 'property');
@@ -199,7 +204,10 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     const pathname = location.pathname;
     let currentPage = 'dashboard';
 
-    if (pathname.includes('/property')) {
+    if (pathname.includes('/dashboard')) {
+      currentPage = 'dashboard';
+    }
+    else if (pathname.includes('/property')) {
       currentPage = 'property';
     } else if (pathname.includes('/landlord')) {
       currentPage = 'landlord';
@@ -240,19 +248,19 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
 
   const handleCreateDealClick = () => {
     try {
-      const brokerAvailable = brokers.filter((broker: any) => {
-        return broker.isAdmin === false && broker.isActive === true;
-      })
+      // const brokerAvailable = brokers.filter((broker: any) => {
+      //   return broker.isAdmin === false && broker.isActive === true;
+      // })
 
-      if (availableSites.length === 0 || brokerAvailable.length === 0) {
+      // if (availableSites.length === 0 || brokerAvailable.length === 0) {
 
-        setSnackbarMessage(
-          'Unable to create deal. Property is either unavailable or already assigned. Please create a new property to proceed'
-        );
-        setSnackbarOpen(true);
-      } else {
-        dispatch(openDealForm());
-      }
+      //   setSnackbarMessage(
+      //     'Unable to create deal. Property is either unavailable or already assigned. Please create a new property to proceed'
+      //   );
+      //   setSnackbarOpen(true);
+      // } else {
+      dispatch(openDealForm());
+      // }
 
     } catch (error) {
       console.error('Error opening deal form:', error);
@@ -296,6 +304,9 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           {/* Desktop Links */}
           {userdetails.isAdmin && (
             <div className={styles.desktopLinks}>
+              <p onClick={() => handleRoute('home')} className={`${styles.navItem} ${activePage === 'dashboard' ? styles.active : ''}`}>
+                HOME
+              </p>
               <p onClick={handleDealsClick} className={`${styles.navItem} ${activePage === 'deals' ? styles.active : ''}`}>
                 DEALS
               </p>
@@ -378,6 +389,9 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
 
         {(isMobileMenuOpen) && (
           <div className={styles.mobileDropdown}>
+            <p onClick={() => handleMobileNavItemClick('home')} className={styles.mobileNavItem}>
+              HOME
+            </p>
             <p onClick={() => handleOpenPopup('Profile')} className={styles.mobileNavItem}>
               PROFILE
             </p>
