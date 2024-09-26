@@ -32,8 +32,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useNavigate } from 'react-router-dom';
 
-interface Site {
+export interface Site {
   id: number;
   landlordId: number;
   addressline1: string;
@@ -47,6 +48,7 @@ interface Site {
 }
 
 const SiteGrid: React.FC = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number>(0);
@@ -172,6 +174,10 @@ const SiteGrid: React.FC = () => {
       errors.zipcode = 'Zipcode is required';
       valid = false;
     }
+    if (!formData.landlordId) {
+      errors.landlordId = 1;
+      valid = false;
+    }
 
     setFormErrors(errors);
     return valid;
@@ -265,6 +271,9 @@ const SiteGrid: React.FC = () => {
     if (landlorddetails.length === 0) {
       dispatch(setSnackbarMessage('You cannot add a property without landlords. Please add landlords to proceed.'));
       dispatch(setSnackbarOpen(true));
+      setTimeout(() => {
+        navigate('/landlord');
+      }, 3500)
     } else if (data) {
       resetForm();
       handleOpen();
@@ -354,7 +363,7 @@ const SiteGrid: React.FC = () => {
               ))}
             </Select>
           </FormControl>
-
+          {formErrors.landlordId && <p style={{ color: 'red', fontSize: '0.75rem', marginTop: '.25rem', marginLeft: '.80rem' }}>{formErrors.landlordId ? 'Landlord Name is required' : null}</p>}
           <TextField
             autoFocus
             margin="dense"

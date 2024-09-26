@@ -28,7 +28,7 @@ import { FiEdit, FiTrash } from 'react-icons/fi';
 import { fetchBrokers } from '../../Redux/slice/broker/brokerSlice';
 
 
-interface Landlord {
+export interface Landlord {
   id: number;
   name: string;
   phoneNumber: string;

@@ -301,7 +301,7 @@ const Cards: React.FC = () => {
                       </div>}
                     {(deals.activeStep > 6 && (!userdetails.isAdmin)) &&
                       <div className={styles.stepsinfo} title='deals Completed'>
-                        <span >Commission : $ {deals.proposalCommission + deals.loiExecuteCommission + deals.leaseSignedCommission + deals.noticeToProceedCommission + deals.commercialOperationCommission + deals.finalCommission}</span>
+                        <span >Commission : $ {deals.finalCommission}</span>
                       </div>}
                   </div>
 
