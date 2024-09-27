@@ -38,7 +38,7 @@ const BrokerGrid: React.FC = () => {
       dispatch(fetchDealDetails());
     }
     else {
-      dispatch(fetchBrokerDealDetails(deal.id)); // Fetch broker deal details by user ID
+      dispatch(fetchBrokerDealDetails(deal.id));
     }
     setOpenDialog(true);
   };
