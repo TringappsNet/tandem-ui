@@ -31,7 +31,7 @@ import {
 } from '../Redux/slice/deal/currentDeal';
 import { fetchSites } from '../Redux/slice/site/siteSlice';
 import { fetchBrokers } from '../Redux/slice/broker/brokerSlice';
-import LandlordAndPropertyForm from '../AxiosInterceptor/LandlordandProperty/LandlordPropertyForm';
+import LandlordAndPropertyForm from '../LandlordandProperty/LandlordPropertyForm';
 
 const steps = [
   {
@@ -158,7 +158,7 @@ const DealForm: React.FC<DealFormProps> = () => {
 
     const payload = {
       ...formData,
-      activeStep: formData.activeStep > activeStep ? formData.activeStep : activeStep + 1,
+      activeStep: activeStep === 0 ? activeStep + 1 : activeStep >= 7 ? 7 : formData.activeStep > activeStep ? formData.activeStep : activeStep + 1,
       status,
       brokerId,
       propertyId: { id: propertyId },
@@ -200,7 +200,7 @@ const DealForm: React.FC<DealFormProps> = () => {
   const getStatus = (step: number) => {
     if (step === 0) return 'Started';
     if (step > 0 && step < 6) return 'In-Progress';
-    if (step === 6) return 'Completed';
+    if (step >= 6) return 'Completed';
     return '';
   };
 
@@ -238,9 +238,9 @@ const DealForm: React.FC<DealFormProps> = () => {
                       .filter(
                         (site) =>
                           !deals.some(
-                            (deal) =>
-                              deal.propertyName ===
-                              `${site.addressline1}, ${site.addressline2}`
+                            (deal: any) =>
+                              deal.propertyId.id ===
+                              site.id
                           )
                       )
                       .map((site, idx) => (
@@ -624,16 +624,19 @@ const DealForm: React.FC<DealFormProps> = () => {
                 >
                   {activeStep === steps.length - 2 ? 'Finish' : 'Save & Next'}
                 </Button>
+                {activeStep !== 0 &&
 
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleBack}
-                  sx={{ width: 100 }}
-                  disabled={activeStep === 0}
-                >
-                  Back
-                </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleBack}
+                    sx={{ width: 100 }}
+                    disabled={activeStep === 0 || activeStep === 1}
+                    title={'Back to previous step'}
+                  >
+                    Back
+                  </Button>
+                }
               </Box>
             )}
 

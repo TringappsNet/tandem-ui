@@ -48,6 +48,7 @@ const dealSlice = createSlice({
 
     },
     fetchDealDetailsFailure: (state, action: PayloadAction<string>) => {
+      state.dealDetails = []
       state.loading = false;
       state.error = action.payload;
     },

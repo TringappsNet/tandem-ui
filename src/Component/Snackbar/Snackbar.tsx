@@ -26,13 +26,13 @@ const SnackbarComponent: React.FC<SnackbarProps> = ({
     backgroundColor: '#ffffff3b',
     borderRadius: '50%',
     display: 'flex',
-    alignItems:'center',
-    justifyContent:'center',
-    textAlign:'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
     fontSize: '18px',
     height: '30px',
     width: '30px',
-    color:'white',
+    color: 'white',
   };
 
   const IconComponent = severity === 'error' ? ErrorIcon : CheckCircleIcon;
@@ -40,8 +40,8 @@ const SnackbarComponent: React.FC<SnackbarProps> = ({
   const alertProps: AlertProps = {
     onClose: onClose,
     severity: severity,
-    sx: { width: '700px', textAlign: 'center', ...style, padding: '0 10px',backgroundColor: severity === 'error' ? '#DE5242' : '#54B471'},
-    action: (<IconButton  onClick={onClose}><CloseIcon className={styles.cross}/></IconButton>
+    sx: { width: '700px', textAlign: 'center', ...style, padding: '0 10px', backgroundColor: severity === 'error' ? '#DE5242' : '#54B471' },
+    action: (<IconButton onClick={onClose}><CloseIcon className={styles.cross} /></IconButton>
     ),
   };
 
@@ -49,10 +49,10 @@ const SnackbarComponent: React.FC<SnackbarProps> = ({
     <Snackbar
       open={open}
       autoHideDuration={3000}
-      onClose={onClose} 
+      onClose={onClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
     >
-      <Alert {...alertProps} icon={<div style={iconStyle}><IconComponent className={styles.icon}/></div>} >
+      <Alert {...alertProps} icon={<div style={iconStyle}><IconComponent className={styles.icon} /></div>} >
         {message}
       </Alert>
     </Snackbar>
