@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TextField, Select, MenuItem, FormControl, InputLabel, Button, DialogContent, DialogActions, SelectChangeEvent, Typography, Box } from '@mui/material';
+import { TextField, Select, MenuItem, FormControl, InputLabel, Button, DialogContent, DialogActions, SelectChangeEvent, Typography, Box, Dialog, DialogTitle, IconButton } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSite, setSnackbarOpen as setSnackbarOpenSite } from '../Redux/slice/site/siteSlice';
 import { Landlord } from '../Grids/landlordGrid/Landlord';
@@ -53,6 +53,7 @@ const LandlordAndPropertyForm = () => {
     const [landlordErrors, setLandlordErrors] = useState<Partial<Landlord>>({});
     const [propertyErrors, setPropertyErrors] = useState<Partial<Site>>({});
     const landlorddetails = useSelector((state: RootState) => state.landlord.landlords);
+    const [isPropertyVisible, setIsPropertyVisible] = useState<boolean>(true)
     const snackbarSiteOpen = useSelector(
         (state: RootState) => state.site.snackbarOpen
     );
@@ -194,7 +195,8 @@ const LandlordAndPropertyForm = () => {
             const trimmedLandlordData = trimLandlordData(landlordData);
             dispatch(addLandlord(trimmedLandlordData));
             resetLandlordForm();
-
+            resetPropertyForm();
+            setIsPropertyVisible(true);
         }
     };
 
@@ -214,146 +216,210 @@ const LandlordAndPropertyForm = () => {
                     alignItems: 'center',
                 }
             }}>
-                {/* Left Column: Landlord Details */}
-                <Box sx={{ margin: 0, padding: 0, width: '100%', '@media (max-width:763px)': { width: '100%' } }}>
+                <Dialog open={!isPropertyVisible} maxWidth='md' sx={{
+                    '& .MuiDialog-paper': {
+                        width: 1,
+                        height: '100%',
+                        '@media (max-width:763px)': {
+                            maxHeight: '68%'
+                        }
+                    },
+                }}>
+                    <DialogTitle
+                        sx={{
+                            background:
+                                'linear-gradient(58deg, rgb(35 39 43) 0%, rgb(79 84 89) 35%, rgb(32 46 59) 100%);',
+                            color: 'white',
+                            height: '44px',
+                            padding: '6px 24px',
+                            letterSpacing: '.18rem',
+                            fontSize: 15,
+                            display: 'flex',
+                            alignItems: 'center',
+                            '@media (max-width:763px)': { fontSize: '.78rem' }
+                        }}
+                    >
+                        LANDLORD FORM
+                        <IconButton
+                            aria-label="close"
+                            onClick={() => { resetPropertyForm(); setIsPropertyVisible(true) }}
+                            sx={{
+                                position: 'absolute',
+                                right: 25,
+                                top: 2,
+                                color: (theme) => theme.palette.grey[500],
+                                '@media (max-width:763px)': { width: '5rem' }
+                            }}
+                        >
+                            <button
+                                className="saveclose"
+                                style={{
+                                    height: '24px',
+                                    width: '100px',
+                                    border: '1px solid whitesmoke',
+                                    borderRadius: '3px',
+                                    color: 'white',
+                                    backgroundColor: 'transparent',
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                Close
+                            </button>
+                        </IconButton>
+                    </DialogTitle>
                     <DialogContent sx={{ padding: 0, margin: 0, minHeight: '18rem', display: 'flex', flexDirection: 'column' }}>
-                        <Typography variant='h5' align='center'>Add Landlord</Typography>
-                        <Box sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: 1, '@media (max-width:763px)': { flexDirection: 'column' } }}>
-                            <TextField
-                                margin="dense"
-                                name="name"
-                                label="Name"
-                                fullWidth
-                                size="small"
-                                autoComplete='off'
-                                value={landlordData.name}
-                                onChange={(e) => setLandlordData({ ...landlordData, name: e.target.value })}
-                                error={!!landlordErrors.name}
-                                helperText={landlordErrors.name}
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
-                            />
-                            <TextField
-                                margin="dense"
-                                name="phoneNumber"
-                                label="Phone Number"
-                                type="number"
-                                size="small"
-                                fullWidth
-                                autoComplete='off'
-                                value={landlordData.phoneNumber}
-                                onChange={(e) => setLandlordData({ ...landlordData, phoneNumber: e.target.value })}
-                                error={!!landlordErrors.phoneNumber}
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
-                                helperText={landlordErrors.phoneNumber}
-                            />
-                            <TextField
-                                margin="dense"
-                                name="email"
-                                label="Email"
-                                type="email"
-                                autoComplete='off'
-                                size="small"
-                                fullWidth
-                                value={landlordData.email}
-                                onChange={(e) => setLandlordData({ ...landlordData, email: e.target.value })}
-                                error={!!landlordErrors.email}
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
-                                helperText={landlordErrors.email}
-                            />
-                            <TextField
-                                margin="dense"
-                                name="address1"
-                                label="Address 1"
-                                fullWidth
-                                autoComplete='off'
-                                size="small"
-                                value={landlordData.address1}
-                                onChange={(e) => setLandlordData({ ...landlordData, address1: e.target.value })}
-                                error={!!landlordErrors.address1}
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
-                                helperText={landlordErrors.address1}
-                            />
-                            <TextField
-                                margin="dense"
-                                name="address2"
-                                label="Address 2"
-                                fullWidth
-                                autoComplete='off'
-                                size="small"
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
-                                value={landlordData.address2}
-                                onChange={(e) => setLandlordData({ ...landlordData, address2: e.target.value })}
-                            />
-                            <TextField
-                                margin="dense"
-                                name="city"
-                                label="City"
-                                autoComplete='off'
-                                size="small"
-                                fullWidth
-                                value={landlordData.city}
-                                onChange={(e) => setLandlordData({ ...landlordData, city: e.target.value })}
-                                error={!!landlordErrors.city}
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
-                                helperText={landlordErrors.city}
-                            />
-                            <TextField
-                                margin="dense"
-                                name="state"
-                                label="State"
-                                autoComplete='off'
-                                size="small"
-                                fullWidth
-                                value={landlordData.state}
-                                onChange={(e) => setLandlordData({ ...landlordData, state: e.target.value })}
-                                error={!!landlordErrors.state}
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
-                                helperText={landlordErrors.state}
-                            />
-                            <TextField
-                                margin="dense"
-                                name="country"
-                                label="Country"
-                                autoComplete='off'
-                                size="small"
-                                fullWidth
-                                value={landlordData.country}
-                                onChange={(e) => setLandlordData({ ...landlordData, country: e.target.value })}
-                                error={!!landlordErrors.country}
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
-                                helperText={landlordErrors.country}
-                            />
-                            <TextField
-                                margin="dense"
-                                name="zipcode"
-                                label="Zipcode"
-                                type="number"
-                                autoComplete='off'
-                                size="small"
-                                fullWidth
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
-                                value={landlordData.zipcode}
-                                onChange={(e) => setLandlordData({ ...landlordData, zipcode: e.target.value })}
-                                error={!!landlordErrors.zipcode}
-                                helperText={landlordErrors.zipcode}
-                            />
+
+                        <Box sx={{ margin: 0, padding: '2rem', width: '100%', height: '100%', '@media (max-width:763px)': { width: '100%' } }}>
+                            <Typography variant='h5' align='center' sx={{ marginBottom: 2, fontWeight: 500 }}>Add Landlord Details</Typography>
+                            <Box sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: 1, '@media (max-width:763px)': { flexDirection: 'column' } }}>
+                                <TextField
+                                    margin="dense"
+                                    name="name"
+                                    label="Name"
+                                    fullWidth
+                                    size="small"
+                                    autoComplete='off'
+                                    value={landlordData.name}
+                                    onChange={(e) => setLandlordData({ ...landlordData, name: e.target.value })}
+                                    error={!!landlordErrors.name}
+                                    helperText={landlordErrors.name}
+                                    sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    name="phoneNumber"
+                                    label="Phone Number"
+                                    type="number"
+                                    size="small"
+                                    fullWidth
+                                    autoComplete='off'
+                                    value={landlordData.phoneNumber}
+                                    onChange={(e) => setLandlordData({ ...landlordData, phoneNumber: e.target.value })}
+                                    error={!!landlordErrors.phoneNumber}
+                                    sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
+                                    helperText={landlordErrors.phoneNumber}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    name="email"
+                                    label="Email"
+                                    type="email"
+                                    autoComplete='off'
+                                    size="small"
+                                    fullWidth
+                                    value={landlordData.email}
+                                    onChange={(e) => setLandlordData({ ...landlordData, email: e.target.value })}
+                                    error={!!landlordErrors.email}
+                                    sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
+                                    helperText={landlordErrors.email}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    name="address1"
+                                    label="Address 1"
+                                    fullWidth
+                                    autoComplete='off'
+                                    size="small"
+                                    value={landlordData.address1}
+                                    onChange={(e) => setLandlordData({ ...landlordData, address1: e.target.value })}
+                                    error={!!landlordErrors.address1}
+                                    sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
+                                    helperText={landlordErrors.address1}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    name="address2"
+                                    label="Address 2"
+                                    fullWidth
+                                    autoComplete='off'
+                                    size="small"
+                                    sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
+                                    value={landlordData.address2}
+                                    onChange={(e) => setLandlordData({ ...landlordData, address2: e.target.value })}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    name="city"
+                                    label="City"
+                                    autoComplete='off'
+                                    size="small"
+                                    fullWidth
+                                    value={landlordData.city}
+                                    onChange={(e) => setLandlordData({ ...landlordData, city: e.target.value })}
+                                    error={!!landlordErrors.city}
+                                    sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
+                                    helperText={landlordErrors.city}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    name="state"
+                                    label="State"
+                                    autoComplete='off'
+                                    size="small"
+                                    fullWidth
+                                    value={landlordData.state}
+                                    onChange={(e) => setLandlordData({ ...landlordData, state: e.target.value })}
+                                    error={!!landlordErrors.state}
+                                    sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
+                                    helperText={landlordErrors.state}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    name="country"
+                                    label="Country"
+                                    autoComplete='off'
+                                    size="small"
+                                    fullWidth
+                                    value={landlordData.country}
+                                    onChange={(e) => setLandlordData({ ...landlordData, country: e.target.value })}
+                                    error={!!landlordErrors.country}
+                                    sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
+                                    helperText={landlordErrors.country}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    name="zipcode"
+                                    label="Zipcode"
+                                    type="number"
+                                    autoComplete='off'
+                                    size="small"
+                                    fullWidth
+                                    sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
+                                    value={landlordData.zipcode}
+                                    onChange={(e) => setLandlordData({ ...landlordData, zipcode: e.target.value })}
+                                    error={!!landlordErrors.zipcode}
+                                    helperText={landlordErrors.zipcode}
+                                />
+                            </Box>
+
+                            <DialogActions sx={{ paddingTop: 3, flexDirection: 'column', gap: 2, justifyContent: 'center', '@media (max-width:763px)': { justifyContent: 'center', flexWrap: 'wrap', gap: 3 } }}>
+                                <Button onClick={handleSaveLandlord} size="small" variant="contained" sx={{ height: '2.8rem', width: '30rem', margin: 0, '@media (max-width:763px)': { width: '100%', margin: 0 } }}>
+                                    Save Landlord
+                                </Button>
+                            </DialogActions>
                         </Box>
                     </DialogContent>
 
-                    <DialogActions sx={{ paddingTop: 3, justifyContent: 'center', '@media (max-width:763px)': { justifyContent: 'center' } }}>
-                        <Button onClick={handleSaveLandlord} size="small" variant="contained" sx={{ height: '2.3rem', width: '17rem' }}>
-                            Save Landlord
-                        </Button>
-                    </DialogActions>
-                </Box>
+                </Dialog>
 
-                {/* Right Column: Property Details */}
+
                 <Box sx={{ margin: 0, padding: 0, width: '100%', '@media (max-width:763px)': { width: '100%' } }}>
                     <DialogContent sx={{ padding: 0, margin: 0 }}>
-                        <Typography variant='h5' align='center'>Add Property</Typography>
+                        <DialogActions>
+                            <Button
+                                variant="outlined"
+                                sx={{ height: 'fit-content', marginTop: 1, marginLeft: 2.2, width: '16rem', '@media (max-width:763px)': { width: 'unset', margin: 0 } }}
+                                onClick={() => { resetLandlordForm(); setIsPropertyVisible(false) }}
+
+                            >
+                                Add New Landlord
+                            </Button>
+                        </DialogActions>
+
+                        <Typography variant='h5' align='center' sx={{ marginBottom: 2, fontWeight: 500 }}>Add Property Details</Typography>
                         <Box sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: 1, '@media (max-width:763px)': { flexDirection: 'column' } }}>
 
-                            <FormControl fullWidth margin="dense" sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}>
+                            <FormControl fullWidth margin="dense" sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}>
                                 <InputLabel id="landlord-select-label" size="small">
                                     Landlord Name
                                 </InputLabel>
@@ -386,7 +452,7 @@ const LandlordAndPropertyForm = () => {
                                 value={propertyData.addressline1}
                                 onChange={(e) => setPropertyData({ ...propertyData, addressline1: e.target.value })}
                                 error={!!propertyErrors.addressline1}
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
+                                sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
                                 helperText={propertyErrors.addressline1}
                             />
                             <TextField
@@ -397,7 +463,7 @@ const LandlordAndPropertyForm = () => {
                                 autoComplete='off'
                                 size="small"
                                 value={propertyData.addressline2}
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
+                                sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
                                 onChange={(e) => setPropertyData({ ...propertyData, addressline2: e.target.value })}
                             />
                             <TextField
@@ -410,7 +476,7 @@ const LandlordAndPropertyForm = () => {
                                 value={propertyData.city}
                                 onChange={(e) => setPropertyData({ ...propertyData, city: e.target.value })}
                                 error={!!propertyErrors.city}
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
+                                sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
                                 helperText={propertyErrors.city}
                             />
                             <TextField
@@ -423,7 +489,7 @@ const LandlordAndPropertyForm = () => {
                                 value={propertyData.state}
                                 onChange={(e) => setPropertyData({ ...propertyData, state: e.target.value })}
                                 error={!!propertyErrors.state}
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
+                                sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
                                 helperText={propertyErrors.state}
                             />
                             <TextField
@@ -436,7 +502,7 @@ const LandlordAndPropertyForm = () => {
                                 value={propertyData.country}
                                 onChange={(e) => setPropertyData({ ...propertyData, country: e.target.value })}
                                 error={!!propertyErrors.country}
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
+                                sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
                                 helperText={propertyErrors.country}
                             />
                             <TextField
@@ -450,14 +516,14 @@ const LandlordAndPropertyForm = () => {
                                 value={propertyData.zipcode}
                                 onChange={(e) => setPropertyData({ ...propertyData, zipcode: e.target.value })}
                                 error={!!propertyErrors.zipcode}
-                                sx={{ width: '48%', '@media (max-width:763px)': { width: '100%' } }}
+                                sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
                                 helperText={propertyErrors.zipcode}
                             />
                         </Box>
                     </DialogContent>
 
                     <DialogActions sx={{ paddingTop: 3, justifyContent: 'center', '@media (max-width:763px)': { justifyContent: 'center' } }}>
-                        <Button onClick={handleSaveProperty} size="small" variant="contained" sx={{ height: '2.4rem', width: '17rem' }}>
+                        <Button onClick={handleSaveProperty} size="small" variant="contained" sx={{ height: '2.8rem', width: '30rem' }}>
                             Save Property
                         </Button>
                     </DialogActions>
@@ -465,7 +531,7 @@ const LandlordAndPropertyForm = () => {
             </Box>
             <SnackbarComponent
                 open={snackbarSiteOpen || snackbarLandlordOpen}
-                message={snackbarSiteMessage ? snackbarSiteMessage:  snackbarLanlordMessage || ''}
+                message={snackbarSiteMessage ? snackbarSiteMessage : snackbarLanlordMessage || ''}
                 onClose={() => {
                     if (snackbarLandlordOpen) {
                         handleCloseSnackbarLandlord();
