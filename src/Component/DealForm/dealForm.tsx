@@ -32,6 +32,7 @@ import {
 import { fetchSites } from '../Redux/slice/site/siteSlice';
 import { fetchBrokers } from '../Redux/slice/broker/brokerSlice';
 import LandlordAndPropertyForm from '../LandlordandProperty/LandlordPropertyForm';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 const steps = [
   {
@@ -663,15 +664,15 @@ const DealForm: React.FC<DealFormProps> = () => {
           </Box>
         ) :
           <Box sx={{ padding: 0 }}>
-            {renderForm()}
             <Button
-              sx={{ '@media (max-width:763px)': { marginTop: '1rem' } }}
+              sx={{ marginTop: '1rem', '@media (max-width:763px)': { marginTop: '1rem' } }}
               variant="contained"
               color="primary"
               onClick={() => setIsPropertyPage(false)}
             >
-              Back
+              <KeyboardBackspaceIcon sx={{ color: '#fff', fontSize: 25, paddingRight: .2 }} />Back to Deal Form
             </Button>
+            {renderForm()}
           </Box>
         }
       </DialogContent>
