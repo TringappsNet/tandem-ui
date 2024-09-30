@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TextField, Select, MenuItem, FormControl, InputLabel, Button, DialogContent, DialogActions, SelectChangeEvent, Typography, Box, Dialog, DialogTitle, IconButton } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { addSite, setSnackbarOpen as setSnackbarOpenSite } from '../Redux/slice/site/siteSlice';
+import { addSite, setClearSiteMessage, setSnackbarOpen as setSnackbarOpenSite } from '../Redux/slice/site/siteSlice';
 import { Landlord } from '../Grids/landlordGrid/Landlord';
 import { Site } from '../Grids/SiteGrid/SiteGrid';
 import { RootState } from '../Redux/reducers';
@@ -76,6 +76,9 @@ const LandlordAndPropertyForm = () => {
 
     const handleCloseSnackbarSite = () => {
         dispatch(setSnackbarOpenSite(false));
+        setTimeout(() => {
+            dispatch(setClearSiteMessage());
+        }, 4000)
     };
 
     const handleCloseSnackbarLandlord = () => {
@@ -100,30 +103,46 @@ const LandlordAndPropertyForm = () => {
             errors.name = 'Landlord name is required';
             valid = false;
         }
+
         if (!landlordData.phoneNumber) {
-            errors.phoneNumber = 'Phone number is required';
+            errors.phoneNumber = 'Phone Number is required';
+            valid = false;
+        } else if (!/\d/.test(landlordData.phoneNumber)) {
+            errors.phoneNumber = 'Phone Number must be only digits';
+            valid = false;
+        } else if (landlordData.phoneNumber.length > 15) {
+            errors.phoneNumber = 'Mobile Number length should not exceed 15 digits';
             valid = false;
         }
+
         if (!landlordData.email) {
             errors.email = 'Email is required';
             valid = false;
-        }
-        if (!landlordData.address1) {
-            errors.address1 = 'Address Line 1 is required';
+        } else if (!/\S+@\S+\.\S+/.test(landlordData.email)) {
+            errors.email = 'Invalid email format';
             valid = false;
         }
+
+        if (!landlordData.address1) {
+            errors.address1 = 'Address is required';
+            valid = false;
+        }
+
         if (!landlordData.city) {
             errors.city = 'City is required';
             valid = false;
         }
+
         if (!landlordData.state) {
             errors.state = 'State is required';
             valid = false;
         }
+
         if (!landlordData.country) {
             errors.country = 'Country is required';
             valid = false;
         }
+
         if (!landlordData.zipcode) {
             errors.zipcode = 'Zipcode is required';
             valid = false;
@@ -531,7 +550,9 @@ const LandlordAndPropertyForm = () => {
             </Box>
             <SnackbarComponent
                 open={snackbarSiteOpen || snackbarLandlordOpen}
-                message={snackbarSiteMessage ? snackbarSiteMessage : snackbarLanlordMessage || ''}
+                message={snackbarSiteMessage ?
+                    snackbarSiteMessage :
+                    snackbarLanlordMessage || ''}
                 onClose={() => {
                     if (snackbarLandlordOpen) {
                         handleCloseSnackbarLandlord();
