@@ -83,6 +83,9 @@ const siteSlice = createSlice({
     setFilteredSites: (state, action: PayloadAction<Site[]>) => {
       state.filteredSites = action.payload;
     },
+    setClearSiteMessage: (state) => {
+      state.snackbarMessage = null;
+    }
   },
 });
 
@@ -96,6 +99,7 @@ export const {
   setSnackbarMessage,
   setSnackbarOpen,
   setFilteredSites,
+  setClearSiteMessage,
 } = siteSlice.actions;
 
 export default siteSlice.reducer;

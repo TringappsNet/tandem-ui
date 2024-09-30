@@ -455,7 +455,7 @@ const DealForm: React.FC<DealFormProps> = () => {
             sx={{ '@media (max-width:763px)': { marginTop: '1rem' } }}
             variant="contained"
             color="primary"
-            onClick={() => setActiveStep(formData.activeStep)}
+            onClick={() => setActiveStep(currentDeal?.activeStep ?? 0 >= formData.activeStep ? currentDeal?.activeStep ?? 0 : formData.activeStep)}
           >
             Back
           </Button>
