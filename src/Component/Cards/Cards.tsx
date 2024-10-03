@@ -56,7 +56,7 @@ const Cards: React.FC = () => {
   };
 
   const viewDealForm = (deal: Deal) => {
-    const updatedDeal = { ...deal, activeStep: 7 };
+    const updatedDeal = { ...deal, activeStep: 8 };
     dispatch(setCurrentDeal(updatedDeal));
     dispatch(openDealForm());
   };
@@ -158,7 +158,8 @@ const Cards: React.FC = () => {
   });
 
   const events = [
-    { label: 'Deal Start' },
+    { label: 'Choose Property' },
+    { label: 'Choose Broker' },
     { label: 'Proposal' },
     { label: 'LOI Execute' },
     { label: 'Lease Signed' },
@@ -314,7 +315,7 @@ const Cards: React.FC = () => {
                       >
                         {deals.status}
                       </div>
-                      <ProgressSteps steps={7} activeStep={deals.activeStep} />
+                      <ProgressSteps steps={8} activeStep={deals.activeStep} />
                     </div>
                   </div>
                   <div className={styles.statusLine}>

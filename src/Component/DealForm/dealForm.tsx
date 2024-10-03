@@ -36,9 +36,14 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 const steps = [
   {
-    label: 'Tandem',
+    label: 'Choose Property',
     fields: [
       { type: 'dropdown', label: 'propertyName', options: [] },
+    ],
+  },
+  {
+    label: 'Choose Broker',
+    fields: [
       { type: 'dropdown', label: 'brokerName', options: [] },
       { type: 'date', label: 'dealStartDate' },
     ],
@@ -159,7 +164,7 @@ const DealForm: React.FC<DealFormProps> = () => {
 
     const payload = {
       ...formData,
-      activeStep: activeStep === 0 ? activeStep + 1 : activeStep >= 7 ? 7 : formData.activeStep > activeStep ? formData.activeStep : activeStep + 1,
+      activeStep: (activeStep === 0 && !formData.id) ? activeStep + 1 : activeStep >= 8 ? 8 : formData.activeStep > activeStep ? formData.activeStep : activeStep + 1,
       status,
       brokerId,
       propertyId: { id: propertyId },
@@ -199,9 +204,9 @@ const DealForm: React.FC<DealFormProps> = () => {
   };
 
   const getStatus = (step: number) => {
-    if (step === 0) return 'Started';
-    if (step > 0 && step < 6) return 'In-Progress';
-    if (step >= 6) return 'Completed';
+    if (step === 0 || step === 1) return 'Started';
+    if (step > 1 && step < 7) return 'In-Progress';
+    if (step >= 7) return 'Completed';
     return '';
   };
 
@@ -214,12 +219,19 @@ const DealForm: React.FC<DealFormProps> = () => {
       case 'dropdown':
         return (
           <>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 4, '@media (max-width:763px)': { flexDirection: 'column', gap: 1 } }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', '@media (max-width:763px)': { flexDirection: 'column', gap: 1 } }}>
+              {/* {label === 'propertyName' && (
+                <Typography variant='h5' sx={{ fontWeight: 500, marginBottom: -1, marginTop: .8, fontSize: '.8rem', textTransform: 'uppercase' }}>Choose a Property</Typography>
+              )} */}
+              {(label === 'brokerName') && (
+                <Typography variant='h5' sx={{ fontWeight: 500, marginTop: 3, fontSize: '1.3rem','@media (max-width:763px)':{fontSize:'.9rem'}  }}>Property Name : {formData.propertyName}</Typography>
+              )}
               <TextField
                 key={index}
                 select
                 label={label}
                 name={label}
+                disabled={formData.finalCommission ? true : false}
                 value={formData[label as keyof Deal] || ''}
                 onChange={handleChange}
                 sx={{ width: 1, maxWidth: 300 }}
@@ -234,7 +246,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                         {broker.name}
                       </MenuItem>
                     ))
-                  : label === 'propertyName'
+                  : (label === 'propertyName' && formData.id === null)
                     ? sites
                       .filter(
                         (site) =>
@@ -252,23 +264,42 @@ const DealForm: React.FC<DealFormProps> = () => {
                           {`${site.addressline1}, ${site.addressline2}`}
                         </MenuItem>
                       ))
-                    : options?.map((option: string, idx: number) => (
-                      <MenuItem key={idx} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
+                    :
+                    (label === 'propertyName' && formData.id !== null)
+                      ? sites
+                        .map((site, idx) => (
+                          <MenuItem
+                            key={idx}
+                            value={`${site.addressline1}, ${site.addressline2}`}
+                          >
+                            {`${site.addressline1}, ${site.addressline2}`}
+                          </MenuItem>
+                        ))
+                      : options?.map((option: string, idx: number) => (
+                        <MenuItem key={idx} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
               </TextField>
               {label === 'propertyName' && (
-                <Button
-                  variant="outlined"
-                  sx={{ height: 'fit-content' }}
-                  onClick={() => setIsPropertyPage(true)}
-                >
-                  Add Property / Landlord
-                </Button>
+                <>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    sx={{ height: 'fit-content', maxWidth: 130 }}
+                    onClick={handleNext}
+                    disabled={!isFormValid()}
+                  >
+                    Save & Next
+                  </Button>
+                  <Typography align='center' sx={{ opacity: .5 }}>---(OR)---</Typography>
+
+                  <LandlordAndPropertyForm />
+                </>
               )}
             </Box>
           </>
+
         );
 
       case 'date':
@@ -450,7 +481,7 @@ const DealForm: React.FC<DealFormProps> = () => {
 
         </Box>
 
-        {formData.activeStep !== 7 && (
+        {formData.activeStep !== 8 && (
           <Button
             sx={{ '@media (max-width:763px)': { marginTop: '1rem' } }}
             variant="contained"
@@ -549,13 +580,13 @@ const DealForm: React.FC<DealFormProps> = () => {
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: 4,
+              gap: 1,
               paddingTop: '1.5rem',
             }}
           >
             {/* Stepper (Div 1) */}
             <Box sx={{ width: '100%' }}>
-              {(userdetails.isAdmin && activeStep !== 7) && (
+              {(userdetails.isAdmin && activeStep !== 8) && (
                 <Stepper
                   orientation="horizontal"
                   activeStep={activeStep}
@@ -603,7 +634,7 @@ const DealForm: React.FC<DealFormProps> = () => {
             {activeStep < steps.length - 1 && (
               <Box sx={{
                 width: '100%', display: 'flex', justifyContent: 'space-between', paddingX: '30px', '@media (max-width:763px)': {
-                  padding: 0
+                  padding: 0,
                 }
               }}>
 
@@ -616,33 +647,34 @@ const DealForm: React.FC<DealFormProps> = () => {
               >
                 Save
               </Button> */}
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                  sx={{ width: 130 }}
-                  disabled={!isFormValid()}
-                >
-                  {activeStep === steps.length - 2 ? 'Finish' : 'Save & Next'}
-                </Button>
                 {activeStep !== 0 &&
+                  <>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      sx={{ width: 130,'@media (max-width:763px)':{width:'45%',fontSize:'.7rem'} }}
+                      disabled={!isFormValid()}
+                    >
+                      {activeStep === steps.length - 2 ? 'Finish' : 'Save & Next'}
+                    </Button>
 
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleBack}
-                    sx={{ width: 100 }}
-                    disabled={activeStep === 0 || activeStep === 1}
-                    title={'Back to previous step'}
-                  >
-                    Back
-                  </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleBack}
+                      sx={{ width: 100,'@media (max-width:763px)':{width:'45%',fontSize:'.7rem'}}}
+                      title={'Back to previous step'}
+                    >
+                      Back
+                    </Button>
+                  </>
                 }
               </Box>
             )}
 
             {/* View Summary (Div 4) */}
-            {activeStep < steps.length - 1 && (
+            {(activeStep < steps.length - 1 && activeStep !== 0) && (
               <Box sx={{
                 width: '100%', display: 'flex', justifyContent: 'flex-end', paddingX: '30px', '@media (max-width:763px)': {
                   padding: 0
@@ -651,7 +683,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => setActiveStep(7)}
+                  onClick={() => setActiveStep(8)}
                   sx={{
                     width: 150,
                     '@media (max-width:763px)': { width: 1 },
