@@ -230,7 +230,7 @@ const LandlordAndPropertyForm = () => {
     return (
         <>
             <Box sx={{
-                margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 3, paddingTop: 2, '@media (max-width:763px)': {
+                margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 3, '@media (max-width:763px)': {
                     flexDirection: 'column',
                     alignItems: 'center',
                 }
@@ -424,22 +424,21 @@ const LandlordAndPropertyForm = () => {
 
                 <Box sx={{ margin: 0, padding: 0, width: '100%', '@media (max-width:763px)': { width: '100%' } }}>
                     <DialogContent sx={{ padding: 0, margin: 0 }}>
-                        <DialogActions>
+                        <DialogActions sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', '@media (max-width:763px)': { flexDirection: 'column', gap: 3, alignItems: 'flex-end', } }}>
+                            <Typography variant='h5' align='center' sx={{ fontWeight: 500, fontSize: '.9rem', textTransform: 'uppercase', '@media (max-width:763px)': { fontSize: '1.1rem' } }}>Create a New Property</Typography>
                             <Button
                                 variant="outlined"
-                                sx={{ height: 'fit-content', marginTop: 1, marginLeft: 2.2, width: '16rem', '@media (max-width:763px)': { width: 'unset', margin: 0 } }}
+                                sx={{ height: 'fit-content', width: '16rem', '@media (max-width:763px)': { width: 'unset', margin: 0, textAlign: 'right', fontSize: '.8rem' } }}
                                 onClick={() => { resetLandlordForm(); setIsPropertyVisible(false) }}
 
                             >
                                 Add New Landlord
                             </Button>
                         </DialogActions>
-
-                        <Typography variant='h5' align='center' sx={{ marginBottom: 2, fontWeight: 500 }}>Add Property Details</Typography>
                         <Box sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: 1, '@media (max-width:763px)': { flexDirection: 'column' } }}>
 
                             <FormControl fullWidth margin="dense" sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}>
-                                <InputLabel id="landlord-select-label" size="small">
+                                <InputLabel id="landlord-select-label" size="small" >
                                     Landlord Name
                                 </InputLabel>
                                 <Select
@@ -538,14 +537,16 @@ const LandlordAndPropertyForm = () => {
                                 sx={{ width: '49%', '@media (max-width:763px)': { width: '100%' } }}
                                 helperText={propertyErrors.zipcode}
                             />
+                            <DialogActions sx={{ width: '49%','@media (max-width:763px)': { width: '100%' } }}>
+                                <Button onClick={handleSaveProperty} size="small" variant="contained" sx={{ height: '2.8rem', width: '30rem', '@media (max-width:763px)': { width: '100%' } }}>
+                                    Save Property
+                                </Button>
+                            </DialogActions>
                         </Box>
+
                     </DialogContent>
 
-                    <DialogActions sx={{ paddingTop: 3, justifyContent: 'center', '@media (max-width:763px)': { justifyContent: 'center' } }}>
-                        <Button onClick={handleSaveProperty} size="small" variant="contained" sx={{ height: '2.8rem', width: '30rem' }}>
-                            Save Property
-                        </Button>
-                    </DialogActions>
+
                 </Box>
             </Box>
             <SnackbarComponent
