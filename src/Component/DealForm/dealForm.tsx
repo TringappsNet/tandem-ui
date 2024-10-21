@@ -158,7 +158,7 @@ const DealForm: React.FC<DealFormProps> = () => {
   };
 
   const saveFormData = () => {
-    const status = getStatus(formData.activeStep > activeStep ? formData.activeStep : activeStep);
+    const status = getStatus((activeStep === 0 && !formData.id) ? activeStep + 1 : activeStep >= 8 ? 8 : formData.activeStep > activeStep ? formData.activeStep : activeStep + 1);
     const brokerId = brokers.find((broker) => broker.name === formData.brokerName)?.id || null;
     const propertyId = sites.find((site) => `${site.addressline1}, ${site.addressline2}` === formData.propertyName)?.id || null;
 
@@ -204,9 +204,9 @@ const DealForm: React.FC<DealFormProps> = () => {
   };
 
   const getStatus = (step: number) => {
-    if (step === 0 || step === 1) return 'Started';
-    if (step > 1 && step < 7) return 'In-Progress';
-    if (step >= 7) return 'Completed';
+    if (step <= 2) return 'Started';
+    if (step >= 3 && step <= 7) return 'In-Progress';
+    if (step > 7) return 'Completed';
     return '';
   };
 
@@ -224,7 +224,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                 <Typography variant='h5' sx={{ fontWeight: 500, marginBottom: -1, marginTop: .8, fontSize: '.8rem', textTransform: 'uppercase' }}>Choose a Property</Typography>
               )} */}
               {(label === 'brokerName') && (
-                <Typography variant='h5' sx={{ fontWeight: 500, marginTop: 3, fontSize: '1.3rem','@media (max-width:763px)':{fontSize:'.9rem'}  }}>Property Name : {formData.propertyName}</Typography>
+                <Typography variant='h5' sx={{ fontWeight: 500, marginTop: 3, fontSize: '1.3rem', '@media (max-width:763px)': { fontSize: '.9rem' } }}>Property Name : {formData.propertyName}</Typography>
               )}
               <TextField
                 key={index}
@@ -481,7 +481,7 @@ const DealForm: React.FC<DealFormProps> = () => {
 
         </Box>
 
-        {formData.activeStep !== 8 && (
+        {currentDeal?.activeStep !== 8 && (
           <Button
             sx={{ '@media (max-width:763px)': { marginTop: '1rem' } }}
             variant="contained"
@@ -653,7 +653,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                       variant="contained"
                       color="primary"
                       onClick={handleNext}
-                      sx={{ width: 130,'@media (max-width:763px)':{width:'45%',fontSize:'.7rem'} }}
+                      sx={{ width: 130, '@media (max-width:763px)': { width: '45%', fontSize: '.7rem' } }}
                       disabled={!isFormValid()}
                     >
                       {activeStep === steps.length - 2 ? 'Finish' : 'Save & Next'}
@@ -663,7 +663,7 @@ const DealForm: React.FC<DealFormProps> = () => {
                       variant="contained"
                       color="primary"
                       onClick={handleBack}
-                      sx={{ width: 100,'@media (max-width:763px)':{width:'45%',fontSize:'.7rem'}}}
+                      sx={{ width: 100, '@media (max-width:763px)': { width: '45%', fontSize: '.7rem' } }}
                       title={'Back to previous step'}
                     >
                       Back
