@@ -296,7 +296,7 @@ const Cards: React.FC = () => {
 
                     <div className={styles.nameHeader}>deals #{deals.id}</div>
                     {(deals.activeStep < 6 && (!userdetails.isAdmin)) &&
-                      <div className={styles.stepsinfo} title='Next Milstone'>
+                      <div className={styles.stepsinfo} title='Next Milestone'>
                         <BiRightArrowCircle />
                         <span>{getLabelForActiveStep(deals.activeStep + 1)}</span>
                       </div>}
