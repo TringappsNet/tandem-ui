@@ -4,10 +4,6 @@
   font-family: 'Public Sans';
 }
 
-.summaryContainer {
-  margin-top: -20px;
-}
-
 .summary {
   font-weight: bold;
   text-align: center;
@@ -18,6 +14,10 @@
 
 .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
   color: #505a63;
+}
+
+.summaryContainer {
+  margin-top: 1rem;
 }
 
 @media (max-width:763px) {
