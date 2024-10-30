@@ -127,7 +127,7 @@ const DealForm: React.FC<DealFormProps> = () => {
     if (currentDeal && currentDeal.activeStep === 8) {
       setIsComponentName('summaryform');
     }
-  })
+  }, [currentDeal])
 
   useEffect(() => {
     if (brokers.length > 0) {
