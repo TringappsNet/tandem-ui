@@ -111,7 +111,8 @@ const DealForm: React.FC<DealFormProps> = () => {
     isNew: currentDeal?.isNew || true,
   });
   const [userId, setUserId] = useState<number | null>(null);
-  const [isPropertyPage, setIsPropertyPage] = useState(false);
+  // const [isPropertyPage, setIsPropertyPage] = useState(false);
+  const [isComponentName, setIsComponentName] = useState('dealform');
 
 
   useEffect(() => {
@@ -123,6 +124,12 @@ const DealForm: React.FC<DealFormProps> = () => {
   }, [dispatch, userdetails.isAdmin]);
 
   useEffect(() => {
+    if (currentDeal && currentDeal.activeStep === 8) {
+      setIsComponentName('summaryform');
+    }
+  })
+
+  useEffect(() => {
     if (brokers.length > 0) {
       setUserId(brokers[0].id);
     }
@@ -132,6 +139,9 @@ const DealForm: React.FC<DealFormProps> = () => {
     if (isFormValid()) {
       saveFormData();
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
+    if (activeStep === 7) {
+      setIsComponentName('summaryform')
     }
   };
 
@@ -376,7 +386,6 @@ const DealForm: React.FC<DealFormProps> = () => {
     )
   }
 
-
   const renderSummary = () => {
     const events = [
       { label: 'Deal Start', date: formData.dealStartDate, commission: null }, // No commission for Deal Start
@@ -486,7 +495,7 @@ const DealForm: React.FC<DealFormProps> = () => {
             sx={{ '@media (max-width:763px)': { marginTop: '1rem' } }}
             variant="contained"
             color="primary"
-            onClick={() => setActiveStep(currentDeal?.activeStep ?? 0 >= formData.activeStep ? currentDeal?.activeStep ?? 0 : formData.activeStep)}
+            onClick={() => setIsComponentName('dealform')}
           >
             Back
           </Button>
@@ -514,6 +523,7 @@ const DealForm: React.FC<DealFormProps> = () => {
         if (userdetails.isAdmin) {
           dispatchFormDataOnClose();
           dispatch(clearCurrentDeal());
+          setIsComponentName('dealform');
         }
       }}
     >
@@ -538,6 +548,7 @@ const DealForm: React.FC<DealFormProps> = () => {
             if (userdetails.isAdmin) {
               dispatchFormDataOnClose();
               dispatch(clearCurrentDeal());
+              setIsComponentName('dealform');
             }
           }}
           sx={{
@@ -569,76 +580,79 @@ const DealForm: React.FC<DealFormProps> = () => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          padding: '2rem'
+          padding: '2rem',
         }}
       >
-        {!isPropertyPage ? (
-          <Box
-            sx={{
-              width: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 1,
-              paddingTop: '1.5rem',
-            }}
-          >
-            {/* Stepper (Div 1) */}
-            <Box sx={{ width: '100%' }}>
-              {(userdetails.isAdmin && activeStep !== 8) && (
-                <Stepper
-                  orientation="horizontal"
-                  activeStep={activeStep}
-                  alternativeLabel
-                  connector={<StepConnector />}
-                  sx={{
-                    '@media (max-width:763px)': {
-                      overflow: 'scroll',
-                    },
-                  }}
-                >
-                  {steps.map((step, index) => (
-                    <Step key={index}>
-                      <StepLabel>{step.label}</StepLabel>
-                    </Step>
-                  ))}
-                </Stepper>
-              )}
-            </Box>
-
-            {/* Input Fields (Div 2) */}
+        {
+          (isComponentName === 'dealform') ? (
             <Box
               sx={{
-                width: '100%',
+                width: 1,
                 display: 'flex',
                 flexDirection: 'column',
-                paddingX: '30px',
-                '@media (max-width: 767px)': {
-                  padding: 0,
-                  marginTop: 1,
-                  paddingX: 0,
-                },
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 3,
+                paddingTop: '1.5rem',
               }}
             >
-              {activeStep < steps.length - 1 ? (
-                <Box sx={{ display: 'flex', flexDirection: 'column', textTransform: 'capitalize' }}>
-                  {steps[activeStep].fields.map((field, index) => renderField(field, index))}
-                </Box>
-              ) : (
-                renderSummary()
-              )}
-            </Box>
+              {/* Stepper (Div 1) */}
+              <Box sx={{ width: '100%' }}>
+                {(userdetails.isAdmin && activeStep !== 8) && (
+                  <Stepper
+                    orientation="horizontal"
+                    activeStep={activeStep}
+                    alternativeLabel
+                    connector={<StepConnector />}
+                    sx={{
+                      '@media (max-width:763px)': {
+                        overflow: 'scroll',
+                      },
+                    }}
+                  >
+                    {steps.map((step, index) => (
+                      <Step key={index}>
+                        <StepLabel>{step.label}</StepLabel>
+                      </Step>
+                    ))}
+                  </Stepper>
+                )}
+              </Box>
 
-            {/* Save/Next Buttons (Div 3) */}
-            {activeStep < steps.length - 1 && (
-              <Box sx={{
-                width: '100%', display: 'flex', justifyContent: 'space-between', paddingX: '30px', '@media (max-width:763px)': {
-                  padding: 0,
-                }
-              }}>
+              {/* Input Fields (Div 2) */}
+              <Box
+                sx={{
+                  width: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingX: '30px',
+                  '@media (max-width: 767px)': {
+                    padding: 0,
+                    marginTop: 1,
+                    paddingX: 0,
+                  },
+                }}
+              >
+                {activeStep < steps.length - 1 ? (
+                  <Box sx={{ display: 'flex', flexDirection: 'column', textTransform: 'capitalize' }}>
+                    {steps[activeStep].fields.map((field, index) => renderField(field, index))}
+                  </Box>
+                ) : (
+                  <div style={{ display: 'flex', justifyContent: 'center', fontSize: '2rem', color: 'green' }}>
+                    You Deal is Completed
+                  </div>
+                )}
+              </Box>
 
-                {/* <Button
+              {/* Save/Next Buttons (Div 3) */}
+              {activeStep < steps.length - 1 && (
+                <Box sx={{
+                  width: '100%', display: 'flex', justifyContent: 'space-between', paddingX: '30px', '@media (max-width:763px)': {
+                    padding: 0,
+                  }
+                }}>
+
+                  {/* <Button
                 variant="contained"
                 color="primary"
                 onClick={saveFormData}
@@ -647,68 +661,76 @@ const DealForm: React.FC<DealFormProps> = () => {
               >
                 Save
               </Button> */}
-                {activeStep !== 0 &&
-                  <>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      sx={{ width: 130, '@media (max-width:763px)': { width: '45%', fontSize: '.7rem' } }}
-                      disabled={!isFormValid()}
-                    >
-                      {activeStep === steps.length - 2 ? 'Finish' : 'Save & Next'}
-                    </Button>
+                  {activeStep !== 0 &&
+                    <>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={
+                          handleNext
+                        }
+                        sx={{ width: 130, '@media (max-width:763px)': { width: '45%', fontSize: '.7rem' } }}
+                        disabled={!isFormValid()}
+                      >
+                        {activeStep === steps.length - 2 ? 'Finish' : 'Save & Next'}
+                      </Button>
 
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleBack}
-                      sx={{ width: 100, '@media (max-width:763px)': { width: '45%', fontSize: '.7rem' } }}
-                      title={'Back to previous step'}
-                    >
-                      Back
-                    </Button>
-                  </>
-                }
-              </Box>
-            )}
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleBack}
+                        sx={{ width: 100, '@media (max-width:763px)': { width: '45%', fontSize: '.7rem' } }}
+                        title={'Back to previous step'}
+                      >
+                        Back
+                      </Button>
+                    </>
+                  }
+                </Box>
+              )}
 
-            {/* View Summary (Div 4) */}
-            {(activeStep < steps.length - 1 && activeStep !== 0) && (
-              <Box sx={{
-                width: '100%', display: 'flex', justifyContent: 'flex-end', paddingX: '30px', '@media (max-width:763px)': {
-                  padding: 0
-                }
-              }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => setActiveStep(8)}
-                  sx={{
-                    width: 150,
-                    '@media (max-width:763px)': { width: 1 },
-                  }}
-                >
-                  View Summary
-                </Button>
-              </Box>
-            )}
-          </Box>
-        ) :
-          <Box sx={{ padding: 0 }}>
-            <Button
-              sx={{ marginTop: '1rem', '@media (max-width:763px)': { marginTop: '1rem' } }}
-              variant="contained"
-              color="primary"
-              onClick={() => setIsPropertyPage(false)}
-            >
-              <KeyboardBackspaceIcon sx={{ color: '#fff', fontSize: 25, paddingRight: .2 }} />Back to Deal Form
-            </Button>
-            {renderForm()}
-          </Box>
+              {/* View Summary (Div 4) */}
+              {(activeStep < steps.length - 1 && activeStep !== 0) && (
+                <Box sx={{
+                  width: '100%', display: 'flex', justifyContent: 'flex-end', paddingX: '30px', '@media (max-width:763px)': {
+                    padding: 0
+                  }
+                }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setIsComponentName('summaryform')}
+                    sx={{
+                      width: 150,
+                      '@media (max-width:763px)': { width: 1 },
+                    }}
+                  >
+                    View Summary
+                  </Button>
+                </Box>
+              )}
+            </Box>
+          )
+            : (isComponentName === 'summaryform') ? (
+              renderSummary()
+            )
+              : (
+                <Box sx={{ padding: 0 }}>
+                  <Button
+                    sx={{ marginTop: '1rem', '@media (max-width:763px)': { marginTop: '1rem' } }}
+                    variant="contained"
+                    color="primary"
+                  // onClick={() => setIsPropertyPage(false)}
+                  >
+                    <KeyboardBackspaceIcon sx={{ color: '#fff', fontSize: 25, paddingRight: .2 }} />Back to Deal Form
+                  </Button>
+                  {renderForm()}
+                </Box>
+              )
         }
-      </DialogContent>
-    </Dialog>
+
+      </DialogContent >
+    </Dialog >
   );
 }
 
